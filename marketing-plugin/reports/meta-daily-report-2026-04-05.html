@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads — Daily Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root { --bg:#f8fafc; --card:#ffffff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b;
+        --accent:#6366f1; --accent2:#8b5cf6; --green:#16a34a; --red:#dc2626; --amber:#d97706; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+       background:var(--bg); color:var(--text); padding:24px; min-height:100vh; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+.header h1 { font-size:24px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.subtitle { color:var(--muted); font-size:14px; margin-top:4px; }
+.badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; }
+.badge-date { background:rgba(99,102,241,0.15); color:var(--accent); }
+.badge-live { background:rgba(34,197,94,0.15); color:var(--green); }
+.section-title { font-size:13px; color:var(--muted); text-transform:uppercase;
+                 letter-spacing:1px; margin:24px 0 12px; font-weight:600; }
+</style>
+</head>
+<body>
+<style>
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; }
+.kpi-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; position:relative; overflow:hidden; }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px;
+                     background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+.kpi-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+.kpi-value { font-size:22px; font-weight:700; }
+.kpi-sub { font-size:12px; margin-top:4px; }
+.kpi-sub.up { color:var(--green); } .kpi-sub.down { color:var(--red); } .kpi-sub.neutral { color:var(--muted); }
+.chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:900px) { .chart-grid { grid-template-columns:1fr; } }
+.chart-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+.chart-card h3 { font-size:14px; font-weight:600; margin-bottom:14px; }
+.chart-card canvas { max-height:240px; }
+.chart-full { grid-column:1/-1; }
+.table-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; overflow-x:auto; margin-bottom:16px; }
+.table-card h3 { font-size:14px; font-weight:600; margin-bottom:14px; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { text-align:left; color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase;
+     letter-spacing:0.5px; padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap; }
+td { padding:10px; border-bottom:1px solid rgba(226,232,240,0.7); vertical-align:middle; }
+tr:hover td { background:rgba(99,102,241,0.04); }
+.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700; text-transform:uppercase; }
+.pill-winner { background:rgba(34,197,94,0.15); color:var(--green); }
+.pill-okay { background:rgba(99,102,241,0.15); color:var(--accent); }
+.pill-loser { background:rgba(239,68,68,0.15); color:var(--red); }
+.pill-fatigued { background:rgba(245,158,11,0.15); color:var(--amber); }
+.pill-low-spend { background:rgba(139,141,151,0.15); color:var(--muted); }
+.pill-PAUSED { background:rgba(139,141,151,0.15); color:var(--muted); }
+.pill-ACTIVE { background:rgba(34,197,94,0.12); color:var(--green); }
+.ad-name { max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:8px; }
+.insight-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.insight-card h4 { font-size:13px; font-weight:600; margin-bottom:8px; display:flex; gap:8px; align-items:center; }
+.insight-card p { font-size:13px; color:var(--muted); line-height:1.5; }
+.trend-up { color:var(--green); } .trend-down { color:var(--red); }
+.footer { text-align:center; color:var(--muted); font-size:11px; padding:20px; }
+.msg-warn { background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3);
+            color:var(--amber); padding:12px 16px; border-radius:10px; font-size:13px; margin-bottom:16px; }
+</style>
+
+<div class="header">
+  <div>
+    <h1 id="title">Meta Ads — Daily Report</h1>
+    <div class="subtitle" id="subtitle"></div>
+  </div>
+  <div>
+    <span class="badge badge-date" id="dateBadge"></span>
+    <span class="badge badge-live">LIVE</span>
+  </div>
+</div>
+<div id="warnMsg"></div>
+
+<div class="section-title">Yesterday Snapshot</div>
+<div class="kpi-grid" id="kpiYesterday"></div>
+
+<div class="section-title">Last 7 Days vs Previous 7 Days</div>
+<div class="kpi-grid" id="kpiWeek"></div>
+
+<div class="section-title">Trend</div>
+<div class="chart-grid">
+  <div class="chart-card chart-full"><h3>30-Day Spend & Clicks</h3><canvas id="chart30"></canvas></div>
+  <div class="chart-card"><h3>Daily CTR (%)</h3><canvas id="chartCtr"></canvas></div>
+  <div class="chart-card"><h3>Daily CPC ($)</h3><canvas id="chartCpc"></canvas></div>
+</div>
+
+<div class="section-title">Creative Performance Summary</div>
+<div class="insight-grid" id="summaryInsights"></div>
+
+<div class="table-card">
+  <h3>Ads Ranked by Spend (Last 7 Days)</h3>
+  <table>
+    <thead><tr>
+      <th>Ad Name</th><th>Status</th><th>Rating</th>
+      <th class="num">Spend</th><th class="num">Impr.</th><th class="num">Reach</th>
+      <th class="num">Freq.</th><th class="num">Clicks</th><th class="num">CTR</th>
+      <th class="num">CPC</th><th class="num">CPM</th><th class="num">Conv.</th><th class="num">CPA</th>
+    </tr></thead>
+    <tbody id="adTable"></tbody>
+  </table>
+</div>
+
+<div class="footer" id="footer"></div>
+
+<script>
+const P = {"generated_at": "2026-04-05 17:39", "data_through": "2026-04-05", "yesterday": {"spend": 104.2, "impressions": 2481, "clicks": 58, "reach": 2186, "conversions": 0, "ctr": 2.3377670294236195, "cpc": 1.7965517241379312, "cpm": 41.99919387343813, "cpa": 0}, "week": {"spend": 851.29, "impressions": 18360, "clicks": 483, "reach": 15421, "conversions": 12, "ctr": 2.630718954248366, "cpc": 1.7625051759834367, "cpm": 46.36655773420479, "cpa": 70.94083333333333}, "prev_week": {"spend": 914.54, "impressions": 20955, "clicks": 487, "reach": 17235, "conversions": 20, "ctr": 2.324027678358387, "cpc": 1.8779055441478438, "cpm": 43.64304461942257, "cpa": 45.727}, "ad_rows": [{"ad_id": "120242733174760535", "name": "Graveyard - $200k", "status": "ACTIVE", "creative_id": "927136226724996", "status_class": "winner", "flags": [], "ctr_change": 5.024962654296733, "spend": 360.99, "impressions": 8848, "clicks": 232, "reach": 8339, "conversions": 8, "frequency_sum": 7.440712, "freq_count": 7, "ctr": 2.6220614828209765, "cpc": 1.5559913793103448, "cpm": 40.799050632911396, "cpa": 45.12375, "frequency_avg": 1.0629588571428572}, {"ad_id": "120241000518010535", "name": "Graveyard", "status": "ACTIVE", "creative_id": "1938583350875841", "status_class": "winner", "flags": [], "ctr_change": 28.89957825331077, "spend": 157.32, "impressions": 4403, "clicks": 135, "reach": 4153, "conversions": 2, "frequency_sum": 7.419832, "freq_count": 7, "ctr": 3.066091301385419, "cpc": 1.1653333333333333, "cpm": 35.730183965478076, "cpa": 78.66, "frequency_avg": 1.059976}, {"ad_id": "120240986098150535", "name": "Podcast Format 2", "status": "ACTIVE", "creative_id": "885923370926169", "status_class": "okay", "flags": [], "ctr_change": 42.85714285714285, "spend": 84.05, "impressions": 966, "clicks": 24, "reach": 892, "conversions": 0, "frequency_sum": 7.637763, "freq_count": 7, "ctr": 2.484472049689441, "cpc": 3.502083333333333, "cpm": 87.00828157349896, "cpa": 0, "frequency_avg": 1.0911089999999999}, {"ad_id": "120241000518030535", "name": "AI", "status": "ACTIVE", "creative_id": "928185246417348", "status_class": "okay", "flags": [], "ctr_change": -15.401540154015397, "spend": 56.75, "impressions": 909, "clicks": 19, "reach": 760, "conversions": 2, "frequency_sum": 8.446112, "freq_count": 7, "ctr": 2.0902090209020905, "cpc": 2.986842105263158, "cpm": 62.43124312431243, "cpa": 28.375, "frequency_avg": 1.2065874285714284}, {"ad_id": "120242249959700535", "name": "Golden Bucket", "status": "ACTIVE", "creative_id": "2488300178292557", "status_class": "winner", "flags": [], "ctr_change": 34.22273781902551, "spend": 47.849999999999994, "impressions": 1293, "clicks": 39, "reach": 1194, "conversions": 0, "frequency_sum": 7.579650000000001, "freq_count": 7, "ctr": 3.0162412993039442, "cpc": 1.2269230769230768, "cpm": 37.00696055684454, "cpa": 0, "frequency_avg": 1.082807142857143}, {"ad_id": "120240986098130535", "name": "Talking Head 3", "status": "ACTIVE", "creative_id": "2221081985298300", "status_class": "loser", "flags": [], "ctr_change": -17.20290124604798, "spend": 26.62, "impressions": 283, "clicks": 4, "reach": 277, "conversions": 0, "frequency_sum": 7.156972, "freq_count": 7, "ctr": 1.4134275618374559, "cpc": 6.655, "cpm": 94.06360424028269, "cpa": 0, "frequency_avg": 1.0224245714285713}, {"ad_id": "120240986098170535", "name": "Mark Cuban", "status": "ACTIVE", "creative_id": "4293317530986963", "status_class": "okay", "flags": [], "ctr_change": -15.589295688823452, "spend": 25.13, "impressions": 419, "clicks": 9, "reach": 398, "conversions": 0, "frequency_sum": 7.265401000000001, "freq_count": 7, "ctr": 2.1479713603818613, "cpc": 2.792222222222222, "cpm": 59.97613365155131, "cpa": 0, "frequency_avg": 1.0379144285714286}, {"ad_id": "120242733272100535", "name": "Talking Head 3 - $200k", "status": "ACTIVE", "creative_id": "4352515321702925", "status_class": "okay", "flags": [], "ctr_change": 62.382445141065816, "spend": 22.720000000000002, "impressions": 319, "clicks": 10, "reach": 301, "conversions": 0, "frequency_sum": 7.398782000000001, "freq_count": 7, "ctr": 3.1347962382445136, "cpc": 2.2720000000000002, "cpm": 71.22257053291537, "cpa": 0, "frequency_avg": 1.0569688571428573}, {"ad_id": "120240986098200535", "name": "200 clients", "status": "ACTIVE", "creative_id": "1284772980221416", "status_class": "loser", "flags": [], "ctr_change": 73.09941520467835, "spend": 19.159999999999997, "impressions": 171, "clicks": 4, "reach": 144, "conversions": 0, "frequency_sum": 6.962378999999999, "freq_count": 6, "ctr": 2.3391812865497075, "cpc": 4.789999999999999, "cpm": 112.04678362573098, "cpa": 0, "frequency_avg": 1.1603964999999998}, {"ad_id": "120240986098160535", "name": "Podcast Format 3", "status": "ACTIVE", "creative_id": "752045220980420", "status_class": "loser", "flags": [], "ctr_change": -72.33333333333333, "spend": 15.139999999999999, "impressions": 150, "clicks": 1, "reach": 130, "conversions": 0, "frequency_sum": 8.917169, "freq_count": 7, "ctr": 0.6666666666666667, "cpc": 15.139999999999999, "cpm": 100.93333333333332, "cpa": 0, "frequency_avg": 1.2738812857142856}, {"ad_id": "120240903917440535", "name": "Talking Head 1", "status": "ACTIVE", "creative_id": "1980114899607032", "status_class": "loser", "flags": [], "ctr_change": -40.88888888888887, "spend": 9.75, "impressions": 150, "clicks": 1, "reach": 133, "conversions": 0, "frequency_sum": 6.753610999999999, "freq_count": 6, "ctr": 0.6666666666666667, "cpc": 9.75, "cpm": 65.0, "cpa": 0, "frequency_avg": 1.1256018333333333}, {"ad_id": "120240986098210535", "name": "7 tabs", "status": "ACTIVE", "creative_id": "1598719904808483", "status_class": "okay", "flags": [], "ctr_change": null, "spend": 7.04, "impressions": 127, "clicks": 3, "reach": 105, "conversions": 0, "frequency_sum": 6.9355910000000005, "freq_count": 6, "ctr": 2.3622047244094486, "cpc": 2.3466666666666667, "cpm": 55.43307086614173, "cpa": 0, "frequency_avg": 1.1559318333333335}, {"ad_id": "120242249959690535", "name": "Brain", "status": "ACTIVE", "creative_id": "1894495637973141", "status_class": "okay", "flags": [], "ctr_change": -40.458015267175576, "spend": 5.75, "impressions": 131, "clicks": 2, "reach": 111, "conversions": 0, "frequency_sum": 8.433874, "freq_count": 7, "ctr": 1.5267175572519083, "cpc": 2.875, "cpm": 43.89312977099236, "cpa": 0, "frequency_avg": 1.2048391428571428}, {"ad_id": "120240986098120535", "name": "Talking Head 2", "status": "ACTIVE", "creative_id": "895437150147747", "status_class": "loser", "flags": [], "ctr_change": null, "spend": 5.61, "impressions": 82, "clicks": 0, "reach": 71, "conversions": 0, "frequency_sum": 6.892171, "freq_count": 6, "ctr": 0.0, "cpc": 0, "cpm": 68.41463414634147, "cpa": 0, "frequency_avg": 1.1486951666666667}, {"ad_id": "120241000518020535", "name": "One system", "status": "ACTIVE", "creative_id": "926801073182332", "status_class": "low-spend", "flags": [], "ctr_change": null, "spend": 4.05, "impressions": 48, "clicks": 0, "reach": 43, "conversions": 0, "frequency_sum": 6.612553999999999, "freq_count": 6, "ctr": 0.0, "cpc": 0, "cpm": 84.37499999999999, "cpa": 0, "frequency_avg": 1.1020923333333332}, {"ad_id": "120240986098140535", "name": "Podcast Format 1", "status": "ACTIVE", "creative_id": "1588797255667718", "status_class": "low-spend", "flags": [], "ctr_change": -100.0, "spend": 2.09, "impressions": 36, "clicks": 0, "reach": 32, "conversions": 0, "frequency_sum": 7.916665999999999, "freq_count": 7, "ctr": 0.0, "cpc": 0, "cpm": 58.05555555555556, "cpa": 0, "frequency_avg": 1.1309522857142855}, {"ad_id": "120241000518040535", "name": "We run company", "status": "ACTIVE", "creative_id": "1344539001047499", "status_class": "low-spend", "flags": [], "ctr_change": null, "spend": 1.27, "impressions": 25, "clicks": 0, "reach": 24, "conversions": 0, "frequency_sum": 6.125, "freq_count": 6, "ctr": 0.0, "cpc": 0, "cpm": 50.8, "cpa": 0, "frequency_avg": 1.0208333333333333}], "daily_30": [{"date": "2026-03-07", "spend": 89.15, "impressions": 2480, "clicks": 81, "reach": 2158, "conversions": 2, "ctr": 3.2661290322580645, "cpc": 1.1006172839506174, "cpm": 35.947580645161295}, {"date": "2026-03-08", "spend": 104.47, "impressions": 3027, "clicks": 72, "reach": 2688, "conversions": 2, "ctr": 2.3785926660059467, "cpc": 1.450972222222222, "cpm": 34.51271886356128}, {"date": "2026-03-09", "spend": 96.19, "impressions": 3210, "clicks": 95, "reach": 2794, "conversions": 4, "ctr": 2.959501557632399, "cpc": 1.0125263157894737, "cpm": 29.965732087227416}, {"date": "2026-03-10", "spend": 104.04, "impressions": 3465, "clicks": 102, "reach": 3126, "conversions": 4, "ctr": 2.943722943722944, "cpc": 1.02, "cpm": 30.02597402597403}, {"date": "2026-03-11", "spend": 107.52, "impressions": 2523, "clicks": 65, "reach": 2278, "conversions": 0, "ctr": 2.576298057867618, "cpc": 1.654153846153846, "cpm": 42.61593341260404}, {"date": "2026-03-12", "spend": 113.4, "impressions": 1993, "clicks": 70, "reach": 1709, "conversions": 2, "ctr": 3.5122930255895635, "cpc": 1.62, "cpm": 56.899147014550934}, {"date": "2026-03-13", "spend": 93.91, "impressions": 1969, "clicks": 60, "reach": 1606, "conversions": 4, "ctr": 3.047232097511427, "cpc": 1.5651666666666666, "cpm": 47.694261046216354}, {"date": "2026-03-14", "spend": 78.53, "impressions": 1344, "clicks": 27, "reach": 1159, "conversions": 2, "ctr": 2.0089285714285716, "cpc": 2.9085185185185187, "cpm": 58.430059523809526}, {"date": "2026-03-15", "spend": 165.71, "impressions": 3139, "clicks": 91, "reach": 2532, "conversions": 8, "ctr": 2.8990124243389612, "cpc": 1.820989010989011, "cpm": 52.79069767441861}, {"date": "2026-03-16", "spend": 126.97, "impressions": 2529, "clicks": 48, "reach": 2027, "conversions": 0, "ctr": 1.8979833926453145, "cpc": 2.645208333333333, "cpm": 50.205614867536575}, {"date": "2026-03-17", "spend": 142.32, "impressions": 3341, "clicks": 87, "reach": 2826, "conversions": 0, "ctr": 2.604010775217001, "cpc": 1.6358620689655172, "cpm": 42.59802454354983}, {"date": "2026-03-18", "spend": 120.37, "impressions": 2167, "clicks": 49, "reach": 1677, "conversions": 2, "ctr": 2.2611905860636825, "cpc": 2.456530612244898, "cpm": 55.54683894785418}, {"date": "2026-03-19", "spend": 122.51, "impressions": 2232, "clicks": 64, "reach": 1777, "conversions": 2, "ctr": 2.867383512544803, "cpc": 1.91421875, "cpm": 54.88799283154122}, {"date": "2026-03-20", "spend": 133.74, "impressions": 2577, "clicks": 58, "reach": 2039, "conversions": 0, "ctr": 2.2506790842064417, "cpc": 2.3058620689655176, "cpm": 51.897555296856815}, {"date": "2026-03-21", "spend": 96.69, "impressions": 1900, "clicks": 37, "reach": 1520, "conversions": 2, "ctr": 1.9473684210526316, "cpc": 2.613243243243243, "cpm": 50.88947368421053}, {"date": "2026-03-22", "spend": 156.33, "impressions": 3256, "clicks": 82, "reach": 2683, "conversions": 2, "ctr": 2.5184275184275187, "cpc": 1.9064634146341466, "cpm": 48.01289926289927}, {"date": "2026-03-23", "spend": 138.04, "impressions": 3377, "clicks": 76, "reach": 2980, "conversions": 2, "ctr": 2.2505182114302635, "cpc": 1.816315789473684, "cpm": 40.876517619188625}, {"date": "2026-03-24", "spend": 139.11, "impressions": 3115, "clicks": 70, "reach": 2493, "conversions": 0, "ctr": 2.247191011235955, "cpc": 1.9872857142857145, "cpm": 44.65810593900482}, {"date": "2026-03-25", "spend": 124.48, "impressions": 2981, "clicks": 75, "reach": 2306, "conversions": 6, "ctr": 2.5159342502515933, "cpc": 1.6597333333333333, "cpm": 41.75779939617578}, {"date": "2026-03-26", "spend": 123.88, "impressions": 3267, "clicks": 79, "reach": 2576, "conversions": 2, "ctr": 2.418120599938782, "cpc": 1.5681012658227849, "cpm": 37.91857973676156}, {"date": "2026-03-27", "spend": 110.2, "impressions": 2513, "clicks": 55, "reach": 2198, "conversions": 6, "ctr": 2.1886191802626342, "cpc": 2.003636363636364, "cpm": 43.85196975726224}, {"date": "2026-03-28", "spend": 117.52, "impressions": 2539, "clicks": 69, "reach": 2122, "conversions": 0, "ctr": 2.717605356439543, "cpc": 1.7031884057971014, "cpm": 46.28593934619929}, {"date": "2026-03-29", "spend": 161.31, "impressions": 3163, "clicks": 63, "reach": 2560, "conversions": 4, "ctr": 1.991779955738223, "cpc": 2.5604761904761904, "cpm": 50.99905153335441}, {"date": "2026-03-30", "spend": 138.92, "impressions": 2983, "clicks": 97, "reach": 2539, "conversions": 2, "ctr": 3.251759973181361, "cpc": 1.432164948453608, "cpm": 46.5705665437479}, {"date": "2026-03-31", "spend": 135.87, "impressions": 3310, "clicks": 92, "reach": 2811, "conversions": 6, "ctr": 2.7794561933534743, "cpc": 1.4768478260869566, "cpm": 41.04833836858006}, {"date": "2026-04-01", "spend": 126.15, "impressions": 3071, "clicks": 79, "reach": 2531, "conversions": 4, "ctr": 2.5724519700423314, "cpc": 1.5968354430379748, "cpm": 41.077824812764575}, {"date": "2026-04-02", "spend": 113.65, "impressions": 2245, "clicks": 52, "reach": 1833, "conversions": 0, "ctr": 2.316258351893096, "cpc": 2.185576923076923, "cpm": 50.623608017817375}, {"date": "2026-04-03", "spend": 112.37, "impressions": 1808, "clicks": 48, "reach": 1503, "conversions": 0, "ctr": 2.6548672566371683, "cpc": 2.341041666666667, "cpm": 62.15154867256637}, {"date": "2026-04-04", "spend": 120.13, "impressions": 2462, "clicks": 57, "reach": 2018, "conversions": 0, "ctr": 2.3151909017059302, "cpc": 2.1075438596491227, "cpm": 48.79366368805849}, {"date": "2026-04-05", "spend": 104.2, "impressions": 2481, "clicks": 58, "reach": 2186, "conversions": 0, "ctr": 2.3377670294236195, "cpc": 1.7965517241379312, "cpm": 41.99919387343813}], "ad_level_msg": "", "campaign_name": "Leads"};
+const fmt = (n) => (n||0).toLocaleString('en-US');
+const fmtCur = (n) => '$' + (n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const fmt2 = (n) => (n||0).toFixed(2);
+
+document.getElementById('title').textContent = P.campaign_name + ' — Daily Report';
+document.getElementById('subtitle').textContent = 'Data through ' + P.data_through + ' · Generated ' + P.generated_at;
+document.getElementById('dateBadge').textContent = 'Data: ' + P.data_through;
+document.getElementById('footer').textContent = 'Generated ' + P.generated_at + ' · Meta Marketing API · All values in USD';
+if (P.ad_level_msg) document.getElementById('warnMsg').innerHTML = '<div class="msg-warn">⚠ ' + P.ad_level_msg + '</div>';
+
+function pctCh(c, p) { if (!p) return c ? 100 : 0; return ((c-p)/p)*100; }
+function delta(c, p, inv=false) {
+  const ch = pctCh(c, p);
+  const d = ch > 0 ? (inv?'down':'up') : ch < 0 ? (inv?'up':'down') : 'neutral';
+  return `<span class="kpi-sub ${d}">${ch>=0?'+':''}${ch.toFixed(1)}% vs prior week</span>`;
+}
+
+const y = P.yesterday;
+document.getElementById('kpiYesterday').innerHTML = [
+  ['Spend', fmtCur(y.spend)], ['Impressions', fmt(y.impressions)], ['Reach', fmt(y.reach)],
+  ['Clicks', fmt(y.clicks)], ['CTR', fmt2(y.ctr)+'%'], ['CPC', fmtCur(y.cpc)],
+  ['CPM', fmtCur(y.cpm)], ['Conversions', fmt(y.conversions)]
+].map(([l,v]) => `<div class="kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div><div class="kpi-sub neutral">—</div></div>`).join('');
+
+const w = P.week, pw = P.prev_week;
+document.getElementById('kpiWeek').innerHTML = [
+  ['Spend', fmtCur(w.spend), delta(w.spend, pw.spend, true)],
+  ['Impressions', fmt(w.impressions), delta(w.impressions, pw.impressions)],
+  ['Reach', fmt(w.reach), delta(w.reach, pw.reach)],
+  ['Clicks', fmt(w.clicks), delta(w.clicks, pw.clicks)],
+  ['CTR', fmt2(w.ctr)+'%', delta(w.ctr, pw.ctr)],
+  ['CPC', fmtCur(w.cpc), delta(w.cpc, pw.cpc, true)],
+  ['CPM', fmtCur(w.cpm), delta(w.cpm, pw.cpm, true)],
+  ['Conversions', fmt(w.conversions), delta(w.conversions, pw.conversions)],
+  ['CPA', w.conversions?fmtCur(w.cpa):'—', (w.conversions && pw.conversions) ? delta(w.cpa, pw.cpa, true) : '<span class="kpi-sub neutral">—</span>']
+].map(([l,v,d]) => `<div class="kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div>${d}</div>`).join('');
+</script>
+
+<script>
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = 'rgba(226,232,240,0.8)';
+Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,sans-serif';
+
+const labels30 = P.daily_30.map(d => new Date(d.date+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'}));
+
+new Chart(document.getElementById('chart30'), {
+  type:'bar',
+  data:{ labels:labels30, datasets:[
+    { label:'Spend ($)', data:P.daily_30.map(d=>d.spend), backgroundColor:'rgba(99,102,241,0.7)', borderRadius:4, yAxisID:'y', order:2 },
+    { label:'Clicks', data:P.daily_30.map(d=>d.clicks), type:'line', borderColor:'#22c55e', backgroundColor:'rgba(34,197,94,0.1)', tension:0.3, pointRadius:3, yAxisID:'y1', fill:true, order:1 }
+  ]},
+  options:{ responsive:true, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'top'}},
+    scales:{ y:{title:{display:true,text:'Spend ($)'},beginAtZero:true}, y1:{position:'right',title:{display:true,text:'Clicks'},beginAtZero:true,grid:{drawOnChartArea:false}} }}
+});
+new Chart(document.getElementById('chartCtr'), {
+  type:'line', data:{ labels:labels30, datasets:[{ label:'CTR %', data:P.daily_30.map(d=>d.ctr), borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,0.1)', tension:0.3, pointRadius:3, fill:true }]},
+  options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:false}} }
+});
+new Chart(document.getElementById('chartCpc'), {
+  type:'line', data:{ labels:labels30, datasets:[{ label:'CPC $', data:P.daily_30.map(d=>d.cpc), borderColor:'#ef4444', backgroundColor:'rgba(239,68,68,0.1)', tension:0.3, pointRadius:3, fill:true }]},
+  options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:false}} }
+});
+</script>
+
+<script>
+const statusClass = { 'winner':'pill-winner', 'okay':'pill-okay', 'loser':'pill-loser', 'low-spend':'pill-low-spend' };
+const statusLabel = { 'winner':'Winner', 'okay':'OK', 'loser':'Loser', 'low-spend':'Low spend' };
+
+document.getElementById('adTable').innerHTML = P.ad_rows.map(r => {
+  const flags = (r.flags||[]).map(f => `<span class="pill pill-${f}" style="margin-left:4px;">${f}</span>`).join('');
+  const arrow = r.ctr_change == null ? '' :
+    r.ctr_change > 0 ? `<span class="trend-up"> ↑${r.ctr_change.toFixed(0)}%</span>` :
+    r.ctr_change < 0 ? `<span class="trend-down"> ↓${Math.abs(r.ctr_change).toFixed(0)}%</span>` : '';
+  return `<tr>
+    <td class="ad-name" title="${r.name}">${r.name}</td>
+    <td><span class="pill pill-${r.status}">${r.status}</span></td>
+    <td><span class="pill ${statusClass[r.status_class]||'pill-okay'}">${statusLabel[r.status_class]||r.status_class}</span>${flags}</td>
+    <td class="num">${fmtCur(r.spend)}</td><td class="num">${fmt(r.impressions)}</td><td class="num">${fmt(r.reach)}</td>
+    <td class="num">${fmt2(r.frequency_avg)}</td><td class="num">${fmt(r.clicks)}</td>
+    <td class="num">${fmt2(r.ctr)}%${arrow}</td><td class="num">${fmtCur(r.cpc)}</td><td class="num">${fmtCur(r.cpm)}</td>
+    <td class="num">${r.conversions||0}</td><td class="num">${r.conversions?fmtCur(r.cpa):'—'}</td>
+  </tr>`;
+}).join('') || '<tr><td colspan="13" style="text-align:center;color:var(--muted);padding:30px;">No ad-level data yet.</td></tr>';
+
+const rows = P.ad_rows;
+const insights = [];
+if (rows.length > 0) {
+  const winners = rows.filter(r => r.status_class === 'winner');
+  const losers = rows.filter(r => r.status_class === 'loser');
+  const fatigued = rows.filter(r => r.flags && r.flags.includes('fatigued'));
+  const bestCtr = [...rows].sort((a,b) => b.ctr - a.ctr).filter(r => r.spend > 5)[0];
+  insights.push({ icon:'🏆', title:`${winners.length} Winner${winners.length!==1?'s':''}`,
+    text: winners.length ? `Keep scaling: ${winners.slice(0,3).map(w=>w.name).join(', ')}.` : 'No ads meet winner criteria (CTR≥2.5%, CPC≤$2).' });
+  insights.push({ icon:'📉', title:`${losers.length} Underperformer${losers.length!==1?'s':''}`,
+    text: losers.length ? `Consider pausing: ${losers.slice(0,3).map(l=>l.name).join(', ')}.` : 'No clear losers — all ads above CTR 1% and under CPC $4.' });
+  insights.push({ icon:'⚠️', title:`${fatigued.length} Fatigued`,
+    text: fatigued.length ? `Frequency > 3 on: ${fatigued.slice(0,3).map(f=>f.name).join(', ')}. Refresh creative.` : 'No creative fatigue (all under 3.0 frequency).' });
+  if (rows[0]) insights.push({ icon:'💸', title:'Highest Spend', text:`${rows[0].name} consumed ${fmtCur(rows[0].spend)} (CTR ${fmt2(rows[0].ctr)}%, CPC ${fmtCur(rows[0].cpc)}).` });
+  if (bestCtr) insights.push({ icon:'🎯', title:'Best CTR', text:`${bestCtr.name} — ${fmt2(bestCtr.ctr)}% CTR. Study what works, replicate.` });
+} else {
+  insights.push({ icon:'ℹ️', title:'No ad-level data', text:'Sync with --level ad first.' });
+}
+document.getElementById('summaryInsights').innerHTML = insights.map(i =>
+  `<div class="insight-card"><h4><span>${i.icon}</span> ${i.title}</h4><p>${i.text}</p></div>`).join('');
+</script>
+</body>
+</html>

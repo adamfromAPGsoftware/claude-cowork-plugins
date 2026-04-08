@@ -1,0 +1,58 @@
+{
+  "skill-name": "bmad-apg-mkt-campaign-launcher",
+  "module-code": "mkt",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Campaign Launcher — creates Meta campaigns programmatically, uploads creatives, sets up GA4 tracking, lead capture webhooks, retires underperforming ads, and activates campaigns. Safety-first: dry-run default, PAUSED creation, approval gates.",
+  "capabilities": [
+    {
+      "menu-code": "MC",
+      "name": "meta-campaign",
+      "description": "Create a Meta campaign structure (campaign, ad sets, ads) — all PAUSED until [GO].",
+      "type": "prompt",
+      "file": "meta-campaign.md"
+    },
+    {
+      "menu-code": "UC",
+      "name": "upload-creatives",
+      "description": "Upload generated image and video creatives to Meta and store creative IDs.",
+      "type": "prompt",
+      "file": "upload-creatives.md"
+    },
+    {
+      "menu-code": "GA",
+      "name": "setup-ga4",
+      "description": "Create or configure a GA4 property and data stream for the campaign URL.",
+      "type": "prompt",
+      "file": "setup-ga4.md"
+    },
+    {
+      "menu-code": "LC",
+      "name": "lead-capture",
+      "description": "Deploy a Cloudflare Worker for lead capture — form submission to CRM and Meta Conversions API.",
+      "type": "prompt",
+      "file": "lead-capture.md"
+    },
+    {
+      "menu-code": "RA",
+      "name": "retire-ads",
+      "description": "Pause underperforming ads identified by Performance Review.",
+      "type": "prompt",
+      "file": "retire-ads.md"
+    },
+    {
+      "menu-code": "GO",
+      "name": "go-live",
+      "description": "Run pre-flight checklist and activate a PAUSED campaign — starts spending budget.",
+      "type": "prompt",
+      "file": "go-live.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

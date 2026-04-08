@@ -1,0 +1,4 @@
+node_modules/
+models/
+_temp_*
+_denoised_*

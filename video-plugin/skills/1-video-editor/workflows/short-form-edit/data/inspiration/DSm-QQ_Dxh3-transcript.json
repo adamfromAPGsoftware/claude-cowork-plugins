@@ -1,0 +1,1344 @@
+{
+  "metadata": {
+    "video_id": "DSm-QQ_Dxh3",
+    "source_file": "DSm-QQ_Dxh3.mp4",
+    "duration_seconds": 48.36856,
+    "model": "general-nova-3",
+    "language": "en",
+    "transcribed_at": "2026-03-10T10:43:30.404006+00:00",
+    "word_count": 187,
+    "confidence_avg": 0.9496
+  },
+  "transcript": "While everybody's been obsessing over ChatGPT and Kerzer, Google silently released 10 AI vibe coding tools, and the best part, they're completely free. First, we have Anti Gravity, their new AI code editor, which works just like Kerzer and lets you build fully functional apps and websites with just simple text prompts. Then we got Google's AI Studio, which is perfect for spinning up quick AI powered apps in seconds. Next is Stitch, their AI design tool that turns your prompts and wireframes into literally full UI designs and front end code. After that, it's Opal, which is basically a combination of N8 and a Lovable, perfect for building no code AI apps powered by their models like Bayo three and Nano Banana. And finally, Joules, their AI coding agent that connects your GitHub that can build entire features, run tests, fix bugs, and manage your whole code base all on its own. And these are just five of the 12 tools that they launched so far. So if you guys want the full list for yourself, just comment Google and I'll send them to you directly.",
+  "words": [
+    {
+      "word": "while",
+      "start": 0.0,
+      "end": 0.24,
+      "confidence": 0.3915294,
+      "punctuated_word": "While"
+    },
+    {
+      "word": "everybody's",
+      "start": 0.24,
+      "end": 0.71999997,
+      "confidence": 0.95876175,
+      "punctuated_word": "everybody's"
+    },
+    {
+      "word": "been",
+      "start": 0.71999997,
+      "end": 0.79999995,
+      "confidence": 0.9991941,
+      "punctuated_word": "been"
+    },
+    {
+      "word": "obsessing",
+      "start": 0.79999995,
+      "end": 1.12,
+      "confidence": 0.9990085,
+      "punctuated_word": "obsessing"
+    },
+    {
+      "word": "over",
+      "start": 1.12,
+      "end": 1.36,
+      "confidence": 0.9942334,
+      "punctuated_word": "over"
+    },
+    {
+      "word": "chatgpt",
+      "start": 1.36,
+      "end": 1.8399999,
+      "confidence": 0.7474728,
+      "punctuated_word": "ChatGPT"
+    },
+    {
+      "word": "and",
+      "start": 1.8399999,
+      "end": 2.08,
+      "confidence": 0.96271616,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "kerzer",
+      "start": 2.08,
+      "end": 2.48,
+      "confidence": 0.64735526,
+      "punctuated_word": "Kerzer,"
+    },
+    {
+      "word": "google",
+      "start": 2.48,
+      "end": 2.72,
+      "confidence": 0.99862754,
+      "punctuated_word": "Google"
+    },
+    {
+      "word": "silently",
+      "start": 2.72,
+      "end": 3.1999998,
+      "confidence": 0.9974852,
+      "punctuated_word": "silently"
+    },
+    {
+      "word": "released",
+      "start": 3.1999998,
+      "end": 3.76,
+      "confidence": 0.9989491,
+      "punctuated_word": "released"
+    },
+    {
+      "word": "10",
+      "start": 3.76,
+      "end": 4.08,
+      "confidence": 0.9990345,
+      "punctuated_word": "10"
+    },
+    {
+      "word": "ai",
+      "start": 4.08,
+      "end": 4.48,
+      "confidence": 0.9871622,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "vibe",
+      "start": 4.48,
+      "end": 4.88,
+      "confidence": 0.89988333,
+      "punctuated_word": "vibe"
+    },
+    {
+      "word": "coding",
+      "start": 4.88,
+      "end": 5.2,
+      "confidence": 0.98657155,
+      "punctuated_word": "coding"
+    },
+    {
+      "word": "tools",
+      "start": 5.2,
+      "end": 5.7599998,
+      "confidence": 0.73786044,
+      "punctuated_word": "tools,"
+    },
+    {
+      "word": "and",
+      "start": 5.7599998,
+      "end": 5.8399997,
+      "confidence": 0.9994916,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "the",
+      "start": 5.8399997,
+      "end": 6.0,
+      "confidence": 0.99632627,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "best",
+      "start": 6.0,
+      "end": 6.24,
+      "confidence": 0.9998511,
+      "punctuated_word": "best"
+    },
+    {
+      "word": "part",
+      "start": 6.24,
+      "end": 6.56,
+      "confidence": 0.94075,
+      "punctuated_word": "part,"
+    },
+    {
+      "word": "they're",
+      "start": 6.56,
+      "end": 6.72,
+      "confidence": 0.9982077,
+      "punctuated_word": "they're"
+    },
+    {
+      "word": "completely",
+      "start": 6.72,
+      "end": 7.12,
+      "confidence": 0.99976224,
+      "punctuated_word": "completely"
+    },
+    {
+      "word": "free",
+      "start": 7.12,
+      "end": 7.6,
+      "confidence": 0.99970895,
+      "punctuated_word": "free."
+    },
+    {
+      "word": "first",
+      "start": 7.6,
+      "end": 8.0,
+      "confidence": 0.9752393,
+      "punctuated_word": "First,"
+    },
+    {
+      "word": "we",
+      "start": 8.0,
+      "end": 8.08,
+      "confidence": 0.99954516,
+      "punctuated_word": "we"
+    },
+    {
+      "word": "have",
+      "start": 8.08,
+      "end": 8.24,
+      "confidence": 0.998007,
+      "punctuated_word": "have"
+    },
+    {
+      "word": "anti",
+      "start": 8.24,
+      "end": 8.559999,
+      "confidence": 0.7520944,
+      "punctuated_word": "Anti"
+    },
+    {
+      "word": "gravity",
+      "start": 8.559999,
+      "end": 9.04,
+      "confidence": 0.7482767,
+      "punctuated_word": "Gravity,"
+    },
+    {
+      "word": "their",
+      "start": 9.04,
+      "end": 9.12,
+      "confidence": 0.99702555,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "new",
+      "start": 9.12,
+      "end": 9.28,
+      "confidence": 0.9839888,
+      "punctuated_word": "new"
+    },
+    {
+      "word": "ai",
+      "start": 9.28,
+      "end": 9.599999,
+      "confidence": 0.9990169,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "code",
+      "start": 9.599999,
+      "end": 9.84,
+      "confidence": 0.93835926,
+      "punctuated_word": "code"
+    },
+    {
+      "word": "editor",
+      "start": 9.84,
+      "end": 10.24,
+      "confidence": 0.8866509,
+      "punctuated_word": "editor,"
+    },
+    {
+      "word": "which",
+      "start": 10.24,
+      "end": 10.32,
+      "confidence": 0.9999378,
+      "punctuated_word": "which"
+    },
+    {
+      "word": "works",
+      "start": 10.32,
+      "end": 10.559999,
+      "confidence": 0.9991541,
+      "punctuated_word": "works"
+    },
+    {
+      "word": "just",
+      "start": 10.559999,
+      "end": 10.719999,
+      "confidence": 0.9994411,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "like",
+      "start": 10.719999,
+      "end": 10.88,
+      "confidence": 0.99963665,
+      "punctuated_word": "like"
+    },
+    {
+      "word": "kerzer",
+      "start": 10.88,
+      "end": 11.2,
+      "confidence": 0.9948649,
+      "punctuated_word": "Kerzer"
+    },
+    {
+      "word": "and",
+      "start": 11.2,
+      "end": 11.44,
+      "confidence": 0.921505,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "lets",
+      "start": 11.44,
+      "end": 11.599999,
+      "confidence": 0.9823241,
+      "punctuated_word": "lets"
+    },
+    {
+      "word": "you",
+      "start": 11.599999,
+      "end": 11.759999,
+      "confidence": 0.99962723,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "build",
+      "start": 11.759999,
+      "end": 11.92,
+      "confidence": 0.997938,
+      "punctuated_word": "build"
+    },
+    {
+      "word": "fully",
+      "start": 11.92,
+      "end": 12.16,
+      "confidence": 0.9968436,
+      "punctuated_word": "fully"
+    },
+    {
+      "word": "functional",
+      "start": 12.16,
+      "end": 12.559999,
+      "confidence": 0.9996184,
+      "punctuated_word": "functional"
+    },
+    {
+      "word": "apps",
+      "start": 12.559999,
+      "end": 12.799999,
+      "confidence": 0.9985154,
+      "punctuated_word": "apps"
+    },
+    {
+      "word": "and",
+      "start": 12.799999,
+      "end": 12.96,
+      "confidence": 0.97111183,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "websites",
+      "start": 12.96,
+      "end": 13.28,
+      "confidence": 0.99479467,
+      "punctuated_word": "websites"
+    },
+    {
+      "word": "with",
+      "start": 13.28,
+      "end": 13.5199995,
+      "confidence": 0.99806494,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "just",
+      "start": 13.5199995,
+      "end": 13.759999,
+      "confidence": 0.9993642,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "simple",
+      "start": 13.759999,
+      "end": 14.0,
+      "confidence": 0.99925715,
+      "punctuated_word": "simple"
+    },
+    {
+      "word": "text",
+      "start": 14.0,
+      "end": 14.24,
+      "confidence": 0.99549484,
+      "punctuated_word": "text"
+    },
+    {
+      "word": "prompts",
+      "start": 14.24,
+      "end": 14.879999,
+      "confidence": 0.9952081,
+      "punctuated_word": "prompts."
+    },
+    {
+      "word": "then",
+      "start": 15.2,
+      "end": 15.44,
+      "confidence": 0.99425346,
+      "punctuated_word": "Then"
+    },
+    {
+      "word": "we",
+      "start": 15.44,
+      "end": 16.08,
+      "confidence": 0.9437425,
+      "punctuated_word": "we"
+    },
+    {
+      "word": "got",
+      "start": 15.585,
+      "end": 15.745,
+      "confidence": 0.73993546,
+      "punctuated_word": "got"
+    },
+    {
+      "word": "google's",
+      "start": 15.745,
+      "end": 16.145,
+      "confidence": 0.9929933,
+      "punctuated_word": "Google's"
+    },
+    {
+      "word": "ai",
+      "start": 16.145,
+      "end": 16.465,
+      "confidence": 0.9759233,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "studio",
+      "start": 16.465,
+      "end": 17.025,
+      "confidence": 0.72228146,
+      "punctuated_word": "Studio,"
+    },
+    {
+      "word": "which",
+      "start": 17.025,
+      "end": 17.105,
+      "confidence": 0.9996611,
+      "punctuated_word": "which"
+    },
+    {
+      "word": "is",
+      "start": 17.105,
+      "end": 17.185,
+      "confidence": 0.9986879,
+      "punctuated_word": "is"
+    },
+    {
+      "word": "perfect",
+      "start": 17.185,
+      "end": 17.505,
+      "confidence": 0.9987526,
+      "punctuated_word": "perfect"
+    },
+    {
+      "word": "for",
+      "start": 17.505,
+      "end": 17.585,
+      "confidence": 0.995843,
+      "punctuated_word": "for"
+    },
+    {
+      "word": "spinning",
+      "start": 17.585,
+      "end": 17.905,
+      "confidence": 0.9665269,
+      "punctuated_word": "spinning"
+    },
+    {
+      "word": "up",
+      "start": 17.905,
+      "end": 18.065,
+      "confidence": 0.9960288,
+      "punctuated_word": "up"
+    },
+    {
+      "word": "quick",
+      "start": 18.065,
+      "end": 18.305,
+      "confidence": 0.9954976,
+      "punctuated_word": "quick"
+    },
+    {
+      "word": "ai",
+      "start": 18.305,
+      "end": 18.625,
+      "confidence": 0.9851184,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "powered",
+      "start": 18.625,
+      "end": 18.945,
+      "confidence": 0.99641657,
+      "punctuated_word": "powered"
+    },
+    {
+      "word": "apps",
+      "start": 18.945,
+      "end": 19.105,
+      "confidence": 0.9983517,
+      "punctuated_word": "apps"
+    },
+    {
+      "word": "in",
+      "start": 19.105,
+      "end": 19.265,
+      "confidence": 0.97787243,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "seconds",
+      "start": 19.265,
+      "end": 19.904999,
+      "confidence": 0.9912178,
+      "punctuated_word": "seconds."
+    },
+    {
+      "word": "next",
+      "start": 19.985,
+      "end": 20.305,
+      "confidence": 0.9983783,
+      "punctuated_word": "Next"
+    },
+    {
+      "word": "is",
+      "start": 20.305,
+      "end": 20.545,
+      "confidence": 0.9817508,
+      "punctuated_word": "is"
+    },
+    {
+      "word": "stitch",
+      "start": 20.545,
+      "end": 20.945,
+      "confidence": 0.96689606,
+      "punctuated_word": "Stitch,"
+    },
+    {
+      "word": "their",
+      "start": 20.945,
+      "end": 21.105,
+      "confidence": 0.99676204,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "ai",
+      "start": 21.105,
+      "end": 21.425,
+      "confidence": 0.99811745,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "design",
+      "start": 21.425,
+      "end": 21.744999,
+      "confidence": 0.9478805,
+      "punctuated_word": "design"
+    },
+    {
+      "word": "tool",
+      "start": 21.744999,
+      "end": 21.985,
+      "confidence": 0.99879754,
+      "punctuated_word": "tool"
+    },
+    {
+      "word": "that",
+      "start": 21.985,
+      "end": 22.145,
+      "confidence": 0.9889853,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "turns",
+      "start": 22.145,
+      "end": 22.305,
+      "confidence": 0.9974988,
+      "punctuated_word": "turns"
+    },
+    {
+      "word": "your",
+      "start": 22.305,
+      "end": 22.465,
+      "confidence": 0.86268455,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "prompts",
+      "start": 22.465,
+      "end": 22.705,
+      "confidence": 0.99451196,
+      "punctuated_word": "prompts"
+    },
+    {
+      "word": "and",
+      "start": 22.705,
+      "end": 22.865,
+      "confidence": 0.87664557,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "wireframes",
+      "start": 22.865,
+      "end": 23.425,
+      "confidence": 0.8827292,
+      "punctuated_word": "wireframes"
+    },
+    {
+      "word": "into",
+      "start": 23.425,
+      "end": 23.665,
+      "confidence": 0.9649486,
+      "punctuated_word": "into"
+    },
+    {
+      "word": "literally",
+      "start": 23.665,
+      "end": 24.064999,
+      "confidence": 0.9599345,
+      "punctuated_word": "literally"
+    },
+    {
+      "word": "full",
+      "start": 24.064999,
+      "end": 24.305,
+      "confidence": 0.9928577,
+      "punctuated_word": "full"
+    },
+    {
+      "word": "ui",
+      "start": 24.305,
+      "end": 24.625,
+      "confidence": 0.9982917,
+      "punctuated_word": "UI"
+    },
+    {
+      "word": "designs",
+      "start": 24.625,
+      "end": 24.945,
+      "confidence": 0.996865,
+      "punctuated_word": "designs"
+    },
+    {
+      "word": "and",
+      "start": 24.945,
+      "end": 25.105,
+      "confidence": 0.6890068,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "front",
+      "start": 25.105,
+      "end": 25.345001,
+      "confidence": 0.9934121,
+      "punctuated_word": "front"
+    },
+    {
+      "word": "end",
+      "start": 25.345001,
+      "end": 25.505001,
+      "confidence": 0.9309935,
+      "punctuated_word": "end"
+    },
+    {
+      "word": "code",
+      "start": 25.505001,
+      "end": 26.064999,
+      "confidence": 0.9973418,
+      "punctuated_word": "code."
+    },
+    {
+      "word": "after",
+      "start": 26.305,
+      "end": 26.625,
+      "confidence": 0.99840564,
+      "punctuated_word": "After"
+    },
+    {
+      "word": "that",
+      "start": 26.625,
+      "end": 26.865,
+      "confidence": 0.90257716,
+      "punctuated_word": "that,"
+    },
+    {
+      "word": "it's",
+      "start": 26.865,
+      "end": 27.025,
+      "confidence": 0.9923637,
+      "punctuated_word": "it's"
+    },
+    {
+      "word": "opal",
+      "start": 27.025,
+      "end": 27.505001,
+      "confidence": 0.8952427,
+      "punctuated_word": "Opal,"
+    },
+    {
+      "word": "which",
+      "start": 27.505001,
+      "end": 27.585,
+      "confidence": 0.9998647,
+      "punctuated_word": "which"
+    },
+    {
+      "word": "is",
+      "start": 27.585,
+      "end": 27.665,
+      "confidence": 0.9980726,
+      "punctuated_word": "is"
+    },
+    {
+      "word": "basically",
+      "start": 27.665,
+      "end": 27.985,
+      "confidence": 0.9967691,
+      "punctuated_word": "basically"
+    },
+    {
+      "word": "a",
+      "start": 27.985,
+      "end": 28.145,
+      "confidence": 0.9977502,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "combination",
+      "start": 28.145,
+      "end": 28.465,
+      "confidence": 0.99873024,
+      "punctuated_word": "combination"
+    },
+    {
+      "word": "of",
+      "start": 28.465,
+      "end": 28.625,
+      "confidence": 0.99774325,
+      "punctuated_word": "of"
+    },
+    {
+      "word": "n8",
+      "start": 28.625,
+      "end": 28.945,
+      "confidence": 0.68367445,
+      "punctuated_word": "N8"
+    },
+    {
+      "word": "and",
+      "start": 28.945,
+      "end": 29.105,
+      "confidence": 0.8152648,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "a",
+      "start": 29.105,
+      "end": 29.265,
+      "confidence": 0.26318642,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "lovable",
+      "start": 29.265,
+      "end": 29.744999,
+      "confidence": 0.7940961,
+      "punctuated_word": "Lovable,"
+    },
+    {
+      "word": "perfect",
+      "start": 29.744999,
+      "end": 29.985,
+      "confidence": 0.98421925,
+      "punctuated_word": "perfect"
+    },
+    {
+      "word": "for",
+      "start": 29.94,
+      "end": 30.18,
+      "confidence": 0.96960336,
+      "punctuated_word": "for"
+    },
+    {
+      "word": "building",
+      "start": 30.18,
+      "end": 30.34,
+      "confidence": 0.9916443,
+      "punctuated_word": "building"
+    },
+    {
+      "word": "no",
+      "start": 30.34,
+      "end": 30.58,
+      "confidence": 0.99204695,
+      "punctuated_word": "no"
+    },
+    {
+      "word": "code",
+      "start": 30.58,
+      "end": 30.74,
+      "confidence": 0.98677176,
+      "punctuated_word": "code"
+    },
+    {
+      "word": "ai",
+      "start": 30.74,
+      "end": 30.98,
+      "confidence": 0.9677367,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "apps",
+      "start": 30.98,
+      "end": 31.300001,
+      "confidence": 0.9934417,
+      "punctuated_word": "apps"
+    },
+    {
+      "word": "powered",
+      "start": 31.300001,
+      "end": 31.62,
+      "confidence": 0.9847674,
+      "punctuated_word": "powered"
+    },
+    {
+      "word": "by",
+      "start": 31.62,
+      "end": 31.78,
+      "confidence": 0.9997358,
+      "punctuated_word": "by"
+    },
+    {
+      "word": "their",
+      "start": 31.78,
+      "end": 31.94,
+      "confidence": 0.9995784,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "models",
+      "start": 31.94,
+      "end": 32.18,
+      "confidence": 0.99958116,
+      "punctuated_word": "models"
+    },
+    {
+      "word": "like",
+      "start": 32.18,
+      "end": 32.34,
+      "confidence": 0.8771675,
+      "punctuated_word": "like"
+    },
+    {
+      "word": "bayo",
+      "start": 32.34,
+      "end": 32.66,
+      "confidence": 0.63302815,
+      "punctuated_word": "Bayo"
+    },
+    {
+      "word": "three",
+      "start": 32.66,
+      "end": 32.9,
+      "confidence": 0.9883442,
+      "punctuated_word": "three"
+    },
+    {
+      "word": "and",
+      "start": 32.9,
+      "end": 33.06,
+      "confidence": 0.98915416,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "nano",
+      "start": 33.06,
+      "end": 33.3,
+      "confidence": 0.61887383,
+      "punctuated_word": "Nano"
+    },
+    {
+      "word": "banana",
+      "start": 33.3,
+      "end": 33.94,
+      "confidence": 0.93659246,
+      "punctuated_word": "Banana."
+    },
+    {
+      "word": "and",
+      "start": 34.18,
+      "end": 34.34,
+      "confidence": 0.99933654,
+      "punctuated_word": "And"
+    },
+    {
+      "word": "finally",
+      "start": 34.34,
+      "end": 34.74,
+      "confidence": 0.9395286,
+      "punctuated_word": "finally,"
+    },
+    {
+      "word": "joules",
+      "start": 34.74,
+      "end": 35.22,
+      "confidence": 0.86298096,
+      "punctuated_word": "Joules,"
+    },
+    {
+      "word": "their",
+      "start": 35.22,
+      "end": 35.38,
+      "confidence": 0.99370533,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "ai",
+      "start": 35.38,
+      "end": 35.62,
+      "confidence": 0.99804425,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "coding",
+      "start": 35.62,
+      "end": 35.940002,
+      "confidence": 0.9785104,
+      "punctuated_word": "coding"
+    },
+    {
+      "word": "agent",
+      "start": 35.940002,
+      "end": 36.18,
+      "confidence": 0.9990821,
+      "punctuated_word": "agent"
+    },
+    {
+      "word": "that",
+      "start": 36.18,
+      "end": 36.34,
+      "confidence": 0.9937856,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "connects",
+      "start": 36.34,
+      "end": 36.58,
+      "confidence": 0.99884653,
+      "punctuated_word": "connects"
+    },
+    {
+      "word": "your",
+      "start": 36.58,
+      "end": 37.06,
+      "confidence": 0.9770041,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "github",
+      "start": 36.7735,
+      "end": 37.0935,
+      "confidence": 0.9110602,
+      "punctuated_word": "GitHub"
+    },
+    {
+      "word": "that",
+      "start": 37.0935,
+      "end": 37.1735,
+      "confidence": 0.49656597,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "can",
+      "start": 37.1735,
+      "end": 37.3335,
+      "confidence": 0.95051354,
+      "punctuated_word": "can"
+    },
+    {
+      "word": "build",
+      "start": 37.3335,
+      "end": 37.4935,
+      "confidence": 0.9984767,
+      "punctuated_word": "build"
+    },
+    {
+      "word": "entire",
+      "start": 37.4935,
+      "end": 37.893497,
+      "confidence": 0.9911897,
+      "punctuated_word": "entire"
+    },
+    {
+      "word": "features",
+      "start": 37.893497,
+      "end": 38.533497,
+      "confidence": 0.9953874,
+      "punctuated_word": "features,"
+    },
+    {
+      "word": "run",
+      "start": 38.533497,
+      "end": 38.8535,
+      "confidence": 0.9997185,
+      "punctuated_word": "run"
+    },
+    {
+      "word": "tests",
+      "start": 38.8535,
+      "end": 39.4935,
+      "confidence": 0.9974141,
+      "punctuated_word": "tests,"
+    },
+    {
+      "word": "fix",
+      "start": 39.4935,
+      "end": 39.733498,
+      "confidence": 0.9958871,
+      "punctuated_word": "fix"
+    },
+    {
+      "word": "bugs",
+      "start": 39.733498,
+      "end": 40.213497,
+      "confidence": 0.93963385,
+      "punctuated_word": "bugs,"
+    },
+    {
+      "word": "and",
+      "start": 40.213497,
+      "end": 40.2935,
+      "confidence": 0.9997228,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "manage",
+      "start": 40.2935,
+      "end": 40.533497,
+      "confidence": 0.997468,
+      "punctuated_word": "manage"
+    },
+    {
+      "word": "your",
+      "start": 40.533497,
+      "end": 40.693497,
+      "confidence": 0.9985636,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "whole",
+      "start": 40.693497,
+      "end": 40.8535,
+      "confidence": 0.9982162,
+      "punctuated_word": "whole"
+    },
+    {
+      "word": "code",
+      "start": 40.8535,
+      "end": 41.0935,
+      "confidence": 0.99762625,
+      "punctuated_word": "code"
+    },
+    {
+      "word": "base",
+      "start": 41.0935,
+      "end": 41.3335,
+      "confidence": 0.71235526,
+      "punctuated_word": "base"
+    },
+    {
+      "word": "all",
+      "start": 41.3335,
+      "end": 41.4935,
+      "confidence": 0.99274397,
+      "punctuated_word": "all"
+    },
+    {
+      "word": "on",
+      "start": 41.4935,
+      "end": 41.6535,
+      "confidence": 0.9638142,
+      "punctuated_word": "on"
+    },
+    {
+      "word": "its",
+      "start": 41.6535,
+      "end": 41.8135,
+      "confidence": 0.9702801,
+      "punctuated_word": "its"
+    },
+    {
+      "word": "own",
+      "start": 41.8135,
+      "end": 42.1335,
+      "confidence": 0.9957459,
+      "punctuated_word": "own."
+    },
+    {
+      "word": "and",
+      "start": 42.1335,
+      "end": 42.373497,
+      "confidence": 0.99904376,
+      "punctuated_word": "And"
+    },
+    {
+      "word": "these",
+      "start": 42.373497,
+      "end": 42.533497,
+      "confidence": 0.9929153,
+      "punctuated_word": "these"
+    },
+    {
+      "word": "are",
+      "start": 42.533497,
+      "end": 42.693497,
+      "confidence": 0.9896606,
+      "punctuated_word": "are"
+    },
+    {
+      "word": "just",
+      "start": 42.693497,
+      "end": 42.7735,
+      "confidence": 0.9264785,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "five",
+      "start": 42.7735,
+      "end": 43.013496,
+      "confidence": 0.9980995,
+      "punctuated_word": "five"
+    },
+    {
+      "word": "of",
+      "start": 43.013496,
+      "end": 43.1735,
+      "confidence": 0.9983523,
+      "punctuated_word": "of"
+    },
+    {
+      "word": "the",
+      "start": 43.1735,
+      "end": 43.253498,
+      "confidence": 0.9993555,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "12",
+      "start": 43.253498,
+      "end": 43.413498,
+      "confidence": 0.9994467,
+      "punctuated_word": "12"
+    },
+    {
+      "word": "tools",
+      "start": 43.413498,
+      "end": 43.733498,
+      "confidence": 0.99909127,
+      "punctuated_word": "tools"
+    },
+    {
+      "word": "that",
+      "start": 43.733498,
+      "end": 43.8135,
+      "confidence": 0.9717316,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "they",
+      "start": 43.8135,
+      "end": 43.9735,
+      "confidence": 0.99946123,
+      "punctuated_word": "they"
+    },
+    {
+      "word": "launched",
+      "start": 43.9735,
+      "end": 44.213497,
+      "confidence": 0.7012773,
+      "punctuated_word": "launched"
+    },
+    {
+      "word": "so",
+      "start": 44.213497,
+      "end": 44.4535,
+      "confidence": 0.99955994,
+      "punctuated_word": "so"
+    },
+    {
+      "word": "far",
+      "start": 44.4535,
+      "end": 44.7735,
+      "confidence": 0.9834745,
+      "punctuated_word": "far."
+    },
+    {
+      "word": "so",
+      "start": 44.7735,
+      "end": 45.013496,
+      "confidence": 0.99923193,
+      "punctuated_word": "So"
+    },
+    {
+      "word": "if",
+      "start": 45.013496,
+      "end": 45.1735,
+      "confidence": 0.98395306,
+      "punctuated_word": "if"
+    },
+    {
+      "word": "you",
+      "start": 45.1735,
+      "end": 45.253498,
+      "confidence": 0.999233,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "guys",
+      "start": 45.253498,
+      "end": 45.413498,
+      "confidence": 0.99894613,
+      "punctuated_word": "guys"
+    },
+    {
+      "word": "want",
+      "start": 45.413498,
+      "end": 45.573498,
+      "confidence": 0.99948066,
+      "punctuated_word": "want"
+    },
+    {
+      "word": "the",
+      "start": 45.573498,
+      "end": 45.6535,
+      "confidence": 0.9981997,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "full",
+      "start": 45.6535,
+      "end": 45.8135,
+      "confidence": 0.9997278,
+      "punctuated_word": "full"
+    },
+    {
+      "word": "list",
+      "start": 45.8135,
+      "end": 45.9735,
+      "confidence": 0.97513175,
+      "punctuated_word": "list"
+    },
+    {
+      "word": "for",
+      "start": 45.9735,
+      "end": 46.1335,
+      "confidence": 0.9907274,
+      "punctuated_word": "for"
+    },
+    {
+      "word": "yourself",
+      "start": 46.1335,
+      "end": 46.4535,
+      "confidence": 0.9828254,
+      "punctuated_word": "yourself,"
+    },
+    {
+      "word": "just",
+      "start": 46.4535,
+      "end": 46.6135,
+      "confidence": 0.9997681,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "comment",
+      "start": 46.6135,
+      "end": 46.8535,
+      "confidence": 0.99843544,
+      "punctuated_word": "comment"
+    },
+    {
+      "word": "google",
+      "start": 46.8535,
+      "end": 47.1735,
+      "confidence": 0.8993671,
+      "punctuated_word": "Google"
+    },
+    {
+      "word": "and",
+      "start": 47.1735,
+      "end": 47.333496,
+      "confidence": 0.66041744,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "i'll",
+      "start": 47.333496,
+      "end": 47.573498,
+      "confidence": 0.99853015,
+      "punctuated_word": "I'll"
+    },
+    {
+      "word": "send",
+      "start": 47.573498,
+      "end": 47.6535,
+      "confidence": 0.9995796,
+      "punctuated_word": "send"
+    },
+    {
+      "word": "them",
+      "start": 47.6535,
+      "end": 47.8135,
+      "confidence": 0.9996213,
+      "punctuated_word": "them"
+    },
+    {
+      "word": "to",
+      "start": 47.8135,
+      "end": 47.893497,
+      "confidence": 0.999556,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "you",
+      "start": 47.893497,
+      "end": 48.053497,
+      "confidence": 0.9983334,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "directly",
+      "start": 48.053497,
+      "end": 48.373497,
+      "confidence": 0.9966177,
+      "punctuated_word": "directly."
+    }
+  ],
+  "utterances": [
+    {
+      "start": 0.0,
+      "end": 14.879999,
+      "text": "While everybody's been obsessing over ChatGPT and Kerzer, Google silently released 10 AI vibe coding tools, and the best part, they're completely free. First, we have Anti Gravity, their new AI code editor, which works just like Kerzer and lets you build fully functional apps and websites with just simple text prompts.",
+      "confidence": 0.949247
+    },
+    {
+      "start": 15.2,
+      "end": 33.94,
+      "text": "Then we got Google's AI Studio, which is perfect for spinning up quick AI powered apps in seconds. Next is Stitch, their AI design tool that turns your prompts and wireframes into literally full UI designs and front end code. After that, it's Opal, which is basically a combination of N8 and a Lovable, perfect for building no code AI apps powered by their models like Bayo three and Nano Banana.",
+      "confidence": 0.937048
+    },
+    {
+      "start": 34.18,
+      "end": 48.373497,
+      "text": "And finally, Joules, their AI coding agent that connects your GitHub that can build entire features, run tests, fix bugs, and manage your whole code base all on its own. And these are just five of the 12 tools that they launched so far. So if you guys want the full list for yourself, just comment Google and I'll send them to you directly.",
+      "confidence": 0.96373206
+    }
+  ]
+}

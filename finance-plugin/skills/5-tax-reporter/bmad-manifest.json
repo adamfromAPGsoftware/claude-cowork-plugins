@@ -1,0 +1,100 @@
+{
+  "skill-name": "bmad-apg-fin-5-tax-reporter",
+  "module-code": "fin",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Tax & Compliance Reporter — generates BAS quarter data, annual tax summaries, R&D grant reports, income statements, balance sheets, cash flow statements, and answers tax-specific queries with transaction-level evidence.",
+  "capabilities": [
+    {
+      "menu-code": "GB",
+      "name": "generate-bas",
+      "description": "Generate BAS quarter data with GST collected, GST paid, net GST, expenses by category, and completeness metrics.",
+      "type": "prompt",
+      "file": "generate-bas.md"
+    },
+    {
+      "menu-code": "GT",
+      "name": "generate-tax-summary",
+      "description": "Generate annual tax summary for a financial year with income, expenses, FX, GST, depreciation-eligible items, and R&D spend.",
+      "type": "prompt",
+      "file": "generate-tax-summary.md"
+    },
+    {
+      "menu-code": "GG",
+      "name": "generate-grant-report",
+      "description": "Generate R&D and eligible spend summary for government incentive applications.",
+      "type": "prompt",
+      "file": "generate-grant-report.md"
+    },
+    {
+      "menu-code": "GI",
+      "name": "generate-income-statement",
+      "description": "Generate an income statement (P&L) for a financial year or custom period with GST-exclusive figures and completeness metrics.",
+      "type": "prompt",
+      "file": "generate-income-statement.md"
+    },
+    {
+      "menu-code": "GBS",
+      "name": "generate-balance-sheet",
+      "description": "Generate a balance sheet using transaction data and CRM MCP for accounts receivable/payable.",
+      "type": "prompt",
+      "file": "generate-balance-sheet.md"
+    },
+    {
+      "menu-code": "GCF",
+      "name": "generate-cashflow",
+      "description": "Generate a cash flow statement using the direct method with operating, investing, and financing activities.",
+      "type": "prompt",
+      "file": "generate-cashflow.md"
+    },
+    {
+      "menu-code": "GF",
+      "name": "generate-financials",
+      "description": "Generate Excel workbook (.xlsx) and print-ready HTML for all financial statements — transaction ledger, P&L, balance sheet, cash flow, category and FX summaries.",
+      "type": "prompt",
+      "file": "generate-financials.md"
+    },
+    {
+      "menu-code": "QT",
+      "name": "query-tax",
+      "description": "Answer freeform tax-specific queries with transaction-level evidence.",
+      "type": "prompt",
+      "file": "query-tax.md"
+    },
+    {
+      "menu-code": "RC",
+      "name": "r-and-d-categorize",
+      "description": "Tag transactions as R&D eligible based on eligibility rules and interactive review.",
+      "type": "prompt",
+      "file": "r-and-d-categorize.md"
+    },
+    {
+      "menu-code": "RD",
+      "name": "r-and-d-document",
+      "description": "Generate R&D activity documentation with evidence for AusIndustry registration.",
+      "type": "prompt",
+      "file": "r-and-d-document.md"
+    },
+    {
+      "menu-code": "RA",
+      "name": "r-and-d-audit",
+      "description": "Pre-submission self-audit and Airwallex vs accountant reconciliation for R&D claim.",
+      "type": "prompt",
+      "file": "r-and-d-audit.md"
+    },
+    {
+      "menu-code": "RS",
+      "name": "r-and-d-submit",
+      "description": "Generate AusIndustry registration form data and submission pack.",
+      "type": "prompt",
+      "file": "r-and-d-submit.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

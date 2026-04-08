@@ -1,0 +1,89 @@
+# Competitive Research Sidecar Configuration
+# Persistent settings loaded at workflow init
+
+# Niche scope — the content space to analyse
+niche: "AI education, automation, and agentic coding"
+
+# Competitor channels to monitor
+# Uses channel_id (UC...) where available, or @handle for YouTube API resolution
+competitors:
+  # --- Adam's named competitors ---
+  - name: "Nick Saraev"
+    channel_id: "UCbo-KbSjJDG6JWQ_MTZ_rNA"
+    handle: "@nicksaraev"
+    focus: "n8n, Make.com, AI automation agency"
+  - name: "Nate Herk"
+    channel_id: "UC2ojq-nuP8ceeHqiroeKhBA"
+    handle: "@nateherk"
+    focus: "AI automation, n8n, AI workflow clients"
+  - name: "Liam Ottley"
+    handle: "@LiamOttley"
+    focus: "AI agency model, Morningside AI, AI entrepreneurship"
+  - name: "Dave Ebbelaar"
+    handle: "@daveebbelaar"
+    focus: "AI engineering, Python for AI, Datalumina"
+  - name: "Mark Kashef"
+    handle: "@Mark_Kashef"
+    focus: "AI coding, data science, NLP, Prompt Advisers"
+  - name: "Samin Yasar"
+    handle: "@SaminLearnsAI"
+    focus: "AI business, BookedIn.ai, AI learning roadmaps"
+
+  # --- Additional major AI/tech education creators ---
+  - name: "Cole Medin"
+    channel_id: "UCMwVTLZIRRUyyVrkjDpn4pA"
+    handle: "@ColeMedin"
+    focus: "AI agents, local AI, n8n, agentic coding"
+  - name: "AI Jason"
+    handle: "@AIJasonZ"
+    focus: "AI agents, automation, multi-agent frameworks"
+  - name: "Matthew Berman"
+    channel_id: "UCawZsQWqfGSbCI5yjkdVkTA"
+    handle: "@matthew_berman"
+    focus: "AI news, model reviews, AI tools"
+  - name: "WorldofAI"
+    channel_id: "UC2WmuBuFq6gL08QYG-JjXKw"
+    handle: "@intheworldofai"
+    focus: "AI tutorials, coding with AI, daily uploads"
+
+# Analysis defaults
+defaults:
+  timeframe_days: 30
+  min_outlier_score: 3
+  max_transcripts: 5
+  video_limit_per_channel: 50
+
+# Niche-wide keyword trend scanning
+niche_scan:
+  enabled: true
+  timeframe_days: 7
+
+  # Keywords to search across ALL of YouTube (not just competitors)
+  keywords:
+    - "Claude Code"
+    - "AI agents"
+    - "agentic coding"
+    - "AI automation"
+    - "Claude AI"
+    - "AI coding tools"
+    - "vibe coding"
+    - "MCP servers"
+    - "AI workflow"
+    - "cursor vs claude"
+
+  # Exa web intelligence queries
+  exa_queries:
+    - "Claude Code trending"
+    - "AI agents news this week"
+    - "agentic coding tools 2026"
+    - "AI automation trends"
+
+  # Scoring (no channel baseline — use absolute thresholds)
+  scoring:
+    velocity_super: 10000   # views/day
+    velocity_strong: 3000
+    velocity_standard: 500
+    min_views: 1000
+    max_results_per_keyword: 25
+
+  quota_budget: 1500

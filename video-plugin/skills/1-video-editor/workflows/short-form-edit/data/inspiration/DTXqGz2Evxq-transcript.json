@@ -1,0 +1,1073 @@
+{
+  "metadata": {
+    "video_id": "DTXqGz2Evxq",
+    "source_file": "DTXqGz2Evxq.mp4",
+    "duration_seconds": 31.382626,
+    "model": "general-nova-3",
+    "language": "en",
+    "transcribed_at": "2026-03-10T10:43:30.452456+00:00",
+    "word_count": 150,
+    "confidence_avg": 0.9848
+  },
+  "transcript": "Have you ever noticed that ChatGPT is pretty much just a yes, man? No matter what you ask it, it'll say you're smart. That's a great idea. But that's because behind the language model is actually a system prompt that the engineering team designed for it to respond in that way, making it agreeable and trying to solve whatever question you ask it for a better user experience. But it might not actually help you improve. The right way is to actually give it the instructions to do so. So here's what I want you to do. Go into the instructions and then go to default instructions and write this in there. Be my ruthless mentor. If my ideas are bad, tell me why. You need to stress test everything and get things to the point where it's bulletproof. So just comment bulletproof, and I'll send you the other prompts.",
+  "words": [
+    {
+      "word": "have",
+      "start": 0.0,
+      "end": 0.16,
+      "confidence": 0.59735847,
+      "punctuated_word": "Have"
+    },
+    {
+      "word": "you",
+      "start": 0.16,
+      "end": 0.24,
+      "confidence": 0.98899555,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "ever",
+      "start": 0.24,
+      "end": 0.39999998,
+      "confidence": 0.9959501,
+      "punctuated_word": "ever"
+    },
+    {
+      "word": "noticed",
+      "start": 0.39999998,
+      "end": 0.64,
+      "confidence": 0.9985863,
+      "punctuated_word": "noticed"
+    },
+    {
+      "word": "that",
+      "start": 0.64,
+      "end": 0.79999995,
+      "confidence": 0.99868184,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "chatgpt",
+      "start": 0.79999995,
+      "end": 1.28,
+      "confidence": 0.80787975,
+      "punctuated_word": "ChatGPT"
+    },
+    {
+      "word": "is",
+      "start": 1.28,
+      "end": 1.52,
+      "confidence": 0.99709773,
+      "punctuated_word": "is"
+    },
+    {
+      "word": "pretty",
+      "start": 1.52,
+      "end": 1.68,
+      "confidence": 0.99947137,
+      "punctuated_word": "pretty"
+    },
+    {
+      "word": "much",
+      "start": 1.68,
+      "end": 1.8399999,
+      "confidence": 0.9996927,
+      "punctuated_word": "much"
+    },
+    {
+      "word": "just",
+      "start": 1.8399999,
+      "end": 2.0,
+      "confidence": 0.9985227,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "a",
+      "start": 2.0,
+      "end": 2.08,
+      "confidence": 0.9979303,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "yes",
+      "start": 2.08,
+      "end": 2.3999999,
+      "confidence": 0.9474553,
+      "punctuated_word": "yes,"
+    },
+    {
+      "word": "man",
+      "start": 2.3999999,
+      "end": 2.56,
+      "confidence": 0.9686034,
+      "punctuated_word": "man?"
+    },
+    {
+      "word": "no",
+      "start": 2.56,
+      "end": 2.8,
+      "confidence": 0.9990615,
+      "punctuated_word": "No"
+    },
+    {
+      "word": "matter",
+      "start": 2.8,
+      "end": 2.96,
+      "confidence": 0.99976724,
+      "punctuated_word": "matter"
+    },
+    {
+      "word": "what",
+      "start": 2.96,
+      "end": 3.04,
+      "confidence": 0.9985738,
+      "punctuated_word": "what"
+    },
+    {
+      "word": "you",
+      "start": 3.04,
+      "end": 3.1999998,
+      "confidence": 0.99953985,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "ask",
+      "start": 3.1999998,
+      "end": 3.36,
+      "confidence": 0.99859065,
+      "punctuated_word": "ask"
+    },
+    {
+      "word": "it",
+      "start": 3.36,
+      "end": 3.6,
+      "confidence": 0.99609065,
+      "punctuated_word": "it,"
+    },
+    {
+      "word": "it'll",
+      "start": 3.6,
+      "end": 3.76,
+      "confidence": 0.9944799,
+      "punctuated_word": "it'll"
+    },
+    {
+      "word": "say",
+      "start": 3.76,
+      "end": 3.9199998,
+      "confidence": 0.9990951,
+      "punctuated_word": "say"
+    },
+    {
+      "word": "you're",
+      "start": 3.9199998,
+      "end": 4.16,
+      "confidence": 0.9136188,
+      "punctuated_word": "you're"
+    },
+    {
+      "word": "smart",
+      "start": 4.16,
+      "end": 4.48,
+      "confidence": 0.99388134,
+      "punctuated_word": "smart."
+    },
+    {
+      "word": "that's",
+      "start": 4.48,
+      "end": 4.72,
+      "confidence": 0.99967223,
+      "punctuated_word": "That's"
+    },
+    {
+      "word": "a",
+      "start": 4.72,
+      "end": 4.7999997,
+      "confidence": 0.99929297,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "great",
+      "start": 4.7999997,
+      "end": 4.88,
+      "confidence": 0.9996556,
+      "punctuated_word": "great"
+    },
+    {
+      "word": "idea",
+      "start": 4.88,
+      "end": 5.2799997,
+      "confidence": 0.91046417,
+      "punctuated_word": "idea."
+    },
+    {
+      "word": "but",
+      "start": 5.2799997,
+      "end": 5.44,
+      "confidence": 0.9961534,
+      "punctuated_word": "But"
+    },
+    {
+      "word": "that's",
+      "start": 5.44,
+      "end": 5.68,
+      "confidence": 0.9995659,
+      "punctuated_word": "that's"
+    },
+    {
+      "word": "because",
+      "start": 5.68,
+      "end": 5.8399997,
+      "confidence": 0.9995264,
+      "punctuated_word": "because"
+    },
+    {
+      "word": "behind",
+      "start": 5.8399997,
+      "end": 6.24,
+      "confidence": 0.99830097,
+      "punctuated_word": "behind"
+    },
+    {
+      "word": "the",
+      "start": 6.24,
+      "end": 6.3999996,
+      "confidence": 0.9996099,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "language",
+      "start": 6.3999996,
+      "end": 6.72,
+      "confidence": 0.9999291,
+      "punctuated_word": "language"
+    },
+    {
+      "word": "model",
+      "start": 6.72,
+      "end": 7.04,
+      "confidence": 0.99981755,
+      "punctuated_word": "model"
+    },
+    {
+      "word": "is",
+      "start": 7.04,
+      "end": 7.2,
+      "confidence": 0.9927834,
+      "punctuated_word": "is"
+    },
+    {
+      "word": "actually",
+      "start": 7.2,
+      "end": 7.44,
+      "confidence": 0.9979413,
+      "punctuated_word": "actually"
+    },
+    {
+      "word": "a",
+      "start": 7.44,
+      "end": 7.6,
+      "confidence": 0.9819118,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "system",
+      "start": 7.6,
+      "end": 7.8399997,
+      "confidence": 0.99829334,
+      "punctuated_word": "system"
+    },
+    {
+      "word": "prompt",
+      "start": 7.8399997,
+      "end": 8.08,
+      "confidence": 0.9608099,
+      "punctuated_word": "prompt"
+    },
+    {
+      "word": "that",
+      "start": 8.08,
+      "end": 8.24,
+      "confidence": 0.9915372,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "the",
+      "start": 8.24,
+      "end": 8.4,
+      "confidence": 0.99856085,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "engineering",
+      "start": 8.4,
+      "end": 8.8,
+      "confidence": 0.9998492,
+      "punctuated_word": "engineering"
+    },
+    {
+      "word": "team",
+      "start": 8.8,
+      "end": 8.96,
+      "confidence": 0.9998472,
+      "punctuated_word": "team"
+    },
+    {
+      "word": "designed",
+      "start": 8.96,
+      "end": 9.36,
+      "confidence": 0.99947804,
+      "punctuated_word": "designed"
+    },
+    {
+      "word": "for",
+      "start": 9.36,
+      "end": 9.599999,
+      "confidence": 0.9997905,
+      "punctuated_word": "for"
+    },
+    {
+      "word": "it",
+      "start": 9.599999,
+      "end": 9.679999,
+      "confidence": 0.9855461,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "to",
+      "start": 9.679999,
+      "end": 9.84,
+      "confidence": 0.99787736,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "respond",
+      "start": 9.84,
+      "end": 10.08,
+      "confidence": 0.99991333,
+      "punctuated_word": "respond"
+    },
+    {
+      "word": "in",
+      "start": 10.08,
+      "end": 10.32,
+      "confidence": 0.99964654,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "that",
+      "start": 10.32,
+      "end": 10.4,
+      "confidence": 0.99991286,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "way",
+      "start": 10.4,
+      "end": 10.8,
+      "confidence": 0.9486642,
+      "punctuated_word": "way,"
+    },
+    {
+      "word": "making",
+      "start": 10.8,
+      "end": 11.04,
+      "confidence": 0.999814,
+      "punctuated_word": "making"
+    },
+    {
+      "word": "it",
+      "start": 11.04,
+      "end": 11.12,
+      "confidence": 0.9996151,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "agreeable",
+      "start": 11.12,
+      "end": 11.599999,
+      "confidence": 0.9992757,
+      "punctuated_word": "agreeable"
+    },
+    {
+      "word": "and",
+      "start": 11.599999,
+      "end": 11.759999,
+      "confidence": 0.97357893,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "trying",
+      "start": 11.759999,
+      "end": 12.0,
+      "confidence": 0.99985814,
+      "punctuated_word": "trying"
+    },
+    {
+      "word": "to",
+      "start": 12.0,
+      "end": 12.16,
+      "confidence": 0.9994092,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "solve",
+      "start": 12.16,
+      "end": 12.4,
+      "confidence": 0.99987006,
+      "punctuated_word": "solve"
+    },
+    {
+      "word": "whatever",
+      "start": 12.4,
+      "end": 12.799999,
+      "confidence": 0.9995981,
+      "punctuated_word": "whatever"
+    },
+    {
+      "word": "question",
+      "start": 12.799999,
+      "end": 13.04,
+      "confidence": 0.999501,
+      "punctuated_word": "question"
+    },
+    {
+      "word": "you",
+      "start": 13.04,
+      "end": 13.2,
+      "confidence": 0.9997367,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "ask",
+      "start": 13.2,
+      "end": 13.44,
+      "confidence": 0.99446565,
+      "punctuated_word": "ask"
+    },
+    {
+      "word": "it",
+      "start": 13.44,
+      "end": 14.08,
+      "confidence": 0.9985038,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "for",
+      "start": 13.635,
+      "end": 13.795,
+      "confidence": 0.960306,
+      "punctuated_word": "for"
+    },
+    {
+      "word": "a",
+      "start": 13.795,
+      "end": 13.875,
+      "confidence": 0.9956487,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "better",
+      "start": 13.875,
+      "end": 14.115,
+      "confidence": 0.99972147,
+      "punctuated_word": "better"
+    },
+    {
+      "word": "user",
+      "start": 14.115,
+      "end": 14.3550005,
+      "confidence": 0.9995685,
+      "punctuated_word": "user"
+    },
+    {
+      "word": "experience",
+      "start": 14.3550005,
+      "end": 14.995,
+      "confidence": 0.8323165,
+      "punctuated_word": "experience."
+    },
+    {
+      "word": "but",
+      "start": 14.995,
+      "end": 15.075,
+      "confidence": 0.99929976,
+      "punctuated_word": "But"
+    },
+    {
+      "word": "it",
+      "start": 15.075,
+      "end": 15.155001,
+      "confidence": 0.99898535,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "might",
+      "start": 15.155001,
+      "end": 15.315001,
+      "confidence": 0.9995448,
+      "punctuated_word": "might"
+    },
+    {
+      "word": "not",
+      "start": 15.315001,
+      "end": 15.475,
+      "confidence": 0.99958473,
+      "punctuated_word": "not"
+    },
+    {
+      "word": "actually",
+      "start": 15.475,
+      "end": 15.635,
+      "confidence": 0.99724966,
+      "punctuated_word": "actually"
+    },
+    {
+      "word": "help",
+      "start": 15.635,
+      "end": 15.795,
+      "confidence": 0.9997732,
+      "punctuated_word": "help"
+    },
+    {
+      "word": "you",
+      "start": 15.795,
+      "end": 15.955,
+      "confidence": 0.99954826,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "improve",
+      "start": 15.955,
+      "end": 16.355,
+      "confidence": 0.9924654,
+      "punctuated_word": "improve."
+    },
+    {
+      "word": "the",
+      "start": 16.355,
+      "end": 16.435,
+      "confidence": 0.99965394,
+      "punctuated_word": "The"
+    },
+    {
+      "word": "right",
+      "start": 16.435,
+      "end": 16.595001,
+      "confidence": 0.99981874,
+      "punctuated_word": "right"
+    },
+    {
+      "word": "way",
+      "start": 16.595001,
+      "end": 16.755001,
+      "confidence": 0.9997812,
+      "punctuated_word": "way"
+    },
+    {
+      "word": "is",
+      "start": 16.755001,
+      "end": 16.915,
+      "confidence": 0.9995003,
+      "punctuated_word": "is"
+    },
+    {
+      "word": "to",
+      "start": 16.915,
+      "end": 17.075,
+      "confidence": 0.9994086,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "actually",
+      "start": 17.075,
+      "end": 17.235,
+      "confidence": 0.9960581,
+      "punctuated_word": "actually"
+    },
+    {
+      "word": "give",
+      "start": 17.235,
+      "end": 17.395,
+      "confidence": 0.9996408,
+      "punctuated_word": "give"
+    },
+    {
+      "word": "it",
+      "start": 17.395,
+      "end": 17.555,
+      "confidence": 0.99821293,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "the",
+      "start": 17.555,
+      "end": 17.715,
+      "confidence": 0.99737537,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "instructions",
+      "start": 17.715,
+      "end": 18.195,
+      "confidence": 0.999451,
+      "punctuated_word": "instructions"
+    },
+    {
+      "word": "to",
+      "start": 18.195,
+      "end": 18.275,
+      "confidence": 0.9991359,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "do",
+      "start": 18.275,
+      "end": 18.435,
+      "confidence": 0.999721,
+      "punctuated_word": "do"
+    },
+    {
+      "word": "so",
+      "start": 18.435,
+      "end": 18.675,
+      "confidence": 0.9956832,
+      "punctuated_word": "so."
+    },
+    {
+      "word": "so",
+      "start": 18.675,
+      "end": 18.835,
+      "confidence": 0.9988299,
+      "punctuated_word": "So"
+    },
+    {
+      "word": "here's",
+      "start": 18.835,
+      "end": 18.994999,
+      "confidence": 0.99889123,
+      "punctuated_word": "here's"
+    },
+    {
+      "word": "what",
+      "start": 18.994999,
+      "end": 19.075,
+      "confidence": 0.9995889,
+      "punctuated_word": "what"
+    },
+    {
+      "word": "i",
+      "start": 19.075,
+      "end": 19.155,
+      "confidence": 0.9996407,
+      "punctuated_word": "I"
+    },
+    {
+      "word": "want",
+      "start": 19.155,
+      "end": 19.315,
+      "confidence": 0.99950886,
+      "punctuated_word": "want"
+    },
+    {
+      "word": "you",
+      "start": 19.315,
+      "end": 19.395,
+      "confidence": 0.99965525,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "to",
+      "start": 19.395,
+      "end": 19.475,
+      "confidence": 0.995805,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "do",
+      "start": 19.475,
+      "end": 19.635,
+      "confidence": 0.988199,
+      "punctuated_word": "do."
+    },
+    {
+      "word": "go",
+      "start": 19.635,
+      "end": 19.795,
+      "confidence": 0.995723,
+      "punctuated_word": "Go"
+    },
+    {
+      "word": "into",
+      "start": 19.795,
+      "end": 20.035,
+      "confidence": 0.9893295,
+      "punctuated_word": "into"
+    },
+    {
+      "word": "the",
+      "start": 20.035,
+      "end": 20.115,
+      "confidence": 0.9983773,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "instructions",
+      "start": 20.115,
+      "end": 20.515,
+      "confidence": 0.9980647,
+      "punctuated_word": "instructions"
+    },
+    {
+      "word": "and",
+      "start": 20.515,
+      "end": 20.675,
+      "confidence": 0.628094,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "then",
+      "start": 20.675,
+      "end": 20.835,
+      "confidence": 0.99802196,
+      "punctuated_word": "then"
+    },
+    {
+      "word": "go",
+      "start": 20.835,
+      "end": 21.075,
+      "confidence": 0.9969502,
+      "punctuated_word": "go"
+    },
+    {
+      "word": "to",
+      "start": 21.075,
+      "end": 21.235,
+      "confidence": 0.99030215,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "default",
+      "start": 21.235,
+      "end": 22.115,
+      "confidence": 0.98478043,
+      "punctuated_word": "default"
+    },
+    {
+      "word": "instructions",
+      "start": 21.827625,
+      "end": 22.147625,
+      "confidence": 0.868412,
+      "punctuated_word": "instructions"
+    },
+    {
+      "word": "and",
+      "start": 22.147625,
+      "end": 22.387625,
+      "confidence": 0.96838367,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "write",
+      "start": 22.387625,
+      "end": 22.627625,
+      "confidence": 0.9951572,
+      "punctuated_word": "write"
+    },
+    {
+      "word": "this",
+      "start": 22.627625,
+      "end": 22.787624,
+      "confidence": 0.99938774,
+      "punctuated_word": "this"
+    },
+    {
+      "word": "in",
+      "start": 22.787624,
+      "end": 22.947626,
+      "confidence": 0.8392031,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "there",
+      "start": 22.947626,
+      "end": 23.187626,
+      "confidence": 0.9470741,
+      "punctuated_word": "there."
+    },
+    {
+      "word": "be",
+      "start": 23.187626,
+      "end": 23.427626,
+      "confidence": 0.9981845,
+      "punctuated_word": "Be"
+    },
+    {
+      "word": "my",
+      "start": 23.427626,
+      "end": 23.667625,
+      "confidence": 0.9983399,
+      "punctuated_word": "my"
+    },
+    {
+      "word": "ruthless",
+      "start": 23.667625,
+      "end": 23.987625,
+      "confidence": 0.99925405,
+      "punctuated_word": "ruthless"
+    },
+    {
+      "word": "mentor",
+      "start": 23.987625,
+      "end": 24.387625,
+      "confidence": 0.99821615,
+      "punctuated_word": "mentor."
+    },
+    {
+      "word": "if",
+      "start": 24.387625,
+      "end": 24.547625,
+      "confidence": 0.99977463,
+      "punctuated_word": "If"
+    },
+    {
+      "word": "my",
+      "start": 24.547625,
+      "end": 24.707624,
+      "confidence": 0.99940896,
+      "punctuated_word": "my"
+    },
+    {
+      "word": "ideas",
+      "start": 24.707624,
+      "end": 24.947624,
+      "confidence": 0.99978215,
+      "punctuated_word": "ideas"
+    },
+    {
+      "word": "are",
+      "start": 24.947624,
+      "end": 25.107626,
+      "confidence": 0.999874,
+      "punctuated_word": "are"
+    },
+    {
+      "word": "bad",
+      "start": 25.107626,
+      "end": 25.427626,
+      "confidence": 0.9990386,
+      "punctuated_word": "bad,"
+    },
+    {
+      "word": "tell",
+      "start": 25.427626,
+      "end": 25.587626,
+      "confidence": 0.99939656,
+      "punctuated_word": "tell"
+    },
+    {
+      "word": "me",
+      "start": 25.587626,
+      "end": 25.667625,
+      "confidence": 0.9999131,
+      "punctuated_word": "me"
+    },
+    {
+      "word": "why",
+      "start": 25.667625,
+      "end": 25.987625,
+      "confidence": 0.99672234,
+      "punctuated_word": "why."
+    },
+    {
+      "word": "you",
+      "start": 25.987625,
+      "end": 26.147625,
+      "confidence": 0.9997613,
+      "punctuated_word": "You"
+    },
+    {
+      "word": "need",
+      "start": 26.147625,
+      "end": 26.227625,
+      "confidence": 0.99993384,
+      "punctuated_word": "need"
+    },
+    {
+      "word": "to",
+      "start": 26.227625,
+      "end": 26.387625,
+      "confidence": 0.9980457,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "stress",
+      "start": 26.387625,
+      "end": 26.627625,
+      "confidence": 0.9999449,
+      "punctuated_word": "stress"
+    },
+    {
+      "word": "test",
+      "start": 26.627625,
+      "end": 26.867626,
+      "confidence": 0.9988524,
+      "punctuated_word": "test"
+    },
+    {
+      "word": "everything",
+      "start": 26.867626,
+      "end": 27.187626,
+      "confidence": 0.99980265,
+      "punctuated_word": "everything"
+    },
+    {
+      "word": "and",
+      "start": 27.187626,
+      "end": 27.507626,
+      "confidence": 0.98638505,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "get",
+      "start": 27.507626,
+      "end": 27.747625,
+      "confidence": 0.99902153,
+      "punctuated_word": "get"
+    },
+    {
+      "word": "things",
+      "start": 27.747625,
+      "end": 27.987625,
+      "confidence": 0.9997029,
+      "punctuated_word": "things"
+    },
+    {
+      "word": "to",
+      "start": 27.987625,
+      "end": 28.067625,
+      "confidence": 0.9997451,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "the",
+      "start": 28.067625,
+      "end": 28.227625,
+      "confidence": 0.99892455,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "point",
+      "start": 28.227625,
+      "end": 28.387625,
+      "confidence": 0.99995375,
+      "punctuated_word": "point"
+    },
+    {
+      "word": "where",
+      "start": 28.387625,
+      "end": 28.627625,
+      "confidence": 0.99690753,
+      "punctuated_word": "where"
+    },
+    {
+      "word": "it's",
+      "start": 28.627625,
+      "end": 28.787624,
+      "confidence": 0.9991981,
+      "punctuated_word": "it's"
+    },
+    {
+      "word": "bulletproof",
+      "start": 28.787624,
+      "end": 29.267626,
+      "confidence": 0.97905904,
+      "punctuated_word": "bulletproof."
+    },
+    {
+      "word": "so",
+      "start": 29.267626,
+      "end": 29.427626,
+      "confidence": 0.9995659,
+      "punctuated_word": "So"
+    },
+    {
+      "word": "just",
+      "start": 29.427626,
+      "end": 29.587626,
+      "confidence": 0.99703395,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "comment",
+      "start": 29.587626,
+      "end": 29.747625,
+      "confidence": 0.99237317,
+      "punctuated_word": "comment"
+    },
+    {
+      "word": "bulletproof",
+      "start": 29.747625,
+      "end": 30.307625,
+      "confidence": 0.9586598,
+      "punctuated_word": "bulletproof,"
+    },
+    {
+      "word": "and",
+      "start": 30.307625,
+      "end": 30.387625,
+      "confidence": 0.9985607,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "i'll",
+      "start": 30.387625,
+      "end": 30.547626,
+      "confidence": 0.99992335,
+      "punctuated_word": "I'll"
+    },
+    {
+      "word": "send",
+      "start": 30.547626,
+      "end": 30.707626,
+      "confidence": 0.9997327,
+      "punctuated_word": "send"
+    },
+    {
+      "word": "you",
+      "start": 30.707626,
+      "end": 30.787624,
+      "confidence": 0.9998615,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "the",
+      "start": 30.787624,
+      "end": 30.947624,
+      "confidence": 0.99918336,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "other",
+      "start": 30.947624,
+      "end": 31.107624,
+      "confidence": 0.99940383,
+      "punctuated_word": "other"
+    },
+    {
+      "word": "prompts",
+      "start": 31.107624,
+      "end": 31.347626,
+      "confidence": 0.9900634,
+      "punctuated_word": "prompts."
+    }
+  ],
+  "utterances": [
+    {
+      "start": 0.0,
+      "end": 31.347626,
+      "text": "Have you ever noticed that ChatGPT is pretty much just a yes, man? No matter what you ask it, it'll say you're smart. That's a great idea. But that's because behind the language model is actually a system prompt that the engineering team designed for it to respond in that way, making it agreeable and trying to solve whatever question you ask it for a better user experience. But it might not actually help you improve. The right way is to actually give it the instructions to do so. So here's what I want you to do. Go into the instructions and then go to default instructions and write this in there. Be my ruthless mentor. If my ideas are bad, tell me why. You need to stress test everything and get things to the point where it's bulletproof. So just comment bulletproof, and I'll send you the other prompts.",
+      "confidence": 0.9847922
+    }
+  ]
+}

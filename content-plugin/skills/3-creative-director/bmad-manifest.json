@@ -1,0 +1,51 @@
+{
+  "skill-name": "bmad-apg-ccs-3-creative-director",
+  "module-code": "ccs",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Visual direction specialist and thumbnail strategist. Expert in CTR psychology, composition design, and identity-preserving generation via Gemini.",
+  "capabilities": [
+    {
+      "menu-code": "AC",
+      "name": "analyse-content",
+      "description": "Ingest video content and extract thumbnail angles, hooks, and visual direction",
+      "type": "prompt",
+      "file": "analyse-content.md"
+    },
+    {
+      "menu-code": "DP",
+      "name": "draft-package",
+      "description": "Keyword research, title/thumbnail combos, CTR pre-validation, and package plan",
+      "type": "prompt",
+      "file": "draft-package.md"
+    },
+    {
+      "menu-code": "KR",
+      "name": "keyword-research",
+      "description": "YouTube autocomplete, Google Trends, and competitive keyword analysis",
+      "type": "prompt",
+      "file": "keyword-research.md"
+    },
+    {
+      "menu-code": "SF",
+      "name": "short-form-thumbnail",
+      "description": "Generate vertical 9:16 thumbnails with style guide and inspiration images",
+      "type": "prompt",
+      "file": "short-form-thumbnail.md"
+    },
+    {
+      "menu-code": "VA",
+      "name": "visual-asset-creation",
+      "description": "Create thumbnails, carousels, images, logos, and web captures",
+      "type": "prompt",
+      "file": "visual-asset-creation.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session context to memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+---
+name: 'step-04-review'
+description: 'Present all 5 agency scripts for user review and approval with filming instructions'
+---
+
+# Step 4: Review — User Approval
+
+## STEP GOAL:
+
+Present all 5 agency short-form scripts for user review, handle feedback, and confirm final approval before the user films the videos.
+
+## MANDATORY EXECUTION RULES (READ FIRST):
+
+### Universal Rules:
+
+- CRITICAL: Read the complete step file before taking any action
+- ALWAYS halt and wait for user input at each review checkpoint
+- YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`
+
+### Step-Specific Rules:
+
+- Present each script clearly with key metrics
+- **COLLAB mode:** Allow per-script revision before final approval — user MUST explicitly approve
+- **AUTO mode:** Auto-approve all scripts, present final summary, and complete the workflow
+
+## MANDATORY SEQUENCE
+
+**If `{execution_mode}` = `auto`:** Skip to section 3 (Final Approval) — auto-approve all scripts immediately.
+
+**If `{execution_mode}` = `collab`:** Execute the full review flow below.
+
+### 1. Present Scripts Summary (COLLAB mode only)
+
+"**Review — 5 Agency Short-Form Video Scripts (@{YOUR_HANDLE})**
+
+Here are your 5 scripts ready for filming. Each is designed to be filmed as a single LANDSCAPE (16:9) take where you speak directly to camera. Landscape filming is REQUIRED for split-screen support and centre-crop flexibility.
+
+| # | Title | Category | Duration | Words | Hook | Pillar | CTA |
+|---|-------|----------|----------|-------|------|--------|-----|
+| SF-01 | {title} | {cat} | {X}s | {W} | {hook type} | {pillar} | {CTA keyword} |
+| SF-02 | ... | ... | ... | ... | ... | ... | ... |
+| SF-03 | ... | ... | ... | ... | ... | ... | ... |
+| SF-04 | ... | ... | ... | ... | ... | ... | ... |
+| SF-05 | ... | ... | ... | ... | ... | ... | ... |
+
+**Duration mix:** 2 Punchy + 2 Standard + 1 Deep
+**Channel:** @{YOUR_HANDLE}
+**Default CTA:** Comment AUDIT
+
+[1-5] Review a specific script in detail
+[A] Approve all scripts
+[R] Revise a script"
+
+### 2. Handle User Input (COLLAB mode only)
+
+**[1-5]** — Show the full script for that video including:
+- Complete script text (Hook -> Body -> CTA) with word count validation table
+- Reference frame plan table
+- Full MG prompts (complete Hera prompts with references)
+- Conceptual storyboard table
+- Platform copy (Instagram PRIMARY, TikTok, YouTube Shorts)
+- Pacing rule compliance summary
+
+After showing, present:
+"[E] Edit this script | [B] Back to summary | [A] Approve all"
+
+**[A]** — User approves all scripts.
+
+**[R]** — Ask which script (1-5) and what to change. Make the revision and re-present.
+
+**[E]** — Ask what to change in the current script. Make the revision and re-present.
+
+### 3. Final Approval
+
+**If `{execution_mode}` = `auto`:** Auto-approve all scripts. Log: "**Auto mode:** All 5 agency scripts auto-approved."
+
+Once approved (user selects [A] in collab, or auto-approved):
+
+"**All 5 agency scripts approved**
+
+**Next steps for you:**
+
+**Option A — Single Recording (recommended):**
+1. Open `agency-sf/scripts/sf-all-teleprompter.md` in your teleprompter app
+2. Film one continuous LANDSCAPE video (16:9) in 4K, reading all 5 scripts back-to-back
+3. Leave a **3-second pause** between each script so the pipeline can detect boundaries
+4. Save as: `sf-all-raw.mp4`
+5. Place it in: `{agency_folder}/{project-slug}/video-editor/agency-short-form/raw/`
+6. Run the **Video Editor [SF] Short-Form Pipeline** on the agency-short-form path — it will auto-split into 5 individual videos
+
+**Option B — Individual Recordings (fallback):**
+1. Film 5 separate LANDSCAPE videos (16:9) in 4K — one take each
+2. Name them: `sf-01.mp4`, `sf-02.mp4`, ... `sf-05.mp4`
+3. Place them in: `{agency_folder}/{project-slug}/video-editor/agency-short-form/raw/`
+4. Run the **Video Editor [SF] Short-Form Pipeline**
+
+The pipeline will auto-generate 720p proxies for analysis — no need to create them yourself.
+
+**Filming tips:**
+- Punchy scripts (x2): Keep energy HIGH, speak at ~4.0 wps — quick, decisive delivery
+- Standard scripts (x2): Energetic, confident pace, ~3.5 wps — business operator energy
+- Deep script (x1): Steady and clear at ~3.5 wps, can slow to ~3.0 wps for complex points
+- Film in 4K LANDSCAPE (3840x2160) — the pipeline handles proxy generation and centre-crop to 9:16
+- **Single recording tip:** Leave a clear 3-second pause between scripts so the pipeline can detect boundaries
+- **Tone reminder:** Business operator, not tech educator. Speak to fellow business owners, not developers
+
+**Folder structure after filming:**
+```
+agency-short-form/
+  raw/
+    sf-all-raw.mp4     <- Option A: single combined recording (4K)
+    -- OR --
+    sf-01.mp4          <- Option B: individual recordings (4K)
+    sf-02.mp4
+    sf-03.mp4
+    sf-04.mp4
+    sf-05.mp4
+copywriter/
+  agency-sf/
+    scripts/
+      sf-01-script.md        <- generated by this workflow
+      sf-02-script.md
+      sf-03-script.md
+      sf-04-script.md
+      sf-05-script.md
+      sf-all-teleprompter.md <- combined teleprompter for single-session recording
+    research-brief-{date}.md <- from step 01
+```"
+
+Update all script file frontmatter with `status: approved`.
+
+"**Workflow complete.** You can dismiss this agent when ready."
+
+---
+
+## SYSTEM SUCCESS/FAILURE METRICS
+
+### SUCCESS:
+
+- All 5 scripts presented for review
+- User explicitly approved all scripts (collab) or auto-approved (auto)
+- Combined teleprompter file verified in agency-sf/scripts/ folder
+- Platform copy present with Instagram Reel as PRIMARY for all 5 scripts
+- Clear filming instructions provided (both single-recording and individual options)
+- Folder structure shows agency-short-form/ path (not short-form/)
+- Tone reminder included (business operator, not tech educator)
+- Script files updated with approved status
+
+### FAILURE:
+
+- Auto-approving without user input (collab mode only)
+- Not presenting full script details when requested (collab mode)
+- Missing platform copy or identical copy across platforms
+- Not providing filming instructions
+- Directing raw recordings to short-form/ instead of agency-short-form/

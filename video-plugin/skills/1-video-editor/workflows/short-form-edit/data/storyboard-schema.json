@@ -1,0 +1,230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Short-Form Storyboard",
+  "description": "Machine-readable storyboard for short-form vertical video. Primary output of step-03, primary input for remotion-scaffold.ts.",
+  "type": "object",
+  "required": ["videoId", "title", "metadata", "segments"],
+  "additionalProperties": false,
+  "properties": {
+    "videoId": {
+      "type": "string",
+      "description": "Video identifier, e.g. 'sf-01'",
+      "pattern": "^sf-\\d{2}$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable video title"
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "durationSeconds",
+        "totalFrames",
+        "fps",
+        "compositionWidth",
+        "compositionHeight",
+        "sourceFile",
+        "backgroundMusic",
+        "backgroundMusicVolume",
+        "nonSpeakerCoveragePct",
+        "durationCategory"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "durationSeconds": {
+          "type": "number",
+          "description": "Total duration in seconds (from ffprobe)"
+        },
+        "totalFrames": {
+          "type": "integer",
+          "description": "Total frames = Math.round(durationSeconds * fps)"
+        },
+        "fps": {
+          "type": "integer",
+          "description": "Frames per second (probed from source via ffprobe)",
+          "enum": [30, 60]
+        },
+        "compositionWidth": {
+          "type": "integer",
+          "description": "Composition width in pixels (probed from source via ffprobe)"
+        },
+        "compositionHeight": {
+          "type": "integer",
+          "description": "Composition height in pixels (probed from source via ffprobe)"
+        },
+        "sourceFile": {
+          "type": "string",
+          "description": "Cleaned 4K source video filename, e.g. 'sf-01-cleaned-4k.mp4'"
+        },
+        "backgroundMusic": {
+          "type": "string",
+          "pattern": "^sf-\\d{2}-audio-mix\\.mp3$",
+          "description": "MUST be 'sf-{NN}-audio-mix.mp3' — the pre-mixed audio file (music at 0.08 + clicks at 6.0). NEVER use raw track filename (bg-*.mp3) — causes deafening music and no clicks."
+        },
+        "backgroundMusicVolume": {
+          "type": "number",
+          "description": "Background music volume (0.0-1.0), typically 0.08",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "nonSpeakerCoveragePct": {
+          "type": "number",
+          "description": "Percentage of frames that are non-speaker visual types (must be >= 65%)",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "durationCategory": {
+          "type": "string",
+          "description": "Video duration category for pacing rule thresholds",
+          "enum": ["punchy", "standard", "deep"]
+        }
+      }
+    },
+    "segments": {
+      "type": "array",
+      "description": "Ordered list of video segments. Must cover all frames with zero gaps.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["index", "pattern", "visualType", "startFrame", "durationInFrames", "transitionSfx"],
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "1-based segment index",
+            "minimum": 1
+          },
+          "pattern": {
+            "type": "string",
+            "description": "Visual pattern code",
+            "enum": ["V1", "V2", "V4", "V4b", "V5", "V6", "V7"]
+          },
+          "visualType": {
+            "type": "string",
+            "description": "Visual type label",
+            "enum": [
+              "speaker",
+              "speaker-zoom",
+              "motion-graphic",
+              "motion-graphic-cutaway",
+              "split-screen",
+              "hook-text",
+              "cta"
+            ]
+          },
+          "startFrame": {
+            "type": "integer",
+            "description": "Start frame (0-based). Must equal previous segment's startFrame + durationInFrames.",
+            "minimum": 0
+          },
+          "durationInFrames": {
+            "type": "integer",
+            "description": "Duration in frames. Max 120 (4s @ 30fps) per Rule V3.",
+            "minimum": 1
+          },
+          "sourceFile": {
+            "type": ["string", "null"],
+            "description": "Speaker/MG video filename relative to public/. Null for Tier A inline-rendered segments."
+          },
+          "overlayFile": {
+            "type": ["string", "null"],
+            "description": "MG overlay filename for V5 split-screen segments. Null for non-split-screen."
+          },
+          "videoStartFrom": {
+            "type": ["integer", "null"],
+            "description": "Frame offset into source video for speaker segments (audio sync). Equals startFrame for cleaned source.",
+            "minimum": 0
+          },
+          "overlayPadding": {
+            "type": "boolean",
+            "description": "Whether V5 overlay renders at 85% with light bg margins. Default false.",
+            "default": false
+          },
+          "skipFadeIn": {
+            "type": "boolean",
+            "description": "Skip the 8-frame fade-in. Must be true for first segment (Rule V7).",
+            "default": false
+          },
+          "captionText": {
+            "type": ["string", "null"],
+            "description": "Text content for V6 hook-text segments. Null for other patterns."
+          },
+          "captionHighlight": {
+            "type": ["string", "null"],
+            "description": "Word(s) to highlight in accent color for V6 segments."
+          },
+          "transitionSfx": {
+            "type": "string",
+            "description": "Transition SFX marker. 'click' when visual-type family changes, '--' otherwise.",
+            "enum": ["click", "--"]
+          },
+          "notes": {
+            "type": "string",
+            "description": "Freeform notes (tier info, animation description, etc.)",
+            "default": ""
+          }
+        }
+      }
+    },
+    "mgRequests": {
+      "type": "array",
+      "description": "Motion graphic requests for asset generation pipeline. Informational — not used by scaffold.",
+      "items": {
+        "type": "object",
+        "required": ["index", "tier", "prompt", "aspectRatio", "durationSeconds", "outputFile"],
+        "additionalProperties": false,
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "1-based MG request index",
+            "minimum": 1
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority marker, e.g. 'P0-HOOK' or '--'"
+          },
+          "tier": {
+            "type": "string",
+            "description": "MG production tier",
+            "enum": ["A", "C"]
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Prompt or description for MG generation"
+          },
+          "aspectRatio": {
+            "type": "string",
+            "description": "Target aspect ratio",
+            "enum": ["9:16", "16:9"]
+          },
+          "durationSeconds": {
+            "type": "number",
+            "description": "MG duration in seconds"
+          },
+          "referenceFrameFile": {
+            "type": ["string", "null"],
+            "description": "Reference frame filename if applicable"
+          },
+          "v5Padding": {
+            "type": "boolean",
+            "description": "DEPRECATED — FFmpeg pre-padding removed. Padding is handled exclusively by Remotion overlayPadding prop (85% with objectFit: contain). This field is ignored by upscale-mgs.ts.",
+            "default": false
+          },
+          "transcriptContext": {
+            "type": "string",
+            "minLength": 5,
+            "description": "MANDATORY: Exact 5-15 words from the transcript spoken during this MG segment's timeframe. Calculate from startFrame/durationInFrames, find the matching transcript words, and quote them verbatim. Used to verify the MG prompt visually reinforces what the viewer hears. null or N/A is a SYSTEM FAILURE."
+          },
+          "visualAnalysisRef": {
+            "type": ["string", "null"],
+            "description": "Body video timestamp where this tool/concept is visible (e.g., 'body @ 03:12-05:05') or null for abstract MGs."
+          },
+          "outputFile": {
+            "type": "string",
+            "description": "Output filename, e.g. 'sf-01-mg-hook.mp4'"
+          }
+        }
+      }
+    }
+  }
+}

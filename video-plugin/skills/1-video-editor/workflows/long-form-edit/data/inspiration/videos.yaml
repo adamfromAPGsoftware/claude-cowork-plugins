@@ -1,0 +1,141 @@
+# Long-Form Inspiration Videos
+# 5 high-performing YouTube tutorials across 4 creators
+# Selected 2026-03-11 — mix of long courses + shorter tutorials
+
+videos:
+  - id: Ey18PDiaAYI
+    folder: nate-herk-n8n-agents-course
+    creator: Nate Herk
+    title: "Build & Sell n8n AI Agents (8+ Hour Course, No Code)"
+    duration: "8:26:39"
+    durationSeconds: 30399
+    views: 1538504
+    url: "https://www.youtube.com/watch?v=Ey18PDiaAYI"
+    category: course-length
+    visual_analysis_minutes: 5
+    full_transcript: true
+    sampleWindows:
+      - start: "03:00"
+        end: "05:00"
+        context: "First body chapter — initial tutorial section after intro"
+      - start: "30:00"
+        end: "32:00"
+        context: "Early chapter boundary — first major section transition"
+      - start: "1:30:00"
+        end: "1:32:00"
+        context: "Chapter boundary — mid-early course"
+      - start: "3:00:00"
+        end: "3:02:00"
+        context: "Mid-course section"
+      - start: "5:00:00"
+        end: "5:02:00"
+        context: "Later section — deep tutorial content"
+      - start: "7:00:00"
+        end: "7:02:00"
+        context: "Late body — near end of course"
+      - start: "8:20:00"
+        end: "8:26:39"
+        context: "Closing / CTA section"
+
+  - id: QoQBzR1NIqI
+    folder: nick-saraev-claude-code-course
+    creator: Nick Saraev
+    title: "CLAUDE CODE FULL COURSE 4 HOURS: Build & Sell (2026)"
+    duration: "4:11:35"
+    durationSeconds: 15095
+    views: 593530
+    url: "https://www.youtube.com/watch?v=QoQBzR1NIqI"
+    category: course-length
+    visual_analysis_minutes: 5
+    full_transcript: true
+    sampleWindows:
+      - start: "03:00"
+        end: "05:00"
+        context: "First body chapter — initial tutorial section"
+      - start: "30:00"
+        end: "32:00"
+        context: "Early chapter boundary"
+      - start: "1:00:00"
+        end: "1:02:00"
+        context: "Chapter boundary — first hour mark"
+      - start: "2:00:00"
+        end: "2:02:00"
+        context: "Mid-course section"
+      - start: "3:30:00"
+        end: "3:32:00"
+        context: "Late body — advanced content"
+      - start: "4:05:00"
+        end: "4:11:35"
+        context: "Closing / CTA section"
+
+  - id: EH5jx5qPabU
+    folder: futurepedia-first-ai-agent
+    creator: Futurepedia
+    title: "From Zero to Your First AI Agent in 25 Minutes (No Coding)"
+    duration: "25:58"
+    durationSeconds: 1558
+    views: 3325776
+    url: "https://www.youtube.com/watch?v=EH5jx5qPabU"
+    category: shorter-form
+    visual_analysis_minutes: 26
+    full_transcript: true
+    sampleWindows:
+      - start: "02:00"
+        end: "04:00"
+        context: "Early body — first tutorial walkthrough"
+      - start: "10:00"
+        end: "12:00"
+        context: "Mid-point — core tutorial content"
+      - start: "20:00"
+        end: "22:00"
+        context: "Late body — wrapping up tutorial"
+      - start: "24:00"
+        end: "25:58"
+        context: "Closing / CTA section"
+
+  - id: OpUGl4gBHAU
+    folder: varun-mayya-automate-with-ai
+    creator: Varun Mayya
+    title: "How to Automate ANYTHING with AI (N8N Tutorial)"
+    duration: "28:45"
+    durationSeconds: 1725
+    views: 252539
+    url: "https://www.youtube.com/watch?v=OpUGl4gBHAU"
+    category: shorter-form
+    visual_analysis_minutes: 29
+    full_transcript: true
+    sampleWindows:
+      - start: "02:00"
+        end: "04:00"
+        context: "Early body — initial automation demo"
+      - start: "12:00"
+        end: "14:00"
+        context: "Mid-point — building the automation"
+      - start: "22:00"
+        end: "24:00"
+        context: "Late body — advanced features"
+      - start: "26:00"
+        end: "28:45"
+        context: "Closing / CTA section"
+
+  - id: dpoMEcXjVH8
+    folder: kevin-stratvert-n8n-beginners
+    creator: Kevin Stratvert
+    title: "n8n Tutorial for Beginners - Build Your First Free AI Agent"
+    duration: "23:10"
+    durationSeconds: 1390
+    views: 263762
+    url: "https://www.youtube.com/watch?v=dpoMEcXjVH8"
+    category: shorter-form
+    visual_analysis_minutes: 23
+    full_transcript: true
+    sampleWindows:
+      - start: "01:30"
+        end: "03:30"
+        context: "Early body — getting started with n8n"
+      - start: "10:00"
+        end: "12:00"
+        context: "Mid-point — building the agent"
+      - start: "18:00"
+        end: "20:00"
+        context: "Late body — testing and running"

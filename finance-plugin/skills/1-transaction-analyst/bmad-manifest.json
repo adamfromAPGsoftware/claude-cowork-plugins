@@ -1,0 +1,37 @@
+{
+  "skill-name": "bmad-apg-fin-transaction-analyst",
+  "module-code": "fin",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Transaction Analyst — pulls Airwallex transactions (read-only), normalizes merchant names, auto-categorizes spend, and maintains finance-data.json as the single source of truth.",
+  "capabilities": [
+    {
+      "menu-code": "PT",
+      "name": "pull-transactions",
+      "description": "Fetch financial_transactions from Airwallex for a date range, merge into finance-data.json. Idempotent — skips already-imported transaction IDs.",
+      "type": "prompt",
+      "file": "pull-transactions.md"
+    },
+    {
+      "menu-code": "PB",
+      "name": "pull-balances",
+      "description": "Fetch current account balances, available funds, and pending amounts from Airwallex.",
+      "type": "prompt",
+      "file": "pull-balances.md"
+    },
+    {
+      "menu-code": "CT",
+      "name": "categorize",
+      "description": "Auto-categorize uncategorized transactions by merchant name patterns and MCC codes. Flags uncertain matches for manual review.",
+      "type": "prompt",
+      "file": "categorize.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

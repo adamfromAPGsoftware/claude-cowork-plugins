@@ -1,0 +1,23 @@
+{
+  "skill-name": "bmad-apg-ccs-4-editor",
+  "module-code": "ccs",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Quality guardian for all CCS content. Runs brand voice, ICP relevance, and value delivery gates with scoring and structured review reports.",
+  "capabilities": [
+    {
+      "menu-code": "QR",
+      "name": "quality-review",
+      "description": "Run content through brand voice, ICP relevance, and value delivery gates",
+      "type": "prompt",
+      "file": "quality-review.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session context to memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

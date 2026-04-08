@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads — Daily Report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root { --bg:#f8fafc; --card:#ffffff; --border:#e2e8f0; --text:#1e293b; --muted:#64748b;
+        --accent:#6366f1; --accent2:#8b5cf6; --green:#16a34a; --red:#dc2626; --amber:#d97706; }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+       background:var(--bg); color:var(--text); padding:24px; min-height:100vh; }
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+.header h1 { font-size:24px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+             -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.subtitle { color:var(--muted); font-size:14px; margin-top:4px; }
+.badge { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; }
+.badge-date { background:rgba(99,102,241,0.15); color:var(--accent); }
+.badge-live { background:rgba(34,197,94,0.15); color:var(--green); }
+.section-title { font-size:13px; color:var(--muted); text-transform:uppercase;
+                 letter-spacing:1px; margin:24px 0 12px; font-weight:600; }
+</style>
+</head>
+<body>
+<style>
+.kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; }
+.kpi-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; position:relative; overflow:hidden; }
+.kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px;
+                     background:linear-gradient(90deg,var(--accent),var(--accent2)); }
+.kpi-label { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+.kpi-value { font-size:22px; font-weight:700; }
+.kpi-sub { font-size:12px; margin-top:4px; }
+.kpi-sub.up { color:var(--green); } .kpi-sub.down { color:var(--red); } .kpi-sub.neutral { color:var(--muted); }
+.chart-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:900px) { .chart-grid { grid-template-columns:1fr; } }
+.chart-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+.chart-card h3 { font-size:14px; font-weight:600; margin-bottom:14px; }
+.chart-card canvas { max-height:240px; }
+.chart-full { grid-column:1/-1; }
+.table-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; overflow-x:auto; margin-bottom:16px; }
+.table-card h3 { font-size:14px; font-weight:600; margin-bottom:14px; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { text-align:left; color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase;
+     letter-spacing:0.5px; padding:8px 10px; border-bottom:1px solid var(--border); white-space:nowrap; }
+td { padding:10px; border-bottom:1px solid rgba(226,232,240,0.7); vertical-align:middle; }
+tr:hover td { background:rgba(99,102,241,0.04); }
+.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:10px; font-weight:700; text-transform:uppercase; }
+.pill-winner { background:rgba(34,197,94,0.15); color:var(--green); }
+.pill-okay { background:rgba(99,102,241,0.15); color:var(--accent); }
+.pill-loser { background:rgba(239,68,68,0.15); color:var(--red); }
+.pill-fatigued { background:rgba(245,158,11,0.15); color:var(--amber); }
+.pill-low-spend { background:rgba(139,141,151,0.15); color:var(--muted); }
+.pill-PAUSED { background:rgba(139,141,151,0.15); color:var(--muted); }
+.pill-ACTIVE { background:rgba(34,197,94,0.12); color:var(--green); }
+.ad-name { max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.insight-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; margin-bottom:8px; }
+.insight-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:18px; }
+.insight-card h4 { font-size:13px; font-weight:600; margin-bottom:8px; display:flex; gap:8px; align-items:center; }
+.insight-card p { font-size:13px; color:var(--muted); line-height:1.5; }
+.trend-up { color:var(--green); } .trend-down { color:var(--red); }
+.footer { text-align:center; color:var(--muted); font-size:11px; padding:20px; }
+.msg-warn { background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3);
+            color:var(--amber); padding:12px 16px; border-radius:10px; font-size:13px; margin-bottom:16px; }
+</style>
+
+<div class="header">
+  <div>
+    <h1 id="title">Meta Ads — Daily Report</h1>
+    <div class="subtitle" id="subtitle"></div>
+  </div>
+  <div>
+    <span class="badge badge-date" id="dateBadge"></span>
+    <span class="badge badge-live">LIVE</span>
+  </div>
+</div>
+<div id="warnMsg"></div>
+
+<div class="section-title">Yesterday Snapshot</div>
+<div class="kpi-grid" id="kpiYesterday"></div>
+
+<div class="section-title">Last 7 Days vs Previous 7 Days</div>
+<div class="kpi-grid" id="kpiWeek"></div>
+
+<div class="section-title">Trend</div>
+<div class="chart-grid">
+  <div class="chart-card chart-full"><h3>30-Day Spend & Clicks</h3><canvas id="chart30"></canvas></div>
+  <div class="chart-card"><h3>Daily CTR (%)</h3><canvas id="chartCtr"></canvas></div>
+  <div class="chart-card"><h3>Daily CPC ($)</h3><canvas id="chartCpc"></canvas></div>
+</div>
+
+<div class="section-title">Creative Performance Summary</div>
+<div class="insight-grid" id="summaryInsights"></div>
+
+<div class="table-card">
+  <h3>Ads Ranked by Spend (Last 7 Days)</h3>
+  <table>
+    <thead><tr>
+      <th>Ad Name</th><th>Status</th><th>Rating</th>
+      <th class="num">Spend</th><th class="num">Impr.</th><th class="num">Reach</th>
+      <th class="num">Freq.</th><th class="num">Clicks</th><th class="num">CTR</th>
+      <th class="num">CPC</th><th class="num">CPM</th><th class="num">Conv.</th><th class="num">CPA</th>
+    </tr></thead>
+    <tbody id="adTable"></tbody>
+  </table>
+</div>
+
+<div class="footer" id="footer"></div>
+
+<script>
+const P = __DATA__;
+const fmt = (n) => (n||0).toLocaleString('en-US');
+const fmtCur = (n) => '$' + (n||0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+const fmt2 = (n) => (n||0).toFixed(2);
+
+document.getElementById('title').textContent = P.campaign_name + ' — Daily Report';
+document.getElementById('subtitle').textContent = 'Data through ' + P.data_through + ' · Generated ' + P.generated_at;
+document.getElementById('dateBadge').textContent = 'Data: ' + P.data_through;
+document.getElementById('footer').textContent = 'Generated ' + P.generated_at + ' · Meta Marketing API · All values in USD';
+if (P.ad_level_msg) document.getElementById('warnMsg').innerHTML = '<div class="msg-warn">⚠ ' + P.ad_level_msg + '</div>';
+
+function pctCh(c, p) { if (!p) return c ? 100 : 0; return ((c-p)/p)*100; }
+function delta(c, p, inv=false) {
+  const ch = pctCh(c, p);
+  const d = ch > 0 ? (inv?'down':'up') : ch < 0 ? (inv?'up':'down') : 'neutral';
+  return `<span class="kpi-sub ${d}">${ch>=0?'+':''}${ch.toFixed(1)}% vs prior week</span>`;
+}
+
+const y = P.yesterday;
+document.getElementById('kpiYesterday').innerHTML = [
+  ['Spend', fmtCur(y.spend)], ['Impressions', fmt(y.impressions)], ['Reach', fmt(y.reach)],
+  ['Clicks', fmt(y.clicks)], ['CTR', fmt2(y.ctr)+'%'], ['CPC', fmtCur(y.cpc)],
+  ['CPM', fmtCur(y.cpm)], ['Conversions', fmt(y.conversions)]
+].map(([l,v]) => `<div class="kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div><div class="kpi-sub neutral">—</div></div>`).join('');
+
+const w = P.week, pw = P.prev_week;
+document.getElementById('kpiWeek').innerHTML = [
+  ['Spend', fmtCur(w.spend), delta(w.spend, pw.spend, true)],
+  ['Impressions', fmt(w.impressions), delta(w.impressions, pw.impressions)],
+  ['Reach', fmt(w.reach), delta(w.reach, pw.reach)],
+  ['Clicks', fmt(w.clicks), delta(w.clicks, pw.clicks)],
+  ['CTR', fmt2(w.ctr)+'%', delta(w.ctr, pw.ctr)],
+  ['CPC', fmtCur(w.cpc), delta(w.cpc, pw.cpc, true)],
+  ['CPM', fmtCur(w.cpm), delta(w.cpm, pw.cpm, true)],
+  ['Conversions', fmt(w.conversions), delta(w.conversions, pw.conversions)],
+  ['CPA', w.conversions?fmtCur(w.cpa):'—', (w.conversions && pw.conversions) ? delta(w.cpa, pw.cpa, true) : '<span class="kpi-sub neutral">—</span>']
+].map(([l,v,d]) => `<div class="kpi-card"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div>${d}</div>`).join('');
+</script>
+
+<script>
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = 'rgba(226,232,240,0.8)';
+Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,sans-serif';
+
+const labels30 = P.daily_30.map(d => new Date(d.date+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short'}));
+
+new Chart(document.getElementById('chart30'), {
+  type:'bar',
+  data:{ labels:labels30, datasets:[
+    { label:'Spend ($)', data:P.daily_30.map(d=>d.spend), backgroundColor:'rgba(99,102,241,0.7)', borderRadius:4, yAxisID:'y', order:2 },
+    { label:'Clicks', data:P.daily_30.map(d=>d.clicks), type:'line', borderColor:'#22c55e', backgroundColor:'rgba(34,197,94,0.1)', tension:0.3, pointRadius:3, yAxisID:'y1', fill:true, order:1 }
+  ]},
+  options:{ responsive:true, interaction:{mode:'index',intersect:false}, plugins:{legend:{position:'top'}},
+    scales:{ y:{title:{display:true,text:'Spend ($)'},beginAtZero:true}, y1:{position:'right',title:{display:true,text:'Clicks'},beginAtZero:true,grid:{drawOnChartArea:false}} }}
+});
+new Chart(document.getElementById('chartCtr'), {
+  type:'line', data:{ labels:labels30, datasets:[{ label:'CTR %', data:P.daily_30.map(d=>d.ctr), borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,0.1)', tension:0.3, pointRadius:3, fill:true }]},
+  options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:false}} }
+});
+new Chart(document.getElementById('chartCpc'), {
+  type:'line', data:{ labels:labels30, datasets:[{ label:'CPC $', data:P.daily_30.map(d=>d.cpc), borderColor:'#ef4444', backgroundColor:'rgba(239,68,68,0.1)', tension:0.3, pointRadius:3, fill:true }]},
+  options:{ responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:false}} }
+});
+</script>
+
+<script>
+const statusClass = { 'winner':'pill-winner', 'okay':'pill-okay', 'loser':'pill-loser', 'low-spend':'pill-low-spend' };
+const statusLabel = { 'winner':'Winner', 'okay':'OK', 'loser':'Loser', 'low-spend':'Low spend' };
+
+document.getElementById('adTable').innerHTML = P.ad_rows.map(r => {
+  const flags = (r.flags||[]).map(f => `<span class="pill pill-${f}" style="margin-left:4px;">${f}</span>`).join('');
+  const arrow = r.ctr_change == null ? '' :
+    r.ctr_change > 0 ? `<span class="trend-up"> ↑${r.ctr_change.toFixed(0)}%</span>` :
+    r.ctr_change < 0 ? `<span class="trend-down"> ↓${Math.abs(r.ctr_change).toFixed(0)}%</span>` : '';
+  return `<tr>
+    <td class="ad-name" title="${r.name}">${r.name}</td>
+    <td><span class="pill pill-${r.status}">${r.status}</span></td>
+    <td><span class="pill ${statusClass[r.status_class]||'pill-okay'}">${statusLabel[r.status_class]||r.status_class}</span>${flags}</td>
+    <td class="num">${fmtCur(r.spend)}</td><td class="num">${fmt(r.impressions)}</td><td class="num">${fmt(r.reach)}</td>
+    <td class="num">${fmt2(r.frequency_avg)}</td><td class="num">${fmt(r.clicks)}</td>
+    <td class="num">${fmt2(r.ctr)}%${arrow}</td><td class="num">${fmtCur(r.cpc)}</td><td class="num">${fmtCur(r.cpm)}</td>
+    <td class="num">${r.conversions||0}</td><td class="num">${r.conversions?fmtCur(r.cpa):'—'}</td>
+  </tr>`;
+}).join('') || '<tr><td colspan="13" style="text-align:center;color:var(--muted);padding:30px;">No ad-level data yet.</td></tr>';
+
+const rows = P.ad_rows;
+const insights = [];
+if (rows.length > 0) {
+  const winners = rows.filter(r => r.status_class === 'winner');
+  const losers = rows.filter(r => r.status_class === 'loser');
+  const fatigued = rows.filter(r => r.flags && r.flags.includes('fatigued'));
+  const bestCtr = [...rows].sort((a,b) => b.ctr - a.ctr).filter(r => r.spend > 5)[0];
+  insights.push({ icon:'🏆', title:`${winners.length} Winner${winners.length!==1?'s':''}`,
+    text: winners.length ? `Keep scaling: ${winners.slice(0,3).map(w=>w.name).join(', ')}.` : 'No ads meet winner criteria (CTR≥2.5%, CPC≤$2).' });
+  insights.push({ icon:'📉', title:`${losers.length} Underperformer${losers.length!==1?'s':''}`,
+    text: losers.length ? `Consider pausing: ${losers.slice(0,3).map(l=>l.name).join(', ')}.` : 'No clear losers — all ads above CTR 1% and under CPC $4.' });
+  insights.push({ icon:'⚠️', title:`${fatigued.length} Fatigued`,
+    text: fatigued.length ? `Frequency > 3 on: ${fatigued.slice(0,3).map(f=>f.name).join(', ')}. Refresh creative.` : 'No creative fatigue (all under 3.0 frequency).' });
+  if (rows[0]) insights.push({ icon:'💸', title:'Highest Spend', text:`${rows[0].name} consumed ${fmtCur(rows[0].spend)} (CTR ${fmt2(rows[0].ctr)}%, CPC ${fmtCur(rows[0].cpc)}).` });
+  if (bestCtr) insights.push({ icon:'🎯', title:'Best CTR', text:`${bestCtr.name} — ${fmt2(bestCtr.ctr)}% CTR. Study what works, replicate.` });
+} else {
+  insights.push({ icon:'ℹ️', title:'No ad-level data', text:'Sync with --level ad first.' });
+}
+document.getElementById('summaryInsights').innerHTML = insights.map(i =>
+  `<div class="insight-card"><h4><span>${i.icon}</span> ${i.title}</h4><p>${i.text}</p></div>`).join('');
+</script>
+</body>
+</html>

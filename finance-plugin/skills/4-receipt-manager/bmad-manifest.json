@@ -1,0 +1,37 @@
+{
+  "skill-name": "bmad-apg-fin-4-receipt-manager",
+  "module-code": "fin",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Receipt Manager — processes receipt photos via vision, matches to transactions, tracks receipt coverage, and maintains audit-ready records.",
+  "capabilities": [
+    {
+      "menu-code": "PR",
+      "name": "process-receipt",
+      "description": "Process a receipt photo via vision. Extract merchant, amount, GST, date. Match to transaction in finance-data.json. Save image to finance/receipts/.",
+      "type": "prompt",
+      "file": "process-receipt.md"
+    },
+    {
+      "menu-code": "AT",
+      "name": "attach-receipt",
+      "description": "Manually link a receipt file path to a specific transaction by ID.",
+      "type": "prompt",
+      "file": "attach-receipt.md"
+    },
+    {
+      "menu-code": "RA",
+      "name": "receipt-audit",
+      "description": "List all transactions above $50 missing receipts. Group by category. Show total unreceipted amount.",
+      "type": "prompt",
+      "file": "receipt-audit.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

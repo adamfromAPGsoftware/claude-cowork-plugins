@@ -1,0 +1,72 @@
+<!-- ─── GA4 (Google Analytics 4) ──────────────────────────────── -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ga4_measurement_id}}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ga4_measurement_id}}', {
+    send_page_view: true
+  });
+</script>
+
+<!-- ─── Meta Pixel ───────────────────────────────────────────── -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '{{meta_pixel_id}}');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id={{meta_pixel_id}}&ev=PageView&noscript=1"
+/></noscript>
+
+<!-- ─── UTM Capture ──────────────────────────────────────────── -->
+<script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    utmKeys.forEach(function(key) {
+      var val = params.get(key);
+      if (val) sessionStorage.setItem(key, val);
+    });
+  })();
+</script>
+
+<!-- ─── Form Submission Event Handlers ───────────────────────── -->
+<script>
+  (function() {
+    // Wait for DOM, then attach to any lead form
+    document.addEventListener('DOMContentLoaded', function() {
+      var form = document.getElementById('leadForm');
+      if (!form) return;
+
+      form.addEventListener('submit', function() {
+        // GA4 lead event
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            event_category: 'form',
+            event_label: sessionStorage.getItem('utm_campaign') || 'direct',
+            value: 1
+          });
+        }
+        // Meta Pixel lead event
+        if (typeof fbq === 'function') {
+          fbq('track', 'Lead');
+        }
+      });
+    });
+  })();
+</script>
+
+<!-- ─── Meta Conversions API (Server-Side) ───────────────────── -->
+<!-- Future: Cloudflare Worker endpoint for server-side event forwarding.
+     When CAPI is enabled, the form submission handler will also POST to
+     the CAPI Worker URL with event_name, user_data (hashed), and
+     custom_data for deduplication with the pixel event above.
+     Worker URL: TBD — configure in campaign-data.json tracking section. -->

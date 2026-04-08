@@ -1,0 +1,21 @@
+{
+  "name": "video",
+  "description": "Video Production Pipeline \u2014 ingest, transcription, analysis, clipping, storyboarding, rendering, and motion graphics",
+  "version": "1.0.0",
+  "author": {
+    "name": "{YOUR_NAME}",
+    "url": "https://{YOUR_DOMAIN}"
+  },
+  "keywords": [
+    "video",
+    "editing",
+    "remotion",
+    "deepgram",
+    "hera",
+    "apg"
+  ],
+  "agents": [
+    "./agents/1-video-editor.md"
+  ],
+  "skills": "./skills/"
+}

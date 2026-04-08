@@ -1,0 +1,24 @@
+{
+  "name": "sales",
+  "description": "Sales Pipeline \u2014 pre-discovery research, battle cards, discovery calls, close pages, and follow-up communications with CRM lead tracking",
+  "version": "1.0.0",
+  "author": {
+    "name": "{YOUR_NAME}",
+    "url": "https://{YOUR_DOMAIN}"
+  },
+  "keywords": [
+    "sales",
+    "discovery",
+    "lead",
+    "apg"
+  ],
+  "commands": [
+    "./commands/new-client.md"
+  ],
+  "agents": [
+    "./agents/1-call-prep.md",
+    "./agents/2-sales-closer.md"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

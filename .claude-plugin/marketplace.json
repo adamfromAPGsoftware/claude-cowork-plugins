@@ -1,0 +1,47 @@
+{
+  "name": "cowork-plugins",
+  "owner": {
+    "name": "Cowork Plugins"
+  },
+  "metadata": {
+    "description": "AI-powered business operations plugins for Claude Code — sales, audit, finance, marketing, content, social, and video pipelines",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "sales",
+      "source": "./sales-plugin",
+      "description": "Sales pipeline — call prep, sales closer, lead nurture"
+    },
+    {
+      "name": "audit",
+      "source": "./audit-plugin",
+      "description": "Audit pipeline — extractor, researcher, deliverable builder, solution designer"
+    },
+    {
+      "name": "finance",
+      "source": "./finance-plugin",
+      "description": "Finance — transactions, spend analysis, reconciliation, receipts, tax reporting"
+    },
+    {
+      "name": "marketing",
+      "source": "./marketing-plugin",
+      "description": "Marketing — campaigns, performance, funnels, competitors, creatives, landing pages"
+    },
+    {
+      "name": "content",
+      "source": "./content-plugin",
+      "description": "Content — strategist, copywriter, creative director, editor, publisher"
+    },
+    {
+      "name": "social",
+      "source": "./social-plugin",
+      "description": "Social — inbox collector, engagement responder, prospect qualifier"
+    },
+    {
+      "name": "video",
+      "source": "./video-plugin",
+      "description": "Video — full pipeline editor"
+    }
+  ]
+}

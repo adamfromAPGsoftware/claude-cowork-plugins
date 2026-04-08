@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'finance-data.json$'; then echo 'finance-data.json modified — run /apg-finance:status to check data integrity'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

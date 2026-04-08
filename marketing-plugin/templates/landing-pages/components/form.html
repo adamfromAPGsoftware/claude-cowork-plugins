@@ -1,0 +1,39 @@
+<!-- ─── Reusable Lead Capture Form Component ─────────────────── -->
+<!-- Insert inside a <form> element. Requires parent page JS for UTM population and submission handling. -->
+
+{{form_fields_html}}
+
+<!-- Hidden UTM fields — populated from sessionStorage by page-level JS -->
+<input type="hidden" name="utm_source" id="utm_source">
+<input type="hidden" name="utm_medium" id="utm_medium">
+<input type="hidden" name="utm_campaign" id="utm_campaign">
+<input type="hidden" name="utm_term" id="utm_term">
+<input type="hidden" name="utm_content" id="utm_content">
+
+<!-- Submit button -->
+<button type="submit" class="form-submit" id="formSubmit">{{cta_text}}</button>
+
+<!-- Loading state script -->
+<script>
+  (function() {
+    var form = document.getElementById('leadForm');
+    var btn = document.getElementById('formSubmit');
+    var originalText = btn ? btn.textContent : '';
+
+    if (!form || !btn) return;
+
+    form.addEventListener('submit', function() {
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      // Re-enable after 10s timeout (failsafe)
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }, 10000);
+    });
+  })();
+</script>
+
+<!-- Error display -->
+<div class="form-error" id="formError" style="display:none;padding:12px 16px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:8px;color:#FCA5A5;font-size:0.9rem;text-align:center;margin-top:8px;"></div>

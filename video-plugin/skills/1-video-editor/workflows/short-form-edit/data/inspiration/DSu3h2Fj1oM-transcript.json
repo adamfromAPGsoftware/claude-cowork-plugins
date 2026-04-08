@@ -1,0 +1,1014 @@
+{
+  "metadata": {
+    "video_id": "DSu3h2Fj1oM",
+    "source_file": "DSu3h2Fj1oM.mp4",
+    "duration_seconds": 37.82675,
+    "model": "general-nova-3",
+    "language": "en",
+    "transcribed_at": "2026-03-10T10:43:30.428343+00:00",
+    "word_count": 139,
+    "confidence_avg": 0.9661
+  },
+  "transcript": "Google just dropped Disco, their new AI browser that basically combines googling with vibe coding. And it works by using a new feature called GenTabs. It basically scans all your open browser tabs, then spots patterns in your browsing, and instantly turns them into task specific custom mini apps. So instead of switch switching between 20 different pages, Disco scans them all and then builds you a single interactive dashboard. For example, if you ask for travel tips, it'll create a full trip planner app with interactive maps and hotel price comparisons. Ask about space and it'll generate you three d solar systems you can actually explore and then quiz yourself on. Right now, it's strictly invite only. So if you want the link to try it, just comment Google down below and I'll send it to you directly.",
+  "words": [
+    {
+      "word": "google",
+      "start": 0.0,
+      "end": 0.48,
+      "confidence": 0.9951481,
+      "punctuated_word": "Google"
+    },
+    {
+      "word": "just",
+      "start": 0.48,
+      "end": 0.71999997,
+      "confidence": 0.9968941,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "dropped",
+      "start": 0.71999997,
+      "end": 0.96,
+      "confidence": 0.91721547,
+      "punctuated_word": "dropped"
+    },
+    {
+      "word": "disco",
+      "start": 0.96,
+      "end": 1.4399999,
+      "confidence": 0.70212674,
+      "punctuated_word": "Disco,"
+    },
+    {
+      "word": "their",
+      "start": 1.4399999,
+      "end": 1.5999999,
+      "confidence": 0.99276793,
+      "punctuated_word": "their"
+    },
+    {
+      "word": "new",
+      "start": 1.5999999,
+      "end": 1.76,
+      "confidence": 0.9942092,
+      "punctuated_word": "new"
+    },
+    {
+      "word": "ai",
+      "start": 1.76,
+      "end": 2.08,
+      "confidence": 0.97966844,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "browser",
+      "start": 2.08,
+      "end": 2.3999999,
+      "confidence": 0.9790908,
+      "punctuated_word": "browser"
+    },
+    {
+      "word": "that",
+      "start": 2.3999999,
+      "end": 2.6399999,
+      "confidence": 0.9919376,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "basically",
+      "start": 2.6399999,
+      "end": 2.96,
+      "confidence": 0.9879822,
+      "punctuated_word": "basically"
+    },
+    {
+      "word": "combines",
+      "start": 2.96,
+      "end": 3.36,
+      "confidence": 0.99822,
+      "punctuated_word": "combines"
+    },
+    {
+      "word": "googling",
+      "start": 3.36,
+      "end": 3.84,
+      "confidence": 0.8843579,
+      "punctuated_word": "googling"
+    },
+    {
+      "word": "with",
+      "start": 3.84,
+      "end": 4.08,
+      "confidence": 0.9992829,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "vibe",
+      "start": 4.08,
+      "end": 4.4,
+      "confidence": 0.91511136,
+      "punctuated_word": "vibe"
+    },
+    {
+      "word": "coding",
+      "start": 4.4,
+      "end": 4.88,
+      "confidence": 0.7804737,
+      "punctuated_word": "coding."
+    },
+    {
+      "word": "and",
+      "start": 4.88,
+      "end": 5.04,
+      "confidence": 0.9919208,
+      "punctuated_word": "And"
+    },
+    {
+      "word": "it",
+      "start": 5.04,
+      "end": 5.12,
+      "confidence": 0.9951206,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "works",
+      "start": 5.12,
+      "end": 5.3599997,
+      "confidence": 0.9994048,
+      "punctuated_word": "works"
+    },
+    {
+      "word": "by",
+      "start": 5.3599997,
+      "end": 5.52,
+      "confidence": 0.99844176,
+      "punctuated_word": "by"
+    },
+    {
+      "word": "using",
+      "start": 5.52,
+      "end": 5.7599998,
+      "confidence": 0.9992279,
+      "punctuated_word": "using"
+    },
+    {
+      "word": "a",
+      "start": 5.7599998,
+      "end": 5.8399997,
+      "confidence": 0.99866843,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "new",
+      "start": 5.8399997,
+      "end": 6.08,
+      "confidence": 0.9977882,
+      "punctuated_word": "new"
+    },
+    {
+      "word": "feature",
+      "start": 6.08,
+      "end": 6.3199997,
+      "confidence": 0.9989293,
+      "punctuated_word": "feature"
+    },
+    {
+      "word": "called",
+      "start": 6.3199997,
+      "end": 6.64,
+      "confidence": 0.9983109,
+      "punctuated_word": "called"
+    },
+    {
+      "word": "gentabs",
+      "start": 6.64,
+      "end": 7.68,
+      "confidence": 0.7845342,
+      "punctuated_word": "GenTabs."
+    },
+    {
+      "word": "it",
+      "start": 7.7599998,
+      "end": 8.0,
+      "confidence": 0.992167,
+      "punctuated_word": "It"
+    },
+    {
+      "word": "basically",
+      "start": 8.0,
+      "end": 8.24,
+      "confidence": 0.9943135,
+      "punctuated_word": "basically"
+    },
+    {
+      "word": "scans",
+      "start": 8.24,
+      "end": 8.559999,
+      "confidence": 0.99864703,
+      "punctuated_word": "scans"
+    },
+    {
+      "word": "all",
+      "start": 8.559999,
+      "end": 8.8,
+      "confidence": 0.99825805,
+      "punctuated_word": "all"
+    },
+    {
+      "word": "your",
+      "start": 8.8,
+      "end": 8.96,
+      "confidence": 0.982421,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "open",
+      "start": 8.96,
+      "end": 9.12,
+      "confidence": 0.97283643,
+      "punctuated_word": "open"
+    },
+    {
+      "word": "browser",
+      "start": 9.12,
+      "end": 9.5199995,
+      "confidence": 0.9891908,
+      "punctuated_word": "browser"
+    },
+    {
+      "word": "tabs",
+      "start": 9.5199995,
+      "end": 10.08,
+      "confidence": 0.79837775,
+      "punctuated_word": "tabs,"
+    },
+    {
+      "word": "then",
+      "start": 10.08,
+      "end": 10.16,
+      "confidence": 0.94263566,
+      "punctuated_word": "then"
+    },
+    {
+      "word": "spots",
+      "start": 10.16,
+      "end": 10.48,
+      "confidence": 0.99465126,
+      "punctuated_word": "spots"
+    },
+    {
+      "word": "patterns",
+      "start": 10.48,
+      "end": 10.8,
+      "confidence": 0.9977354,
+      "punctuated_word": "patterns"
+    },
+    {
+      "word": "in",
+      "start": 10.8,
+      "end": 10.96,
+      "confidence": 0.99884593,
+      "punctuated_word": "in"
+    },
+    {
+      "word": "your",
+      "start": 10.96,
+      "end": 11.12,
+      "confidence": 0.9949478,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "browsing",
+      "start": 11.12,
+      "end": 11.599999,
+      "confidence": 0.83796096,
+      "punctuated_word": "browsing,"
+    },
+    {
+      "word": "and",
+      "start": 11.599999,
+      "end": 11.679999,
+      "confidence": 0.99926895,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "instantly",
+      "start": 11.679999,
+      "end": 12.08,
+      "confidence": 0.9995795,
+      "punctuated_word": "instantly"
+    },
+    {
+      "word": "turns",
+      "start": 12.08,
+      "end": 12.4,
+      "confidence": 0.9989446,
+      "punctuated_word": "turns"
+    },
+    {
+      "word": "them",
+      "start": 12.4,
+      "end": 12.559999,
+      "confidence": 0.99889874,
+      "punctuated_word": "them"
+    },
+    {
+      "word": "into",
+      "start": 12.559999,
+      "end": 12.799999,
+      "confidence": 0.9732125,
+      "punctuated_word": "into"
+    },
+    {
+      "word": "task",
+      "start": 12.799999,
+      "end": 13.04,
+      "confidence": 0.98279124,
+      "punctuated_word": "task"
+    },
+    {
+      "word": "specific",
+      "start": 13.04,
+      "end": 13.5199995,
+      "confidence": 0.99916804,
+      "punctuated_word": "specific"
+    },
+    {
+      "word": "custom",
+      "start": 13.5199995,
+      "end": 14.0,
+      "confidence": 0.9626829,
+      "punctuated_word": "custom"
+    },
+    {
+      "word": "mini",
+      "start": 14.0,
+      "end": 14.32,
+      "confidence": 0.97010833,
+      "punctuated_word": "mini"
+    },
+    {
+      "word": "apps",
+      "start": 14.32,
+      "end": 14.879999,
+      "confidence": 0.9965029,
+      "punctuated_word": "apps."
+    },
+    {
+      "word": "so",
+      "start": 14.88,
+      "end": 15.04,
+      "confidence": 0.9982212,
+      "punctuated_word": "So"
+    },
+    {
+      "word": "instead",
+      "start": 15.04,
+      "end": 15.36,
+      "confidence": 0.9565041,
+      "punctuated_word": "instead"
+    },
+    {
+      "word": "of",
+      "start": 15.36,
+      "end": 15.44,
+      "confidence": 0.9887976,
+      "punctuated_word": "of"
+    },
+    {
+      "word": "switch",
+      "start": 15.44,
+      "end": 16.0,
+      "confidence": 0.5414545,
+      "punctuated_word": "switch"
+    },
+    {
+      "word": "switching",
+      "start": 15.645,
+      "end": 15.805,
+      "confidence": 0.913404,
+      "punctuated_word": "switching"
+    },
+    {
+      "word": "between",
+      "start": 15.805,
+      "end": 16.205,
+      "confidence": 0.99957186,
+      "punctuated_word": "between"
+    },
+    {
+      "word": "20",
+      "start": 16.205,
+      "end": 16.605,
+      "confidence": 0.9995011,
+      "punctuated_word": "20"
+    },
+    {
+      "word": "different",
+      "start": 16.605,
+      "end": 16.845001,
+      "confidence": 0.9991523,
+      "punctuated_word": "different"
+    },
+    {
+      "word": "pages",
+      "start": 16.845001,
+      "end": 17.325,
+      "confidence": 0.9866111,
+      "punctuated_word": "pages,"
+    },
+    {
+      "word": "disco",
+      "start": 17.325,
+      "end": 17.725,
+      "confidence": 0.661044,
+      "punctuated_word": "Disco"
+    },
+    {
+      "word": "scans",
+      "start": 17.725,
+      "end": 18.125,
+      "confidence": 0.9989034,
+      "punctuated_word": "scans"
+    },
+    {
+      "word": "them",
+      "start": 18.125,
+      "end": 18.285,
+      "confidence": 0.9988085,
+      "punctuated_word": "them"
+    },
+    {
+      "word": "all",
+      "start": 18.285,
+      "end": 18.445,
+      "confidence": 0.9993998,
+      "punctuated_word": "all"
+    },
+    {
+      "word": "and",
+      "start": 18.445,
+      "end": 18.605,
+      "confidence": 0.9781171,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "then",
+      "start": 18.605,
+      "end": 18.685001,
+      "confidence": 0.99619055,
+      "punctuated_word": "then"
+    },
+    {
+      "word": "builds",
+      "start": 18.685001,
+      "end": 18.925001,
+      "confidence": 0.9486404,
+      "punctuated_word": "builds"
+    },
+    {
+      "word": "you",
+      "start": 18.925001,
+      "end": 19.085001,
+      "confidence": 0.9977028,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "a",
+      "start": 19.085001,
+      "end": 19.165,
+      "confidence": 0.9983255,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "single",
+      "start": 19.165,
+      "end": 19.485,
+      "confidence": 0.9997181,
+      "punctuated_word": "single"
+    },
+    {
+      "word": "interactive",
+      "start": 19.485,
+      "end": 19.965,
+      "confidence": 0.98785454,
+      "punctuated_word": "interactive"
+    },
+    {
+      "word": "dashboard",
+      "start": 19.965,
+      "end": 20.765,
+      "confidence": 0.9988807,
+      "punctuated_word": "dashboard."
+    },
+    {
+      "word": "for",
+      "start": 20.925,
+      "end": 21.165,
+      "confidence": 0.9994991,
+      "punctuated_word": "For"
+    },
+    {
+      "word": "example",
+      "start": 21.165,
+      "end": 21.565,
+      "confidence": 0.99223065,
+      "punctuated_word": "example,"
+    },
+    {
+      "word": "if",
+      "start": 21.565,
+      "end": 21.645,
+      "confidence": 0.9978923,
+      "punctuated_word": "if"
+    },
+    {
+      "word": "you",
+      "start": 21.645,
+      "end": 21.725,
+      "confidence": 0.9994259,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "ask",
+      "start": 21.725,
+      "end": 21.965,
+      "confidence": 0.92438877,
+      "punctuated_word": "ask"
+    },
+    {
+      "word": "for",
+      "start": 21.965,
+      "end": 22.045,
+      "confidence": 0.99934965,
+      "punctuated_word": "for"
+    },
+    {
+      "word": "travel",
+      "start": 22.045,
+      "end": 22.365,
+      "confidence": 0.993439,
+      "punctuated_word": "travel"
+    },
+    {
+      "word": "tips",
+      "start": 22.365,
+      "end": 22.685001,
+      "confidence": 0.97572744,
+      "punctuated_word": "tips,"
+    },
+    {
+      "word": "it'll",
+      "start": 22.685001,
+      "end": 22.925,
+      "confidence": 0.91414136,
+      "punctuated_word": "it'll"
+    },
+    {
+      "word": "create",
+      "start": 22.925,
+      "end": 23.085001,
+      "confidence": 0.9986008,
+      "punctuated_word": "create"
+    },
+    {
+      "word": "a",
+      "start": 23.085001,
+      "end": 23.245,
+      "confidence": 0.99850404,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "full",
+      "start": 23.245,
+      "end": 23.405,
+      "confidence": 0.99895537,
+      "punctuated_word": "full"
+    },
+    {
+      "word": "trip",
+      "start": 23.405,
+      "end": 23.725,
+      "confidence": 0.9944876,
+      "punctuated_word": "trip"
+    },
+    {
+      "word": "planner",
+      "start": 23.725,
+      "end": 24.045,
+      "confidence": 0.99272126,
+      "punctuated_word": "planner"
+    },
+    {
+      "word": "app",
+      "start": 24.045,
+      "end": 24.365002,
+      "confidence": 0.9983197,
+      "punctuated_word": "app"
+    },
+    {
+      "word": "with",
+      "start": 24.365002,
+      "end": 24.605,
+      "confidence": 0.99747914,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "interactive",
+      "start": 24.605,
+      "end": 25.085,
+      "confidence": 0.99934703,
+      "punctuated_word": "interactive"
+    },
+    {
+      "word": "maps",
+      "start": 25.085,
+      "end": 25.325,
+      "confidence": 0.9985567,
+      "punctuated_word": "maps"
+    },
+    {
+      "word": "and",
+      "start": 25.325,
+      "end": 25.565,
+      "confidence": 0.99587506,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "hotel",
+      "start": 25.565,
+      "end": 25.965,
+      "confidence": 0.9984426,
+      "punctuated_word": "hotel"
+    },
+    {
+      "word": "price",
+      "start": 25.965,
+      "end": 26.285,
+      "confidence": 0.99680364,
+      "punctuated_word": "price"
+    },
+    {
+      "word": "comparisons",
+      "start": 26.285,
+      "end": 27.005001,
+      "confidence": 0.9879765,
+      "punctuated_word": "comparisons."
+    },
+    {
+      "word": "ask",
+      "start": 27.165,
+      "end": 27.565,
+      "confidence": 0.9672317,
+      "punctuated_word": "Ask"
+    },
+    {
+      "word": "about",
+      "start": 27.331688,
+      "end": 27.651688,
+      "confidence": 0.99646676,
+      "punctuated_word": "about"
+    },
+    {
+      "word": "space",
+      "start": 27.651688,
+      "end": 27.971687,
+      "confidence": 0.9636593,
+      "punctuated_word": "space"
+    },
+    {
+      "word": "and",
+      "start": 27.971687,
+      "end": 28.211687,
+      "confidence": 0.5810929,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "it'll",
+      "start": 28.211687,
+      "end": 28.451689,
+      "confidence": 0.75002754,
+      "punctuated_word": "it'll"
+    },
+    {
+      "word": "generate",
+      "start": 28.451689,
+      "end": 28.691689,
+      "confidence": 0.9990489,
+      "punctuated_word": "generate"
+    },
+    {
+      "word": "you",
+      "start": 28.691689,
+      "end": 28.851688,
+      "confidence": 0.9971806,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "three",
+      "start": 28.851688,
+      "end": 29.091688,
+      "confidence": 0.9995592,
+      "punctuated_word": "three"
+    },
+    {
+      "word": "d",
+      "start": 29.091688,
+      "end": 29.331688,
+      "confidence": 0.9529544,
+      "punctuated_word": "d"
+    },
+    {
+      "word": "solar",
+      "start": 29.331688,
+      "end": 29.651688,
+      "confidence": 0.9958209,
+      "punctuated_word": "solar"
+    },
+    {
+      "word": "systems",
+      "start": 29.651688,
+      "end": 29.971687,
+      "confidence": 0.9938012,
+      "punctuated_word": "systems"
+    },
+    {
+      "word": "you",
+      "start": 29.971687,
+      "end": 30.131687,
+      "confidence": 0.9183754,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "can",
+      "start": 30.131687,
+      "end": 30.291687,
+      "confidence": 0.9995938,
+      "punctuated_word": "can"
+    },
+    {
+      "word": "actually",
+      "start": 30.291687,
+      "end": 30.531689,
+      "confidence": 0.99843806,
+      "punctuated_word": "actually"
+    },
+    {
+      "word": "explore",
+      "start": 30.531689,
+      "end": 30.851688,
+      "confidence": 0.9998136,
+      "punctuated_word": "explore"
+    },
+    {
+      "word": "and",
+      "start": 30.851688,
+      "end": 31.091688,
+      "confidence": 0.99295205,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "then",
+      "start": 31.091688,
+      "end": 31.171688,
+      "confidence": 0.9986411,
+      "punctuated_word": "then"
+    },
+    {
+      "word": "quiz",
+      "start": 31.171688,
+      "end": 31.491688,
+      "confidence": 0.9990976,
+      "punctuated_word": "quiz"
+    },
+    {
+      "word": "yourself",
+      "start": 31.491688,
+      "end": 31.811687,
+      "confidence": 0.9986468,
+      "punctuated_word": "yourself"
+    },
+    {
+      "word": "on",
+      "start": 31.811687,
+      "end": 32.291687,
+      "confidence": 0.99877834,
+      "punctuated_word": "on."
+    },
+    {
+      "word": "right",
+      "start": 32.291687,
+      "end": 32.611687,
+      "confidence": 0.99922574,
+      "punctuated_word": "Right"
+    },
+    {
+      "word": "now",
+      "start": 32.611687,
+      "end": 32.85169,
+      "confidence": 0.8823279,
+      "punctuated_word": "now,"
+    },
+    {
+      "word": "it's",
+      "start": 32.85169,
+      "end": 33.01169,
+      "confidence": 0.99791867,
+      "punctuated_word": "it's"
+    },
+    {
+      "word": "strictly",
+      "start": 33.01169,
+      "end": 33.331688,
+      "confidence": 0.99975175,
+      "punctuated_word": "strictly"
+    },
+    {
+      "word": "invite",
+      "start": 33.331688,
+      "end": 33.73169,
+      "confidence": 0.9997919,
+      "punctuated_word": "invite"
+    },
+    {
+      "word": "only",
+      "start": 33.73169,
+      "end": 34.131687,
+      "confidence": 0.8256885,
+      "punctuated_word": "only."
+    },
+    {
+      "word": "so",
+      "start": 34.131687,
+      "end": 34.37169,
+      "confidence": 0.99876523,
+      "punctuated_word": "So"
+    },
+    {
+      "word": "if",
+      "start": 34.37169,
+      "end": 34.451687,
+      "confidence": 0.9893533,
+      "punctuated_word": "if"
+    },
+    {
+      "word": "you",
+      "start": 34.451687,
+      "end": 34.611687,
+      "confidence": 0.99954236,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "want",
+      "start": 34.611687,
+      "end": 34.69169,
+      "confidence": 0.999808,
+      "punctuated_word": "want"
+    },
+    {
+      "word": "the",
+      "start": 34.69169,
+      "end": 34.85169,
+      "confidence": 0.99868065,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "link",
+      "start": 34.85169,
+      "end": 35.01169,
+      "confidence": 0.9998661,
+      "punctuated_word": "link"
+    },
+    {
+      "word": "to",
+      "start": 35.01169,
+      "end": 35.171688,
+      "confidence": 0.9992286,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "try",
+      "start": 35.171688,
+      "end": 35.331688,
+      "confidence": 0.9999223,
+      "punctuated_word": "try"
+    },
+    {
+      "word": "it",
+      "start": 35.331688,
+      "end": 35.571686,
+      "confidence": 0.960884,
+      "punctuated_word": "it,"
+    },
+    {
+      "word": "just",
+      "start": 35.571686,
+      "end": 35.651688,
+      "confidence": 0.99952495,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "comment",
+      "start": 35.651688,
+      "end": 35.971687,
+      "confidence": 0.9539599,
+      "punctuated_word": "comment"
+    },
+    {
+      "word": "google",
+      "start": 35.971687,
+      "end": 36.21169,
+      "confidence": 0.89134884,
+      "punctuated_word": "Google"
+    },
+    {
+      "word": "down",
+      "start": 36.21169,
+      "end": 36.451687,
+      "confidence": 0.9993217,
+      "punctuated_word": "down"
+    },
+    {
+      "word": "below",
+      "start": 36.451687,
+      "end": 36.69169,
+      "confidence": 0.999841,
+      "punctuated_word": "below"
+    },
+    {
+      "word": "and",
+      "start": 36.69169,
+      "end": 36.85169,
+      "confidence": 0.7465396,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "i'll",
+      "start": 36.85169,
+      "end": 37.09169,
+      "confidence": 0.99834645,
+      "punctuated_word": "I'll"
+    },
+    {
+      "word": "send",
+      "start": 37.09169,
+      "end": 37.171688,
+      "confidence": 0.9996581,
+      "punctuated_word": "send"
+    },
+    {
+      "word": "it",
+      "start": 37.171688,
+      "end": 37.331688,
+      "confidence": 0.99947673,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "to",
+      "start": 37.331688,
+      "end": 37.41169,
+      "confidence": 0.99593616,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "you",
+      "start": 37.41169,
+      "end": 37.491688,
+      "confidence": 0.9986557,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "directly",
+      "start": 37.491688,
+      "end": 37.811687,
+      "confidence": 0.99850345,
+      "punctuated_word": "directly."
+    }
+  ],
+  "utterances": [
+    {
+      "start": 0.0,
+      "end": 7.68,
+      "text": "Google just dropped Disco, their new AI browser that basically combines googling with vibe coding. And it works by using a new feature called GenTabs.",
+      "confidence": 0.9550733
+    },
+    {
+      "start": 7.7599998,
+      "end": 20.765,
+      "text": "It basically scans all your open browser tabs, then spots patterns in your browsing, and instantly turns them into task specific custom mini apps. So instead of switch switching between 20 different pages, Disco scans them all and then builds you a single interactive dashboard.",
+      "confidence": 0.96268785
+    },
+    {
+      "start": 20.925,
+      "end": 27.005001,
+      "text": "For example, if you ask for travel tips, it'll create a full trip planner app with interactive maps and hotel price comparisons.",
+      "confidence": 0.98873466
+    },
+    {
+      "start": 27.165,
+      "end": 37.811687,
+      "text": "Ask about space and it'll generate you three d solar systems you can actually explore and then quiz yourself on. Right now, it's strictly invite only. So if you want the link to try it, just comment Google down below and I'll send it to you directly.",
+      "confidence": 0.96453303
+    }
+  ]
+}

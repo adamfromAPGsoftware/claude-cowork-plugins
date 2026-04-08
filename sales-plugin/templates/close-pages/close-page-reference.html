@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{YOUR_COMPANY} — AI &amp; Operations Audit</title>
+<link rel="icon" type="image/png" href="{YOUR_LOGO_URL}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── CSS Variables ── */
+:root {
+  --bg: hsl(222, 47%, 7%);
+  --bg-rgb: 13, 17, 28;
+  --fg: hsl(0, 0%, 95%);
+  --card: hsl(215, 35%, 9%);
+  --card-rgb: 18, 24, 35;
+  --primary: #7bed00;
+  --primary-rgb: 123, 237, 0;
+  --primary-fg: hsl(200, 30%, 5%);
+  --secondary: hsl(215, 30%, 12%);
+  --secondary-rgb: 21, 29, 43;
+  --muted-fg: hsl(200, 10%, 50%);
+  --border: hsl(200, 15%, 15%);
+  --border-rgb: 33, 40, 44;
+  --red: #f87171;
+  --red-bg: rgba(239,68,68,0.05);
+  --red-border: rgba(239,68,68,0.2);
+  --warning: hsl(40, 95%, 55%);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ── Grid Pattern Overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  line-height: 1.1;
+}
+p { text-wrap: pretty; }
+
+/* ── Layout ── */
+.section-container {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 80px 16px;
+  position: relative;
+  z-index: 1;
+}
+@media (min-width: 640px) {
+  .section-container { padding: 128px 24px; }
+}
+@media (min-width: 1024px) {
+  .section-container { padding: 128px 32px; }
+}
+
+/* ── Component Classes ── */
+.glass-card {
+  background: rgba(var(--card-rgb), 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(var(--border-rgb), 0.5);
+  border-radius: 12px;
+}
+.glow-border {
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  box-shadow: 0 0 20px rgba(var(--primary-rgb), 0.12);
+}
+.gradient-text {
+  background: linear-gradient(to right, var(--primary), var(--primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cta-glow {
+  box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.3);
+  transition: box-shadow 0.3s;
+}
+.cta-glow:hover {
+  box-shadow: 0 0 50px rgba(var(--primary-rgb), 0.5);
+}
+
+/* ── CTA Button ── */
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary);
+  color: var(--primary-fg);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 18px 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.cta-btn:hover { opacity: 0.9; }
+.cta-btn:hover .cta-arrow { transform: translateX(4px); }
+.cta-arrow { transition: transform 0.2s; display: inline-block; }
+@media (min-width: 640px) {
+  .cta-btn { font-size: 1.125rem; padding: 22px 40px; }
+}
+
+/* ── Sticky Nav ── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(var(--bg-rgb), 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(var(--border-rgb), 0.3);
+}
+.nav-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+@media (min-width: 640px) { .nav-inner { height: 72px; padding: 0 32px; } }
+.nav-logo { height: 32px; }
+@media (min-width: 640px) { .nav-logo { height: 40px; } }
+.nav-links { display: none; gap: 32px; font-size: 0.875rem; color: #9ca3af; font-weight: 500; }
+.nav-links a:hover { color: var(--fg); }
+@media (min-width: 640px) { .nav-links { display: flex; } }
+.nav-cta {
+  border: 1px solid rgba(var(--primary-rgb), 0.6);
+  color: var(--fg);
+  padding: 10px 20px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+.nav-cta:hover { background: var(--primary); color: var(--primary-fg); }
+
+/* ── Scroll Animations ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Section Backgrounds ── */
+.bg-gradient-section {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, var(--bg), rgba(var(--secondary-rgb), 0.2), var(--bg));
+  z-index: 0;
+}
+
+/* ── Attention Bar ── */
+.attention-bar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 9999px;
+  max-width: 90vw;
+}
+@media (min-width: 640px) { .attention-bar { font-size: 0.875rem; } }
+.pulse-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--primary);
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Checklist Items ── */
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.check-icon {
+  width: 20px; height: 20px;
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ── Scenario Cards ── */
+.scenario-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+}
+@media (min-width: 640px) { .scenario-card { padding: 32px; } }
+.scenario-icon {
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(var(--primary-rgb), 0.1);
+  flex-shrink: 0;
+}
+.scenario-icon svg { width: 20px; height: 20px; color: var(--primary); }
+
+/* ── Timeline ── */
+.timeline { position: relative; padding-left: 48px; }
+@media (min-width: 640px) { .timeline { padding-left: 64px; } }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+@media (min-width: 640px) { .timeline::before { left: 32px; } }
+.timeline-item { position: relative; padding-bottom: 48px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -30px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.4);
+}
+@media (min-width: 640px) { .timeline-dot { left: -38px; width: 14px; height: 14px; } }
+.timeline-date {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.timeline-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+@media (min-width: 640px) { .timeline-title { font-size: 1.5rem; } }
+.timeline-title svg { width: 20px; height: 20px; color: var(--primary); flex-shrink: 0; }
+@media (min-width: 640px) { .timeline-title svg { width: 24px; height: 24px; } }
+.timeline-desc {
+  font-size: 0.75rem;
+  color: #d1d5db;
+  margin-bottom: 16px;
+}
+@media (min-width: 640px) { .timeline-desc { font-size: 0.875rem; } }
+.timeline-bullet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #d1d5db;
+  margin-bottom: 8px;
+}
+@media (min-width: 640px) { .timeline-bullet { font-size: 0.875rem; } }
+.timeline-bullet svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+
+/* ── Before/After Grid ── */
+.compare-grid {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 768px) { .compare-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+.stat-card {
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid;
+}
+.stat-card.before { background: var(--red-bg); border-color: var(--red-border); }
+.stat-card.after { background: rgba(var(--primary-rgb), 0.05); border-color: rgba(var(--primary-rgb), 0.2); }
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+@media (min-width: 640px) { .stat-value { font-size: 1.875rem; } }
+.stat-value.red { color: var(--red); }
+.stat-value.green { color: var(--primary); }
+.stat-label { font-size: 0.875rem; color: #d1d5db; }
+
+/* ── Department Cards ── */
+.dept-card { padding: 24px; }
+@media (min-width: 640px) { .dept-card { padding: 32px; } }
+.dept-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.dept-icon {
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(var(--primary-rgb), 0.1);
+  flex-shrink: 0;
+}
+.dept-icon svg { width: 20px; height: 20px; color: var(--primary); }
+.dept-waste {
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
+}
+.dept-waste-value { font-size: 1.125rem; font-weight: 800; color: var(--red); }
+.dept-waste-label { font-size: 0.75rem; color: #d1d5db; }
+.dept-grid { display: grid; gap: 16px; }
+@media (min-width: 640px) { .dept-grid { grid-template-columns: 1fr 1fr; } }
+.dept-col-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.dept-col-label .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.dept-col-label.before-label .dot { background: #ef4444; }
+.dept-col-label.before-label { color: var(--red); }
+.dept-col-label.after-label .dot { background: var(--primary); }
+.dept-col-label.after-label { color: var(--primary); }
+.dept-item {
+  font-size: 0.875rem;
+  color: #d1d5db;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.dept-item .marker { flex-shrink: 0; margin-top: 2px; }
+.dept-item .marker.red { color: rgba(239,68,68,0.6); }
+.dept-item .marker.green { color: rgba(var(--primary-rgb), 0.6); }
+
+/* ── Value Stack ── */
+.value-item {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 20px 24px;
+}
+@media (min-width: 640px) { .value-item { flex-direction: row; } }
+
+/* ── Guarantee Section ── */
+.guarantee-section {
+  position: relative;
+  padding: 96px 16px;
+}
+@media (min-width: 640px) { .guarantee-section { padding: 144px 24px; } }
+.guarantee-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(var(--primary-rgb), 0.04), rgba(var(--primary-rgb), 0.08), rgba(var(--primary-rgb), 0.04));
+}
+.guarantee-border {
+  position: absolute;
+  inset: 0;
+  border-top: 1px solid rgba(var(--primary-rgb), 0.2);
+  border-bottom: 1px solid rgba(var(--primary-rgb), 0.2);
+}
+.guarantee-grid {
+  display: grid;
+  gap: 24px;
+  max-width: 672px;
+  margin: 0 auto;
+}
+@media (min-width: 640px) { .guarantee-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ── Credibility ── */
+.cred-grid {
+  display: grid;
+  gap: 32px;
+  align-items: start;
+}
+@media (min-width: 768px) { .cred-grid { grid-template-columns: 280px 1fr; } }
+.cred-photo {
+  width: 192px;
+  height: 192px;
+  border-radius: 16px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.cred-badges { display: flex; flex-wrap: wrap; gap: 12px; }
+.cred-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+}
+.cred-badge svg { width: 16px; height: 16px; color: var(--primary); fill: var(--primary); }
+
+/* ── Proof Grid ── */
+.proof-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.proof-panel {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+}
+@media (min-width: 640px) { .proof-panel { height: 400px; } }
+.proof-panel:hover { border-color: rgba(var(--primary-rgb), 0.5); box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.12); }
+.proof-panel-img {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+  background: rgba(var(--secondary-rgb), 0.8);
+}
+.proof-panel-img img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+.proof-panel-info {
+  padding: 12px 20px;
+  background: rgba(var(--bg-rgb), 0.6);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(var(--border-rgb), 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.proof-panel-info p:first-child { font-size: 0.875rem; font-weight: 600; }
+.proof-panel-info p:last-child { font-size: 0.75rem; color: #d1d5db; }
+
+/* ── Case Studies ── */
+.cases-grid {
+  display: grid;
+  gap: 24px;
+}
+@media (min-width: 768px) { .cases-grid { grid-template-columns: repeat(3, 1fr); } }
+.case-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.case-card:hover {
+  border-color: rgba(var(--primary-rgb), 0.4);
+  box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.08);
+}
+.case-video {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  background: rgba(var(--secondary-rgb), 0.6);
+}
+.case-video iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.case-content { padding: 20px; }
+.case-industry {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.case-name { font-size: 1.125rem; font-weight: 700; margin-bottom: 4px; }
+.case-copy { font-size: 0.875rem; color: #d1d5db; line-height: 1.6; }
+
+/* ── Trust Strip ── */
+.trust-strip {
+  margin-top: 48px;
+  padding: 20px 24px;
+  border-radius: 12px;
+  background: rgba(var(--secondary-rgb), 0.5);
+  border: 1px solid rgba(var(--border-rgb), 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 0.875rem;
+  color: #d1d5db;
+}
+.trust-strip a { display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
+.trust-strip a:hover { color: var(--primary); }
+.trust-strip .dot { color: var(--border); }
+.trust-strip svg { flex-shrink: 0; }
+
+/* ── Testimonials ── */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (min-width: 768px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .testimonials-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.testimonial-card {
+  padding: 24px;
+  position: relative;
+  transition: all 0.3s;
+}
+.testimonial-card:hover {
+  border-color: rgba(var(--primary-rgb), 0.4);
+  box-shadow: 0 0 30px rgba(var(--primary-rgb), 0.08);
+}
+.testimonial-quote-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  color: rgba(var(--primary-rgb), 0.1);
+}
+.stars { display: flex; gap: 2px; }
+.stars svg { width: 16px; height: 16px; color: #facc15; fill: #facc15; }
+.testimonial-text { margin-top: 16px; font-size: 0.875rem; color: #d1d5db; line-height: 1.6; }
+.testimonial-highlight { color: var(--primary); font-weight: 500; }
+.testimonial-author {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(var(--border-rgb), 0.3);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(var(--primary-rgb), 0.2);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.testimonial-name { font-size: 0.875rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.testimonial-role { font-size: 0.75rem; color: #d1d5db; }
+.testimonial-email { font-size: 0.75rem; color: rgba(209,213,219,0.6); display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.testimonial-email svg { width: 12px; height: 12px; flex-shrink: 0; }
+.linkedin-icon { color: #0A66C2; transition: opacity 0.2s; flex-shrink: 0; }
+.linkedin-icon:hover { opacity: 0.8; }
+
+/* ── FAQ Accordion ── */
+.faq-item {
+  margin-bottom: 12px;
+}
+.faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  background: none;
+  border: none;
+  color: var(--fg);
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+.faq-trigger:hover { color: var(--fg); }
+.faq-chevron {
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); }
+.faq-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  padding: 0 20px;
+  color: #d1d5db;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.faq-item.open .faq-content {
+  max-height: 500px;
+  padding: 0 20px 20px;
+}
+
+/* ── Footer ── */
+.site-footer {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #d1d5db;
+  border-top: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Utility ── */
+.text-center { text-align: center; }
+.text-neutral-300 { color: #d1d5db; }
+.text-neutral-400 { color: #9ca3af; }
+.text-neutral-500 { color: #6b7280; }
+.text-primary { color: var(--primary); }
+.text-red { color: var(--red); }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.mb-2 { margin-bottom: 8px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-5 { margin-bottom: 20px; }
+.mb-6 { margin-bottom: 24px; }
+.mb-8 { margin-bottom: 32px; }
+.mb-10 { margin-bottom: 40px; }
+.mb-12 { margin-bottom: 48px; }
+.mt-4 { margin-top: 16px; }
+.mt-8 { margin-top: 32px; }
+.mt-10 { margin-top: 40px; }
+.mt-12 { margin-top: 48px; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.max-w-2xl { max-width: 672px; }
+.max-w-3xl { max-width: 768px; }
+.max-w-4xl { max-width: 896px; }
+.max-w-5xl { max-width: 1024px; }
+.max-w-6xl { max-width: 1152px; }
+.space-y-3 > * + * { margin-top: 12px; }
+.space-y-4 > * + * { margin-top: 16px; }
+.space-y-6 > * + * { margin-top: 24px; }
+.space-y-8 > * + * { margin-top: 32px; }
+.leading-relaxed { line-height: 1.625; }
+
+/* ── SVG Icons (inline) ── */
+svg.icon { display: inline-block; vertical-align: middle; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── Bouncing Arrow ── */
+@keyframes bounce-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.bounce-arrow { animation: bounce-y 1.5s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NAV -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <img src="{YOUR_LOGO_URL}" alt="{YOUR_COMPANY}" class="nav-logo">
+    <div class="nav-links">
+      <a href="#testimonials">Testimonials</a>
+      <a href="#process">Process</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a href="https://cal.com/{YOUR_HANDLE}/apg-software-audit-ai-systems-strategy-session-aud" target="_blank" rel="noopener" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative; min-height:100vh; display:flex; flex-direction:column; overflow:hidden;">
+  <!-- BG Blobs -->
+  <div style="position:absolute;inset:0;overflow:hidden;z-index:0;">
+    <div style="position:absolute;top:25%;left:25%;width:384px;height:384px;background:rgba(var(--primary-rgb),0.1);border-radius:50%;filter:blur(48px);"></div>
+    <div style="position:absolute;bottom:25%;right:25%;width:320px;height:320px;background:rgba(var(--primary-rgb),0.05);border-radius:50%;filter:blur(48px);"></div>
+    <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(var(--primary-rgb),0.05),transparent);border-radius:50%;filter:blur(32px);"></div>
+  </div>
+
+  <!-- Attention Bar -->
+  <div class="fade-up" style="position:relative;z-index:10;padding:40px 16px 24px;text-align:center;">
+    <div class="attention-bar glass-card" style="box-shadow:0 0 30px rgba(var(--primary-rgb),0.15);border-color:rgba(var(--primary-rgb),0.3);">
+      <span class="pulse-dot"></span>
+      <span style="color:#d1d5db;font-weight:500;">
+        For business owners who know they need AI &amp; automation
+        <span style="color:var(--primary);font-weight:700;"> &mdash; but don't know where to start</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div style="position:relative;z-index:10;flex:1;display:flex;align-items:center;justify-content:center;padding:0 16px;">
+    <div class="fade-up" style="max-width:1024px;margin:0 auto;text-align:center;">
+      <h1 style="font-size:1.875rem;line-height:1.08;letter-spacing:-0.02em;margin-bottom:32px;padding:0 8px;">
+        We Go Inside Your Business and Show You Exactly Where
+        <span class="gradient-text"> AI and Automation</span> Will Actually
+        <span class="gradient-text" style="text-decoration:underline;text-decoration-color:rgba(var(--primary-rgb),0.5);text-decoration-thickness:4px;text-underline-offset:8px;"> Make a Difference</span>
+      </h1>
+
+      <p style="font-size:1rem;color:#9ca3af;max-width:896px;margin:0 auto 20px;line-height:1.6;">
+        <span style="color:var(--primary);font-weight:600;">Saves $50,000+/year</span>, and reclaims
+        <span style="color:var(--primary);font-weight:600;"> 20+ hours weekly</span> for your team
+      </p>
+
+      <p style="font-size:0.875rem;color:#6b7280;margin-bottom:56px;">
+        Complete blueprint in 14 days. Or you get a full refund. No questions asked.
+      </p>
+
+      <!-- VSL Video -->
+      <div class="glow-border" style="max-width:896px;margin:0 auto 48px;border-radius:16px;overflow:hidden;position:relative;padding-top:56.25%;">
+        <iframe
+          src="https://{YOUR_CLOUDFLARE_STREAM_HOST}/{VIDEO_ID_1}/iframe?poster=https%3A%2F%2F{YOUR_CLOUDFLARE_STREAM_HOST}%2F{VIDEO_ID_1}%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&primaryColor=%23c9f959"
+          loading="lazy"
+          style="border:none;position:absolute;top:0;left:0;height:100%;width:100%;"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:24px;">
+        <a href="https://cal.com/{YOUR_HANDLE}/apg-software-audit-ai-systems-strategy-session-aud" target="_blank" rel="noopener" class="cta-btn cta-glow">
+          Book Your Free Strategy Call
+          <span class="cta-arrow">&rarr;</span>
+        </a>
+        <p style="font-size:0.875rem;color:#6b7280;max-width:448px;">
+          Free 15-minute strategy call. No pressure. We'll tell you exactly what we'd fix &mdash; even if you don't hire us.
+        </p>
+      </div>
+
+      <div style="height:48px;"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PROBLEM -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="bg-gradient-section"></div>
+  <div class="section-container">
+    <div class="fade-up" style="max-width:768px;margin:0 auto;">
+      <h2 style="font-size:1.875rem;margin-bottom:32px;text-align:center;">
+        Your Business Is Leaking Money
+        <span class="gradient-text"> Every Single Day</span>
+      </h2>
+
+      <p style="font-size:1.125rem;color:#9ca3af;line-height:1.625;max-width:768px;margin:0 auto 40px;text-align:center;">
+        Most businesses lose 20+ hours a week to manual work, disconnected tools,
+        and processes that should've been automated years ago. The worst part?
+        You can feel it &mdash; but you don't know exactly where the biggest leaks are
+        or what to fix first.
+      </p>
+
+      <div class="glass-card glow-border" style="padding:24px 32px;text-align:center;max-width:576px;margin:0 auto 32px;">
+        <p style="font-size:1.25rem;font-weight:800;">
+          Our AI audit finds it all in
+          <span class="gradient-text"> 14 days.</span>
+        </p>
+      </div>
+
+      <div style="max-width:672px;margin:0 auto;" class="space-y-3">
+        <div class="check-item">
+          <svg class="check-icon icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          <p style="font-size:1.125rem;color:#d1d5db;">Exactly where your team is wasting the most time and money</p>
+        </div>
+        <div class="check-item">
+          <svg class="check-icon icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          <p style="font-size:1.125rem;color:#d1d5db;">Which tasks to automate first for the biggest ROI</p>
+        </div>
+        <div class="check-item">
+          <svg class="check-icon icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          <p style="font-size:1.125rem;color:#d1d5db;">Where AI actually fits in your specific operation</p>
+        </div>
+        <div class="check-item">
+          <svg class="check-icon icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+          <p style="font-size:1.125rem;color:#d1d5db;">What tools you're paying for but barely using</p>
+        </div>
+      </div>
+
+      <p style="font-size:1.125rem;color:#d1d5db;line-height:1.625;max-width:672px;margin:32px auto 0;text-align:center;">
+        No theory. No generic recommendations.
+        A blueprint built from the inside of <span style="color:var(--fg);font-weight:600;">YOUR</span> business &mdash; with your first automation already running.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MECHANISM -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="bg-gradient-section"></div>
+  <div class="section-container">
+    <div class="fade-up" style="max-width:768px;margin:0 auto;">
+      <h2 style="font-size:1.875rem;margin-bottom:20px;text-align:center;line-height:1.15;">
+        Everyone Says You Need AI and Automation.
+        <span class="gradient-text"> Nobody Shows You Where to Start.</span>
+      </h2>
+
+      <p style="font-size:1.125rem;color:#9ca3af;line-height:1.625;text-align:center;margin-bottom:56px;">
+        You've seen it everywhere. LinkedIn posts about AI transforming businesses.
+        Competitors talking about automation. Articles saying companies that don't
+        adopt AI will get left behind.
+      </p>
+
+      <!-- 3 Scenario Cards -->
+      <div class="space-y-8" style="margin-bottom:64px;">
+        <div class="glass-card scenario-card fade-up">
+          <div class="scenario-icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+          </div>
+          <p style="color:#d1d5db;line-height:1.625;">
+            Maybe you tried. You played with ChatGPT. Set up a few Zaps that nobody maintains.
+            Signed up for a CRM that was supposed to fix everything but now sits there at
+            <span style="color:var(--primary);font-weight:600;"> 2% usage</span>. You tried the tools,
+            but nothing actually changed. Your team is still doing the
+            <span style="color:var(--primary);font-weight:600;"> same manual work</span>. Your data
+            still lives in five different places. The mess is the same mess, just with a few more logins.
+          </p>
+        </div>
+
+        <div class="glass-card scenario-card fade-up">
+          <div class="scenario-icon">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M16 17H7"/><path d="M17 21H9"/></svg>
+          </div>
+          <p style="color:#d1d5db;line-height:1.625;">
+            Or maybe you haven't tried, because where do you even start?
+            There are <span style="color:var(--primary);font-weight:600;">thousands of AI tools</span>.
+            Hundreds of automation platforms. Every week there's a new one. You've thought
+            about it, looked into it, maybe even sat through a demo or two. But the more you
+            looked, the more overwhelming it got. So you put it aside. Not because you don't
+            care, because <span style="color:var(--primary);font-weight:600;">nobody gave you a clear answer</span> on
+            what actually applies to YOUR business.
+          </p>
+        </div>
+
+        <div class="glass-card scenario-card fade-up">
+          <div class="scenario-icon">
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <p style="color:#d1d5db;line-height:1.625;">
+            Either way, you're stuck in the same place. Your team is
+            <span style="color:var(--primary);font-weight:600;"> wasting hours every day</span> on
+            manual work that should've been automated years ago. Things are falling through
+            the cracks: missed follow-ups, scheduling conflicts, data that lives in someone's
+            head instead of a system. You know there's
+            <span style="color:var(--primary);font-weight:600;"> money leaking</span>. You just
+            can't see exactly where, or what to fix first.
+          </p>
+        </div>
+      </div>
+
+      <!-- Second heading -->
+      <div class="fade-up">
+        <h3 style="font-size:1.5rem;margin-bottom:24px;text-align:center;line-height:1.15;">
+          It's Not Your Fault.
+          <span class="gradient-text"> The Advice Is Broken.</span>
+        </h3>
+
+        <div style="color:#d1d5db;line-height:1.625;text-align:center;max-width:672px;margin:0 auto 48px;" class="space-y-6">
+          <p>
+            Every AI tool, every automation platform, every consultant you've
+            spoken to gave you <span style="color:var(--primary);font-weight:600;">generic advice</span> for a generic business.
+          </p>
+          <p style="color:#9ca3af;font-style:italic;">
+            "Automate your workflows." "Use AI for customer service." "Integrate
+            your tools."
+          </p>
+          <p>
+            Great, but <span style="color:var(--fg);font-weight:600;">WHICH</span> workflows?
+            <span style="color:var(--fg);font-weight:600;"> WHERE</span> does AI actually fit?
+            Which of the 47 things your team does manually every day is the one
+            that's costing you the most?
+          </p>
+          <p>
+            Generic advice doesn't fix a specific business. And
+            <span style="color:var(--primary);font-weight:600;"> your business is specific</span>.
+            Your team, your tools, your processes, the way data moves (or
+            doesn't move) between your systems, that's all unique. No YouTube
+            video, no AI tool, and no automation platform can fix what it's never
+            seen from the inside.
+          </p>
+        </div>
+
+        <!-- Pull Quote -->
+        <div class="glass-card glow-border" style="padding:24px 32px;text-align:center;max-width:672px;margin:0 auto;">
+          <svg class="icon" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--primary);margin:0 auto 16px;opacity:0.6;display:block;"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <p style="font-size:1.125rem;font-weight:800;line-height:1.3;">
+            You don't need another tool. You need someone who's been inside 300+
+            businesses to look at yours and tell you
+            <span class="gradient-text"> exactly what to fix.</span>
+          </p>
+        </div>
+
+        <!-- Transition Arrow -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:64px;">
+          <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);font-weight:700;">
+            Here's how we do it
+          </p>
+          <div class="bounce-arrow">
+            <svg class="icon" viewBox="0 0 24 24" style="width:32px;height:32px;color:var(--primary);"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- AUDIT JOURNEY (TIMELINE) -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="process" style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;margin-bottom:20px;">
+        Your Audit <span class="gradient-text">Journey</span>
+      </h2>
+      <p style="color:#d1d5db;font-size:1.125rem;max-width:672px;margin:0 auto;">
+        From kickoff to blueprint in 14 days. Here's exactly what happens.
+      </p>
+    </div>
+
+    <div class="timeline fade-up" style="max-width:768px;margin:0 auto;">
+      <!-- Day 1-2 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Days 1&ndash;2</div>
+        <div class="timeline-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+          Kickoff
+        </div>
+        <p class="timeline-desc">We get access to your tools, your workflows, your team. We ask the questions most consultants don't think to ask. You tell us everything.</p>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> 90-minute kickoff call with full screen-share walkthrough</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Access granted to every tool, spreadsheet, and system</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Team interviews to uncover hidden bottlenecks</div>
+      </div>
+
+      <!-- Day 3-5 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Days 3&ndash;5</div>
+        <div class="timeline-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="m13 13.5 2-2.5-2-2.5"/><path d="m21 21-4.3-4.3"/><circle cx="11" cy="11" r="8"/></svg>
+          Deep Dive
+        </div>
+        <p class="timeline-desc">We map your entire operation: every tool, every process, every data flow. Nothing gets missed.</p>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Full tool stack audit &mdash; every app, workaround, and manual process</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Leakage points identified and dollar values assigned</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Process maps built for every department</div>
+      </div>
+
+      <!-- Day 5-7 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Days 5&ndash;7</div>
+        <div class="timeline-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          Your First Automation Goes Live
+        </div>
+        <p class="timeline-desc">We build and deploy one automation into your business. You start seeing time savings immediately, before the audit is even done.</p>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> One automation built and deployed in your business</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Immediate time savings &mdash; typically 5&ndash;10 hrs/week</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Your team trained on the new workflow</div>
+      </div>
+
+      <!-- Day 7-12 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Days 7&ndash;12</div>
+        <div class="timeline-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 12h4"/><path d="M10 16h4"/><path d="M10 8h1"/></svg>
+          Blueprint Build
+        </div>
+        <p class="timeline-desc">We assemble your operational blueprint, AI opportunity map, ROI projections, and priority matrix. Everything is specific to your business.</p>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Full Operational Audit Document (15&ndash;20 pages)</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> AI &amp; Automation Opportunity Map</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> ROI Projection &amp; Savings Report</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Priority Matrix &mdash; what to fix first</div>
+      </div>
+
+      <!-- Day 14 -->
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Day 14</div>
+        <div class="timeline-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          Strategy Walkthrough
+        </div>
+        <p class="timeline-desc">We present the full blueprint live. You walk away knowing exactly what to fix, in what order, and how much each fix is worth.</p>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Strategy Walkthrough Call with your team</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> Every question answered, every next step mapped out</div>
+        <div class="timeline-bullet"><svg class="icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg> You keep the blueprint whether you work with us or not</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NUMBERS COMPARE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;margin-bottom:20px;">
+        What We Typically <span class="gradient-text">Uncover</span>
+      </h2>
+      <p style="color:#d1d5db;font-size:1.125rem;max-width:672px;margin:0 auto;">
+        Every business is different &mdash; but these patterns show up again and again.
+      </p>
+    </div>
+
+    <div class="compare-grid max-w-5xl mx-auto fade-up">
+      <!-- Before Column -->
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:#ef4444;"></div>
+          <h3 style="font-size:1.125rem;font-weight:800;color:var(--red);">Before the Audit</h3>
+        </div>
+        <div class="space-y-3">
+          <div class="stat-card before"><p class="stat-value red">20+ hrs/wk</p><p class="stat-label">Lost to manual processes and re-work</p></div>
+          <div class="stat-card before"><p class="stat-value red">5+</p><p class="stat-label">Disconnected tools with no sync between them</p></div>
+          <div class="stat-card before"><p class="stat-value red">No visibility</p><p class="stat-label">Into which leads, jobs, or clients are falling through</p></div>
+          <div class="stat-card before"><p class="stat-value red">3&ndash;7 days</p><p class="stat-label">Delay from agreement to first invoice</p></div>
+          <div class="stat-card before"><p class="stat-value red">Zero</p><p class="stat-label">Follow-up system for past clients</p></div>
+          <div class="stat-card before"><p class="stat-value red">Gut feel</p><p class="stat-label">Instead of data when making decisions</p></div>
+        </div>
+      </div>
+
+      <!-- After Column -->
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+          <div style="width:12px;height:12px;border-radius:50%;background:var(--primary);"></div>
+          <h3 style="font-size:1.125rem;font-weight:800;color:var(--primary);">After the Audit</h3>
+        </div>
+        <div class="space-y-3">
+          <div class="stat-card after"><p class="stat-value green">10&ndash;15 hrs/wk</p><p class="stat-label">Reclaimed with clear process fixes</p></div>
+          <div class="stat-card after"><p class="stat-value green">1 system</p><p class="stat-label">Unified workflow &mdash; everything talks to everything</p></div>
+          <div class="stat-card after"><p class="stat-value green">Full clarity</p><p class="stat-label">On every gap, bottleneck, and missed opportunity</p></div>
+          <div class="stat-card after"><p class="stat-value green">Same day</p><p class="stat-label">Streamlined onboarding with digital flow</p></div>
+          <div class="stat-card after"><p class="stat-value green">Automated</p><p class="stat-label">Reviews, referrals, and reactivation on autopilot</p></div>
+          <div class="stat-card after"><p class="stat-value green">A blueprint</p><p class="stat-label">With priorities ranked by impact and effort</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Math Box -->
+    <div class="glass-card glow-border fade-up" style="max-width:768px;margin:48px auto 0;padding:32px;text-align:center;">
+      <p style="color:#9ca3af;font-size:0.875rem;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:8px;">Do the math</p>
+      <p style="color:#d1d5db;font-size:0.875rem;margin-bottom:24px;max-width:512px;margin-left:auto;margin-right:auto;">
+        Let's be conservative &mdash; say your team wastes
+        <span style="color:var(--red);font-weight:600;">just</span>
+        20 hours a week on manual work.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:1.5rem;font-weight:800;color:var(--red);">20 hrs</span>
+          <span style="font-size:0.875rem;color:#9ca3af;">/ week</span>
+        </div>
+        <span style="color:#6b7280;font-size:1.25rem;">&times;</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:1.5rem;font-weight:800;">$35</span>
+          <span style="font-size:0.875rem;color:#9ca3af;">avg / hour</span>
+        </div>
+        <span style="color:#6b7280;font-size:1.25rem;">&times;</span>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:1.5rem;font-weight:800;">52</span>
+          <span style="font-size:0.875rem;color:#9ca3af;">weeks</span>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:16px;">
+        <p style="color:#9ca3af;font-size:0.875rem;margin-bottom:4px;">That's at least</p>
+        <p class="gradient-text" style="font-size:2.25rem;font-weight:800;margin-bottom:8px;">$36,400 / year</p>
+        <p style="color:#d1d5db;font-size:0.875rem;max-width:576px;margin:0 auto;">
+          And that's the conservative number &mdash; the real one is usually
+          2&ndash;3x higher. Before you count missed leads, late invoices,
+          or lost clients.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DEPARTMENT BREAKDOWN -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;margin-bottom:20px;">
+        Where The Time Goes &mdash;
+        <span class="gradient-text"> Department by Department</span>
+      </h2>
+      <p style="color:#d1d5db;font-size:1.125rem;max-width:672px;margin:0 auto;">
+        These are the patterns we see in almost every audit. The problems
+        are common &mdash; the fixes are specific to you.
+      </p>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-6">
+      <!-- Acquisition -->
+      <div class="glass-card glow-border dept-card fade-up">
+        <div class="dept-header">
+          <div class="dept-icon"><svg class="icon" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></div>
+          <div><h3 style="font-weight:800;font-size:1.125rem;">Acquisition</h3></div>
+          <div class="dept-waste"><span class="dept-waste-value">~8 hrs/wk</span><p class="dept-waste-label">wasted</p></div>
+        </div>
+        <div class="dept-grid">
+          <div>
+            <div class="dept-col-label before-label"><span class="dot"></span> Before</div>
+            <div class="dept-item"><span class="marker red">-</span> Leads land in Gmail, phone, or sticky notes</div>
+            <div class="dept-item"><span class="marker red">-</span> No follow-up system &mdash; leads go cold</div>
+            <div class="dept-item"><span class="marker red">-</span> No pipeline &mdash; no idea what converted</div>
+            <div class="dept-item"><span class="marker red">-</span> Can't measure which ads actually work</div>
+          </div>
+          <div>
+            <div class="dept-col-label after-label"><span class="dot"></span> After</div>
+            <div class="dept-item"><span class="marker green">+</span> Every lead captured into one pipeline</div>
+            <div class="dept-item"><span class="marker green">+</span> Automated follow-up sequences</div>
+            <div class="dept-item"><span class="marker green">+</span> Source attribution on every deal</div>
+            <div class="dept-item"><span class="marker green">+</span> Clear view of what's converting</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Onboarding -->
+      <div class="glass-card glow-border dept-card fade-up">
+        <div class="dept-header">
+          <div class="dept-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg></div>
+          <div><h3 style="font-weight:800;font-size:1.125rem;">Onboarding</h3></div>
+          <div class="dept-waste"><span class="dept-waste-value">~4 hrs/wk</span><p class="dept-waste-label">wasted</p></div>
+        </div>
+        <div class="dept-grid">
+          <div>
+            <div class="dept-col-label before-label"><span class="dot"></span> Before</div>
+            <div class="dept-item"><span class="marker red">-</span> Paper contracts re-typed into spreadsheets</div>
+            <div class="dept-item"><span class="marker red">-</span> 3&ndash;7 day delay from agreement to invoice</div>
+            <div class="dept-item"><span class="marker red">-</span> Manual data entry &mdash; errors and duplicates</div>
+            <div class="dept-item"><span class="marker red">-</span> Client info scattered across 5 places</div>
+          </div>
+          <div>
+            <div class="dept-col-label after-label"><span class="dot"></span> After</div>
+            <div class="dept-item"><span class="marker green">+</span> Digital signing &mdash; same-day turnaround</div>
+            <div class="dept-item"><span class="marker green">+</span> Auto-populated fields, zero re-entry</div>
+            <div class="dept-item"><span class="marker green">+</span> Standardised checklist &mdash; nothing missed</div>
+            <div class="dept-item"><span class="marker green">+</span> One source of truth for every client</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quoting -->
+      <div class="glass-card glow-border dept-card fade-up">
+        <div class="dept-header">
+          <div class="dept-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></div>
+          <div><h3 style="font-weight:800;font-size:1.125rem;">Quoting</h3></div>
+          <div class="dept-waste"><span class="dept-waste-value">~6 hrs/wk</span><p class="dept-waste-label">wasted</p></div>
+        </div>
+        <div class="dept-grid">
+          <div>
+            <div class="dept-col-label before-label"><span class="dot"></span> Before</div>
+            <div class="dept-item"><span class="marker red">-</span> 2&ndash;5 day turnaround per quote</div>
+            <div class="dept-item"><span class="marker red">-</span> Each person quotes differently</div>
+            <div class="dept-item"><span class="marker red">-</span> Multiple revision loops via email</div>
+            <div class="dept-item"><span class="marker red">-</span> No follow-up on sent quotes</div>
+          </div>
+          <div>
+            <div class="dept-col-label after-label"><span class="dot"></span> After</div>
+            <div class="dept-item"><span class="marker green">+</span> Same-day quoting with templates</div>
+            <div class="dept-item"><span class="marker green">+</span> Standardised pricing across the team</div>
+            <div class="dept-item"><span class="marker green">+</span> One-click revisions with tracking</div>
+            <div class="dept-item"><span class="marker green">+</span> Automated follow-up + win/loss data</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fulfilment -->
+      <div class="glass-card glow-border dept-card fade-up">
+        <div class="dept-header">
+          <div class="dept-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path d="M4 15v-3a6 6 0 0 1 6-6h0"/><path d="M14 6h0a6 6 0 0 1 6 6v3"/></svg></div>
+          <div><h3 style="font-weight:800;font-size:1.125rem;">Fulfilment</h3></div>
+          <div class="dept-waste"><span class="dept-waste-value">~10 hrs/wk</span><p class="dept-waste-label">wasted</p></div>
+        </div>
+        <div class="dept-grid">
+          <div>
+            <div class="dept-col-label before-label"><span class="dot"></span> Before</div>
+            <div class="dept-item"><span class="marker red">-</span> Scheduling lives on a whiteboard</div>
+            <div class="dept-item"><span class="marker red">-</span> No real-time visibility on job progress</div>
+            <div class="dept-item"><span class="marker red">-</span> Timesheets submitted days late</div>
+            <div class="dept-item"><span class="marker red">-</span> Profitability unknown until months later</div>
+          </div>
+          <div>
+            <div class="dept-col-label after-label"><span class="dot"></span> After</div>
+            <div class="dept-item"><span class="marker green">+</span> Real-time job dashboard from anywhere</div>
+            <div class="dept-item"><span class="marker green">+</span> Live progress updates and photo logs</div>
+            <div class="dept-item"><span class="marker green">+</span> Automated timesheet sync</div>
+            <div class="dept-item"><span class="marker green">+</span> Live job costing &mdash; no surprises</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reactivation -->
+      <div class="glass-card glow-border dept-card fade-up">
+        <div class="dept-header">
+          <div class="dept-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg></div>
+          <div><h3 style="font-weight:800;font-size:1.125rem;">Reactivation</h3></div>
+          <div class="dept-waste"><span class="dept-waste-value">~0 hrs/wk</span><p class="dept-waste-label">Not happening</p></div>
+        </div>
+        <div class="dept-grid">
+          <div>
+            <div class="dept-col-label before-label"><span class="dot"></span> Before</div>
+            <div class="dept-item"><span class="marker red">-</span> Zero re-engagement of past clients</div>
+            <div class="dept-item"><span class="marker red">-</span> Barely any online reviews</div>
+            <div class="dept-item"><span class="marker red">-</span> No referral system despite word-of-mouth leads</div>
+            <div class="dept-item"><span class="marker red">-</span> Seasonal opportunities completely missed</div>
+          </div>
+          <div>
+            <div class="dept-col-label after-label"><span class="dot"></span> After</div>
+            <div class="dept-item"><span class="marker green">+</span> Automated review requests after every job</div>
+            <div class="dept-item"><span class="marker green">+</span> Referral program with instant credit</div>
+            <div class="dept-item"><span class="marker green">+</span> Seasonal reminders on autopilot</div>
+            <div class="dept-item"><span class="marker green">+</span> Past clients re-engaged systematically</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="glass-card glow-border fade-up" style="max-width:768px;margin:32px auto 0;padding:32px;text-align:center;">
+      <p style="color:#d1d5db;font-size:0.875rem;margin-bottom:8px;">Typical total across all departments</p>
+      <p style="font-size:2.25rem;font-weight:800;color:var(--red);margin-bottom:4px;">20&ndash;30 hours / week</p>
+      <p style="color:#d1d5db;font-size:0.875rem;max-width:448px;margin:0 auto;">
+        Spent on manual work, chasing information, and fixing avoidable
+        mistakes. The audit shows you exactly where &mdash; and what to do about it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- VALUE STACK -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;">
+        Everything The Audit <span class="gradient-text">Delivers</span>
+      </h2>
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-3">
+      <div class="glass-card glow-border value-item fade-up">
+        <div class="scenario-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-weight:600;font-size:1rem;margin-bottom:4px;">Full Operational Audit Document (15-20 Pages)</h3>
+          <p style="font-size:0.875rem;color:#d1d5db;">We get inside every tool, workflow, and manual process in your business. You'll see a complete map of how your operation actually runs &mdash; and where it's breaking down.</p>
+        </div>
+      </div>
+
+      <div class="glass-card glow-border value-item fade-up">
+        <div class="scenario-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-weight:600;font-size:1rem;margin-bottom:4px;">AI &amp; Automation Opportunity Map</h3>
+          <p style="font-size:0.875rem;color:#d1d5db;">A specific breakdown of where AI and automation will have the highest impact in YOUR business. Not a generic list &mdash; a tailored map based on how you actually operate.</p>
+        </div>
+      </div>
+
+      <div class="glass-card glow-border value-item fade-up">
+        <div class="scenario-icon"><svg class="icon" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-weight:600;font-size:1rem;margin-bottom:4px;">ROI Projection &amp; Savings Report</h3>
+          <p style="font-size:0.875rem;color:#d1d5db;">Hard numbers. How much time and money each fix saves you. Use this to justify the investment to partners, co-founders, or your team.</p>
+        </div>
+      </div>
+
+      <div class="glass-card glow-border value-item fade-up">
+        <div class="scenario-icon"><svg class="icon" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2"/><line x1="10" x2="14" y1="6" y2="6"/><line x1="10" x2="14" y1="10" y2="10"/><line x1="10" x2="14" y1="14" y2="14"/><path d="M4 2h1v20H4z"/><path d="M19 2h1v20h-1z"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-weight:600;font-size:1rem;margin-bottom:4px;">Priority Matrix - What To Fix First</h3>
+          <p style="font-size:0.875rem;color:#d1d5db;">Not everything matters equally. We rank every opportunity by impact and effort so you know where to start and what to ignore.</p>
+        </div>
+      </div>
+
+      <div class="glass-card glow-border value-item fade-up">
+        <div class="scenario-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-weight:600;font-size:1rem;margin-bottom:4px;">One Automation - Built And Deployed For You</h3>
+          <p style="font-size:0.875rem;color:#d1d5db;">Within the first week, we identify your biggest quick win and build it live in your business. You see results before the audit is even finished.</p>
+        </div>
+      </div>
+
+      <div class="glass-card glow-border value-item fade-up">
+        <div class="scenario-icon"><svg class="icon" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></svg></div>
+        <div style="flex:1;min-width:0;">
+          <h3 style="font-weight:600;font-size:1rem;margin-bottom:4px;">Strategy Walkthrough Call</h3>
+          <p style="font-size:0.875rem;color:#d1d5db;">We present the full blueprint to you and your team. Every question answered. Every next step mapped out. Whether you work with us after or not, you leave with total clarity.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Box -->
+    <div class="glass-card glow-border fade-up" style="max-width:768px;margin:40px auto 0;padding:32px;text-align:center;">
+      <p style="font-size:1.125rem;color:#d1d5db;margin-bottom:4px;">All of this in just 14 days</p>
+      <p style="font-size:1.5rem;font-weight:800;margin-bottom:24px;">Find out if your business qualifies</p>
+      <a href="https://cal.com/{YOUR_HANDLE}/apg-software-audit-ai-systems-strategy-session-aud" target="_blank" rel="noopener" class="cta-btn cta-glow">
+        Book Your Free Strategy Call <span class="cta-arrow">&rarr;</span>
+      </a>
+      <p style="font-size:0.875rem;color:#9ca3af;margin-top:16px;">
+        100% money-back guarantee. You keep the blueprint either way.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- GUARANTEE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="guarantee-section">
+  <div class="guarantee-bg"></div>
+  <div class="guarantee-border"></div>
+  <div style="position:relative;max-width:896px;margin:0 auto;padding:0 16px;z-index:1;">
+    <div class="fade-up text-center">
+      <p class="gradient-text" style="font-size:4.5rem;font-weight:800;margin-bottom:16px;line-height:1;">100%</p>
+      <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);font-weight:700;margin-bottom:40px;">Money-Back Guarantee</p>
+
+      <h2 style="font-size:1.875rem;margin-bottom:48px;letter-spacing:-0.02em;">
+        Love the blueprint, or
+        <span class="gradient-text"> don't pay.</span>
+      </h2>
+
+      <div class="guarantee-grid" style="margin-bottom:40px;">
+        <div class="glass-card" style="padding:20px;border-radius:12px;">
+          <p style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">7 days</p>
+          <p style="font-size:0.875rem;color:#d1d5db;">to decide &mdash; full refund, no questions</p>
+        </div>
+        <div class="glass-card" style="padding:20px;border-radius:12px;">
+          <p style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">You keep it</p>
+          <p style="font-size:0.875rem;color:#d1d5db;">the blueprint is yours either way</p>
+        </div>
+        <div class="glass-card" style="padding:20px;border-radius:12px;">
+          <p style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">Zero risk</p>
+          <p style="font-size:0.875rem;color:#d1d5db;">if it's not actionable, you pay nothing</p>
+        </div>
+      </div>
+
+      <p style="color:#d1d5db;font-size:0.875rem;max-width:512px;margin:0 auto;line-height:1.6;">
+        We've done this enough times to know what we'll find. But the
+        guarantee is there so you don't have to take our word for it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CREDIBILITY -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="bg-gradient-section"></div>
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;">
+        Built By Someone Who's <span class="gradient-text">Seen Your Problem Before.</span>
+      </h2>
+    </div>
+
+    <div class="cred-grid max-w-4xl mx-auto fade-up">
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div class="glow-border" style="width:192px;height:192px;border-radius:16px;overflow:hidden;margin-bottom:16px;background:var(--secondary);">
+          <img src="https://{YOUR_CDN_HOST}/adam.png" alt="Adam — Founder, {YOUR_COMPANY}" class="cred-photo">
+        </div>
+        <h3 style="font-weight:800;font-size:1.25rem;">{YOUR_FIRST_NAME}</h3>
+        <p style="font-size:0.875rem;color:#d1d5db;">Founder, {YOUR_COMPANY}</p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="space-y-4" style="color:#d1d5db;line-height:1.625;">
+          <p>After 300+ projects building software, automating operations, and tearing apart broken systems &mdash; I keep seeing the same thing. Businesses losing thousands every month to scattered tools, manual work that should've been automated years ago, and software they're barely using.</p>
+          <p>Every audit is done personally. Not by a junior. Not by a subcontractor. The person who's seen 300+ of these operations is the one going through yours.</p>
+        </div>
+
+        <div class="cred-badges">
+          <div class="glass-card cred-badge">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--primary);stroke:none;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-weight:500;">300+ projects completed</span>
+          </div>
+          <div class="glass-card cred-badge">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--primary);stroke:none;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-weight:500;">50 five-star reviews</span>
+          </div>
+        </div>
+
+        <div class="cred-badges">
+          <a href="https://www.youtube.com/@AdamGoodyer" target="_blank" rel="noopener noreferrer" class="glass-card cred-badge" style="transition:border-color 0.2s;">
+            <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--primary);"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            <span style="font-weight:500;">YouTube</span>
+          </a>
+          <a href="{YOUR_UPWORK_URL}" target="_blank" rel="noopener noreferrer" class="glass-card cred-badge" style="transition:border-color 0.2s;">
+            <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--primary);stroke:none;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span style="font-weight:500;">Upwork</span>
+          </a>
+          <a href="{YOUR_LINKEDIN_URL}" target="_blank" rel="noopener noreferrer" class="glass-card cred-badge" style="transition:border-color 0.2s;">
+            <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--primary);"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+            <span style="font-weight:500;">LinkedIn</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PROOF (2x2 Grid) -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="section-container">
+    <div class="proof-grid max-w-5xl mx-auto fade-up">
+      <a href="{YOUR_UPWORK_URL}" target="_blank" rel="noopener noreferrer" class="glass-card proof-panel">
+        <div class="proof-panel-img">
+          <img src="https://{YOUR_CDN_HOST}/Adam%20Upwork%20Screenshot.png" alt="Upwork Profile">
+        </div>
+        <div class="proof-panel-info">
+          <div><p>Upwork Profile</p><p>100% Job Success &middot; {YOUR_CREDENTIAL} &middot; $100K+</p></div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/@AdamGoodyer" target="_blank" rel="noopener noreferrer" class="glass-card proof-panel">
+        <div class="proof-panel-img">
+          <img src="https://{YOUR_CDN_HOST}/Adam%20Goodyer%20Youtube%20Channel%20Screenshot.png" alt="YouTube Channel">
+        </div>
+        <div class="proof-panel-info">
+          <div><p>YouTube Channel</p><p>5.48K subscribers &middot; 84 videos</p></div>
+        </div>
+      </a>
+
+      <a href="https://{YOUR_COMMUNITY_URL}" target="_blank" rel="noopener noreferrer" class="glass-card proof-panel">
+        <div class="proof-panel-img">
+          <img src="https://{YOUR_CDN_HOST}/Skool%20Screenshot.png" alt="{YOUR_FREE_COMMUNITY}">
+        </div>
+        <div class="proof-panel-info">
+          <div><p>{YOUR_FREE_COMMUNITY}</p><p>339 members &middot; Skool community</p></div>
+        </div>
+      </a>
+
+      <a href="{YOUR_UPWORK_URL}" target="_blank" rel="noopener noreferrer" class="glass-card proof-panel">
+        <div class="proof-panel-img">
+          <img src="https://{YOUR_CDN_HOST}/upwork_reviews_collage.png" alt="Upwork Reviews">
+        </div>
+        <div class="proof-panel-info">
+          <div><p>Client Reviews</p><p>50+ five-star reviews</p></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- CASE STUDIES -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="testimonials" style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;">
+        What Happens <span class="gradient-text">After An Audit</span>
+      </h2>
+    </div>
+
+    <div class="cases-grid max-w-6xl mx-auto fade-up">
+      <!-- Tom -->
+      <div class="glass-card case-card">
+        <div class="case-video">
+          <iframe src="https://{YOUR_CLOUDFLARE_STREAM_HOST}/{VIDEO_ID_2}/iframe?poster=https%3A%2F%2F{YOUR_CLOUDFLARE_STREAM_HOST}%2F{VIDEO_ID_2}%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&primaryColor=%237bed00" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="case-content">
+          <p class="case-industry">HOME SERVICES / SPORTS</p>
+          <h3 class="case-name">Tom &mdash; {CASE_STUDY_3_NAME}</h3>
+          <p class="case-copy">Tom had worked with multiple agencies before, none delivered the detail or speed his business needed. We found gaps their previous partners had missed entirely, mapped the full picture, and built a plan to move fast. Delivered in a fraction of the expected timeline. Tom called it "above and beyond" and stopped looking for other agencies.</p>
+        </div>
+      </div>
+
+      <!-- Gavin -->
+      <div class="glass-card case-card">
+        <div class="case-video">
+          <iframe src="https://{YOUR_CLOUDFLARE_STREAM_HOST}/{VIDEO_ID_3}/iframe?poster=https%3A%2F%2F{YOUR_CLOUDFLARE_STREAM_HOST}%2F{VIDEO_ID_3}%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&primaryColor=%237bed00" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="case-content">
+          <p class="case-industry">MARKETING AGENCY</p>
+          <h3 class="case-name">Gavin &mdash; {TESTIMONIAL_COMPANY}</h3>
+          <p class="case-copy">Gavin had the vision for an AI platform but no clear, cost-effective path from idea to launch. We cut the unnecessary spend, turned his strategy into a structured roadmap, and launched the MVP well under budget and ahead of every deadline. Built to scale from day one.</p>
+        </div>
+      </div>
+
+      <!-- Dan -->
+      <div class="glass-card case-card">
+        <div class="case-video">
+          <iframe src="https://{YOUR_CLOUDFLARE_STREAM_HOST}/{VIDEO_ID_4}/iframe?poster=https%3A%2F%2F{YOUR_CLOUDFLARE_STREAM_HOST}%2F{VIDEO_ID_4}%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600&primaryColor=%237bed00" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="case-content">
+          <p class="case-industry">MARKETING AGENCY</p>
+          <h3 class="case-name">Dan &mdash; EON</h3>
+          <p class="case-copy">Dan needed a development partner who truly understood his tech stack, not surface-level. We went deep into the platform architecture, identified what was slowing them down, and streamlined the operation. Over a year of ongoing partnership. Dan calls it "a breeze."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trust Strip -->
+    <div class="trust-strip fade-up">
+      <a href="{YOUR_UPWORK_URL}" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:var(--primary);stroke:none;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span style="font-weight:500;color:var(--fg);">50 five-star reviews</span>
+      </a>
+      <span class="dot">&bull;</span>
+      <span style="display:flex;align-items:center;gap:8px;">
+        <svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;color:var(--primary);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+        <span style="font-weight:500;color:var(--fg);">300+ projects completed</span>
+      </span>
+      <span class="dot">&bull;</span>
+      <a href="https://www.trustpilot.com/review/{YOUR_DOMAIN}" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#00B67A;stroke:none;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <span style="font-weight:500;color:var(--fg);">Rated Excellent on Trustpilot</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TESTIMONIALS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;margin-bottom:20px;">
+        What Our <span class="gradient-text">Clients Say</span>
+      </h2>
+      <p style="color:#d1d5db;max-width:672px;margin:0 auto;">
+        Real feedback from founders and teams we've worked with.
+      </p>
+    </div>
+
+    <div class="testimonials-grid max-w-5xl mx-auto fade-up">
+      <!-- Col 1 -->
+      <div class="space-y-5">
+        <!-- Testimonial 2 -->
+        <div class="glass-card testimonial-card">
+          <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="testimonial-text">We hired an experienced Bubble agency to build an app for one of our customers but as requirements started getting complex we got stuck, for weeks, without making much progress. The customer was getting extremely frustrated and then we came across Adam. <span class="testimonial-highlight">Within the first 30 minutes going through the code he identified the issue</span>, rewrote the logic and in a few hours we had our app up and running. After this gig, we decided to partner with Adam and his company on all Bubble projects moving forward. Great value for money, you just know he will deliver it! You are not just paying for a developer, you are paying for not having headaches, knowing that he will implement best practices.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MP</div>
+            <div style="min-width:0;flex:1;">
+              <p class="testimonial-name">{TESTIMONIAL_2_NAME} <a href="{TESTIMONIAL_2_LINKEDIN}" target="_blank" rel="noopener" class="linkedin-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></p>
+              <p class="testimonial-role">CPTO &mdash; {TESTIMONIAL_2_COMPANY}</p>
+              <p class="testimonial-email"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> {TESTIMONIAL_2_EMAIL}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="glass-card testimonial-card">
+          <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="testimonial-text">Adam has been super helpful in showing me the many options available for creating digital solutions, its made <span class="testimonial-highlight">a huge difference to my business</span>, cheers mate!</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">DB</div>
+            <div style="min-width:0;flex:1;">
+              <p class="testimonial-name">{TESTIMONIAL_3_NAME} <a href="{TESTIMONIAL_3_LINKEDIN}" target="_blank" rel="noopener" class="linkedin-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></p>
+              <p class="testimonial-role">CEO &mdash; {TESTIMONIAL_3_COMPANY}</p>
+              <p class="testimonial-email"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> {TESTIMONIAL_3_EMAIL}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2 -->
+      <div class="space-y-5">
+        <!-- {TESTIMONIAL_4_NAME} -->
+        <div class="glass-card testimonial-card">
+          <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="testimonial-text">Adam helped us build an MVP of the very first iteration of the app using Bubble. We needed something built quickly but professionally as a proof of concept. Adam was responsive and great to work with &ndash; communication is so critical in these types of projects! Since this MVP, <span class="testimonial-highlight">the app has gone from strength to strength</span> and we're grateful for the early support we received. Thanks again, Adam.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">NI</div>
+            <div style="min-width:0;flex:1;">
+              <p class="testimonial-name">{TESTIMONIAL_4_NAME} <a href="{TESTIMONIAL_4_LINKEDIN}" target="_blank" rel="noopener" class="linkedin-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></p>
+              <p class="testimonial-role">Head of Product &mdash; Moment Leader</p>
+              <p class="testimonial-email"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> {TESTIMONIAL_4_EMAIL}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Guarantee Badge -->
+        <div class="glass-card" style="padding:24px;text-align:center;border-radius:12px;">
+          <p class="gradient-text" style="font-size:1.875rem;font-weight:800;margin-bottom:8px;">100%</p>
+          <p style="font-size:0.875rem;font-weight:600;margin-bottom:4px;">Money-back guarantee.</p>
+          <p style="font-size:0.75rem;color:#d1d5db;">You keep the blueprint either way.</p>
+        </div>
+      </div>
+
+      <!-- Col 3 -->
+      <div class="space-y-5">
+        <!-- Joey -->
+        <div class="glass-card testimonial-card">
+          <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="testimonial-text">Adam helped me get an MVP up and running on Bubble. Super helpful, can't thank him enough. Explained everything so clearly, helped troubleshoot all my problems and explain the underlying logic so I could make it as efficient as possible and not waste any money. Highly recommend if you're looking for someone <span class="testimonial-highlight">reliable and easy to work with</span>.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JR</div>
+            <div style="min-width:0;flex:1;">
+              <p class="testimonial-name">Joey Ross</p>
+              <p class="testimonial-role">Founder</p>
+              <p class="testimonial-email"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> {TESTIMONIAL_6_EMAIL}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- {TESTIMONIAL_5_NAME} -->
+        <div class="glass-card testimonial-card">
+          <svg class="testimonial-quote-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+          <div class="stars"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+          <p class="testimonial-text">Working with Adam and the team, they created and built an MVP for my Real Estate SaaS in a <span class="testimonial-highlight">shorter timeframe and at a lower cost</span> than other Agency's. Adam shared as much knowledge and resources as possible throughout to guide the project in the right direction. Although the project did not continue, they completed the MVP as proposed. Well done.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JA</div>
+            <div style="min-width:0;flex:1;">
+              <p class="testimonial-name">{TESTIMONIAL_5_NAME} <a href="{TESTIMONIAL_5_LINKEDIN}" target="_blank" rel="noopener" class="linkedin-icon"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a></p>
+              <p class="testimonial-role">Founder &mdash; Real Estate SaaS</p>
+              <p class="testimonial-email"><svg class="icon" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> {TESTIMONIAL_5_EMAIL}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLUEPRINT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;">
+  <div class="bg-gradient-section" style="background:linear-gradient(to bottom, var(--bg), rgba(var(--secondary-rgb),0.1), var(--bg));"></div>
+  <div class="section-container" style="position:relative;z-index:1;">
+    <div class="fade-up" style="max-width:768px;margin:0 auto;text-align:center;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(var(--primary-rgb),0.1);margin-bottom:24px;">
+        <svg class="icon" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--primary);"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      </div>
+      <h2 style="font-size:1.875rem;margin-bottom:32px;">
+        The Blueprint <span class="gradient-text">Belongs To You</span>
+      </h2>
+      <p style="font-size:1.125rem;color:#d1d5db;line-height:1.625;max-width:672px;margin:0 auto;">
+        Take it to another agency. Give it to your internal team. Hand it to a freelancer. The audit is a standalone deliverable, not a deposit on future work. Whatever you do with it, you'll have total clarity on what to fix and where to start.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- URGENCY -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="pricing" style="position:relative;">
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom, var(--bg), rgba(var(--primary-rgb),0.05), var(--bg));"></div>
+  <div class="section-container" style="position:relative;z-index:1;">
+    <div class="fade-up" style="max-width:768px;margin:0 auto;text-align:center;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(234,179,8,0.1);margin-bottom:24px;">
+        <svg class="icon" viewBox="0 0 24 24" style="width:24px;height:24px;color:var(--warning);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h2 style="font-size:1.875rem;margin-bottom:20px;">
+        We Take <span class="gradient-text">4 Audits</span> Per Month
+      </h2>
+      <p style="color:#d1d5db;font-size:1.125rem;margin-bottom:32px;max-width:512px;margin-left:auto;margin-right:auto;">
+        Every audit is done personally and in-depth. We don't batch them and we don't outsource them. When the 4 spots are filled, booking pushes to the following month.
+      </p>
+      <a href="https://cal.com/{YOUR_HANDLE}/apg-software-audit-ai-systems-strategy-session-aud" target="_blank" rel="noopener" class="cta-btn cta-glow">
+        Book Your Free Strategy Call <span class="cta-arrow">&rarr;</span>
+      </a>
+      <p style="font-size:0.875rem;color:#d1d5db;margin-top:16px;">
+        100% money-back guarantee. You keep the blueprint either way.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FAQ -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="faq" style="position:relative;">
+  <div class="section-container">
+    <div class="fade-up text-center mb-12">
+      <h2 style="font-size:1.875rem;">
+        Common <span class="gradient-text">Questions</span>
+      </h2>
+    </div>
+
+    <div style="max-width:672px;margin:0 auto;" class="fade-up">
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>Who is {YOUR_COMPANY} and why should I trust you?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">{YOUR_COMPANY} is founded by {YOUR_NAME}, who has completed 300+ projects and earned 50+ five-star reviews on Upwork. Every audit is done personally by Adam &mdash; not by a junior or subcontractor. You can check our Upwork profile, YouTube channel (5K+ subscribers), and LinkedIn for full transparency.</div>
+      </div>
+
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>What exactly is an AI &amp; operations audit?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">We go inside your business for 14 days &mdash; mapping every tool, workflow, and manual process. You get a 15&ndash;20 page blueprint showing exactly where you're losing time and money, where AI and automation will have the highest impact, and what to fix first. Plus, we build and deploy your first automation before the audit is even finished.</div>
+      </div>
+
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>What if I just want the blueprint and don't need anything built after?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">That's completely fine. The audit is a standalone product. You walk away with a full blueprint you can use however you want: internally, with another team, or just as a reference. No obligations beyond the audit.</div>
+      </div>
+
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>What tools and platforms do you audit?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">Everything you're using: Notion, Slack, Asana, HubSpot, Monday, Sheets, Trello, Zapier, Make.com, QuickBooks, Xero, and more. If it's part of your operation, it's part of the audit.</div>
+      </div>
+
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>How is the free automation chosen?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">During the kickoff call, we identify the quickest, highest-impact win &mdash; the one manual task that's costing you the most time right now. That's what we build first, so you see real results within the first week.</div>
+      </div>
+
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>What exactly is the guarantee?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">If you don't walk away with a clear, actionable blueprint you'd confidently use or hand to any team, full refund within 7 days. You keep the blueprint either way. Zero risk.</div>
+      </div>
+
+      <div class="faq-item glass-card" style="border-color:rgba(var(--border-rgb),0.5);">
+        <button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">
+          <span>Can my co-founder or team be involved?</span>
+          <svg class="faq-chevron icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="faq-content">We encourage it. The Day 14 strategy walkthrough is designed for your whole team. Everyone walks away aligned on what to fix and where to start.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FINAL CTA -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section style="position:relative;padding:64px 0 80px;">
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom, var(--bg), rgba(var(--primary-rgb),0.05), var(--bg));"></div>
+  <div style="position:relative;z-index:10;max-width:768px;margin:0 auto;padding:0 16px;text-align:center;">
+    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:16px;" class="fade-up">
+      Ready to stop guessing and
+      <span class="gradient-text"> start fixing?</span>
+    </h2>
+    <p style="color:#d1d5db;margin-bottom:32px;max-width:512px;margin-left:auto;margin-right:auto;" class="fade-up">
+      Book a free 15-minute strategy call. We'll tell you exactly what we'd fix in your business, even if you don't hire us.
+    </p>
+    <div class="fade-up">
+      <a href="https://cal.com/{YOUR_HANDLE}/apg-software-audit-ai-systems-strategy-session-aud" target="_blank" rel="noopener" class="cta-btn cta-glow">
+        Book Your Free Strategy Call <span class="cta-arrow">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  &copy; 2026 {YOUR_COMPANY}. All rights reserved.
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+// Scroll-triggered fade-up animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '-50px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>

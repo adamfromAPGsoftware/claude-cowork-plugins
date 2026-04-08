@@ -1,0 +1,30 @@
+{
+  "skill-name": "bmad-apg-mkt-campaign-collector",
+  "module-code": "mkt",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Campaign Collector — pulls Meta ad campaign data (read-only), auto-discovers ad accounts, and maintains marketing-data.json as the single source of truth.",
+  "capabilities": [
+    {
+      "menu-code": "PM",
+      "name": "pull-meta",
+      "description": "Fetch campaigns, ad sets, ads, and insights from Meta Marketing API for a date range. Merge into marketing-data.json. Idempotent — skips already-imported data.",
+      "type": "prompt",
+      "file": "pull-meta.md"
+    },
+    {
+      "menu-code": "DA",
+      "name": "discover-accounts",
+      "description": "Discover and list all ad accounts accessible with the current Meta access token.",
+      "type": "prompt",
+      "file": "discover-accounts.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'social-data.json$'; then echo 'social-data.json modified — run /apg-social:status to check data integrity'; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'response-queue.json$'; then echo 'response-queue.json modified — run /apg-social:review-queue to check pending drafts'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

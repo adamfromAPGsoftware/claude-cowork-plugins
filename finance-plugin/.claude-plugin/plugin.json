@@ -1,0 +1,36 @@
+{
+  "name": "finance",
+  "description": "Financial Management \u2014 Airwallex transaction analysis, spend investigation, leak detection, and CRM reconciliation",
+  "version": "1.0.0",
+  "author": {
+    "name": "{YOUR_NAME}",
+    "url": "https://{YOUR_DOMAIN}"
+  },
+  "keywords": [
+    "finance",
+    "airwallex",
+    "transactions",
+    "reconciliation",
+    "apg"
+  ],
+  "commands": [
+    "./commands/attach-receipt.md",
+    "./commands/generate-bas.md",
+    "./commands/generate-tax-summary.md",
+    "./commands/import-amex.md",
+    "./commands/leak-check.md",
+    "./commands/pull-transactions.md",
+    "./commands/reconcile.md",
+    "./commands/spend-summary.md",
+    "./commands/status.md",
+    "./commands/sync-crm.md"
+  ],
+  "agents": [
+    "./agents/1-transaction-analyst.md",
+    "./agents/2-spend-investigator.md",
+    "./agents/3-reconciler.md",
+    "./agents/4-receipt-manager.md",
+    "./agents/5-tax-reporter.md"
+  ],
+  "skills": "./skills/"
+}

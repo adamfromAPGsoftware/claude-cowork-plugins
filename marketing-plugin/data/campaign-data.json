@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "last_created": "2026-04-07T00:00:00.000Z",
+    "total_campaigns": 1
+  },
+  "campaigns": [
+    {
+      "campaign_id": "camp-2026-04-07-001",
+      "name": "AI Scoping Engine for Agencies",
+      "status": "creatives",
+      "created_at": "2026-04-07T00:00:00.000Z",
+      "updated_at": "2026-04-07T00:00:00.000Z",
+
+      "product": {
+        "name": "AI Scoping Engine",
+        "description": "A 4-agent AI system that transforms meeting transcripts into process maps, findings reports, strategic approaches, clickable prototypes, and client portals. One-click install via Claude Code / Cowork. Replaces 200+ hours of manual discovery/scoping with ~20 hours of AI-assisted extraction and deliverable generation.",
+        "price": "Custom — based on team size and ROI calculation. Not shown on landing page.",
+        "offer_details": "Custom-quoted based on qualification. Funnel: (1) Qualification questions on landing page capture team size, number of PMs, current scoping hours/week, and number of concurrent client engagements. (2) ROI calculator shows prospect their personalised savings (PM hours × rate × weeks = annual waste on manual scoping). (3) Custom quote generated based on their team size and ROI. (4) Book a discovery call to walk through the numbers and close. Selling on ROI to the business — not implementation time or features.",
+        "guarantee": "ROI guarantee — the system pays for itself based on hours saved. Prospect sees their own numbers before the call. Specifics confirmed on discovery call.",
+        "usp": [
+          "200 hours → 20 hours: 90% reduction in scoping/discovery time",
+          "Auto-connects to meeting note-takers (Fathom) — zero manual transcription",
+          "Generates clickable prototypes, process maps, and client portals automatically",
+          "One-click install via Claude Code / Cowork — no infrastructure to manage",
+          "Increases scoping accuracy, reducing downstream development errors and scope creep",
+          "Pays for itself in 1-2 weeks for any agency with a full-time PM",
+          "4 specialised AI agents: Process Mapper → Process Analyst → Generator → Solution Architect",
+          "Direct Fathom.ai integration — auto-pulls meeting transcripts, zero manual upload",
+          "MCP-connected CRM — auto-pulls leads, syncs project data, manages pipeline",
+          "Interactive demo available — prospects can try before buying"
+        ],
+        "social_proof": [
+          "{YOUR_COMPANY} has run ~5 live client audits in the last month using this exact system",
+          "{YOUR_NAME}'s YouTube channel — hundreds of thousands of views on AI/agency content",
+          "Existing education communities: {YOUR_FREE_COMMUNITY} (free) + AIF Academy (paid)",
+          "Running software agency uses this daily for real client engagements",
+          "Testimonials and case studies available from {YOUR_COMPANY} website and audit portal"
+        ],
+        "landing_page_assets": [
+          "Interactive clickable demo (from order flow prototype)",
+          "Video content library from YouTube channel",
+          "Social proof from {YOUR_DOMAIN} and client audit portals",
+          "Fathom.ai integration walkthrough"
+        ]
+      },
+
+      "audience": {
+        "icp_description": "Founders, technical directors, and project managers at software development agencies and marketing/digital agencies doing $200K+ revenue. Also freelance developers/consultants doing $100K+. Anyone who runs multiple discovery/scoping sessions with clients before building — and feels the pain of that manual, expensive process. They have at least one full-time project manager or senior person spending significant time on pre-build scoping.",
+        "pain_points": [
+          "Discovery/scoping process takes weeks and hundreds of billable hours",
+          "Senior technical staff stuck doing manual process documentation instead of building",
+          "Scoping inaccuracies lead to scope creep, budget blowouts, and client disputes",
+          "Meeting transcripts sit unused — insights lost between sessions",
+          "Building proposals and scope documents is repetitive but high-stakes",
+          "Can't scale the number of concurrent client engagements due to PM bottleneck"
+        ],
+        "aspirations": [
+          "Run 3-5x more discovery engagements simultaneously without hiring",
+          "Deliver polished client portals and prototypes that close deals faster",
+          "Free senior staff from documentation to focus on architecture and delivery",
+          "Reduce scoping errors that cause downstream project failures",
+          "Systematise their discovery process so it's consistent regardless of who runs it"
+        ],
+        "buying_triggers": [
+          "Just lost a project due to inaccurate scoping / scope creep",
+          "Hiring a new PM and realising the cost vs what AI could do",
+          "Growing agency hitting capacity ceiling on concurrent projects",
+          "Seeing competitors deliver faster proposals and winning deals",
+          "New financial year — budget for tooling and process improvement"
+        ],
+        "industries": [
+          "Software development agencies",
+          "Web/app development studios",
+          "Digital/marketing agencies",
+          "IT consulting firms",
+          "Freelance developers and technical consultants"
+        ],
+        "locations": ["AU", "US", "GB"],
+        "age_range": "28-55",
+        "custom_audience_ids": []
+      },
+
+      "intelligence": {
+        "market_report_path": "data/reports/campaigns/camp-2026-04-07-001/market-intelligence.md",
+        "competitor_winner_ids": ["3328979794067876", "1827916011114841"],
+        "own_winner_angle_ids": [],
+        "key_themes": [
+          "The upstream bottleneck — AI accelerated coding but scoping is still manual",
+          "Agency capacity ceiling — founder/senior PM is the bottleneck on every new engagement",
+          "The unpaid scoping problem — agencies scope for free hoping to win the deal",
+          "Junior empowerment — want junior PMs to produce senior-quality scopes",
+          "Proof hunger — B2B buyers respond to specific numbers, not vague promises",
+          "Demo-driven conversion — interactive demos convert best for high-ticket B2B"
+        ],
+        "activation_opportunities": [
+          "200 hours → 20 as the anchor hook — specific, provable, novel in this space",
+          "Founder-led video creative — Adam's YouTube credibility, competitors not using it",
+          "Interactive demo on landing page — no competitor offers try-before-buy",
+          "Before/after carousel — manual scoping vs AI output side-by-side",
+          "Scope creep pain-agitation hooks — using audience's own language",
+          "Social proof stack — YouTube, education community, 5 live audits/month, real portals",
+          "ROI calculator as mid-funnel qualification tool"
+        ]
+      },
+
+      "creatives": {
+        "batch_ids": ["batch-2026-04-07-002", "batch-2026-04-08-001"],
+        "active_angle_ids": [],
+        "retired_angle_ids": [],
+        "landing_page_copy": {
+          "headline": "Drop Your Scoping Process From Months to Days",
+          "subheadline": "The AI system our agency uses to run 5 client discoveries simultaneously — now available for yours.",
+          "benefits": [
+            "90% less scoping time — 200 hours of manual discovery compressed to 20 with 4 AI agents working your pipeline",
+            "Clickable prototypes, auto-generated — Meeting transcripts become process maps, findings reports, and interactive prototypes",
+            "Fathom.ai connected — Auto-pulls your meeting transcripts. Zero manual upload, zero lost insights",
+            "Scope accuracy that prevents blowouts — Structured extraction with citation-backed confidence scores",
+            "One-click install — Up and running via Claude Code / Cowork in minutes, not weeks"
+          ],
+          "social_proof": [
+            "Our agency has run 5 client scoping engagements this month using this exact system",
+            "{YOUR_NAME} — Top 1% {YOUR_CREDENTIAL} Upwork, 300+ projects, Fortune 500 clients",
+            "Hundreds of thousands of YouTube views on AI + agency content",
+            "330+ member education community ({YOUR_FREE_COMMUNITY})",
+            "Interactive demo: try the actual output before you buy"
+          ],
+          "cta_text": "See What You'll Save",
+          "form_fields": ["name", "email", "company", "team_size", "num_project_managers", "scoping_hours_per_week", "concurrent_client_engagements"]
+        }
+      },
+
+      "performance": {
+        "last_review": null,
+        "review_cadence_days": 7,
+        "auto_retire_threshold": {
+          "min_spend": 50,
+          "min_days": 7,
+          "max_cpa": null,
+          "min_roas": null,
+          "min_ctr": 0.5
+        },
+        "iteration_count": 0,
+        "performance_history": []
+      },
+
+      "landing_page": {
+        "status": "generated",
+        "template": "go-enhance",
+        "domain": "scope.{YOUR_DOMAIN}",
+        "path": "/",
+        "full_url": "https://scope.{YOUR_DOMAIN}/",
+        "deploy_path": "marketing-plugin/data/landing-pages/camp-2026-04-07-001",
+        "generated_at": "2026-04-07T12:00:00.000Z",
+        "deployed_at": null
+      },
+
+      "tracking": {
+        "ga4_property_id": null,
+        "ga4_measurement_id": null,
+        "ga4_api_secret": null,
+        "meta_pixel_id": null,
+        "meta_capi_token": null,
+        "utm_source": "meta",
+        "utm_medium": "paid",
+        "utm_campaign": "ai-scoping-engine-agencies",
+        "conversions_api_enabled": false
+      },
+
+      "meta_campaign": {
+        "status": "not_created",
+        "campaign_id": null,
+        "ad_set_ids": [],
+        "ad_ids": [],
+        "daily_budget": 5000,
+        "objective": "OUTCOME_LEADS",
+        "approved_at": null,
+        "approved_by": null
+      },
+
+      "lead_capture": {
+        "form_webhook_url": null,
+        "crm_pipeline": "marketing-leads",
+        "auto_create_lead": true,
+        "notification_email": "{YOUR_EMAIL}"
+      },
+
+      "approval_log": [
+        {
+          "gate": "campaign_plan",
+          "status": "approved",
+          "timestamp": "2026-04-07T00:00:00.000Z",
+          "notes": "Strategy approved: 5 angle themes (200→20, Scope Creep Killer, Junior PM, Founder Bottleneck, Proof Stack), qualification form landing page at scope.{YOUR_DOMAIN}, $50/day budget AU+US+UK"
+        }
+      ]
+    }
+  ]
+}

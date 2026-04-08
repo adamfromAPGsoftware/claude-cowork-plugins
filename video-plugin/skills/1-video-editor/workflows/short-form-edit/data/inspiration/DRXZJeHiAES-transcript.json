@@ -1,0 +1,862 @@
+{
+  "metadata": {
+    "video_id": "DRXZJeHiAES",
+    "source_file": "DRXZJeHiAES.mp4",
+    "duration_seconds": 28.054625,
+    "model": "general-nova-3",
+    "language": "en",
+    "transcribed_at": "2026-03-10T10:43:30.354044+00:00",
+    "word_count": 119,
+    "confidence_avg": 0.9582
+  },
+  "transcript": "Here's how to make YouTube shorts that post themselves step by step. Go to nnn.io and create a new workflow. In step one, add an OpenAI node to write your short script. Step two, add a voice node with Eleven Labs to generate the voice over. Step three, add Pika Labs or Runway to turn that audio into a full video. Step four, add a YouTube node, connect your API key, and set it to upload automatically. Now every time you run it, AI writes, voices edits, and posts a brand new short. Your YouTube channel basically runs itself on autopilot. So if you want my exact workflow setup and prompts, just comment system, and I'll send them over.",
+  "words": [
+    {
+      "word": "here's",
+      "start": 0.0,
+      "end": 0.24,
+      "confidence": 0.9583174,
+      "punctuated_word": "Here's"
+    },
+    {
+      "word": "how",
+      "start": 0.24,
+      "end": 0.32,
+      "confidence": 0.9971148,
+      "punctuated_word": "how"
+    },
+    {
+      "word": "to",
+      "start": 0.32,
+      "end": 0.39999998,
+      "confidence": 0.99002904,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "make",
+      "start": 0.39999998,
+      "end": 0.56,
+      "confidence": 0.99969053,
+      "punctuated_word": "make"
+    },
+    {
+      "word": "youtube",
+      "start": 0.56,
+      "end": 0.88,
+      "confidence": 0.98007464,
+      "punctuated_word": "YouTube"
+    },
+    {
+      "word": "shorts",
+      "start": 0.88,
+      "end": 1.12,
+      "confidence": 0.54671985,
+      "punctuated_word": "shorts"
+    },
+    {
+      "word": "that",
+      "start": 1.12,
+      "end": 1.36,
+      "confidence": 0.99833906,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "post",
+      "start": 1.36,
+      "end": 1.5999999,
+      "confidence": 0.9912816,
+      "punctuated_word": "post"
+    },
+    {
+      "word": "themselves",
+      "start": 1.5999999,
+      "end": 2.08,
+      "confidence": 0.9979236,
+      "punctuated_word": "themselves"
+    },
+    {
+      "word": "step",
+      "start": 2.08,
+      "end": 2.3999999,
+      "confidence": 0.7847393,
+      "punctuated_word": "step"
+    },
+    {
+      "word": "by",
+      "start": 2.3999999,
+      "end": 2.56,
+      "confidence": 0.9999175,
+      "punctuated_word": "by"
+    },
+    {
+      "word": "step",
+      "start": 2.56,
+      "end": 2.8,
+      "confidence": 0.9989735,
+      "punctuated_word": "step."
+    },
+    {
+      "word": "go",
+      "start": 2.8,
+      "end": 2.96,
+      "confidence": 0.99544936,
+      "punctuated_word": "Go"
+    },
+    {
+      "word": "to",
+      "start": 2.96,
+      "end": 3.04,
+      "confidence": 0.9973349,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "nnn.io",
+      "start": 3.04,
+      "end": 3.9199998,
+      "confidence": 0.929708,
+      "punctuated_word": "nnn.io"
+    },
+    {
+      "word": "and",
+      "start": 3.9199998,
+      "end": 4.16,
+      "confidence": 0.90924627,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "create",
+      "start": 4.16,
+      "end": 4.4,
+      "confidence": 0.99976677,
+      "punctuated_word": "create"
+    },
+    {
+      "word": "a",
+      "start": 4.4,
+      "end": 4.48,
+      "confidence": 0.99884003,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "new",
+      "start": 4.48,
+      "end": 4.64,
+      "confidence": 0.99924135,
+      "punctuated_word": "new"
+    },
+    {
+      "word": "workflow",
+      "start": 4.64,
+      "end": 5.12,
+      "confidence": 0.9944898,
+      "punctuated_word": "workflow."
+    },
+    {
+      "word": "in",
+      "start": 5.12,
+      "end": 5.2,
+      "confidence": 0.5814972,
+      "punctuated_word": "In"
+    },
+    {
+      "word": "step",
+      "start": 5.2,
+      "end": 5.44,
+      "confidence": 0.99697006,
+      "punctuated_word": "step"
+    },
+    {
+      "word": "one",
+      "start": 5.44,
+      "end": 5.7599998,
+      "confidence": 0.9982275,
+      "punctuated_word": "one,"
+    },
+    {
+      "word": "add",
+      "start": 5.7599998,
+      "end": 5.8399997,
+      "confidence": 0.996014,
+      "punctuated_word": "add"
+    },
+    {
+      "word": "an",
+      "start": 5.8399997,
+      "end": 6.0,
+      "confidence": 0.9981577,
+      "punctuated_word": "an"
+    },
+    {
+      "word": "openai",
+      "start": 6.0,
+      "end": 6.48,
+      "confidence": 0.82410806,
+      "punctuated_word": "OpenAI"
+    },
+    {
+      "word": "node",
+      "start": 6.48,
+      "end": 6.72,
+      "confidence": 0.9587468,
+      "punctuated_word": "node"
+    },
+    {
+      "word": "to",
+      "start": 6.72,
+      "end": 6.8799996,
+      "confidence": 0.99941945,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "write",
+      "start": 6.8799996,
+      "end": 7.04,
+      "confidence": 0.9991033,
+      "punctuated_word": "write"
+    },
+    {
+      "word": "your",
+      "start": 7.04,
+      "end": 7.2,
+      "confidence": 0.9990564,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "short",
+      "start": 7.2,
+      "end": 7.44,
+      "confidence": 0.9392749,
+      "punctuated_word": "short"
+    },
+    {
+      "word": "script",
+      "start": 7.44,
+      "end": 7.9199996,
+      "confidence": 0.993241,
+      "punctuated_word": "script."
+    },
+    {
+      "word": "step",
+      "start": 7.9199996,
+      "end": 8.16,
+      "confidence": 0.9986463,
+      "punctuated_word": "Step"
+    },
+    {
+      "word": "two",
+      "start": 8.16,
+      "end": 8.48,
+      "confidence": 0.99770236,
+      "punctuated_word": "two,"
+    },
+    {
+      "word": "add",
+      "start": 8.48,
+      "end": 8.639999,
+      "confidence": 0.99927026,
+      "punctuated_word": "add"
+    },
+    {
+      "word": "a",
+      "start": 8.639999,
+      "end": 8.72,
+      "confidence": 0.9984444,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "voice",
+      "start": 8.72,
+      "end": 8.96,
+      "confidence": 0.96817553,
+      "punctuated_word": "voice"
+    },
+    {
+      "word": "node",
+      "start": 8.96,
+      "end": 9.12,
+      "confidence": 0.9818923,
+      "punctuated_word": "node"
+    },
+    {
+      "word": "with",
+      "start": 9.12,
+      "end": 9.36,
+      "confidence": 0.9993825,
+      "punctuated_word": "with"
+    },
+    {
+      "word": "eleven",
+      "start": 9.36,
+      "end": 9.599999,
+      "confidence": 0.59283406,
+      "punctuated_word": "Eleven"
+    },
+    {
+      "word": "labs",
+      "start": 9.599999,
+      "end": 9.84,
+      "confidence": 0.72042173,
+      "punctuated_word": "Labs"
+    },
+    {
+      "word": "to",
+      "start": 9.84,
+      "end": 10.08,
+      "confidence": 0.99935514,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "generate",
+      "start": 10.08,
+      "end": 10.32,
+      "confidence": 0.9998381,
+      "punctuated_word": "generate"
+    },
+    {
+      "word": "the",
+      "start": 10.32,
+      "end": 10.48,
+      "confidence": 0.9955434,
+      "punctuated_word": "the"
+    },
+    {
+      "word": "voice",
+      "start": 10.48,
+      "end": 10.639999,
+      "confidence": 0.9980751,
+      "punctuated_word": "voice"
+    },
+    {
+      "word": "over",
+      "start": 10.639999,
+      "end": 10.96,
+      "confidence": 0.7989993,
+      "punctuated_word": "over."
+    },
+    {
+      "word": "step",
+      "start": 10.96,
+      "end": 11.2,
+      "confidence": 0.9992761,
+      "punctuated_word": "Step"
+    },
+    {
+      "word": "three",
+      "start": 11.2,
+      "end": 11.5199995,
+      "confidence": 0.99885905,
+      "punctuated_word": "three,"
+    },
+    {
+      "word": "add",
+      "start": 11.5199995,
+      "end": 11.679999,
+      "confidence": 0.99774605,
+      "punctuated_word": "add"
+    },
+    {
+      "word": "pika",
+      "start": 11.679999,
+      "end": 12.0,
+      "confidence": 0.63814026,
+      "punctuated_word": "Pika"
+    },
+    {
+      "word": "labs",
+      "start": 12.0,
+      "end": 12.24,
+      "confidence": 0.94066536,
+      "punctuated_word": "Labs"
+    },
+    {
+      "word": "or",
+      "start": 12.24,
+      "end": 12.48,
+      "confidence": 0.99102426,
+      "punctuated_word": "or"
+    },
+    {
+      "word": "runway",
+      "start": 12.48,
+      "end": 12.799999,
+      "confidence": 0.90176857,
+      "punctuated_word": "Runway"
+    },
+    {
+      "word": "to",
+      "start": 12.799999,
+      "end": 13.04,
+      "confidence": 0.99831843,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "turn",
+      "start": 13.04,
+      "end": 13.2,
+      "confidence": 0.9998271,
+      "punctuated_word": "turn"
+    },
+    {
+      "word": "that",
+      "start": 13.2,
+      "end": 13.36,
+      "confidence": 0.9908313,
+      "punctuated_word": "that"
+    },
+    {
+      "word": "audio",
+      "start": 13.36,
+      "end": 13.599999,
+      "confidence": 0.99973387,
+      "punctuated_word": "audio"
+    },
+    {
+      "word": "into",
+      "start": 13.599999,
+      "end": 13.92,
+      "confidence": 0.9995351,
+      "punctuated_word": "into"
+    },
+    {
+      "word": "a",
+      "start": 13.92,
+      "end": 14.0,
+      "confidence": 0.99850994,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "full",
+      "start": 14.0,
+      "end": 14.16,
+      "confidence": 0.99971825,
+      "punctuated_word": "full"
+    },
+    {
+      "word": "video",
+      "start": 14.16,
+      "end": 14.559999,
+      "confidence": 0.9997879,
+      "punctuated_word": "video."
+    },
+    {
+      "word": "step",
+      "start": 14.559999,
+      "end": 14.799999,
+      "confidence": 0.99977523,
+      "punctuated_word": "Step"
+    },
+    {
+      "word": "four",
+      "start": 14.799999,
+      "end": 15.12,
+      "confidence": 0.9985341,
+      "punctuated_word": "four,"
+    },
+    {
+      "word": "add",
+      "start": 15.12,
+      "end": 15.679999,
+      "confidence": 0.99736625,
+      "punctuated_word": "add"
+    },
+    {
+      "word": "a",
+      "start": 15.165,
+      "end": 15.405,
+      "confidence": 0.95088404,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "youtube",
+      "start": 15.405,
+      "end": 15.6449995,
+      "confidence": 0.9722323,
+      "punctuated_word": "YouTube"
+    },
+    {
+      "word": "node",
+      "start": 15.6449995,
+      "end": 16.045,
+      "confidence": 0.95664597,
+      "punctuated_word": "node,"
+    },
+    {
+      "word": "connect",
+      "start": 16.045,
+      "end": 16.285,
+      "confidence": 0.99901307,
+      "punctuated_word": "connect"
+    },
+    {
+      "word": "your",
+      "start": 16.285,
+      "end": 16.445,
+      "confidence": 0.9556308,
+      "punctuated_word": "your"
+    },
+    {
+      "word": "api",
+      "start": 16.445,
+      "end": 16.765,
+      "confidence": 0.9989386,
+      "punctuated_word": "API"
+    },
+    {
+      "word": "key",
+      "start": 16.765,
+      "end": 17.005,
+      "confidence": 0.94220084,
+      "punctuated_word": "key,"
+    },
+    {
+      "word": "and",
+      "start": 17.005,
+      "end": 17.085,
+      "confidence": 0.99984455,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "set",
+      "start": 17.085,
+      "end": 17.244999,
+      "confidence": 0.99905556,
+      "punctuated_word": "set"
+    },
+    {
+      "word": "it",
+      "start": 17.244999,
+      "end": 17.405,
+      "confidence": 0.98212665,
+      "punctuated_word": "it"
+    },
+    {
+      "word": "to",
+      "start": 17.405,
+      "end": 17.485,
+      "confidence": 0.9837076,
+      "punctuated_word": "to"
+    },
+    {
+      "word": "upload",
+      "start": 17.485,
+      "end": 17.725,
+      "confidence": 0.99830675,
+      "punctuated_word": "upload"
+    },
+    {
+      "word": "automatically",
+      "start": 17.725,
+      "end": 18.365,
+      "confidence": 0.9997066,
+      "punctuated_word": "automatically."
+    },
+    {
+      "word": "now",
+      "start": 18.365,
+      "end": 18.525,
+      "confidence": 0.99960643,
+      "punctuated_word": "Now"
+    },
+    {
+      "word": "every",
+      "start": 18.525,
+      "end": 18.765,
+      "confidence": 0.9700847,
+      "punctuated_word": "every"
+    },
+    {
+      "word": "time",
+      "start": 18.765,
+      "end": 18.925,
+      "confidence": 0.99993324,
+      "punctuated_word": "time"
+    },
+    {
+      "word": "you",
+      "start": 18.925,
+      "end": 19.005,
+      "confidence": 0.9996259,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "run",
+      "start": 19.005,
+      "end": 19.165,
+      "confidence": 0.99975675,
+      "punctuated_word": "run"
+    },
+    {
+      "word": "it",
+      "start": 19.165,
+      "end": 19.325,
+      "confidence": 0.9922486,
+      "punctuated_word": "it,"
+    },
+    {
+      "word": "ai",
+      "start": 19.325,
+      "end": 19.645,
+      "confidence": 0.9581917,
+      "punctuated_word": "AI"
+    },
+    {
+      "word": "writes",
+      "start": 19.645,
+      "end": 20.045,
+      "confidence": 0.9649441,
+      "punctuated_word": "writes,"
+    },
+    {
+      "word": "voices",
+      "start": 20.045,
+      "end": 20.445,
+      "confidence": 0.9894532,
+      "punctuated_word": "voices"
+    },
+    {
+      "word": "edits",
+      "start": 20.445,
+      "end": 20.925,
+      "confidence": 0.7748563,
+      "punctuated_word": "edits,"
+    },
+    {
+      "word": "and",
+      "start": 20.925,
+      "end": 21.085,
+      "confidence": 0.99971336,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "posts",
+      "start": 21.085,
+      "end": 21.325,
+      "confidence": 0.7431889,
+      "punctuated_word": "posts"
+    },
+    {
+      "word": "a",
+      "start": 21.325,
+      "end": 21.485,
+      "confidence": 0.9951024,
+      "punctuated_word": "a"
+    },
+    {
+      "word": "brand",
+      "start": 21.485,
+      "end": 21.645,
+      "confidence": 0.99969125,
+      "punctuated_word": "brand"
+    },
+    {
+      "word": "new",
+      "start": 21.645,
+      "end": 21.805,
+      "confidence": 0.99939513,
+      "punctuated_word": "new"
+    },
+    {
+      "word": "short",
+      "start": 21.805,
+      "end": 22.125,
+      "confidence": 0.8626368,
+      "punctuated_word": "short."
+    },
+    {
+      "word": "your",
+      "start": 22.125,
+      "end": 22.285,
+      "confidence": 0.99840754,
+      "punctuated_word": "Your"
+    },
+    {
+      "word": "youtube",
+      "start": 22.285,
+      "end": 22.525,
+      "confidence": 0.9976121,
+      "punctuated_word": "YouTube"
+    },
+    {
+      "word": "channel",
+      "start": 22.525,
+      "end": 22.765,
+      "confidence": 0.9992187,
+      "punctuated_word": "channel"
+    },
+    {
+      "word": "basically",
+      "start": 22.765,
+      "end": 23.085,
+      "confidence": 0.9904951,
+      "punctuated_word": "basically"
+    },
+    {
+      "word": "runs",
+      "start": 23.085,
+      "end": 23.404999,
+      "confidence": 0.9994748,
+      "punctuated_word": "runs"
+    },
+    {
+      "word": "itself",
+      "start": 23.404999,
+      "end": 23.724998,
+      "confidence": 0.9986952,
+      "punctuated_word": "itself"
+    },
+    {
+      "word": "on",
+      "start": 23.724998,
+      "end": 23.885,
+      "confidence": 0.99958843,
+      "punctuated_word": "on"
+    },
+    {
+      "word": "autopilot",
+      "start": 23.885,
+      "end": 24.445,
+      "confidence": 0.9775581,
+      "punctuated_word": "autopilot."
+    },
+    {
+      "word": "so",
+      "start": 24.445,
+      "end": 24.525,
+      "confidence": 0.9991412,
+      "punctuated_word": "So"
+    },
+    {
+      "word": "if",
+      "start": 24.525,
+      "end": 24.605,
+      "confidence": 0.9980494,
+      "punctuated_word": "if"
+    },
+    {
+      "word": "you",
+      "start": 24.605,
+      "end": 24.685,
+      "confidence": 0.9991934,
+      "punctuated_word": "you"
+    },
+    {
+      "word": "want",
+      "start": 24.685,
+      "end": 24.845,
+      "confidence": 0.99890363,
+      "punctuated_word": "want"
+    },
+    {
+      "word": "my",
+      "start": 24.845,
+      "end": 24.925,
+      "confidence": 0.99964845,
+      "punctuated_word": "my"
+    },
+    {
+      "word": "exact",
+      "start": 24.925,
+      "end": 25.165,
+      "confidence": 0.99806577,
+      "punctuated_word": "exact"
+    },
+    {
+      "word": "workflow",
+      "start": 25.165,
+      "end": 25.564999,
+      "confidence": 0.9953087,
+      "punctuated_word": "workflow"
+    },
+    {
+      "word": "setup",
+      "start": 25.564999,
+      "end": 25.884998,
+      "confidence": 0.39968893,
+      "punctuated_word": "setup"
+    },
+    {
+      "word": "and",
+      "start": 25.884998,
+      "end": 26.125,
+      "confidence": 0.9598327,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "prompts",
+      "start": 26.125,
+      "end": 26.445,
+      "confidence": 0.98429745,
+      "punctuated_word": "prompts,"
+    },
+    {
+      "word": "just",
+      "start": 26.445,
+      "end": 26.605,
+      "confidence": 0.9970471,
+      "punctuated_word": "just"
+    },
+    {
+      "word": "comment",
+      "start": 26.605,
+      "end": 26.845,
+      "confidence": 0.9947141,
+      "punctuated_word": "comment"
+    },
+    {
+      "word": "system",
+      "start": 26.845,
+      "end": 27.325,
+      "confidence": 0.90125453,
+      "punctuated_word": "system,"
+    },
+    {
+      "word": "and",
+      "start": 27.325,
+      "end": 27.404999,
+      "confidence": 0.99968576,
+      "punctuated_word": "and"
+    },
+    {
+      "word": "i'll",
+      "start": 27.404999,
+      "end": 27.564999,
+      "confidence": 0.9998336,
+      "punctuated_word": "I'll"
+    },
+    {
+      "word": "send",
+      "start": 27.564999,
+      "end": 27.724998,
+      "confidence": 0.99962115,
+      "punctuated_word": "send"
+    },
+    {
+      "word": "them",
+      "start": 27.724998,
+      "end": 27.805,
+      "confidence": 0.9995701,
+      "punctuated_word": "them"
+    },
+    {
+      "word": "over",
+      "start": 27.805,
+      "end": 28.045,
+      "confidence": 0.9993265,
+      "punctuated_word": "over."
+    }
+  ],
+  "utterances": [
+    {
+      "start": 0.0,
+      "end": 3.9199998,
+      "text": "Here's how to make YouTube shorts that post themselves step by step. Go to nnn.io",
+      "confidence": 0.9443742
+    },
+    {
+      "start": 3.9199998,
+      "end": 28.045,
+      "text": "and create a new workflow. In step one, add an OpenAI node to write your short script. Step two, add a voice node with Eleven Labs to generate the voice over. Step three, add Pika Labs or Runway to turn that audio into a full video. Step four, add a YouTube node, connect your API key, and set it to upload automatically. Now every time you run it, AI writes, voices edits, and posts a brand new short. Your YouTube channel basically runs itself on autopilot. So if you want my exact workflow setup and prompts, just comment system, and I'll send them over.",
+      "confidence": 0.9601378
+    }
+  ]
+}

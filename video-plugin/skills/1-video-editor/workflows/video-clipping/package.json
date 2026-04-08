@@ -1,0 +1,7 @@
+{
+  "name": "video-clipping",
+  "type": "module",
+  "dependencies": {
+    "tsx": "^4.0.0"
+  }
+}

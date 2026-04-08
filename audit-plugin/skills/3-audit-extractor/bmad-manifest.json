@@ -1,0 +1,37 @@
+{
+  "skill-name": "bmad-apg-process-mapper",
+  "module-code": "apg",
+  "version": "2.0.0",
+  "has-memory": true,
+  "persona": "Process Mapper — extracts structured process documentation from client conversations. Every step, tool, time cost, pain point, and decision node captured from what was actually said. No ideas generated. No improvements researched.",
+  "capabilities": [
+    {
+      "menu-code": "SU",
+      "name": "sync-and-update",
+      "description": "Fetch new Fathom meetings, scan client materials, and extract all unprocessed inputs into the audit data file. The one command to run after every session.",
+      "type": "prompt",
+      "file": "sync-and-update.md"
+    },
+    {
+      "menu-code": "AC",
+      "name": "audit-check",
+      "description": "Re-run completeness and contradiction checks across all audit data. Show coverage gaps, contradictions, and prioritised follow-up questions.",
+      "type": "prompt",
+      "file": "audit-check.md"
+    },
+    {
+      "menu-code": "GQ",
+      "name": "generate-questions",
+      "description": "Audit deliverable readiness, cross-reference transcripts, generate and research follow-up questions, export client-ready email.",
+      "type": "prompt",
+      "file": "generate-questions.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'marketing-data.json$'; then echo 'marketing-data.json modified — run /apg-marketing:status to check data integrity'; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'competitor-data.json$'; then echo 'competitor-data.json modified — run /apg-marketing:scrape-competitors or /apg-marketing:track-winners to review'; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'creative-data.json$'; then echo 'creative-data.json modified — run /apg-marketing:generate-creatives to review batch status'; fi"
+          },
+          {
+            "type": "command",
+            "command": "FILE=$(cat | jq -r '.tool_input.file_path // .tool_input.filePath // empty'); if [ -n \"$FILE\" ] && echo \"$FILE\" | grep -q 'campaign-data.json$'; then echo 'campaign-data.json modified — run /apg-marketing:campaign-status to check pipeline status'; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

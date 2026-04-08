@@ -1,0 +1,51 @@
+{
+  "skill-name": "bmad-apg-fin-3-reconciler",
+  "module-code": "fin",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Reconciler — imports Amex CSV transactions, cross-source deduplication, CRM invoice/bill reconciliation, and CRM sync via MCP tools.",
+  "capabilities": [
+    {
+      "menu-code": "IA",
+      "name": "import-amex",
+      "description": "Parse Amex CSV from finance/amex/, generate amex_{hash} IDs, merge into finance-data.json, flag potential Airwallex dupes.",
+      "type": "prompt",
+      "file": "import-amex.md"
+    },
+    {
+      "menu-code": "DD",
+      "name": "dedup-check",
+      "description": "Find potential duplicates across Airwallex and Amex (amount + date +/- 3 days + merchant fuzzy match).",
+      "type": "prompt",
+      "file": "dedup-check.md"
+    },
+    {
+      "menu-code": "AR",
+      "name": "auto-reconcile",
+      "description": "Match transactions to CRM invoices/bills via MCP tools. Match by amount + date + reference.",
+      "type": "prompt",
+      "file": "auto-reconcile.md"
+    },
+    {
+      "menu-code": "MM",
+      "name": "manual-match",
+      "description": "Present ambiguous matches for user decision — ranked by confidence with full context.",
+      "type": "prompt",
+      "file": "manual-match.md"
+    },
+    {
+      "menu-code": "SC",
+      "name": "sync-crm",
+      "description": "Push reconciled transactions to CRM as documents via create_document MCP. Link to contacts/projects.",
+      "type": "prompt",
+      "file": "sync-crm.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

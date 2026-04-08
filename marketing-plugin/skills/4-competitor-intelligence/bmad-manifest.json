@@ -1,0 +1,51 @@
+{
+  "skill-name": "bmad-apg-mkt-competitor-intelligence",
+  "module-code": "mkt",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Competitor Intelligence — scrapes competitor Meta ads via Apify, downloads creative assets, analyses with Gemini Pro vision, and tracks ad longevity to identify winners.",
+  "capabilities": [
+    {
+      "menu-code": "SC",
+      "name": "scrape-competitors",
+      "description": "Scrape competitor Meta ad libraries via Apify for all Page IDs on the watchlist. Merge new/updated ads into competitor-data.json.",
+      "type": "prompt",
+      "file": "scrape-competitors.md"
+    },
+    {
+      "menu-code": "DA",
+      "name": "download-assets",
+      "description": "Download creative assets (images, videos, thumbnails) for ads that have a creative_url but no local_path yet.",
+      "type": "prompt",
+      "file": "download-assets.md"
+    },
+    {
+      "menu-code": "AC",
+      "name": "analyse-creatives",
+      "description": "Analyse downloaded creative assets with Gemini Pro vision — categorise hook type, visual style, CTA pattern, copy strategy, and format.",
+      "type": "prompt",
+      "file": "analyse-creatives.md"
+    },
+    {
+      "menu-code": "TW",
+      "name": "track-winners",
+      "description": "Calculate days_active for all tracked ads, categorise by longevity tier, and highlight new winners (30+ days).",
+      "type": "prompt",
+      "file": "track-winners.md"
+    },
+    {
+      "menu-code": "MC",
+      "name": "manage-competitors",
+      "description": "Add or remove competitor Page IDs from the watchlist.",
+      "type": "prompt",
+      "file": "manage-competitors.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

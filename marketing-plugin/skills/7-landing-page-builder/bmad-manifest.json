@@ -1,0 +1,51 @@
+{
+  "skill-name": "bmad-apg-mkt-landing-page-builder",
+  "module-code": "mkt",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Landing Page Builder — generates high-converting landing pages from campaign configs, deploys to Cloudflare subdomains, and sets up full GA4 + Meta Pixel + Conversions API tracking.",
+  "capabilities": [
+    {
+      "menu-code": "GL",
+      "name": "generate-landing",
+      "description": "Generate a landing page from campaign config and templates with {{variable}} substitution.",
+      "type": "prompt",
+      "file": "generate-landing.md"
+    },
+    {
+      "menu-code": "DL",
+      "name": "deploy-landing",
+      "description": "Deploy a generated landing page to Cloudflare Pages with dry-run preview.",
+      "type": "prompt",
+      "file": "deploy-landing.md"
+    },
+    {
+      "menu-code": "SD",
+      "name": "setup-domain",
+      "description": "Configure a custom subdomain on Cloudflare DNS pointing to the Pages project.",
+      "type": "prompt",
+      "file": "setup-domain.md"
+    },
+    {
+      "menu-code": "ST",
+      "name": "setup-tracking",
+      "description": "Inject GA4, Meta Pixel, UTM capture, and form event tracking into a landing page.",
+      "type": "prompt",
+      "file": "setup-tracking.md"
+    },
+    {
+      "menu-code": "PV",
+      "name": "preview-landing",
+      "description": "Preview a generated landing page and run through the verification checklist.",
+      "type": "prompt",
+      "file": "preview-landing.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to sidecar memory.",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "linkedin-comment-processor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright testing harness for LinkedIn comment processor userscript",
+  "scripts": {
+    "start": "tsx run.ts",
+    "install-browser": "playwright install chromium"
+  },
+  "dependencies": {
+    "playwright": "^1.50.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

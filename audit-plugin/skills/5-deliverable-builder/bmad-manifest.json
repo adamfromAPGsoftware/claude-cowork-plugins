@@ -1,0 +1,93 @@
+{
+  "skill-name": "bmad-apg-agent-generator",
+  "module-code": "apg",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Precise HTML generation orchestrator. Validates audit data completeness, invokes generate.py, reports outputs. Never writes HTML directly.",
+  "capabilities": [
+    {
+      "menu-code": "GP",
+      "name": "generate-process-map",
+      "description": "Generate process-map.html — HTML/CSS zone-based current-state process map with waste heatmap and citation tooltips",
+      "type": "prompt",
+      "file": "generate-process-map.md"
+    },
+    {
+      "menu-code": "GW",
+      "name": "generate-website",
+      "description": "Generate client-website.html — single-file client-facing site with progressive session unlock. After audit complete + EI run, unlocks Opportunity Preview section.",
+      "type": "prompt",
+      "file": "generate-website.md"
+    },
+    {
+      "menu-code": "GF",
+      "name": "generate-findings",
+      "description": "Generate findings.html — session findings summary showing what was discussed and discovered.",
+      "type": "prompt",
+      "file": "generate-findings.md"
+    },
+    {
+      "menu-code": "GV",
+      "name": "generate-waste",
+      "description": "Generate waste.html — quantified waste breakdown with hours and annual costs per item.",
+      "type": "prompt",
+      "file": "generate-waste.md"
+    },
+    {
+      "menu-code": "GS",
+      "name": "generate-solutions-overview",
+      "description": "Generate solutions-overview.html — researched automation and integration options for each pain point and optimisation.",
+      "type": "prompt",
+      "file": "generate-solutions-overview.md"
+    },
+    {
+      "menu-code": "GA",
+      "name": "generate-strategic-approaches",
+      "description": "Generate strategic-approaches.html — four implementation strategies compared by cost, coverage, and scalability.",
+      "type": "prompt",
+      "file": "generate-strategic-approaches.md"
+    },
+    {
+      "menu-code": "GM",
+      "name": "generate-priority-matrix",
+      "description": "Generate priority-matrix.html — interactive bubble chart (weeks vs value), clickable modals with 5-section content, and 3-horizon roadmap. Requires proposed_changes[] with analyst enrichment (run Process Analyst BR first).",
+      "type": "prompt",
+      "file": "generate-priority-matrix.md"
+    },
+    {
+      "menu-code": "GT",
+      "name": "generate-transformation-blueprint",
+      "description": "Generate transformation-blueprint.html — side-by-side current vs future process map with phase timelines, change annotations, and implementation details. Requires Process Analyst [TB] to have run first.",
+      "type": "prompt",
+      "file": "generate-transformation-blueprint.md"
+    },
+    {
+      "menu-code": "GR",
+      "name": "generate-report",
+      "description": "Generate audit-report.html — internal working document with full ROI model, priority matrix, and 3-horizon roadmap. Not for client delivery.",
+      "type": "prompt",
+      "file": "generate-report.md"
+    },
+    {
+      "menu-code": "GC",
+      "name": "generate-comprehensive-report",
+      "description": "Generate a comprehensive PDF audit report via Gamma — compiles all findings, waste analysis, solutions, strategic approaches, and roadmap into one professional document.",
+      "type": "prompt",
+      "file": "generate-comprehensive-report.md"
+    },
+    {
+      "menu-code": "GD",
+      "name": "deploy",
+      "description": "Deploy client deliverables to Cloudflare Pages portal with password-protected subdomain access",
+      "type": "prompt",
+      "file": "deploy.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session progress to memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "module-code": "apg",
+  "persona": "Fast, surgical discovery close operator. Researches competitors pre-call, personalises close assets post-call, and delivers follow-up comms — all within the hour.",
+  "has-memory": true,
+  "capabilities": [
+    {
+      "name": "generate-discovery-page",
+      "menu-code": "GDP",
+      "description": "Pre-call: research local competitors, scan websites, generate discovery page with competition table and industry benchmarks.",
+      "prompt": "generate-discovery-page.md"
+    },
+    {
+      "name": "generate-close-page",
+      "menu-code": "GCP",
+      "description": "Post-call: analyse transcript (4-pass), update discovery page with real findings, quotes, and waste numbers.",
+      "prompt": "generate-close-page.md"
+    },
+    {
+      "name": "generate-followup-comms",
+      "menu-code": "GFE",
+      "description": "Post-call: personalised follow-up email and SMS text message.",
+      "prompt": "generate-followup-email.md"
+    },
+    {
+      "name": "save-memory",
+      "menu-code": "SM",
+      "description": "Save current session context to memory.",
+      "prompt": "save-memory.md"
+    }
+  ]
+}
