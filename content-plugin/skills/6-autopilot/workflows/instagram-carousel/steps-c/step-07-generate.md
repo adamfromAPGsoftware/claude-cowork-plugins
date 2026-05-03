@@ -36,7 +36,7 @@ This is a deliberate planning step that runs **before** building slides.json. Wo
 
 #### 3a. Select hook image source
 
-**Primary source: Asset Catalog.** Read `{project-root}/content-plugin/data/brand-assets/asset-catalog.yaml` and filter for all assets where `subject_in_frame: true`. This gives you every photo and video frame of the creator available — including Instagram reference photos, headshots, mirror selfies, and B-roll frames.
+**Primary source: Asset Catalog.** Read `{project-root}/brand-assets/asset-catalog.yaml` and filter for all assets where `subject_in_frame: true`. This gives you every photo and video frame of the creator available — including Instagram reference photos, headshots, mirror selfies, and B-roll frames.
 
 Each asset has rich metadata: `subject_description` (where the creator is, what they're doing), `setting`, `emotion`, `mood`, `camera_angle`, and `use_cases`. Use this to pick the photo that best matches the carousel's topic and energy.
 
@@ -54,7 +54,7 @@ Record the chosen source and filename. When updating state in step-09, save the 
 If the carousel topic mentions **Claude, Anthropic, Claude Code, Claude Design, or any Claude product**, the hook slide **must** include Claude visual identity.
 
 **Claude brand assets (canonical paths):**
-- Orange sunburst logo: `{project-root}/content-plugin/data/brand-assets/logos/claude.png`
+- Orange sunburst logo: `{project-root}/brand-assets/logos/claude.png`
 - Black sunburst logo: `{project-root}/content/projects/{active_project_slug}/creative-director/logos/claude-sunburst.png`
 
 **Placement rules:**
@@ -116,7 +116,7 @@ Hook Plan:
 
 Reference frames directory:
 ```
-{project-root}/content-plugin/data/brand-assets/reference-frames/
+{project-root}/brand-assets/reference-frames/
 ```
 
 Pick the most topically relevant screenshot for slides that call for a UI embed. Use the mapping below:

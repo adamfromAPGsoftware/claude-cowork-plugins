@@ -36,7 +36,7 @@ Derive a short kebab-case slug from the active project name or video title:
 ## 3. Load Reference Frame Catalog
 
 Read the full reference frame catalog:
-`{project-root}/content-plugin/data/brand-assets/reference-frames/catalog.yaml`
+`{project-root}/brand-assets/reference-frames/catalog.yaml`
 
 Hold in working memory. You'll use it in Step 2 to match script content to available screenshots.
 
@@ -69,7 +69,7 @@ Create the `diagrams/` directory if it doesn't exist. Also create `diagrams/imag
 - `{output_html}` — `{output_dir}/diagram-{diagram_slug}.html`
 - `{plan_file}` — `{output_dir}/diagram-plan-{diagram_slug}.md`
 - `{images_dir}` — `{output_dir}/images/`
-- `{ref_frames_root}` — `{project-root}/content-plugin/data/brand-assets/reference-frames/`
+- `{ref_frames_root}` — `{project-root}/brand-assets/reference-frames/`
 
 ---
 
@@ -85,8 +85,8 @@ Standard case: `content/projects/{slug}/copywriter/diagrams/diagram-{slug}.html`
 
 **Store:** `{ref_path_prefix}` = `../../../../../` (adjust if output path differs)
 
-So a reference frame at `content-plugin/data/brand-assets/reference-frames/claude-code/file.png` would be referenced in the HTML as:
-`{ref_path_prefix}content-plugin/data/brand-assets/reference-frames/claude-code/file.png`
+So a reference frame at `brand-assets/reference-frames/claude-code/file.png` would be referenced in the HTML as:
+`{ref_path_prefix}brand-assets/reference-frames/claude-code/file.png`
 
 ---
 

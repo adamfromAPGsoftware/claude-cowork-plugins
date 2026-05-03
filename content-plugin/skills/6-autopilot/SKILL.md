@@ -47,7 +47,7 @@ All Python scripts can be run via the Bash tool.
 
 - State file: `{project-root}/content-plugin/data/autopilot-state.yaml`
 - Draft queue: `{project-root}/content-plugin/data/draft-queue/`
-- Content calendar: `{project-root}/content/calendar/content-calendar.yaml`
+- Content calendar: `{content_output_folder}/calendar/content-calendar.yaml`
 - YouTube library: `{project-root}/content-plugin/data/youtube/channel-library.json`
 - Lead magnet keywords: `{project-root}/content-plugin/data/lead-magnet-keywords.yaml`
 - LX inspiration: `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/inspiration/linkedin.md`

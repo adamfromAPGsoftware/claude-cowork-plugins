@@ -33,7 +33,7 @@ Run through each check. Note any failures:
 For each `ScreenshotNode` with a `src` prop:
 - [ ] File exists at the resolved path (check using Bash: `ls {absolute_path}`)
 - [ ] Path uses forward slashes only (no backslashes)
-- [ ] For catalog references: uses `../../../../../content-plugin/data/brand-assets/...` pattern
+- [ ] For catalog references: uses `../../../../../brand-assets/...` pattern
 - [ ] For generated images: uses `./images/` pattern
 
 If a screenshot file doesn't exist, either:

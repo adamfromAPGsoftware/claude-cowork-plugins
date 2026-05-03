@@ -28,13 +28,13 @@ Scans YouTube trends, competitor channels, and market performance using the YouT
 Consumes the ideation brief from the Strategist. Writes long-form video scripts (with YouTube metadata and production assets), short-form scripts (5 scripts + B-roll plan + MG prompts), LinkedIn posts (text/image/carousel/video), X threads, blog posts, email campaigns, and Claude Design interactive flowchart presentations. Outputs live in `{project_folder}/{slug}/copywriter/scripts/`, `linkedin/`, `social/`, `blog-email/`, `presentations/`.
 
 **3 — Creative Director**
-Consumes the script and ideation brief. Runs keyword research (YouTube autocomplete + Google Trends), produces title/thumbnail combos with CTR pre-validation, generates wide (16:9) and vertical (9:16) thumbnails, carousels, and visual assets via fal-ai MCP. Identity-preserving generation uses creator reference photos from `content-plugin/data/reference-photos/`. Outputs live in `{project_folder}/{slug}/creative-director/thumbnails/`, `carousels/`, `motion-graphics/`.
+Consumes the script and ideation brief. Runs keyword research (YouTube autocomplete + Google Trends), produces title/thumbnail combos with CTR pre-validation, generates wide (16:9) and vertical (9:16) thumbnails, carousels, and visual assets via fal-ai MCP. Identity-preserving generation uses creator reference photos from `brand-assets/reference-photos/`. Outputs live in `{project_folder}/{slug}/creative-director/thumbnails/`, `carousels/`, `motion-graphics/`.
 
 **4 — Editor (Finch)**
 Runs three scored pass/fail quality gates against any content handed to it: Brand Voice (≥7/10 against `references/brand-voice.md`), ICP Relevance (≥7/10 against `references/content-icp.md`), and Value Delivery (≥7/10). Produces a structured review report with specific line-level feedback. Content that fails any gate is returned to the originating agent for revision. Review outputs live in `{project_folder}/{slug}/editor/reviews/`.
 
 **5 — Publisher**
-Receives editor-approved content. Formats it to each platform's native spec, schedules via the Buffer MCP (`mcp__buffer__use_buffer_api`), and manages the content calendar at `{content_output_folder}/calendar/`. Also handles post-publish repurposing (auto-generates derivative content from a published YouTube video), LinkedIn "comment X for Y" lead magnet DM automation via a Node.js Playwright workflow, and a TikTok comment processor. Scheduling outputs live in `{project_folder}/{slug}/publisher/scheduled/` and `publisher/calendar/`.
+Receives editor-approved content. Formats it to each platform's native spec, schedules via the Buffer MCP (`mcp__buffer__use_buffer_api`). Also handles post-publish repurposing (auto-generates derivative content from a published YouTube video), LinkedIn "comment X for Y" lead magnet DM automation via a Node.js Playwright workflow, and a TikTok comment processor. Scheduling outputs live in `{project_folder}/{slug}/publisher/scheduled/`.
 
 ## Source of truth
 
@@ -56,11 +56,9 @@ All `{project_folder}`, `{content_output_folder}`, `{standalone_folder}`, and `{
 | Brand voice & anti-AI filter | `references/brand-voice.md` |
 | Content ICP profile | `references/content-icp.md` |
 | Platform config | `references/platform-config.md` |
-| Creator reference photos (thumbnails) | `content-plugin/data/reference-photos/` |
-| Instagram reference photos | `content-plugin/data/instagram-reference-photos/` |
-| Post-publish logs | `{content_output_folder}/post-publish-logs/` |
-| YouTube transcripts | `{content_output_folder}/youtube-transcripts/` |
-| Presentations / standalone | `{content_output_folder}/presentations/`, `{standalone_folder}/` |
+| Brand asset logos | `brand-assets/logos/` |
+| Creator reference photos (thumbnails) | `brand-assets/reference-photos/` |
+| Standalone content | `{standalone_folder}/` |
 
 Content between agents is passed by working within the same project folder — each agent reads from previous agents' subfolders and writes to its own. There is no single data-contract JSON file (unlike the audit pipeline); the project folder is the shared state.
 
@@ -106,7 +104,7 @@ npm install && npx playwright install chromium
 
 **Standalone mode** does not update `active-project.yaml`. The last real project slug is preserved for the next session.
 
-**Presentation capability [CD]** lives in the Copywriter skill (not Creative Director). It generates a self-contained interactive HTML flowchart from a video script — Cold Orange palette (`#E8590C`), horizontal flow + focus slide modes, keyboard navigable. Output saves to `presentations/` and imports into Claude Design (claude.ai/design) or Canva via HTML import. Replaced [ED] Excalidraw on 2026-04-18 when Anthropic launched Claude Design.
+**Presentation capability [CD]** lives in the Copywriter skill (not Creative Director). It generates a self-contained interactive HTML flowchart from a video script — Cold Orange palette (`#E8590C`), horizontal flow + focus slide modes, keyboard navigable. Output saves to the project folder and imports into Claude Design (claude.ai/design) or Canva via HTML import. Replaced [ED] Excalidraw on 2026-04-18 when Anthropic launched Claude Design.
 
 ## Where to look for X
 
@@ -121,10 +119,11 @@ npm install && npx playwright install chromium
 | Platform config | `references/platform-config.md` |
 | Scheduling config / Buffer channel config | `references/scheduling-config.md` |
 | Brand colours, logos, email config | `references/brand-assets.md` |
+| Logo files | `brand-assets/logos/` |
+| Creator reference photos | `brand-assets/reference-photos/` |
 | Plugin config | `config.yaml` |
 | Setup wizard | `content-plugin/skills/0-setup/` |
 | Content module paths and env var list | `config.yaml` |
-| Project folder structure definition | `content-plugin/data/project-templates/folder-structure.yaml` |
 | Lead magnet keyword registry | `content-plugin/data/lead-magnet-keywords.yaml` |
 | Strategist capabilities | `content-plugin/skills/1-content-strategist/manifest.json` |
 | Copywriter capabilities | `content-plugin/skills/2-copywriter/manifest.json` |
@@ -133,8 +132,6 @@ npm install && npx playwright install chromium
 | Publisher capabilities / Buffer MCP notes | `content-plugin/skills/5-publisher/SKILL.md` |
 | Agent persona definitions | `content-plugin/agents/{N}-{name}.md` |
 | Agent memory | `content-plugin/data/memory/{N}-{agent-name}-sidecar/` |
-| Published content logs | `{content_output_folder}/post-publish-logs/` |
-| YouTube transcripts | `{content_output_folder}/youtube-transcripts/` |
 | Competitive research workflow steps | `content-plugin/skills/1-content-strategist/workflows/competitive-research/` |
 | Script generation workflow | `content-plugin/skills/2-copywriter/workflows/script-generation/` |
 | LinkedIn comment processor (Node.js) | `content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/` |

@@ -27,7 +27,7 @@ The `current_index` in `autopilot-state.yaml` advances by 1 each run, wrapping t
 **X specs:** 1200x675 recommended.
 **Best for:** Lead magnet posts (image + keyword CTA = high engagement). Personal posts with a visual metaphor.
 **Generation steps:**
-1. Check `content-plugin/data/brand-assets/` for any indexed reference images (screenshots, tool logos) relevant to the post topic — use these first
+1. Check `brand-assets/` for any indexed reference images (screenshots, tool logos) relevant to the post topic — use these first
 2. If no suitable existing image, generate via fal-ai MCP:
    - Call `mcp__fal-ai__generate_image` with `image_size: "square_hd"` for LinkedIn, `image_size: "landscape_16_9"` for X
    - For tool logos: use the logo sourcing hierarchy (Simple Icons → SVG Repo → CompanyEnrich)

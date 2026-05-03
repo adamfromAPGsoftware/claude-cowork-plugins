@@ -17,7 +17,7 @@ If the file does not exist, treat all values as empty and create it fresh during
 Before starting the numbered sections, configure the content workspace.
 
 Ask:
-"Where should your content workspace live? This is the folder where all your projects, calendar, and outputs will be stored.
+"Where should your content workspace live? This is the folder where all your projects and outputs will be stored.
 
 Default: `~/Content`
 
@@ -30,19 +30,14 @@ Enter an absolute path or press Enter to use the default."
 - Create the folder scaffold using `mkdir -p` for each subdirectory (skip if already exists):
   ```
   {workspace}/projects/
-  {workspace}/calendar/
-  {workspace}/post-publish-logs/
-  {workspace}/youtube-transcripts/
-  {workspace}/presentations/
+  {workspace}/references/
   {workspace}/standalone/
+  {workspace}/brand-assets/logos/
+  {workspace}/brand-assets/reference-photos/
   ```
 - If `{workspace}/projects/_index.yaml` does not exist, create it with content:
   ```yaml
   projects: []
-  ```
-- If `{workspace}/calendar/content-calendar.yaml` does not exist, create it with content:
-  ```yaml
-  calendar: []
   ```
 - Write the workspace and derived paths to config.yaml:
   ```yaml
@@ -58,7 +53,7 @@ Show confirmation:
 ```
 Workspace configured:
   Path:    {workspace}
-  Created: projects/, calendar/, post-publish-logs/, youtube-transcripts/, presentations/, standalone/
+  Created: projects/, references/, standalone/, brand-assets/logos/, brand-assets/reference-photos/
   (Existing directories were left unchanged)
 ```
 
@@ -257,15 +252,13 @@ Ask:
 2. "Do you have a secondary/supporting colour? (hex code, or press Enter to skip)"
    → `brand.colors.secondary` (optional)
 
-3. "Where are your logo files stored? Give the path to your logo directory or individual files."
-   Example: "content-plugin/data/brand-assets/logos/"
-   Or: "I'll set this up later"
-   → `brand.assets.logo_dir` (can be "not configured")
+3. "Your logo files go in `brand-assets/logos/` in your workspace. Drop your logo files there — expected: `brand-logo.png`, `brand-logo-dark.png`, `brand-logo-light.png`."
+   Default: `{workspace}/brand-assets/logos/`
+   → `brand.assets.logo_dir`
 
-4. "Do you have reference photos for identity-preserving thumbnail generation?"
-   These are headshots/portrait photos of you that AI uses to keep your face consistent in thumbnails.
-   If yes: "What's the path to your reference photos directory?"
-   → `brand.assets.reference_photos_dir` (can be "not configured")
+4. "Reference photos for identity-preserving thumbnail generation go in `brand-assets/reference-photos/`. These are headshots/portraits of you that AI uses to keep your face consistent in thumbnails. Expected: `creator-hero-front.jpg`, `creator-3quarter-left.jpg`, `creator-3quarter-right.jpg`, `creator-smiling.jpg`, `creator-talking.jpg`."
+   Default: `{workspace}/brand-assets/reference-photos/`
+   → `brand.assets.reference_photos_dir`
 
 5. "How do you sign off your emails? (the closing line above your name)"
    Examples: "Talk soon,", "Best,", "Until next time,", "Keep going,"

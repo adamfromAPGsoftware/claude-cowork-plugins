@@ -64,12 +64,12 @@ This is always the right choice for YouTube repurpose — the thumbnail already 
 
 #### Path B: Tool-focused post (technical or nurture pillar, NOT youtube-repurpose)
 
-The image should feature the tool(s) mentioned in the post. For style reference, check `{project-root}/content-plugin/data/brand-assets/` for any prior tool-logo image examples.
+The image should feature the tool(s) mentioned in the post. For style reference, check `{project-root}/brand-assets/` for any prior tool-logo image examples.
 
 **Step B1:** Identify the tool(s) featured in the post (e.g., Claude Code, n8n, Supabase, Lovable, Cursor).
 
 **Step B2:** Source logos using the hierarchy:
-1. `{project-root}/content-plugin/data/brand-assets/` — check for existing logos
+1. `{project-root}/brand-assets/` — check for existing logos
 2. Simple Icons (simpleicons.org) — SVG
 3. SVG Repo (svgrepo.com) — SVG
 4. CompanyEnrich
@@ -95,7 +95,7 @@ Save the output to `{draftQueue}/YYYY-MM-DD-linkedin-image.png`.
 - No stock photo aesthetics, no clutter, no gradients
 - Clean, technical, credible — like a developer's dashboard card
 
-For style reference, check `{project-root}/content-plugin/data/brand-assets/` for any prior tool-logo image examples.
+For style reference, check `{project-root}/brand-assets/` for any prior tool-logo image examples.
 
 ---
 
@@ -103,7 +103,7 @@ For style reference, check `{project-root}/content-plugin/data/brand-assets/` fo
 
 The image should use a real reference photo of the creator that metaphorically matches the post's theme or emotional tone.
 
-**Step C1:** Read `{project-root}/content-plugin/data/brand-assets/asset-catalog.yaml`.
+**Step C1:** Read `{project-root}/brand-assets/asset-catalog.yaml`.
 
 **Step C2:** Search the catalog for entries with `use_cases` or `mood`/`emotion` tags that match the post's theme. Examples:
 - Post about failure/learning → find a photo tagged with `reflective`, `candid`, `thinking`

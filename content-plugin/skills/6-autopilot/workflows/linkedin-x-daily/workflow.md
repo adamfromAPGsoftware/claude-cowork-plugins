@@ -4,7 +4,7 @@ description: Daily LinkedIn + X content generation cycle — 8-step automated wo
 projectRoot: '{project-root}'
 stateFile: '{project-root}/content-plugin/data/autopilot-state.yaml'
 draftQueue: '{project-root}/content-plugin/data/draft-queue/'
-contentCalendar: '{project-root}/content/calendar/content-calendar.yaml'
+contentCalendar: '{content_output_folder}/calendar/content-calendar.yaml'
 youtubeLibrary: '{project-root}/content-plugin/data/youtube/channel-library.json'
 inspirationLibrary: '{project-root}/content-plugin/data/memory/2-copywriter-sidecar/inspiration/linkedin.md'
 leadMagnetKeywords: '{project-root}/content-plugin/data/lead-magnet-keywords.yaml'

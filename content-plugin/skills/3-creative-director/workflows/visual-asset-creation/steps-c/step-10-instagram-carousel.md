@@ -8,8 +8,8 @@ brandConfigData: '../data/brand-config.md'
 pipelineScriptsData: '../data/pipeline-scripts.md'
 instagramInspirationDir: '../data/instagram-carousel-inspiration'
 scheduleInstagramData: '{project-root}/content-plugin/skills/2-copywriter/workflows/linkedin-content/data/schedule-instagram.md'
-brandLogoDark: '{project-root}/content-plugin/data/brand-assets/brand-logo-dark.png'
-brandLogoLight: '{project-root}/content-plugin/data/brand-assets/brand-logo-light.png'
+brandLogoDark: '{project-root}/brand-assets/brand-logo-dark.png'
+brandLogoLight: '{project-root}/brand-assets/brand-logo-light.png'
 ---
 
 # Step 10: Instagram Carousel Creation

@@ -105,7 +105,7 @@ function App() {
       <StepMarker x={560} y={660} number={1} label="hook.md" />
       <ConceptNode x={140} y={570} w={340} tag="step · 01" title="..." accent="..." body="..." />
       <ScreenshotNode x={100} y={900} w={380} h={250}
-        src="../../../../../content-plugin/data/brand-assets/reference-frames/claude-code/claude-code-initial-state-with-prompt.png"
+        src="../../../../../brand-assets/reference-frames/claude-code/claude-code-initial-state-with-prompt.png"
         caption="claude code — getting started"
         rotate={-2} pin="tape"
       />

@@ -18,7 +18,7 @@ Required fields:
 - `paths.content_output_folder` — must not be empty
 - `paths.standalone_folder` — must not be empty
 
-Also verify the workspace directory exists on disk: check that `paths.workspace` is an existing directory. If it doesn't exist, the scaffold was never created or the path was changed manually.
+Also verify the workspace directory exists on disk: check that `paths.workspace` is an existing directory and that `projects/`, `references/`, `standalone/`, and `brand-assets/` subdirectories exist. If missing, the scaffold was never created or the path was changed manually.
 
 ### Section 1 — Brand Identity
 
@@ -64,6 +64,8 @@ Required fields:
 
 Required fields:
 - `brand.colors.primary` — must not be empty
+- `brand.assets.logo_dir` — must not be empty; verify directory exists on disk
+- `brand.assets.reference_photos_dir` — must not be empty; verify directory exists on disk
 - `brand.email.sign_off` — must not be empty
 - `brand.email.greeting` — must not be empty
 - `brand.email.platform` — must not be empty

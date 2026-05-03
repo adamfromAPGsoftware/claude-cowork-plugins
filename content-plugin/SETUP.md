@@ -66,7 +66,7 @@ After completing the setup wizard, the plugin creates or populates:
 | File / Location | Contents |
 |------|---------|
 | `config.yaml` | Workspace paths, env var names, brand config |
-| Your content workspace folder | `projects/`, `calendar/`, `post-publish-logs/`, `youtube-transcripts/`, `presentations/`, `standalone/` — created automatically |
+| Your content workspace folder | `projects/`, `references/`, `standalone/`, `brand-assets/logos/`, `brand-assets/reference-photos/` — created automatically |
 | `references/brand-voice.md` | Tone guide, vocabulary list, anti-AI filter |
 | `references/content-icp.md` | Ideal viewer/reader profile |
 | `references/platform-config.md` | Active platforms, account handles, format specs |
@@ -105,5 +105,10 @@ After running setup, your project root contains:
     platform-config.md   Active platforms, cadence, repurposing flow
     scheduling-config.md Buffer channel names, timezone
     brand-assets.md      Colours, logos, email config, content strategy
+  brand-assets/
+    logos/                Brand logos (brand-logo.png, brand-logo-dark.png, etc.)
+    reference-photos/    Creator headshots for identity-preserving generation
+  projects/              Content projects (one folder per project slug)
+  standalone/            Non-project content
   content-plugin/        The plugin (skills, agents, workflows, data)
 ```

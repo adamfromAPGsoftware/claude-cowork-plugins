@@ -393,7 +393,7 @@ Follow the teleprompter formatting rules from script-rules.md for each script's 
 Before marking scripts as complete, verify that every tool/platform mentioned in MG prompts has a matching screenshot in the central reference frame library. This prevents the video editor from hitting missing references during storyboarding.
 
 1. **Scan all 5 scripts** for `[MG:` and `[REF-FRAME:` markers — extract every tool/platform name referenced in prompts and reference fields
-2. **Read the library catalog** at `{project-root}/content-plugin/data/brand-assets/reference-frames/catalog.yaml`
+2. **Read the library catalog** at `{project-root}/brand-assets/reference-frames/catalog.yaml`
 3. **Match each tool** against the catalog's tool entries (check `display_name` and `aliases`)
 4. **Report coverage:**
 
@@ -407,7 +407,7 @@ Tools with library coverage:
 - {tool} (0 frames) — needed for {SF-NN list}
 
 Please capture screenshots and drop them into:
-`content-plugin/data/brand-assets/reference-frames/{tool-slug}/`
+`brand-assets/reference-frames/{tool-slug}/`
 Then run: `npx tsx scripts/analyze-library-images.ts`"
 
 5. **If all tools are covered** → proceed to summary
