@@ -8,7 +8,7 @@ menu-code: PP
 
 ## Purpose
 
-After a long-form YouTube video is published, auto-generate all derivative content in parallel — 5 short-form scripts, blog post, ConvertKit email, LinkedIn lead magnet post, and Instagram carousel — by collecting inputs and launching the Python orchestrator.
+After a long-form YouTube video is published, auto-generate all derivative content in parallel — 5 short-form scripts, blog post, email draft, LinkedIn lead magnet post, and Instagram carousel — by collecting inputs and launching the Python orchestrator.
 
 ## Role Context
 
@@ -26,7 +26,7 @@ Validate URL contains `youtube.com/watch` or `youtu.be/`.
 
 ## Phase 2: Confirm Active Project
 
-Load `{project-root}/_bmad/ccs/active-project.yaml`. Confirm slug and title with user.
+Load `{project-root}/content-plugin/data/active-project.yaml`. Confirm slug and title with user.
 
 ## Phase 3: Validate Project Content
 

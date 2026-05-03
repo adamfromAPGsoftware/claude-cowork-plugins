@@ -1,0 +1,30 @@
+{
+  "skill-name": "content-setup",
+  "module-code": "content-setup",
+  "version": "1.0.0",
+  "has-memory": false,
+  "persona": "Content Plugin Setup Wizard — guides new users through configuring brand voice, ICP, and platform settings before using the content pipeline.",
+  "capabilities": [
+    {
+      "menu-code": "SW",
+      "name": "setup-wizard",
+      "description": "Interactive setup — walks through 8 sections, writes config.yaml, and generates brand-voice.md, content-icp.md, platform-config.md, scheduling-config.md, and brand-assets.md.",
+      "type": "prompt",
+      "file": "setup-wizard.md"
+    },
+    {
+      "menu-code": "VC",
+      "name": "validate-config",
+      "description": "Validate existing config.yaml — check all required fields are set and reference files exist.",
+      "type": "prompt",
+      "file": "validate-config.md"
+    },
+    {
+      "menu-code": "UC",
+      "name": "update-section",
+      "description": "Update a specific config section (brand, voice, icp, platforms, credentials) without rerunning the full wizard.",
+      "type": "prompt",
+      "file": "update-section.md"
+    },
+  ]
+}

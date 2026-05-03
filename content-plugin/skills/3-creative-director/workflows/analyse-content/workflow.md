@@ -31,7 +31,7 @@ This is a single-file workflow — no step files needed. Follow the mandatory se
 
 ### 1. Module Configuration Loading
 
-Load and read full config from `{project-root}/_bmad/ccs/config.yaml`:
+Load and read full config from `{project-root}/config.yaml`:
 - `user_name`, `communication_language`, `output_folder`
 - `content_output_folder`, `project_folder`, `standalone_folder`
 

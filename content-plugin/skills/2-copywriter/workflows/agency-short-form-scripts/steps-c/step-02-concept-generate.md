@@ -107,7 +107,7 @@ Score each candidate within its slot using the **slot-appropriate rubric** (1–
 | Criterion | Weight | What to Assess |
 |-----------|--------|----------------|
 | **Timeliness** | 35% | How fresh is the news hook? Evergreen = 1, published this week = 5 |
-| **Opinion Angle** | 35% | Does Adam have a specific, opinionated take — not just a summary? No take = 1, clear contrarian angle = 5 |
+| **Opinion Angle** | 35% | Does the creator have a specific, opinionated take — not just a summary? No take = 1, clear contrarian angle = 5 |
 | **Hook Strength** | 30% | Is the opening line attention-grabbing? Generic = 1, scroll-stopping = 5 |
 
 **Formula:** (Timeliness × 0.35) + (Opinion × 0.35) + (Hook × 0.30) = Total

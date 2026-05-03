@@ -14,7 +14,7 @@ Persist current session progress to sidecar memory so the next session picks up 
 
 ### Step 1: Update `index.md`
 
-Read current `_bmad/_memory/bmad-apg-ccs-2-copywriter-sidecar/index.md` and update:
+Read current `content-plugin/data/memory/2-copywriter-sidecar/index.md` and update:
 
 **Active Projects section** — Update project status.
 

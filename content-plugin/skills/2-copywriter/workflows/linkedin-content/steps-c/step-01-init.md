@@ -56,7 +56,7 @@ To establish the content source (project-based or personal), select the LinkedIn
 
 ### 0. Load Voice Library (before anything else)
 
-Load `{project-root}/_bmad/ccs/data/adam-voice-library.md` immediately. Apply the Written Content Adaptations and Anti-AI Red Flags sections to all LinkedIn drafts generated in this workflow. Run anti-AI scan before presenting any output to the user.
+Load `{project-root}/references/brand-voice.md` immediately. Apply the Written Content Adaptations and Anti-AI Red Flags sections to all LinkedIn drafts generated in this workflow. Run anti-AI scan before presenting any output to the user.
 
 ### 1. Source Mode Selection
 

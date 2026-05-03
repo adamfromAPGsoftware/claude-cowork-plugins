@@ -41,7 +41,7 @@ Load and read both:
 2. {agencyScriptRulesData} — agency overrides for duration mix, hooks, CTAs, brand voice, reference frames, content pillars
 
 **Load Voice Reference Data:**
-- Load `creator-voice.md` from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/` — match Adam's sentence structure, contractions, and signature phrases
+- Load `creator-voice.md` from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/` — match the creator's sentence structure, contractions, and signature phrases
 - Load `creator-credentials.md` from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/` — reference for credibility mentions
 
 **Key override reminders:**
@@ -133,7 +133,7 @@ For each of the 5 approved concepts (SF-01 through SF-05), produce a complete sc
 
 | # | Source Type | Asset/Tool | Description | Feeds MG |
 |---|------------|-----------|-------------|----------|
-| 1 | branded-asset | apg-logo.png | {YOUR_COMPANY} logo on dark background | MG-{NN} |
+| 1 | branded-asset | brand-logo.png | {YOUR_COMPANY} logo on dark background | MG-{NN} |
 | 2 | tool-screenshot | hubspot | HubSpot pricing page showing per-user fees | MG-{NN} |
 | 3 | prompt-only | — | Abstract data flow showing scattered vs unified | MG-{NN} |
 
@@ -242,7 +242,7 @@ Each file should have frontmatter:
 ---
 title: '{concept title}'
 concept_id: 'SF-{NN}'
-channel: apgsoftware
+channel: {YOUR_HANDLE}
 content_type: agency-bofu
 duration_category: '{Punchy / Standard / Deep}'
 duration_target_s: {15-45}
@@ -262,7 +262,7 @@ stepsCompleted: ['script-write']
 After saving all 5 individual scripts, generate a single combined teleprompter file at:
 `{agency_folder}/{project-slug}/copywriter/agency-sf/scripts/sf-all-teleprompter.md`
 
-This file allows Adam to read all 5 scripts back-to-back in a single recording session.
+This file allows the creator to read all 5 scripts back-to-back in a single recording session.
 
 **Format:**
 
@@ -318,7 +318,7 @@ Follow the teleprompter formatting rules from script-rules.md for each script's 
 Before marking scripts as complete, verify that every tool/platform mentioned in MG prompts has a matching screenshot in the central reference frame library. This prevents the video editor from hitting missing references during storyboarding.
 
 1. **Scan all 5 scripts** for `[MG:` and `[REF-FRAME:` markers — extract every tool/platform name referenced in prompts and reference fields
-2. **Read the library catalog** at `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/catalog.yaml`
+2. **Read the library catalog** at `{project-root}/content-plugin/data/brand-assets/reference-frames/catalog.yaml`
 3. **Match each tool** against the catalog's tool entries (check `display_name` and `aliases`)
 4. **Report coverage:**
 
@@ -332,7 +332,7 @@ Tools with library coverage:
 - {tool} (0 frames) — needed for {SF-NN list}
 
 Please capture screenshots and drop them into:
-`_bmad/ccs/data/brand-assets/reference-frames/{tool-slug}/`
+`content-plugin/data/brand-assets/reference-frames/{tool-slug}/`
 Then run: `npx tsx scripts/analyze-library-images.ts`"
 
 5. **If all tools are covered** → proceed to summary
@@ -380,7 +380,7 @@ Load, read entire file, then execute {nextStepFile}.
 - Combined teleprompter file generated with all 5 scripts and 3-second pause markers
 - Platform copy present with Instagram Reel as PRIMARY and adapted per-platform
 - CTA defaults to "Comment AUDIT" pattern (not follow/community)
-- Frontmatter includes channel: apgsoftware, content_type: agency-bofu
+- Frontmatter includes channel: {YOUR_HANDLE}, content_type: agency-bofu
 - Files saved to agency-sf/ output path (NOT short-form/)
 
 ### FAILURE:

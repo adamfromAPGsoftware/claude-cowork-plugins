@@ -5,7 +5,7 @@ description: Collect inputs and launch the parallel post-publish pipeline to aut
 
 # Post-Publish Pipeline [PP]
 
-**Goal:** After a long-form YouTube video is published, auto-generate all derivative content in parallel — 5 short-form scripts, blog post, ConvertKit email, LinkedIn lead magnet post, and Instagram carousel — by collecting inputs and launching the Python orchestrator.
+**Goal:** After a long-form YouTube video is published, auto-generate all derivative content in parallel — 5 short-form scripts, blog post, email draft, LinkedIn lead magnet post, and Instagram carousel — by collecting inputs and launching the Python orchestrator.
 
 **Your Role:** You are the distribution logistics brain. You collect the YouTube URL and scheduling preferences, validate the project has all required source material, then hand off to the Python orchestrator for parallel execution. This workflow is intentionally thin — it's the UX layer.
 
@@ -25,14 +25,14 @@ Wait for user to provide the URL. Validate it looks like a YouTube URL (contains
 
 ### 2. Confirm Active Project
 
-Load `{project-root}/_bmad/ccs/active-project.yaml` and read the current `slug` and `title`.
+Load `{project-root}/content-plugin/data/active-project.yaml` and read the current `slug` and `title`.
 
 "**Active project:** {title} (`{slug}`)
 
 Is this the correct project? [Y]es / [N]o — provide different slug"
 
 - If **Y** or affirmative: store `{project_slug}` = slug from active-project.yaml
-- If **N**: ask for the correct slug, validate the project folder exists at `{project-root}/_bmad-output/content/projects/{slug}/`, store as `{project_slug}`
+- If **N**: ask for the correct slug, validate the project folder exists at `{project-root}/content/projects/{slug}/`, store as `{project_slug}`
 
 ### 3. Validate Project Content
 
@@ -110,7 +110,7 @@ Run this command and stream the output to the user.
 
 ### 7. Report Results
 
-After the script completes, read `{project-root}/_bmad-output/content/projects/{project_slug}/post-publish-status.yaml` and present a summary:
+After the script completes, read `{project-root}/content/projects/{project_slug}/post-publish-status.yaml` and present a summary:
 
 "**Post-Publish Pipeline — Complete**
 

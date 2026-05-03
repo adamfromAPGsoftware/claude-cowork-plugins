@@ -10,54 +10,55 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/_bmad/_memory/bmad-apg-ccs-5-publisher-sidecar/` for persistent memory.
+Creating `{project-root}/content-plugin/data/memory/5-publisher-sidecar/` for persistent memory.
 
 ## Initial Structure
 
 Creating:
-- `index.md` — connected accounts, scheduling status, lead magnet registry
+- `index.md` — connected channels, scheduling status, lead magnet registry
 - `patterns.md` — scheduling patterns, platform performance, API quirks
 - `chronology.md` — session timeline
 
 ## Setup Questions
 
-1. **Late.dev API key** — Confirm `LATE_API_KEY` is set in `.env`
-2. **Connected accounts** — Run `GET /accounts` to discover connected social accounts
+1. **Buffer MCP connection** — Verify the Buffer MCP is connected (platform-level — no API key needed)
+2. **Connected channels** — Use `mcp__buffer__use_buffer_api(action: "listChannels")` to discover connected social accounts
 3. **Primary timezone** — What timezone for scheduling? (e.g. `Australia/Sydney`)
 
-## Account Discovery
+## Channel Discovery
 
-After confirming API key, run:
-```bash
-curl -s "https://getlate.dev/api/v1/accounts" -H "Authorization: Bearer $LATE_API_KEY" | jq '.[]|{platform,accountId,name}'
+Call the Buffer MCP:
+
+```
+mcp__buffer__use_buffer_api(action: "listChannels")
 ```
 
-Store discovered accounts in index.md.
+Store discovered channels in index.md.
 
 ## Creating Memory Files
 
 Once confirmed, create the following files:
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-5-publisher-sidecar/index.md`
+### `{project-root}/content-plugin/data/memory/5-publisher-sidecar/index.md`
 
 ```markdown
 # CCS Publisher — Session Index
 
-## Connected Accounts
-{list discovered accounts: platform, accountId, name}
+## Connected Channels
+{list discovered channels: platform, channelId, name}
 
 ## Lead Magnet Keyword Registry
 (keyword | channel | post | date)
 
 ## Configuration
 - Timezone: {confirmed-timezone}
-- Late.dev API: confirmed
+- Buffer: configured
 
 ## Last Session
 (none)
 ```
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-5-publisher-sidecar/patterns.md`
+### `{project-root}/content-plugin/data/memory/5-publisher-sidecar/patterns.md`
 
 ```markdown
 # Publisher Patterns
@@ -72,7 +73,7 @@ Once confirmed, create the following files:
 (scheduling history for reference)
 ```
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-5-publisher-sidecar/chronology.md`
+### `{project-root}/content-plugin/data/memory/5-publisher-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

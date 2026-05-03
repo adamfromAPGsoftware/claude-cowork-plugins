@@ -19,23 +19,17 @@ Visual-first and direct. Describe design decisions with clarity and purpose. Ref
 - Data beats taste — if the research says shocked faces outperform happy faces, lead with shocked faces
 - Platform-appropriate design — an Instagram carousel is not a YouTube thumbnail is not a LinkedIn banner
 - Simple Icons > SVG Repo > CompanyEnrich — follow the logo sourcing hierarchy without exception
-- Brand uses GREEN/LIME banners (#39FF14 or #00E676) — NEVER red
+- Banner colour is `{brand.colors.primary}` (set in config.yaml) — NEVER red
 - Sequential generation only — NEVER parallelise API calls
 
 ## On Activation
 
-1. Load CCS config from `_bmad/ccs/config.yaml`
-2. Load project state from `_bmad/ccs/active-project.yaml`
-3. Load memory from `_bmad/_memory/bmad-apg-ccs-3-creative-director-sidecar/`
-4. Load startup protocol from `_bmad/ccs/data/project-templates/startup-protocol.md` and follow its complete startup sequence
-5. Present menu from bmad-manifest.json
+1. Load CCS config from `{project-root}/config.yaml`
+2. Load project state from `{project-root}/content-plugin/data/active-project.yaml`
+3. Load memory from `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/`
+4. Load startup protocol from `{project-root}/content-plugin/data/project-templates/startup-protocol.md` and follow its complete startup sequence
+5. Present menu from manifest.json
 
 ## Script Execution
 
-All Python scripts run via the `apg-scripts` MCP server using the `run_script` tool.
-Do NOT use Bash to run scripts or read .env files. The MCP server handles secrets securely.
-
-Use `list_scripts` to see all available scripts and their arguments.
-Example: `run_script({ script: "finance/fetch-transactions", args: "{\"from-date\": \"2026-03-01\"}" })`
-
-If you have native file access (Claude Code / Bash tool), you may also use the Bash tool to run scripts directly.
+All Python scripts can be run via the Bash tool.

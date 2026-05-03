@@ -1,57 +1,49 @@
-# Content Plugin Setup
+# Content Plugin — Setup Guide
 
 ## Prerequisites
 
 - Node.js 18+ and Python 3.10+ installed
 - Claude Code CLI installed and authenticated
-- Access to the `_bmad/ccs/` shared infrastructure (config, data, workflows)
+- Content plugin installed (this directory lives at `content-plugin/` inside your repo root)
 
-## API Credentials
+## Step 1 — Configure the plugin
 
-### 1. YouTube Data API (Content Strategist)
+Run the setup wizard:
 
-Used for competitive research — scanning competitor channels, fetching video metrics, pulling transcripts.
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
-2. Create a project or select existing
-3. Enable "YouTube Data API v3"
-4. Create an API Key
-5. Add to `.env` as `YOUTUBE_API_KEY`
-
-### 2. Late.dev API (Publisher)
-
-Used for scheduling and publishing content across 13+ social platforms.
-
-1. Sign up at [late.dev](https://getlate.dev)
-2. Connect your social accounts (LinkedIn, X, Instagram, TikTok, YouTube, etc.)
-3. Go to Settings > API
-4. Generate an API key (format: `sk_` + 64 hex chars)
-5. Add to `.env` as `LATE_API_KEY`
-
-### 3. Gemini API (Creative Director)
-
-Used for thumbnail generation with identity preservation and image generation.
-
-1. Go to [AI Studio](https://aistudio.google.com/apikey)
-2. Create an API key
-3. Add to `.env` as `GEMINI_API_KEY`
-
-### 4. Supabase (Copywriter — Blog Publishing)
-
-Used for uploading media and publishing blog posts.
-
-1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
-2. Select your project > Settings > API
-3. Copy the project URL and anon key
-4. Add to `.env` as `SUPABASE_URL` and `SUPABASE_ANON_KEY`
-
-## Python Dependencies
-
-```bash
-pip install youtube-transcript-api pytrends google-generativeai
+```
+/content:0-setup
 ```
 
-## Node Dependencies (LinkedIn Comment Processor)
+Type `SW` to start the setup wizard. It first asks you for a **content workspace path** — the folder on your computer where all your content, projects, and outputs will be stored — then walks you through 8 sections:
+
+- **Content workspace** — where on your computer to store content (e.g. `~/Content`). The plugin creates the folder scaffold for you.
+1. **Creator profile** — your name, niche, and content goals
+2. **Brand voice** — tone, style, vocabulary, anti-AI red flags
+3. **Content ICP** — ideal viewer/reader profile, pain points, transformation
+4. **Platform config** — which platforms you publish to, account handles
+5. **Credentials** — verifies each MCP server is connected
+6. **Scheduling config** — Buffer channel connections, posting cadence
+7. **Brand assets** — primary colour, logo path, email header/footer config
+8. **Content strategy** — competitor channels, content pillars, X Premium status
+
+## Step 2 — MCP servers (platform-level)
+
+The content plugin uses four MCP servers connected at the Claude Code platform level:
+
+- **YouTube MCP** (`mcp__youtube__*`) — video search, channel stats, transcripts
+- **fal-ai MCP** (`mcp__fal-ai__*`) — image generation, video generation
+- **Buffer MCP** (`mcp__buffer__*`) — social media scheduling and publishing
+- **Exa MCP** (`mcp__exa__*`) — web search for trend research
+
+These are already connected in Claude Code. No API keys or config needed in this plugin.
+
+## Step 3 — Install Python dependencies
+
+```bash
+pip install youtube-transcript-api pytrends
+```
+
+Node dependencies (LinkedIn comment processor only):
 
 ```bash
 cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor
@@ -59,18 +51,59 @@ npm install
 npx playwright install chromium
 ```
 
-## First Run
-
-Each agent will run its `init.md` setup on first activation, creating the memory sidecar structure. You will be prompted for configuration specific to each agent.
-
-## Plugin Structure
+## Step 4 — Verify setup
 
 ```
-content-plugin/
-  agents/          5 agent definitions (persona, skills reference)
-  skills/          5 skill directories (SKILL.md, capabilities, memory system)
-  commands/        CLI commands (empty — future use)
-  hooks/           Event hooks (empty — future use)
-  references/      Shared reference documents (future use)
-  scripts/         Shared utility scripts (future use)
+/content:0-setup
+```
+
+Type `VC` to run the verification check. It confirms all required config fields are set, reference files exist, and each MCP server is reachable.
+
+## What gets configured
+
+After completing the setup wizard, the plugin creates or populates:
+
+| File / Location | Contents |
+|------|---------|
+| `config.yaml` | Workspace paths, env var names, brand config |
+| Your content workspace folder | `projects/`, `calendar/`, `post-publish-logs/`, `youtube-transcripts/`, `presentations/`, `standalone/` — created automatically |
+| `references/brand-voice.md` | Tone guide, vocabulary list, anti-AI filter |
+| `references/content-icp.md` | Ideal viewer/reader profile |
+| `references/platform-config.md` | Active platforms, account handles, format specs |
+| `references/scheduling-config.md` | Buffer channel names, posting cadence per platform |
+| `references/brand-assets.md` | Primary colour, logo path, email header/footer config |
+
+## Blog publishing
+
+Blog posts are exported as CMS-ready markdown files with YAML frontmatter. You deploy them yourself:
+
+- **Ghost / WordPress:** Import the markdown file directly
+- **Astro / Hugo / Next.js:** Drop into your `content/` directory
+- **Notion:** Paste body or use Notion API import
+- **Beehiiv / Kit:** Copy body into your email editor
+
+## Next steps
+
+Start your first competitive research session:
+
+```
+/content:1-content-strategist
+```
+
+Type `CR` to begin competitive research.
+
+## Plugin structure
+
+After running setup, your project root contains:
+
+```
+{project-root}/
+  config.yaml            Brand, voice, ICP, platform, and scheduling config
+  references/
+    brand-voice.md       Tone guide, vocabulary rules, anti-AI filter
+    content-icp.md       Ideal viewer/reader profile
+    platform-config.md   Active platforms, cadence, repurposing flow
+    scheduling-config.md Buffer channel names, timezone
+    brand-assets.md      Colours, logos, email config, content strategy
+  content-plugin/        The plugin (skills, agents, workflows, data)
 ```

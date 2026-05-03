@@ -33,7 +33,7 @@ Run and debug a userscript that automates "comment X for Y" lead magnet response
 
 Confirm Playwright installed:
 ```bash
-cd _bmad/custom/workflows/linkedin-comment-processor && npx playwright --version
+cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npx playwright --version
 ```
 
 ### Step 2: Get LinkedIn Session Cookie
@@ -64,10 +64,10 @@ Update CONFIG in `userscript.js`.
 
 ```bash
 # Headed:
-cd _bmad/custom/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>"
+cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>"
 
 # Headless:
-cd _bmad/custom/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>" --headless
+cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>" --headless
 ```
 
 Run as background task.

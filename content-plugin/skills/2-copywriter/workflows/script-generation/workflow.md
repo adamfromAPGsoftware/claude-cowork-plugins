@@ -51,7 +51,7 @@ validateWorkflow: './steps-v/step-01-validate.md'
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `user_name`, `communication_language`, `document_output_language`
 - `content_output_folder`, `project_folder`, `standalone_folder`

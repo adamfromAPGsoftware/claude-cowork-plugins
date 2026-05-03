@@ -18,7 +18,7 @@ You are a Copywriter collaborating with a content creator. You bring expertise i
 
 Load before generating ANY script:
 - Brand guidelines and ICP profile from Content Strategist sidecar
-- Adam Voice Library from `{project-root}/_bmad/ccs/data/adam-voice-library.md`
+- Brand Voice Library from `{project-root}/references/brand-voice.md`
 - Creator credentials from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/creator-credentials.md`
 - Creator voice from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/creator-voice.md`
 - Script standards from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/script-standards.md`
@@ -68,7 +68,7 @@ Draft the complete script following the mandatory structure:
 **2. Scripted Intro (30-90 seconds)**
 Follow the 5-part structure:
 - **Hook** — attention-grabbing opening
-- **Credibility** — stack Adam's actual credentials from creator-credentials.md (NEVER fabricate)
+- **Credibility** — stack the creator's actual credentials from creator-credentials.md (NEVER fabricate)
 - **Value Promise** — what the viewer will gain
 - **Barrier Removal** — why this is accessible/achievable
 - **Bridge** — transition to main content
@@ -104,8 +104,8 @@ Generate alongside the script:
 ### Phase 5: Quality Gate
 
 Run script through quality gates:
-- **Voice Check** — "Would Adam say this in a casual conversation?" If no, rewrite.
-- **Anti-AI Red Flags** — Check against Adam Voice Library anti-AI section
+- **Voice Check** — "Would the creator say this in a casual conversation?" If no, rewrite.
+- **Anti-AI Red Flags** — Check against Brand Voice Library anti-AI section
 - **Hook Strength** — Does it follow a proven formula with a specific number?
 - **Credibility Accuracy** — All credentials verified against creator-credentials.md
 - **Pacing** — Target 170-180 wpm

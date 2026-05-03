@@ -1,6 +1,6 @@
 ---
 name: 'step-06-save'
-description: 'Save approved LinkedIn post with frontmatter and optionally schedule via Late.dev'
+description: 'Save approved LinkedIn post with frontmatter and optionally schedule via Buffer'
 
 nextStepFile: './step-07-more.md'
 ---
@@ -9,7 +9,7 @@ nextStepFile: './step-07-more.md'
 
 ## STEP GOAL:
 
-To save the approved LinkedIn post as a markdown file with structured YAML frontmatter, save any companion media files, and optionally schedule the post via the Late.dev API.
+To save the approved LinkedIn post as a markdown file with structured YAML frontmatter, save any companion media files, and optionally schedule the post via the Buffer API.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -47,7 +47,7 @@ To save the approved LinkedIn post as a markdown file with structured YAML front
 - Approved post content, media plan, hook, CTA all available from previous steps
 - Media file is ALREADY confirmed on disk by step-05b — do not re-check or re-produce it
 - Output paths depend on source mode (project vs personal)
-- Late.dev API available for scheduling
+- Buffer API available for scheduling
 - Focus: File output and distribution — no content changes
 
 ## MANDATORY SEQUENCE
@@ -109,13 +109,13 @@ Update the agent's memories with derivative tracking:
 
 If project mode: update `{project_folder}/project.md` with LinkedIn content status.
 
-### 5. Late.dev Scheduling (Optional)
+### 5. Buffer Scheduling (Optional)
 
 Ask the user:
 
 "**When should this post go live?**
 
-**[N] Now** — publish immediately via Late.dev
+**[N] Now** — publish immediately via Buffer
 **[T] Time** — schedule for a specific date and time
 **[S] Skip** — save as draft only"
 
@@ -123,119 +123,49 @@ Ask the user:
 
 **If Now or Time:**
 
-#### 5a. Read API key from .env
-
-```bash
-LATE_API_KEY=$(grep '^LATE_API_KEY=' "{project-root}/.env" | cut -d'=' -f2)
-```
-
-Verify `LATE_API_KEY` is non-empty. If empty, report the error and ask the user to check the `.env` file. Do NOT proceed with scheduling.
-
-#### 5b. If Time — get schedule datetime
+#### 5a. If Time — get schedule datetime
 
 Ask: "**What date and time? (e.g. 2026-03-05 09:00 AEST)**"
 Convert to ISO 8601 UTC. Store as `{scheduled_for}`.
-If Now: set `"publishNow": true` and omit `scheduledFor`.
 
-#### 5c. Fetch LinkedIn accountId and confirm account
+#### 5b. List channels via Buffer MCP
 
-```bash
-curl -s -X GET "https://getlate.dev/api/v1/accounts" \
-  -H "Authorization: Bearer $LATE_API_KEY"
-```
+Call `mcp__buffer__use_buffer_api(action: "listChannels")` to retrieve connected accounts.
 
-Filter the response to LinkedIn accounts only (`platform === "linkedin"` and `isActive === true`).
+Filter to LinkedIn channels only. Present for confirmation:
 
-**If one LinkedIn account found:** Present it for confirmation:
-
-"**Posting to:** {displayName} (@{username}) — {profileUrl}
+"**Posting to:** {displayName} — LinkedIn
 Is this the right account? **[Y]** Yes / **[N]** No"
 
-- If Y: store `{accountId}` and `{profileId}`, proceed.
-- If N: list all available LinkedIn accounts and ask user to select by number.
+If multiple LinkedIn channels found, list them and ask user to select.
 
-**If multiple LinkedIn accounts found:** List them and ask user to select:
+Store the selected channel's profile ID as `{channel_id}`.
 
-"**Which LinkedIn account should this post to?**
+**If no LinkedIn channel found:** Halt — user must connect LinkedIn in Buffer at buffer.com/manage/channels.
 
-1. {displayName} (@{username}) — {profileUrl}
-2. {displayName} (@{username}) — {profileUrl}
-...
+#### 5c. Upload media (if post has media)
 
-Select a number."
+Use the Buffer MCP tool for media upload if available. If the Buffer MCP does not expose a direct media upload tool, note to user: "Upload your media file manually in Buffer's compose window, or use Buffer's web uploader."
 
-Store selected account's `_id` as `{accountId}` and `profileId._id` as `{profileId}`.
+#### 5d. Schedule the post via Buffer MCP
 
-**If no active LinkedIn account found:** Report the error and halt — do NOT proceed.
-
-#### 5d. Upload media (if post has media)
-
-**For video, image, or carousel formats:**
-
-```bash
-curl -s -X POST "https://getlate.dev/api/v1/media" \
-  -H "Authorization: Bearer $LATE_API_KEY" \
-  -F "files=@{confirmed_media_path}"
+Call:
+```
+mcp__buffer__use_buffer_api(
+  action: "createPost",
+  profileIds: [selected LinkedIn channel ID],
+  text: approved post body,
+  scheduledAt: ISO 8601 UTC datetime,
+  media: [media file path if applicable]
+)
 ```
 
-Store the returned `url` from the response as `{media_url}`.
-Store the returned `type` as `{media_type}` (e.g. `video`, `image`, `document`).
-
-If upload fails, report the error and halt — do NOT proceed to post creation.
-
-**For text format:** skip this section, no media to upload.
-
-#### 5e. Create and schedule the post
-
-Build the JSON payload. For **Now**:
-```json
-{
-  "platforms": [
-    {
-      "platform": "linkedin",
-      "accountId": "{accountId}"
-    }
-  ],
-  "profileId": "{profileId}",
-  "content": "{approved post body text}",
-  "mediaItems": [{"type": "{media_type}", "url": "{media_url}"}],
-  "publishNow": true,
-  "title": "{post_slug}"
-}
-```
-
-For **Time** (omit `publishNow`, include `scheduledFor`):
-```json
-{
-  "platforms": [
-    {
-      "platform": "linkedin",
-      "accountId": "{accountId}"
-    }
-  ],
-  "profileId": "{profileId}",
-  "content": "{approved post body text}",
-  "mediaItems": [{"type": "{media_type}", "url": "{media_url}"}],
-  "scheduledFor": "{scheduled_for}",
-  "title": "{post_slug}"
-}
-```
-
-For **text posts** omit the `mediaItems` field entirely.
-
-```bash
-curl -s -X POST "https://getlate.dev/api/v1/posts" \
-  -H "Authorization: Bearer $LATE_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{payload}'
-```
-
-#### 5f. Handle response
+#### 5e. Handle response
 
 **Success:** Update frontmatter `status: scheduled` (or `published` if Now), `scheduled_at: {datetime or "now"}`.
-Display: "**Post scheduled via Late.dev.** ID: {response id}"
+Display: "**Post scheduled via Buffer.** ID: {response id}"
 
-**Failure:** Display the full error response. Offer:
+**Failure:** Display the full error. Offer:
 - **[R]** Retry
 - **[S]** Skip scheduling — save as draft instead
 
@@ -278,11 +208,10 @@ ONLY WHEN all files are saved, derivative tracking is updated, and scheduling de
 - Companion files saved (carousel JSON, image JSON, video instructions)
 - Output paths correct for source mode
 - Derivative tracking updated
-- Late.dev API key auto-read from .env — never asked from user
-- Media uploaded to Late.dev before post creation
-- LinkedIn accountId fetched automatically from GET /accounts
-- Post scheduled or published via API without manual curl from user
-- Save confirmation presented with file paths and Late.dev post ID
+- Buffer MCP used to list channels (`listChannels`) and create post (`createPost`)
+- LinkedIn channel fetched automatically via MCP call
+- Post scheduled or published via Buffer MCP without manual API calls from user
+- Save confirmation presented with file paths and Buffer post ID
 
 ### ❌ SYSTEM FAILURE:
 
@@ -291,6 +220,6 @@ ONLY WHEN all files are saved, derivative tracking is updated, and scheduling de
 - Saving to wrong output path
 - Overwriting existing files without confirmation
 - Not updating derivative tracking
-- Skipping Late.dev scheduling option
+- Skipping Buffer scheduling option
 
 **Master Rule:** Skipping steps, optimizing sequences, or not following exact instructions is FORBIDDEN and constitutes SYSTEM FAILURE.

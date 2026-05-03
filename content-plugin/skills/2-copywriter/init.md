@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/_bmad/_memory/bmad-apg-ccs-2-copywriter-sidecar/` for persistent memory.
+Creating `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -21,7 +21,7 @@ Creating:
 
 ## Setup Questions
 
-1. **Voice library location** — Confirm Adam Voice Library exists at `{project-root}/_bmad/ccs/data/adam-voice-library.md`
+1. **Voice library location** — Confirm Brand Voice Library exists at `{project-root}/references/brand-voice.md`
 2. **Primary content types** — Which content types do you produce most? (scripts, blog, LinkedIn, X, email, etc.)
 3. **Brand voice reference** — Confirm brand guidelines accessible at Content Strategist sidecar
 
@@ -29,7 +29,7 @@ Creating:
 
 Once confirmed, create the following files:
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-2-copywriter-sidecar/index.md`
+### `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/index.md`
 
 ```markdown
 # CCS Copywriter — Session Index
@@ -48,7 +48,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-2-copywriter-sidecar/patterns.md`
+### `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/patterns.md`
 
 ```markdown
 # Copywriter Patterns
@@ -63,7 +63,7 @@ Once confirmed, create the following files:
 (what works per platform — LinkedIn vs X vs Blog vs Email)
 ```
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-2-copywriter-sidecar/chronology.md`
+### `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

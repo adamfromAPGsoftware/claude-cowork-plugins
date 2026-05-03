@@ -3,8 +3,6 @@ name: 'step-07-write-plan'
 description: 'Compile everything into package-plan.md — titles, prompts, compositions, CTR pre-scores, YouTube description, and generation config'
 
 packagePlanTemplate: '../data/package-plan-template.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 7: Write Package Plan

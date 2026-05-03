@@ -40,7 +40,7 @@ Every section must pass the dual-funnel test:
 - **Builder angle:** Does this section teach something actionable? What skill or knowledge do they gain?
 - **SME angle:** Does this section demonstrate ROI or business value? What outcome is shown?
 - **If a section only speaks to one audience:** Sharpen it or add a bridging sentence
-- **ICP reference:** Reference ICP profiles from the copywriter agent sidecar (`_bmad/_memory/copywriter-sidecar/`) for specific audience pain points, language patterns, and resonance triggers when sharpening sections
+- **ICP reference:** Reference ICP profiles from the copywriter agent sidecar (`content-plugin/data/memory/2-copywriter-sidecar/`) for specific audience pain points, language patterns, and resonance triggers when sharpening sections
 
 ---
 
@@ -109,7 +109,7 @@ When single-column markdown image syntax isn't sufficient, use inline HTML for r
 
 ### Style References
 
-If `inspiration/blog.md` exists in the copywriter memory sidecar (`_bmad/_memory/copywriter-sidecar/inspiration/blog.md`), load it during drafting for style pattern guidance — sentence rhythms, opening hooks, section transitions, and formatting preferences observed from approved content.
+If `inspiration/blog.md` exists in the copywriter memory sidecar (`content-plugin/data/memory/2-copywriter-sidecar/inspiration/blog.md`), load it during drafting for style pattern guidance — sentence rhythms, opening hooks, section transitions, and formatting preferences observed from approved content.
 
 ---
 

@@ -6,8 +6,6 @@ nextStepFile: './step-04-publish.md'  # blog → step-04-publish.md | email → 
 outputFile: '{content_output_folder}/projects/{project_slug}/copywriter/blog-email/{format}-{content_slug}-{date}.md'
 blogStandards: '../data/blog-standards.md'
 emailStandards: '../data/email-standards.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 3: Content Draft
@@ -69,16 +67,16 @@ Load {outputFile} and read:
 - Format-specific inputs (keywords, URLs, format A/B, etc.)
 
 **Load brand context from the copywriter agent's sidecar memory:**
-- `_bmad/_memory/copywriter-sidecar/brand-guidelines.md` — Brand voice, tone, positioning
-- `_bmad/_memory/copywriter-sidecar/icp-profiles.md` — ICP pain points, language, resonance triggers (if exists)
+- `content-plugin/data/memory/2-copywriter-sidecar/brand-guidelines.md` — Brand voice, tone, positioning
+- `content-plugin/data/memory/2-copywriter-sidecar/icp-profiles.md` — ICP pain points, language, resonance triggers (if exists)
 
 **IF format is blog:**
 - Load {blogStandards} completely. These are your generation rules.
-- Load `_bmad/_memory/copywriter-sidecar/inspiration/blog.md` if it exists — for style pattern guidance
+- Load `content-plugin/data/memory/2-copywriter-sidecar/inspiration/blog.md` if it exists — for style pattern guidance
 
 **IF format is email:**
 - Load {emailStandards} completely. These are your generation rules.
-- Load `_bmad/_memory/copywriter-sidecar/inspiration/email.md` if it exists — for style pattern guidance
+- Load `content-plugin/data/memory/2-copywriter-sidecar/inspiration/email.md` if it exists — for style pattern guidance
 
 ### 1b. Pre-Generation Checks (Email Only)
 
@@ -134,14 +132,14 @@ Generate a complete email following ALL rules from {emailStandards}:
 
 **Hero image selection:** Review the image catalog and select the strongest visual as the hero image. Priority order: thumbnail > key diagram > B-roll still. The hero image sits at the top of the email body, before the opening text.
 
-**For Format A (Story-Driven / Nick Saraev Style):**
+**For Format A (Story-Driven Style):**
 1. Hero image (selected from catalog) — flag with `<!-- REQUIRES HOSTING: {local-path} -->` if local path
 2. Cold open (1-2 sentences) — NO greeting. Drop straight into the story or hook mid-conversation
 3. Story body (2-3 short paragraphs) — the experience, the mistake, the discovery. Specific details, real timelines
 4. Insight / lesson (1 paragraph) — the takeaway, what changed
 5. Natural bridge (1-2 sentences) — connect the story to something the reader can act on
 6. Single bold CTA — soft sell, conversational. Bold the CTA link text
-7. Sign-off — "Talk soon," line break, "Adam"
+7. Sign-off — "Talk soon," line break, "{brand.creator_name}"
 8. PS section (ALWAYS) — prime real estate. Italicized. Format: `**P.S.** *{content}*`
 9. Persistent footer elements (exact approved copy from email-standards)
 
@@ -149,12 +147,12 @@ Generate a complete email following ALL rules from {emailStandards}:
 
 **For Format B (Announcement / Liam Ottley Style):**
 1. Hero image (selected from catalog) — flag with `<!-- REQUIRES HOSTING: {local-path} -->` if local path
-2. Greeting — "Hey –" line break, "Adam here."
+2. Greeting — "Hey –" line break, "{brand.creator_name} here."
 3. Hook (1-2 sentences) — what's new, why now. Lead with the result or number
 4. Context with bold figures (1-2 sentences) — social proof, specific numbers in **bold**
 5. "What's inside" bullets (3-5) — each starts with bold label: "**The exact prompt** I use to..."
 6. Direct CTA — action-oriented, clear. Bold the link text
-7. Sign-off — "Keep going," line break, "Adam"
+7. Sign-off — "Keep going," line break, "{brand.creator_name}"
 8. PS (optional) — secondary hook or teaser. Same italicized format
 9. Persistent footer elements (exact approved copy from email-standards)
 
@@ -166,7 +164,7 @@ Generate a complete email following ALL rules from {emailStandards}:
 - One clear CTA only (PS may contain secondary)
 - Generate initial subject line (lowercase/sentence case, under 50 chars, curiosity-driven)
 - Generate initial preview text (1-2 sentences, builds on subject)
-- **Image hosting flag:** When hero image uses a local path, include `<!-- REQUIRES HOSTING: {local-path} -->` comment. The ConvertKit push step (Step 4) will resolve this by uploading to Supabase Storage
+- **Image hosting flag:** When hero image uses a local path, include `<!-- REQUIRES HOSTING: {local-path} -->` comment. Upload the image to your email platform's media library and replace the local path with the public URL before sending
 
 ### 3. Internal Quality Check
 
@@ -240,7 +238,7 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [C] Conti
 
 ONLY WHEN C is selected and the draft has been saved to {outputFile} with user approval will you then:
 - **Blog:** load and read fully `./step-04-publish.md` to execute metadata generation and publishing
-- **Email:** load and read fully `./step-04-polish.md` to execute subject line selection and ConvertKit push
+- **Email:** load and read fully `./step-04-polish.md` to execute subject line selection and email draft push
 
 ---
 

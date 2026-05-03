@@ -1,0 +1,44 @@
+{
+  "skill-name": "content-5-publisher",
+  "module-code": "content-5-publisher",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Publisher — Content distribution specialist. Schedules, formats, and publishes approved content across 13+ social platforms via Buffer.",
+  "capabilities": [
+    {
+      "menu-code": "CC",
+      "name": "content-calendar",
+      "description": "View and manage the content calendar — track scheduled and published content across platforms",
+      "type": "prompt",
+      "file": "content-calendar.md"
+    },
+    {
+      "menu-code": "LC",
+      "name": "linkedin-comment-processor",
+      "description": "Automate 'comment X for Y' lead magnet DMs and replies on LinkedIn posts",
+      "type": "prompt",
+      "file": "linkedin-comment-processor.md"
+    },
+    {
+      "menu-code": "PP",
+      "name": "post-publish-pipeline",
+      "description": "Auto-generate all derivative content from a published YouTube video",
+      "type": "prompt",
+      "file": "post-publish-pipeline.md"
+    },
+    {
+      "menu-code": "SP",
+      "name": "schedule-publish",
+      "description": "Format and schedule content for publication via Buffer across social platforms",
+      "type": "prompt",
+      "file": "schedule-publish.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session context to memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

@@ -42,17 +42,16 @@ Every email includes a hero image at the top of the body, before the opening tex
 ### Image Hosting (Critical for Emails)
 - **Email images MUST be publicly hosted URLs** — local file paths will NOT render in email clients (Gmail, Apple Mail, Outlook, etc.)
 - During drafting: use the local project path and flag with `<!-- REQUIRES HOSTING: {local-path} -->`
-- During ConvertKit push (Step 4): the image is uploaded to Supabase Storage and the local path is replaced with the public URL
-- **Public URL pattern:** `{SUPABASE_URL}/storage/v1/object/public/resource-media/{slug}/{filename}`
-- If the ConvertKit push step is skipped, remind the user that hero image paths must be manually replaced with hosted URLs before sending
+- Before sending: upload the flagged image to your email platform's media library (Beehiiv, Kit, Mailchimp, etc.) and replace the local path with the public URL
+- Remind the user to replace any `<!-- REQUIRES HOSTING -->` flagged paths with hosted URLs before sending
 
 ---
 
-## Format A: Story-Driven / Nick Saraev Style
+## Format A: Story-Driven Style
 
 **Use when:** The content has a personal story angle, a lesson learned, or an experience to share
 **Word count target:** 400-500 words
-**Style influence:** Nick Saraev — raw, specific, no fluff, feels like a private email
+**Style influence:** Story-driven — raw, specific, no fluff, feels like a private email
 
 **Structure:**
 1. **Hero image** (from image catalog)
@@ -61,7 +60,7 @@ Every email includes a hero image at the top of the body, before the opening tex
 4. **Insight / lesson** (1 paragraph) — the takeaway. What you learned. What changed
 5. **Natural bridge** (1-2 sentences) — connect the story to something the reader can act on. No forced transitions
 6. **Single bold CTA** — soft sell, conversational. "If you're curious, here's where I break it all down →". Bold the CTA link text
-7. **Sign-off** — "Talk soon," then line break, then "Adam"
+7. **Sign-off** — "Talk soon," then line break, then "{brand.creator_name}"
 8. **PS section** (ALWAYS include) — PS is prime real estate. Use it for a secondary hook, a surprising stat, or a teaser for next week. Italicize the PS content. Format: `**P.S.** *{content}*`
 
 **Tone:** Conversational, personal, like texting a smart friend. No greeting — cold opens only.
@@ -78,12 +77,12 @@ Every email includes a hero image at the top of the body, before the opening tex
 
 **Structure:**
 1. **Hero image** (from image catalog)
-2. **Greeting** — "Hey –" then line break, then "Adam here."
+2. **Greeting** — "Hey –" then line break, then "{brand.creator_name} here."
 3. **Hook** (1-2 sentences) — what's new, why now, what happened. Lead with the result or the number
 4. **Context with bold figures** (1-2 sentences) — social proof, credibility, specific numbers in bold. "This system handles **$47k/mo** in client work"
 5. **"What's inside" bullets** (3-5 bullets) — what the reader gets. Each bullet starts with a bold label: "**The exact prompt** I use to...", "**A live demo** showing..."
 6. **Direct CTA** — action-oriented, clear. "Watch it here →" or "Grab the template →". Bold the link text
-7. **Sign-off** — "Keep going," then line break, then "Adam"
+7. **Sign-off** — "Keep going," then line break, then "{brand.creator_name}"
 8. **PS** (optional) — secondary hook or teaser. Same italicized format as Format A
 
 **Tone:** Direct, confident, high-energy but not hype. Every sentence earns its place.
@@ -161,7 +160,7 @@ Include these inside the email body (NOT in the template — template handles he
 
 ## HTML Conversion Rules
 
-When converting email markdown to HTML for ConvertKit push, apply these inline styles to every element. ConvertKit strips `<style>` blocks — all styling must be inline.
+When converting email markdown to HTML for your email platform (see `{brand.email.platform}` in config.yaml), apply these inline styles to every element. Many email platforms strip `<style>` blocks — all styling must be inline.
 
 ### Element Style Table
 
@@ -203,7 +202,7 @@ format: "A"  # or "B"
 hero_image: ""  # path to selected hero image
 date: ""
 status: draft
-broadcast_id: ""  # populated after ConvertKit push
+broadcast_id: ""  # populated after email draft push
 stepsCompleted: []
 ---
 ```
@@ -234,7 +233,7 @@ Before presenting an email draft, verify:
 - [ ] Written to ONE person, not a list
 - [ ] Specifics used (real numbers, timelines, names) — not vague
 - [ ] One clear CTA only (PS may contain secondary)
-- [ ] **Sign-off present** — "Talk soon, Adam" (A) or "Keep going, Adam" (B)
+- [ ] **Sign-off present** — "Talk soon, {brand.creator_name}" (A) or "Keep going, {brand.creator_name}" (B)
 - [ ] **PS section present** — always for Format A, optional for Format B
 - [ ] Brand voice maintained — authentic, not corporate, no banned words
 - [ ] **No bullet points in Format A** — prose only

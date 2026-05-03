@@ -3,12 +3,12 @@
 CCS Post-Publish Pipeline Orchestrator
 
 After filming and publishing a long-form YouTube video, this script auto-generates
-all derivative content in parallel: 5 short-form scripts, blog post, ConvertKit
-email, LinkedIn lead magnet, and Instagram carousel.
+all derivative content in parallel: 5 short-form scripts, blog post, email draft,
+LinkedIn lead magnet, and Instagram carousel.
 
 4 parallel lanes via ThreadPoolExecutor:
   1. Shorts: short-form-scripts workflow (auto mode)
-  2. Blog+Email: blog → Supabase publish → email → ConvertKit
+  2. Blog+Email: blog → local markdown save → email → email platform draft
   3. LinkedIn: content generation → schedule via schedule-linkedin-post.py
   4. Instagram: carousel generation → schedule via schedule-instagram-post.py
 
@@ -57,9 +57,9 @@ load_env_config()
 # ---------------------------------------------------------------------------
 
 PROJECT_ROOT = Path(__file__).resolve().parents[6]
-CONTENT_PROJECTS = PROJECT_ROOT / "_bmad-output" / "content" / "projects"
-ACTIVE_PROJECT_PATH = PROJECT_ROOT / "_bmad" / "ccs" / "active-project.yaml"
-LOG_DIR = PROJECT_ROOT / os.environ.get("LOG_DIR", "_bmad-output/post-publish-logs")
+CONTENT_PROJECTS = PROJECT_ROOT / os.environ.get("CONTENT_PROJECTS", "content/projects")
+ACTIVE_PROJECT_PATH = PROJECT_ROOT / "content-plugin" / "data" / "active-project.yaml"
+LOG_DIR = PROJECT_ROOT / os.environ.get("LOG_DIR", "content-plugin/data/logs/post-publish-logs")
 
 STEP_TIMEOUT = int(os.environ.get("STEP_TIMEOUT", "1800"))
 HEARTBEAT_INTERVAL = int(os.environ.get("HEARTBEAT_INTERVAL", "30"))
@@ -278,7 +278,7 @@ def _parse_status_yaml(path: Path) -> Optional[dict]:
 
 
 # ---------------------------------------------------------------------------
-# Streaming subprocess (ported from bmad-orchestrator.py)
+# Streaming subprocess
 # ---------------------------------------------------------------------------
 
 def stream_subprocess(
@@ -513,9 +513,9 @@ def prompt_blog_publish(slug: str, project_folder: Path, youtube_url: str) -> st
         f"At step-01-init: auto-select [P] Project mode. Use project slug '{slug}'.\n"
         f"At step-02-format: auto-select Blog format.\n"
         f"For SEO metadata at step-03: auto-select option [A] for the recommended SEO metadata.\n"
-        f"At step-04-publish: auto-confirm publishing to Supabase.\n\n"
-        f"Complete the entire blog creation and publishing workflow. "
-        f"The blog must be fully published to Supabase before this task is complete."
+        f"At step-04-publish: auto-save the blog as a local markdown file.\n\n"
+        f"Complete the entire blog creation and local-save workflow. "
+        f"The blog markdown file must be saved to the project folder before this task is complete."
     )
 
 
@@ -528,11 +528,11 @@ def prompt_email_draft(slug: str, project_folder: Path, youtube_url: str) -> str
         f"The YouTube video URL is: {youtube_url}\n\n"
         f"At step-01-init: auto-select [P] Project mode. Use project slug '{slug}'.\n"
         f"At step-02-format: auto-select Email format.\n\n"
-        f"IMPORTANT: A blog post for this project has already been published to Supabase. "
-        f"Reference the blog's Supabase image URLs in the email content where appropriate.\n\n"
+        f"IMPORTANT: A blog post for this project has already been saved locally as markdown. "
+        f"Reference any images from the blog's local output folder in the email content where appropriate.\n\n"
         f"Look for blog output files at: {project_folder}/copywriter/blog-email/blog-*.md\n\n"
-        f"At step-04-polish: auto-confirm pushing the email draft to ConvertKit.\n\n"
-        f"Complete the entire email creation and ConvertKit push workflow."
+        f"At step-04-polish: auto-confirm pushing the email draft to your email platform.\n\n"
+        f"Complete the entire email creation and email draft push workflow."
     )
 
 
@@ -581,7 +581,7 @@ def prompt_linkedin_lead_magnet(slug: str, project_folder: Path,
         f"At step-05b (media production): skip video creation — the file already exists.\n\n"
         f"Content category: Lead Magnet — create a post that offers value and drives engagement "
         f"through a lead magnet CTA. Select a keyword from the centralised library at "
-        f"_bmad/ccs/data/lead-magnet-keywords.yaml that best matches this video's topic. "
+        f"content-plugin/data/lead-magnet-keywords.yaml that best matches this video's topic. "
         f"Use the LinkedIn CTA template from the library.\n\n"
         f"Complete the entire LinkedIn content generation workflow end-to-end."
     )
@@ -623,7 +623,7 @@ def prompt_instagram_carousel(slug: str, project_folder: Path,
 
 
 def prompt_instagram_schedule(slug: str, project_folder: Path,
-                               schedule_at: str, account: str = "adam") -> str:
+                               schedule_at: str, account: str = "") -> str:
     account_folder = f"{project_folder}/creative-director/carousels/instagram/{account}/"
     return (
         f"{_yolo_preamble()}"
@@ -784,11 +784,11 @@ def lane_instagram(ctx: dict) -> str:
     else:
         results.append(f"{task_carousel}: skipped")
 
-    # Schedule — Adam's personal account only (is handled standalone)
+    # Schedule — personal account only (handled standalone)
     task_sched = "instagram-schedule"
     if not _should_skip(ctx, task_sched):
         prompt = prompt_instagram_schedule(
-            ctx["slug"], ctx["project_folder"], ctx["schedule_instagram"], "adam")
+            ctx["slug"], ctx["project_folder"], ctx["schedule_instagram"], "")
         ok = run_task(task_sched, prompt, ctx["status"], ctx["slug"], ctx["dry_run"],
                       label="instagram-schedule")
         results.append(f"{task_sched}: {'done' if ok else 'failed'}")

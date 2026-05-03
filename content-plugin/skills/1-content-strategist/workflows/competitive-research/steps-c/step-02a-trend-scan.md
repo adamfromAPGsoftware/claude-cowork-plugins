@@ -48,10 +48,10 @@ To scan all competitor channels in parallel using sub-agents, pull recent video 
 
 ## CONTEXT BOUNDARIES:
 
-- Available: Sidecar config with competitor list, YouTube MCP Server / Data API, `YOUTUBE_API_KEY` (loaded at workflow init from `{project-root}/.env`)
+- Available: Sidecar config with competitor list, YouTube MCP (`mcp__youtube__*`) — platform-level, no API key needed
 - Focus: Data retrieval and outlier score calculation only
 - Limits: Do not analyse content, transcripts, or gaps — that comes in later steps
-- Dependencies: Step 01 must have completed, sidecar must be loaded, `YOUTUBE_API_KEY` must be validated
+- Dependencies: Step 01 must have completed, sidecar must be loaded, YouTube MCP must be validated
 
 ## MANDATORY SEQUENCE
 
@@ -78,10 +78,10 @@ Each sub-agent MUST follow the API reference in {youtubeApiReference} for correc
 
 Each sub-agent MUST:
 
-1. **Fetch channel statistics** — use `channels.list` with `part=snippet,statistics&id={CHANNEL_ID}` (NOTE: the parameter is `id`, NOT `channelId`):
+1. **Fetch channel statistics** — use `mcp__youtube__getChannelStatistics` with `channelIds: [CHANNEL_ID]`:
    - Subscriber count, total views, total videos
 
-2. **Fetch recent videos** (within timeframe) — use `playlistItems.list` to get the channel's uploads playlist, then `videos.list` with batched video IDs for statistics (this is far cheaper on quota than `search.list`):
+2. **Fetch recent videos** — use `mcp__youtube__getChannelTopVideos` with `channelId`, then `mcp__youtube__getVideoDetails` with batched video IDs:
    - Video title, video ID, published date
    - View count, like count, comment count
 

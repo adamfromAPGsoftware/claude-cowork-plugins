@@ -3,8 +3,6 @@ name: 'step-04-title-generation'
 description: 'Generate title options for each angle with keyword integration and ICP scoring'
 
 nextStepFile: './step-05-composition-drafting.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 4: Title Generation

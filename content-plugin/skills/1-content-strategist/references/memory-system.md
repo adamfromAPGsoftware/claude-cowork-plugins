@@ -1,6 +1,6 @@
 # Memory System for CCS Content Strategist
 
-**Memory location:** `{project-root}/_bmad/_memory/bmad-apg-ccs-1-content-strategist-sidecar/`
+**Memory location:** `{project-root}/content-plugin/data/memory/1-content-strategist-sidecar/`
 
 ## Core Principle
 

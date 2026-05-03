@@ -68,15 +68,15 @@ For EACH selected platform, apply the formatting rules:
 4. **Media handling** — Flag if content references media that needs to be attached, note recommended dimensions per platform. Note: TikTok, Pinterest, and Snapchat require media — text-only posts are NOT supported
 5. **Link handling** — Respect each platform's link preview behaviour. **LinkedIn:** put external links in `firstComment` (avoids ~40-50% reach suppression). **Instagram:** captions don't have clickable links — use `firstComment` for links/hashtags
 6. **Formatting** — Apply platform-supported formatting (line breaks, bullet points, etc.)
-7. **First comment preparation** — For LinkedIn, Instagram, Facebook, and YouTube: prepare `firstComment` content. **CRITICAL:** `firstComment` goes INSIDE `platformSpecificData` for each platform when calling the API — NOT at the root level of the request body. Root-level `firstComment` is silently ignored by Late.dev.
+7. **First comment preparation** — For LinkedIn, Instagram, Facebook, and YouTube: prepare `firstComment` content. This will be passed to the Buffer MCP `create_post` call as a platform-specific option. Prepare the first comment text for inclusion with the post.
 8. **Platform-specific required fields** — Flag any required `platformSpecificData` that must be gathered:
-   - **LinkedIn (document post):** `documentTitle` (REQUIRED), `firstComment` (if applicable)
-   - **TikTok (video):** `privacy_level` (REQUIRED), `allow_comment` (REQUIRED), `allow_duet` (REQUIRED), `allow_stitch` (REQUIRED), `content_preview_confirmed: true` (REQUIRED), `express_consent_given: true` (REQUIRED). **NOTE:** Video posts have NO separate title field — `content`/`customContent` is the only text field (max 2,200 chars). Structure as: CTA first line → description → hashtags, all in one field.
-   - **TikTok (photo carousel):** Same required fields as video PLUS use `description` in tiktokSettings for long-form caption (4,000 chars). The `content` field becomes the title (auto-truncated to 90 chars).
-   - **Pinterest:** `boardId` (REQUIRED — must fetch boards via `GET /v1/accounts/{accountId}/pinterest-boards`)
-   - **Reddit:** `subreddit` (REQUIRED — posting fails without one)
+   - **LinkedIn (document post):** note the document title in the formatted output
+   - **TikTok (video):** privacy level (PUBLIC), content preview confirmation required. Video posts have no separate title — the caption is the only text field (max 2,200 chars). Structure as: CTA first line → description → hashtags, all in one field.
+   - **TikTok (photo carousel):** Same requirements as video. Long-form caption up to 4,000 chars.
+   - **Pinterest:** board name required — ask user which board to post to
+   - **Reddit:** subreddit required — posting fails without one
 
-**IMPORTANT:** Each platform will use `customContent` in the Late.dev API call, allowing unique formatted text per platform in a single request. Prepare each platform's content as a separate `customContent` entry.
+**IMPORTANT:** Each platform will use a separate `create_post` Buffer MCP call with its own formatted content. Prepare each platform's content as a distinct post so each gets native-feeling output.
 
 ### 3. Present Formatted Output
 
@@ -107,7 +107,7 @@ Repeat for each selected platform.
 
 ### 3b. Validate Lead Magnet Keywords
 
-If any platform copy contains a lead magnet keyword CTA (e.g., "Comment 'X'" or "DM me 'X'"), validate that the keyword exists in the centralised library at `{project-root}/_bmad/ccs/data/lead-magnet-keywords.yaml`.
+If any platform copy contains a lead magnet keyword CTA (e.g., "Comment 'X'" or "DM me 'X'"), validate that the keyword exists in the centralised library at `{project-root}/content-plugin/data/lead-magnet-keywords.yaml`.
 
 - Load the keyword library
 - Extract any keyword referenced in comment-gated or DM-gated CTAs

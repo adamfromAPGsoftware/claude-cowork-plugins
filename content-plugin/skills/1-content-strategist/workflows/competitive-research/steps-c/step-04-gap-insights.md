@@ -113,7 +113,7 @@ Leverage Exa web intelligence data already gathered in step 2c (cross-platform s
 
 For each identified opportunity, calculate a composite score:
 
-**Opportunity Score = (Demand Signal × 0.30) + (Competition Gap × 0.25) + (Trend Momentum × 0.20) + (Niche Fit × 0.10) + (Niche-Wide Signal × 0.15)**
+**Opportunity Score = (Demand Signal × 0.25) + (Competition Gap × 0.20) + (Trend Momentum × 0.20) + (Niche Fit × 0.10) + (Niche-Wide Signal × 0.10) + (Crossover Potential × 0.15)**
 
 Where:
 - **Demand Signal** (1-10): Based on outlier scores and view counts from competitor scan
@@ -121,6 +121,7 @@ Where:
 - **Trend Momentum** (1-10): Based on recency of outliers and web trend alignment
 - **Niche Fit** (1-10): How well the topic fits the AI/tech education space
 - **Niche-Wide Signal** (1-10): Based on niche-wide data from step 2c — high velocity videos from non-competitor channels on this topic score higher; convergent cross-platform signal (YouTube + web) scores highest. If niche scan was skipped, default this component to 5 (neutral)
+- **Crossover Potential** (1-10): Does this topic naturally bridge two or more distinct audiences? A topic that ONLY appeals to AI developers scores 2–3. A topic that captures AI developers AND a second community (traders, video editors, productivity enthusiasts, founders) scores 7–10. Based on niche crossover analysis from step 3 and title/angle assessment. Mid-sized channels (under 100K) should weight this heavily — crossover is the growth mechanism.
 
 Rank opportunities by composite score.
 
@@ -131,6 +132,7 @@ Append the following to {outputFile} under the **Content Gap Opportunities** sec
 - Gap classification table: Topic, Classification (Hot Gap/Emerging/Saturated/Niche Gold), Demand Signal, Competition Level
 - Top 5 opportunities ranked by opportunity score with rationale
 - Web trend context: key broader trends and how they relate to YouTube findings
+- Viral strategy insights: For each top opportunity — what trending topic does it ride, what secondary audience could be captured, and what crossover framing is recommended (e.g., "Claude + video editing = captures AI audience AND creator community")
 - (Validation mode) Updated competitive landscape assessment with gap context
 
 Update the **Trending Topics & Keywords** section with any new topics surfaced from web research.

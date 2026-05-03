@@ -8,10 +8,8 @@ brandConfigData: '../data/brand-config.md'
 pipelineScriptsData: '../data/pipeline-scripts.md'
 instagramInspirationDir: '../data/instagram-carousel-inspiration'
 scheduleInstagramData: '{project-root}/content-plugin/skills/2-copywriter/workflows/linkedin-content/data/schedule-instagram.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
-apgLogoDark: '{project-root}/_bmad/ccs/data/brand-assets/apg-logo-dark.png'
-apgLogoLight: '{project-root}/_bmad/ccs/data/brand-assets/apg-logo-light.png'
+brandLogoDark: '{project-root}/content-plugin/data/brand-assets/brand-logo-dark.png'
+brandLogoLight: '{project-root}/content-plugin/data/brand-assets/brand-logo-light.png'
 ---
 
 # Step 10: Instagram Carousel Creation
@@ -84,7 +82,7 @@ Select: [B] / [A] / [P]"
 Wait for selection. Store the brand mode.
 
 - IF B (Both): Load BOTH {instagramGuidelinesDark} and {instagramGuidelinesLight}. Pipeline will run twice.
-- IF A (APG): Load {instagramGuidelinesDark} only.
+- IF A ({YOUR_COMPANY}): Load {instagramGuidelinesDark} only.
 - IF P (Personal): Load {instagramGuidelinesLight} only.
 
 **Then, select the creation mode:**
@@ -118,7 +116,7 @@ From these, autonomously determine:
 3. **Slide count** — based on content density (typically 5-8)
 4. **CTA keyword** — derived from the topic
 5. **B-roll/screenshots for inspiration** — review project B-roll to understand what tools and settings appear in the video. Use as prompt inspiration only — do NOT embed video frames. Tool UI screenshots (e.g., Claude Code interface) CAN be embedded.
-6. **Hook slide photo** — the hook slide (slide 1) features Adam using a real photo. **PAUSE AUTO MODE HERE** and prompt the user to provide a photo. List available photos from `_bmad-output/headshots/` as quick-select options. The user can select one or provide a custom file path. Store the selected path as `photo_path` in the slide JSON. The CTA slide (last slide) is text-only — "Comment [KEYWORD]" design, no photo of Adam.
+6. **Hook slide photo** — the hook slide (slide 1) features the creator using a real photo. **PAUSE AUTO MODE HERE** and prompt the user to provide a photo. List available photos from `content-plugin/data/logs/headshots/` as quick-select options. The user can select one or provide a custom file path. Store the selected path as `photo_path` in the slide JSON. The CTA slide (last slide) is text-only — "Comment [KEYWORD]" design, no photo of the creator.
 
 **3b. Fetch logos** — Identify all tools/brands mentioned. For each, run `fetch-logo.ts` fresh (delete existing first). Verify each logo visually. If a logo fails or looks wrong, skip it silently — do not embed a wrong logo.
 
@@ -128,11 +126,11 @@ From these, autonomously determine:
 
 **Pass 1 (if or Both): Dark Mode (@{YOUR_HANDLE})**
 1. Load dark guidelines from {instagramGuidelinesDark}
-2. Craft prompts with dark palette, @{YOUR_HANDLE} handle, logo ({apgLogoDark}) top-right on every slide
+2. Craft prompts with dark palette, @{YOUR_HANDLE} handle, logo ({brandLogoDark}) top-right on every slide
 3. Include logo in every slide's `embed_images` array
 4. Logos fetched with `--color ffffff` (white-on-transparent for dark backgrounds)
 5. Hook slide (slide 1): set `photo_path` to the user's selected photo. CTA slide (last slide): text-only "Comment [KEYWORD]" design, no `photo_path`.
-6. Write `slides.json`, execute `generate-instagram-carousel.py` → output to `{output}/instagram/apg/`
+6. Write `slides.json`, generate slides via `mcp__fal-ai__generate_image` per slide → output to `{output}/instagram/{brand_account}/`
 7. Write caption with tone (professional, ROI-focused, "we built this" energy) + 3-5 business-focused hashtags
 
 **Pass 2 (if Personal or Both): Dark Mode (@{YOUR_HANDLE_PERSONAL})**
@@ -140,7 +138,7 @@ From these, autonomously determine:
 2. Craft prompts with dark palette (black/#111111 backgrounds), @{YOUR_HANDLE_PERSONAL} handle with YouTube icon, NO company logo (no logo)
 3. Logos fetched with `--color ffffff` (white-on-transparent for dark backgrounds)
 4. Hook slide (slide 1): set `photo_path` to the user's selected photo. CTA slide (last slide): text-only, no `photo_path`.
-5. Write `slides.json`, execute `generate-instagram-carousel.py` → output to `{output}/instagram/adam/`
+5. Write `slides.json`, generate slides via `mcp__fal-ai__generate_image` per slide → output to `{output}/instagram/{creator_account}/`
 5. Write caption with personal tone (casual, builder-to-builder, anti-guru) + 3-5 builder-focused hashtags
 
 **3d. Save** — Save captions as markdown with YAML frontmatter alongside the slide PNGs in each brand's output folder.
@@ -155,18 +153,18 @@ From these, autonomously determine:
 {IF generated:}
 **{YOUR_COMPANY} (Dark) — @{YOUR_HANDLE}**
 - **Slides:** {count} slides
-- **Output:** `{output}/instagram/apg/`
-- **Caption:** `{output}/instagram/apg/instagram-caption.md`
+- **Output:** `{output}/instagram/{brand_account}/`
+- **Caption:** `{output}/instagram/{brand_account}/instagram-caption.md`
 - **logo:** On every slide ✅
 
 {IF Personal generated:}
 **{YOUR_NAME} (Light) — @{YOUR_HANDLE_PERSONAL}**
 - **Slides:** {count} slides
-- **Output:** `{output}/instagram/adam/`
-- **Caption:** `{output}/instagram/adam/instagram-caption.md`
+- **Output:** `{output}/instagram/{creator_account}/`
+- **Caption:** `{output}/instagram/{creator_account}/instagram-caption.md`
 
 **Logos fetched:** {list of tools with ✅/❌}
-**Adam appears on:** Slide {N}, Slide {N}
+**Creator appears on:** Slide {N}, Slide {N}
 
 Review the slides and let me know if you want to adjust anything, or schedule them."
 
@@ -184,7 +182,7 @@ Then proceed to step 11 (Schedule) — this is the ONLY point where AUTO mode ha
 2. **Key points** — the 3-6 main points (these become content slides)
 3. **CTA keyword** — what should people comment to get the lead magnet? (e.g., "AGENT", "TOOLS", "GUIDE")
 4. **Screenshots to embed** — do you have any screenshots/images to incorporate into slides? Provide file paths.
-5. **Photo for hook slide** — provide a photo of yourself for the first slide. Available headshots in `_bmad-output/headshots/` — or provide a custom file path.
+5. **Photo for hook slide** — provide a photo of yourself for the first slide. Available headshots in `content-plugin/data/logs/headshots/` — or provide a custom file path.
 
 I'll decide the slide count and which slides should feature you based on the inspiration patterns. Give me the raw content and I'll shape it."
 
@@ -192,7 +190,7 @@ Wait for user input.
 
 After receiving content, autonomously decide:
 - Slide count based on number of key points + hook + CTA
-- Which slides feature Adam (following inspiration patterns and authenticity rules)
+- Which slides feature the creator (following inspiration patterns and authenticity rules)
 - Present these decisions to the user alongside the content summary (same format as AUTO mode)
 
 ### 4. Logos (COLLAB only — AUTO handles this in step 3b)
@@ -292,35 +290,29 @@ Display: **Select an Option:** [A] Adjust prompts [E] Advanced Elicitation [P] P
 
 ### 7. Build JSON & Execute (COLLAB only — AUTO handles this in step 3d)
 
-Load {pipelineScriptsData} for the generate-instagram-carousel.py CLI reference.
+Load {pipelineScriptsData} for the fal-ai MCP reference.
 
-Build the `slides.json` file from the approved prompts:
+Build the `slides.json` file from the approved prompts. Then for each slide, call fal-ai MCP:
 
-```json
-{
-  "slides": [
-    {
-      "slide_number": 1,
-      "prompt": "Using the attached photo of this person as the base image, ...",
-      "photo_path": "/path/to/real-photo.png",
-      "embed_images": []
-    },
-    {
-      "slide_number": 2,
-      "prompt": "Generate a 1080x1350 portrait Instagram slide. ...",
-      "embed_images": ["./screenshots/terminal.png"]
-    }
-  ]
-}
+```
+# Hook slide (with reference photo):
+mcp__fal-ai__upload_file(file_path="/path/to/real-photo.png")  → photo_url
+mcp__fal-ai__generate_image_from_image(
+  image_url=photo_url,
+  prompt="Using the attached photo of this person as the base image, ...",
+  image_size="portrait_4_5"
+)
+
+# Content slide (text-only):
+mcp__fal-ai__generate_image(
+  prompt="Generate a 1080x1350 portrait Instagram slide. ...",
+  image_size="portrait_4_5"
+)
 ```
 
-Write the JSON to the project output directory, then execute:
+Save each slide as `slide-01.png`, `slide-02.png`, etc. in `{project output}/instagram/`.
 
-```bash
-python3 scripts/generate-instagram-carousel.py \
-    --input "{path/to/slides.json}" \
-    --output-dir "{project output}/instagram/"
-```
+**Critical:** Generate slides sequentially — 2s pause between calls, NEVER parallelise.
 
 Report the result:
 - If success: "**Carousel generated!** {count} slides saved to: {output path}"
@@ -399,16 +391,16 @@ IF N or T:
 ```bash
 # {YOUR_COMPANY} carousel
 python3 scripts/schedule-instagram-post.py \
-  --file "{apg-caption-file-path}" \
-  --media-dir "{output}/instagram/apg/" \
-  --account apg \
+  --file "{brand-caption-file-path}" \
+  --media-dir "{output}/instagram/{brand_account}/" \
+  --account {brand_account} \
   --scheduled-at "{ISO 8601 datetime}"  # omit for immediate
 
 # {YOUR_NAME} carousel
 python3 scripts/schedule-instagram-post.py \
-  --file "{adam-caption-file-path}" \
-  --media-dir "{output}/instagram/adam/" \
-  --account adam \
+  --file "{creator-caption-file-path}" \
+  --media-dir "{output}/instagram/{creator_account}/" \
+  --account {creator_account} \
   --scheduled-at "{ISO 8601 datetime}"  # omit for immediate
 ```
 5. Report result for each brand
@@ -433,7 +425,7 @@ Session complete."
 
 - Guidelines AND inspiration images loaded automatically before any prompt crafting
 - Content extracted from video (AUTO) or gathered collaboratively (COLLAB)
-- AI autonomously decided slide count, Adam placement, and layouts (user approved)
+- AI autonomously decided slide count, creator placement, and layouts (user approved)
 - Unique per-slide prompts crafted following brand anchors and authenticity rules
 - ALL prompts presented for user review before generation
 - Script executed successfully with correct flags

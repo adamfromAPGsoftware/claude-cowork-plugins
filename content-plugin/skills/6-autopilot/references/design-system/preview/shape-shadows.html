@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-workspace); padding: 26px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .chip { background: #fff; border-radius: 10px; padding: 18px; display: flex; align-items: center; justify-content: center; min-height: 70px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+  .toolbar { box-shadow: 0 2px 16px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06); }
+  .card { box-shadow: 0 1px 2px rgba(26,22,20,0.04), 0 2px 8px rgba(26,22,20,0.05); }
+</style>
+</head>
+<body>
+  <div class="chip toolbar">--shadow-toolbar</div>
+  <div class="chip card">--shadow-card</div>
+</body>
+</html>

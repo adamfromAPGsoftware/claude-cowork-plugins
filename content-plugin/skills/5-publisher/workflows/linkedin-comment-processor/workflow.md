@@ -33,11 +33,11 @@ Present the user with these actions:
 
    Confirm Playwright is installed:
    ```bash
-   cd _bmad/custom/workflows/linkedin-comment-processor && npx playwright --version
+   cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npx playwright --version
    ```
    If not found, run:
    ```bash
-   cd _bmad/custom/workflows/linkedin-comment-processor && npm install && npx playwright install chromium
+   cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npm install && npx playwright install chromium
    ```
 
 2. **Get the LinkedIn session cookie**
@@ -74,7 +74,7 @@ Present the user with these actions:
 
    **If headless mode:** The user can't interact with the UI, so walk through each setting here.
 
-   Read the current CONFIG object from `_bmad/custom/workflows/linkedin-comment-processor/userscript.js` (near the top of the file) to show current defaults.
+   Read the current CONFIG object from `content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/userscript.js` (near the top of the file) to show current defaults.
 
    Walk through each setting, presenting the current value and asking the user to confirm or change it:
 
@@ -99,7 +99,7 @@ Present the user with these actions:
    - Comma-separated list, or "skip" for none
    - Note: All configured reply message variations (msgsAfterDM, msgsNotConnected) are auto-checked — you only need keywords here for custom replies you've posted manually
 
-   After collecting all inputs, update ONLY the CONFIG values in `_bmad/custom/workflows/linkedin-comment-processor/userscript.js`. Do not modify any other code.
+   After collecting all inputs, update ONLY the CONFIG values in `content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/userscript.js`. Do not modify any other code.
 
 6. **Present launch summary**
 
@@ -138,12 +138,12 @@ Present the user with these actions:
 
    For headed mode:
    ```bash
-   cd _bmad/custom/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>"
+   cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>"
    ```
 
    For headless mode:
    ```bash
-   cd _bmad/custom/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>" --headless
+   cd content-plugin/skills/5-publisher/workflows/linkedin-comment-processor && npx tsx run.ts --url "<url>" --cookie "<li_at>" --headless
    ```
 
    Run this as a background task. The browser stays open until the user clicks Stop & Export or presses Ctrl+C.
@@ -152,7 +152,7 @@ Present the user with these actions:
 
    When the process completes, check the output and the latest snapshot:
    ```bash
-   ls _bmad/custom/workflows/linkedin-comment-processor/debug/
+   ls content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/debug/
    ```
 
    Ask: "How did it go? Would you like to:"
@@ -171,7 +171,7 @@ Read exported HTML/screenshots to diagnose issues, then fix the userscript.
 1. **Identify the latest snapshot**
 
    ```bash
-   ls -lt _bmad/custom/workflows/linkedin-comment-processor/debug/ | head -5
+   ls -lt content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/debug/ | head -5
    ```
 
    If multiple snapshots exist, ask which one to examine.
@@ -180,7 +180,7 @@ Read exported HTML/screenshots to diagnose issues, then fix the userscript.
 
    The Activity Log is inside `#li-cp-devlog` in the DOM export. Search for it:
    ```
-   _bmad/custom/workflows/linkedin-comment-processor/debug/{timestamp}/tab-0.html
+   content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/debug/{timestamp}/tab-0.html
    ```
 
    The log entries use color coding:
@@ -218,7 +218,7 @@ Read exported HTML/screenshots to diagnose issues, then fix the userscript.
    - **Bot detection / CAPTCHA** — Delete `.browser-data/` and re-authenticate with a fresh cookie.
    - **Processing complete with 0 comments** — Check keyword match (case-sensitive in the UI input), and check that comments are loaded (scroll count in the log).
 
-   Edit `_bmad/custom/workflows/linkedin-comment-processor/userscript.js` to update selectors or logic.
+   Edit `content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/userscript.js` to update selectors or logic.
 
    After fixing, ask: "Want to re-run with [LC]?"
 

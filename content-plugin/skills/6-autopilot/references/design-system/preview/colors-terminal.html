@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-slide); padding: 18px 20px; font-family: var(--font-sans); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .sw { border-radius: 6px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06); }
+  .chip { height: 74px; }
+  .meta { padding: 8px 10px; background: #fff; }
+  .name { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--fg-1); }
+  .hex  { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:#1c2128"></div><div class="meta"><div class="name">dark-900 · fill</div><div class="hex">#1c2128</div></div></div>
+    <div class="sw"><div class="chip" style="background:#30363d"></div><div class="meta"><div class="name">dark-700 · border</div><div class="hex">#30363d</div></div></div>
+    <div class="sw"><div class="chip" style="background:#c9d1d9"></div><div class="meta"><div class="name">dark-100 · body</div><div class="hex">#c9d1d9</div></div></div>
+    <div class="sw"><div class="chip" style="background:#f0e6d3"></div><div class="meta"><div class="name">dark-50 · title</div><div class="hex">#f0e6d3</div></div></div>
+  </div>
+</body>
+</html>

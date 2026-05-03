@@ -4,8 +4,6 @@ description: 'Run keyword research waterfall and identify high-signal terms for 
 
 nextStepFile: './step-04-title-generation.md'
 pipelineScriptsData: '../../visual-asset-creation/data/pipeline-scripts.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 3: Keyword Research

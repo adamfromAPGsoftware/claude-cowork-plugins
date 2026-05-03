@@ -1,14 +1,11 @@
 ---
 name: 'step-04-polish'
-description: 'Generate SEO metadata or subject line variants, verify compliance, push to ConvertKit (email), and save final output'
+description: 'Generate SEO metadata or subject line variants, verify compliance, push email draft to your email platform, and save final output'
 
 outputFile: '{content_output_folder}/projects/{project_slug}/copywriter/blog-email/{format}-{content_slug}-{date}.md'
 blogStandards: '../data/blog-standards.md'
 emailStandards: '../data/email-standards.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
-convertKitScript: '{project-root}/scripts/create-convertkit-draft.sh'
-imageHostScript: '{project-root}/scripts/upload-to-supabase-storage.sh'
+emailDraftScript: '{project-root}/scripts/create-email-draft.sh'
 ---
 
 # Step 4: Polish & Metadata
@@ -131,7 +128,7 @@ Generate and present everything in one view — subject lines, preview text, com
    - Word count in range: ✅/❌
    - Persistent footer elements present: ✅/❌
 
-"**Final review before ConvertKit push:**
+"**Final review before email draft push:**
 
 **Subject Line (select one):**
 1) {variant 1} — Curiosity-driven
@@ -146,7 +143,7 @@ B) {option 2}
 **Hero image:** {resolved .png path — ready for hosting}
 **CTA:** {YouTube URL or landing page}
 
-**Select your subject line + preview text, then I'll push to ConvertKit as a draft.**
+**Select your subject line + preview text, then I'll push to your email platform as a draft.**
 (e.g., "1A" or "2B" — or tell me what to change)"
 
 Wait for user selection. This is the single interaction before publishing — subject line choice + preview text choice + implicit publish confirmation in one response.
@@ -192,17 +189,15 @@ Save the completed file to its final output location.
 
 **Blog compliance check:** Verify all image paths are relative (e.g., `../relative/path/to/image.png`). The publish workflow will upload images and rewrite paths to hosted URLs. Flag any absolute or external URLs that shouldn't be there.
 
-### 5. ConvertKit Draft Push (Email Only — Automatic After Subject Line Selection)
+### 5. Email Draft Push (Email Only — Automatic After Subject Line Selection)
 
 **Skip this section entirely for blog posts.**
 
-When the user selects their subject line and preview text in step 2, proceed directly to ConvertKit push — no additional Y/N confirmation needed. The subject line selection IS the publish confirmation.
+When the user selects their subject line and preview text in step 2, proceed directly to email draft push — no additional Y/N confirmation needed. The subject line selection IS the publish confirmation.
 
-1. **Upload hero image** (if local path):
-   - Check if hero image path is a local path or contains `<!-- REQUIRES HOSTING:` comment
-   - If local: execute `{imageHostScript} "{local-path}" "{project_slug}"` to upload to Supabase Storage
-   - Capture the returned public URL
-   - Replace the local path in the email body with the hosted URL
+1. **Hero image hosting:**
+   - If hero image is a local path, note it to the user: "Upload this image to your email platform's media library and replace the path before sending: `{local-path}`"
+   - If hero image is already an https:// URL, proceed directly.
 
 2. **Convert markdown to HTML:**
    - Follow the HTML Conversion Rules from {emailStandards}
@@ -211,25 +206,25 @@ When the user selects their subject line and preview text in step 2, proceed dir
    - Convert persistent footer to the exact HTML block from email-standards
    - Ensure all `<p>`, `<ul>`, `<li>`, `<hr>`, `<a>`, `<strong>`, `<em>` tags have inline styles
 
-3. **Build ConvertKit payload:**
+3. **Build email draft payload:**
    ```json
    {
      "subject": "{selected subject line}",
      "preview_text": "{selected preview text}",
      "content": "{HTML email body}",
      "description": "Draft from CCS blog-email-copy workflow",
-     "email_template_id": 4965521,
      "send_at": null,
      "public": false
    }
    ```
-   - Write payload to a temp file: `/tmp/convertkit-payload-{slug}-{date}.json`
+   - Write payload to a temp file: `/tmp/email-draft-payload-{slug}-{date}.json`
    - **Safety:** `send_at` is ALWAYS null, `public` is ALWAYS false — this creates a draft only
+   - **Note:** The script uses the email platform configured in `{brand.email.platform}` (config.yaml). The default script (`create-email-draft.sh`) targets ConvertKit — adapt for your platform if different.
 
-4. **Execute ConvertKit script:**
-   - Run: `{convertKitScript} /tmp/convertkit-payload-{slug}-{date}.json`
+4. **Execute email draft script:**
+   - Run: `{emailDraftScript} /tmp/email-draft-payload-{slug}-{date}.json`
    - On success: capture broadcast ID from output
-   - On failure: report error, suggest user check `CONVERTKIT_API_KEY` env var
+   - On failure: report error, suggest user check the email platform API key env var
 
 5. **Update frontmatter:**
    - Set `broadcast_id: {captured broadcast ID}`
@@ -248,17 +243,17 @@ When the user selects their subject line and preview text in step 2, proceed dir
 
 {IF Blog:}
 **Next steps:**
-- Run [PB] Publish Blog to push to Supabase
+- Run [PB] Publish Blog to export your CMS-ready markdown file
 - Or review/edit the output file directly
-- All image paths are relative — the publish workflow will upload and rewrite them
+- Image paths are relative — upload images to your CMS media library when deploying
 
 {IF Email:}
-**ConvertKit draft created!**
+**Email draft created!**
 - Broadcast ID: {broadcast_id}
 - Subject: {selected subject line}
-- Status: DRAFT (will not send until you review and schedule in ConvertKit)
+- Status: DRAFT (will not send until you review and schedule in your email platform)
 - Hero image: hosted at {public URL}
-**Next step:** Review the draft in ConvertKit and schedule when ready. It will NOT send automatically.
+**Next step:** Review the draft in your email platform and schedule when ready. It will NOT send automatically.
 
 **Done.**"
 
@@ -292,9 +287,9 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [D] Done
 - Output file updated with final metadata in frontmatter
 - Final output saved to correct location with proper filename
 - Blog: all image paths verified as relative (ready for publish workflow)
-- Email: ConvertKit push offered to user with clear safety messaging
-- Email (if pushed): hero image uploaded to Supabase, HTML converted with inline styles, draft created with send_at: null, broadcast_id captured
-- Completion summary presented with next steps (including ConvertKit status for emails)
+- Email: email draft push offered to user with clear safety messaging
+- Email (if pushed): hero image hosting noted for user, HTML converted with inline styles, draft created with send_at: null, broadcast_id captured
+- Completion summary presented with next steps (including email draft status for emails)
 - stepsCompleted reflects all 4 steps
 
 ### ❌ SYSTEM FAILURE:
@@ -305,8 +300,8 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [D] Done
 - Not updating frontmatter with final metadata
 - Missing stepsCompleted in final output
 - Not presenting completion summary
-- Email: pushing to ConvertKit without user confirmation
+- Email: pushing to email platform without user confirmation
 - Email: creating a broadcast with send_at set to anything other than null
-- Email: not uploading hero image before ConvertKit push (local paths won't render)
+- Email: not noting local hero image paths for user to host manually
 
 **Master Rule:** Skipping steps, optimizing sequences, or not following exact instructions is FORBIDDEN and constitutes SYSTEM FAILURE.

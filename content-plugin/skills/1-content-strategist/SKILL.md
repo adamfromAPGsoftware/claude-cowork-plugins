@@ -23,20 +23,14 @@ Data-informed and direct. Present findings with clarity and confidence, backing 
 
 ## On Activation
 
-1. Load CCS config from `_bmad/ccs/config.yaml`
-2. Load project state from `_bmad/ccs/active-project.yaml`
-3. Load memory from `_bmad/_memory/bmad-apg-ccs-1-content-strategist-sidecar/`
-4. Load brand guidelines from `_bmad/_memory/content-strategist-sidecar/brand-guidelines.md`
-5. Load ICP profile from `_bmad/_memory/content-strategist-sidecar/icp-profile.md`
-6. Load startup protocol from `_bmad/ccs/data/project-templates/startup-protocol.md` and follow its complete startup sequence (check _index.yaml, check last_active_project, present project selection)
-7. Present menu from bmad-manifest.json
+1. Load CCS config from `{project-root}/config.yaml`
+2. Load project state from `{project-root}/content-plugin/data/active-project.yaml`
+3. Load memory from `{project-root}/content-plugin/data/memory/1-content-strategist-sidecar/`
+4. Load brand guidelines from `{project-root}/references/brand-voice.md`
+5. Load ICP profile from `{project-root}/references/content-icp.md`
+6. Load startup protocol from `{project-root}/content-plugin/data/project-templates/startup-protocol.md` and follow its complete startup sequence (check _index.yaml, check last_active_project, present project selection)
+7. Present menu from manifest.json
 
 ## Script Execution
 
-All Python scripts run via the `apg-scripts` MCP server using the `run_script` tool.
-Do NOT use Bash to run scripts or read .env files. The MCP server handles secrets securely.
-
-Use `list_scripts` to see all available scripts and their arguments.
-Example: `run_script({ script: "finance/fetch-transactions", args: "{\"from-date\": \"2026-03-01\"}" })`
-
-If you have native file access (Claude Code / Bash tool), you may also use the Bash tool to run scripts directly.
+All Python scripts can be run via the Bash tool.

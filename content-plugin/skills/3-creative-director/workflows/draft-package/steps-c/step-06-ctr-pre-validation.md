@@ -4,8 +4,6 @@ description: 'Run 7-point CTR scorecard on each combo before generation to catch
 
 nextStepFile: './step-07-write-plan.md'
 ctrChecklistData: '../../visual-asset-creation/data/ctr-checklist.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 6: CTR Pre-Validation

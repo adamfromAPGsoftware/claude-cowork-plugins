@@ -63,10 +63,10 @@
 
 ## Post Structure Templates
 
-> Named templates derived from Adam's proven posts and top-performing external examples. Reference these when structuring post body — pick the template that matches the content category and angle.
+> Named templates derived from 5 proven post formats and top-performing external examples. Reference these when structuring post body — pick the template that matches the content category and angle.
 
-### 1. Adam's Core Template (Lead Magnet / CTA)
-Best for: Lead magnet posts with comment keyword CTA. Adam's highest-performing structure.
+### 1. Core Template (Lead Magnet / CTA)
+Best for: Lead magnet posts with comment keyword CTA. The creator's highest-performing structure.
 ```
 [Contrarian/alarming hook — 1 line]
 
@@ -130,7 +130,7 @@ Best for: Value/educational posts with soft CTA. YouTube trailer companion posts
 
 ## Performance Data by Category
 
-> Enriched stats from 48-post analysed dataset + Adam's 5 proven posts. Use to calibrate expectations and format choices.
+> Enriched stats from 48-post analysed dataset + 5 proven post formats. Use to calibrate expectations and format choices.
 
 ### Lead Magnet Posts
 - **Average engagement:** 1,184 (highest of all categories)
@@ -157,6 +157,6 @@ Best for: Value/educational posts with soft CTA. YouTube trailer companion posts
 - Carousels outperform text posts 1.6x for reach (6.60% avg engagement rate)
 - linkedinVideo averages 406 engagement in nurture (algorithmic preference + demo proof)
 - Document format with PDF attachment drives saves and bookmarks
-- Text-only works when copy quality is elite (all 5 of Adam's proven posts are text-only)
+- Text-only works when copy quality is elite (all 5 proven post formats are text-only)
 - Comment keyword CTAs proven to drive 80-780+ comments on lead magnet posts
 - Text-only comment keyword CTAs driving highest comment:like ratio at 4.9:1

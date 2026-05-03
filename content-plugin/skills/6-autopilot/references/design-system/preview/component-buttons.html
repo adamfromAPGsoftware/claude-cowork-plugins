@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-slide); padding: 22px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-family: var(--font-sans); }
+  button { font-family: var(--font-sans); font-weight: 600; font-size: 14px; border: none; border-radius: 4px; padding: 10px 16px; cursor: pointer; transition: background 120ms; }
+  .primary { background: #d97757; color: #fff; }
+  .primary:hover { background: #c05f2a; }
+  .secondary { background: transparent; color: #1a1614; border: 1px solid #d8d2cc; }
+  .secondary:hover { background: #f2ede8; }
+  .ink { background: #1a1614; color: #fff; }
+  .ink:hover { background: #000; }
+  .ghost { background: transparent; color: #5c5550; }
+  .ghost:hover { background: #f2ede8; }
+  .tag { font-family: var(--font-mono); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 10px; border-radius: 4px; background: #f2ede8; color: #d97757; border: 1px solid #e8e1d9; }
+  .tag.solid { background: #d97757; color: #fff; border-color: transparent; }
+</style>
+</head>
+<body>
+  <button class="primary">Save for later</button>
+  <button class="ink">Read the essay</button>
+  <button class="secondary">Open file</button>
+  <button class="ghost">Cancel</button>
+  <span class="tag solid">Append-only</span>
+  <span class="tag">Layer 01</span>
+</body>
+</html>

@@ -2,24 +2,19 @@
 
 ## Model Configuration
 
-**Model:** `gemini-3-pro-image-preview` (Nano Banana Pro)
-**API Endpoint:** `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-image-preview:generateContent`
-**Auth:** API key via `GEMINI_API_KEY` environment variable (loaded from project `.env`)
+**Tool:** `mcp__fal-ai__generate_image` (fal-ai MCP — platform-level)
+**Auth:** No API key needed — connected at the Claude Code platform level
 
-**API Call Pattern:**
+**Call Pattern:**
 
-```bash
-curl "${ENDPOINT}?key=${GEMINI_API_KEY}" \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "contents": [{"parts": [{"text": "PROMPT_HERE"}]}],
-    "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]}
-  }'
+```
+mcp__fal-ai__generate_image(
+  prompt="PROMPT_HERE",
+  image_size="landscape_4_3"
+)
 ```
 
-**Response:** JSON with `candidates[0].content.parts[]` — each part is either `{"text": "..."}` or `{"inlineData": {"mimeType": "image/jpeg", "data": "BASE64_STRING"}}`. Decode the base64 data and save as `.png`.
-
-> **IMPORTANT:** Always use `gemini-3-pro-image-preview`. Do NOT substitute other models — this is the only Gemini model that supports high-quality image generation with the sketch-style fidelity this workflow requires.
+The tool returns the generated image directly. Save to disk at the appropriate path.
 
 ## Hero Illustration Generation
 

@@ -64,7 +64,7 @@ Confirm that CCS config variables are available from the workflow.md initializat
 - `{user_name}` — user's name
 - `{communication_language}` — language for output
 
-If any are missing, load {project-root}/_bmad/ccs/config.yaml and resolve them.
+If any are missing, load {project-root}/config.yaml and resolve them.
 
 ### 2. Load Brand Design Tokens
 
@@ -77,11 +77,11 @@ Load and read {brandConfigData} completely. Store brand tokens for use in subseq
 ### 3. Verify Reference Photos
 
 Resolve `{reference_photos_folder}` from CCS config and verify the reference photos directory exists with the expected files:
-- `adam-hero-front.jpg` (foundation — always loaded first)
-- `adam-3quarter-left.jpg`
-- `adam-3quarter-right.jpg`
-- `adam-smiling.jpg`
-- `adam-talking.jpg`
+- `creator-hero-front.jpg` (foundation — always loaded first)
+- `creator-3quarter-left.jpg`
+- `creator-3quarter-right.jpg`
+- `creator-smiling.jpg`
+- `creator-talking.jpg`
 
 Store the resolved path for use in thumbnail and image generation steps.
 

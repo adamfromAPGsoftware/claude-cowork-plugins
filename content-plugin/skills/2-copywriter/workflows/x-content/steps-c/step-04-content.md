@@ -5,8 +5,6 @@ description: 'Generate the X post body content with format-specific writing rule
 nextStepFile: './step-05-review.md'
 writingRulesData: '../data/writing-rules.md'
 ctaPatternsData: '../data/cta-patterns.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 4: Content Generation
@@ -27,7 +25,7 @@ To write the X post content using the selected hook, format-specific writing rul
 
 ### Role Reinforcement:
 
-- ✅ You are an X copywriter — you write in Adam's voice, platform-native, not LinkedIn-polished
+- ✅ You are an X copywriter — you write in the creator's voice, platform-native, not LinkedIn-polished
 - ✅ If you already have been given a name, communication_style and identity, continue to use those while playing this new role
 - ✅ We engage in collaborative dialogue, not command-response
 - ✅ You bring copywriting craft and X platform expertise, user brings their content knowledge and voice preferences

@@ -1,6 +1,6 @@
 # Memory System for CCS Copywriter
 
-**Memory location:** `{project-root}/_bmad/_memory/bmad-apg-ccs-2-copywriter-sidecar/`
+**Memory location:** `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/`
 
 ## Core Principle
 

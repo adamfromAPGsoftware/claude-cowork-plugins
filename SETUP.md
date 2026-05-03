@@ -1,138 +1,255 @@
 # Setup Guide
 
-Step-by-step instructions to configure these plugins for your business.
+Step-by-step setup for all Claude Cowork Plugins.
 
-## Prerequisites
+## Prerequisites (all plugins)
 
 - [Claude Code CLI](https://claude.ai/code) installed
-- Python 3.10+ (for scripts in audit, finance, marketing plugins)
-- `jq` (for the sync script: `brew install jq`)
+- Python 3.9+
 
-## 1. Business Identity Configuration
-
-Copy the example config and fill in your values:
-
-```bash
-cp config.example.json config.json
-```
-
-Edit `config.json` with your business details:
-
-| Field | Description | Example |
-|-------|-------------|---------|
-| `company.name` | Your company display name | "Acme Software" |
-| `company.domain` | Your website domain | "acmesoftware.com" |
-| `company.email` | Primary contact email | "hello@acmesoftware.com" |
-| `company.address` | Business address | "123 Main St, Suite 100" |
-| `company.logo_url` | URL to your logo (square) | "https://cdn.example.com/logo.png" |
-| `company.logo_wide_url` | URL to your wide logo | "https://cdn.example.com/logo-wide.png" |
-| `company.social_handle` | Social media handle | "@acmesoftware" |
-| `company.calendly_url` | Your booking link | "cal.com/acme/consult" |
-| `crm.mcp_url` | Your CRM's MCP endpoint | "https://crm.acme.com/api/mcp" |
-| `author.name` | Your name | "Jane Smith" |
-| `cowork.project_root` | Absolute path to this repo on your machine | "/Users/jane/repos/plugins" |
-
-## 2. API Keys
-
-Copy the environment file and add your credentials:
+## Step 1: Configure environment variables
 
 ```bash
 cp .env.example .env
 ```
 
-You only need keys for the plugins you plan to use:
+Fill in the values for the plugins you plan to use. Each section of `.env.example` is labelled by plugin.
 
-### Sales Plugin
-| Key | Service | How to get |
-|-----|---------|------------|
-| `FATHOM_API_KEY` | Fathom (meeting transcripts) | [fathom.video/settings/api](https://fathom.video/settings/api) |
-| `GMAIL_CLIENT_ID` + `GMAIL_CLIENT_SECRET` | Gmail (email drafts) | [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
+---
 
-### Audit Plugin
-| Key | Service | How to get |
-|-----|---------|------------|
-| `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_API_TOKEN` | Cloudflare (portal deployment) | [Cloudflare Dashboard](https://dash.cloudflare.com/profile/api-tokens) |
+## Sales Plugin
 
-### Content Plugin
-| Key | Service | How to get |
-|-----|---------|------------|
-| `YOUTUBE_API_KEY` | YouTube Data API v3 | [Google Cloud Console](https://console.cloud.google.com/apis/credentials) |
-| `LATE_API_KEY` | Late.dev (content scheduling) | [app.getlate.dev/settings/api](https://app.getlate.dev/settings/api) |
-| `OPENROUTER_API_KEY` | OpenRouter (AI models) | [openrouter.ai/keys](https://openrouter.ai/keys) |
-| `SUPABASE_URL` + `SUPABASE_ANON_KEY` | Supabase (blog publishing) | [Supabase Dashboard](https://supabase.com/dashboard) |
+### Requirements
+- Google Cloud project with Sheets API and Gmail API enabled
+- Twilio account (optional — SMS and click-to-call)
+- Fathom account (optional — meeting transcript sync)
 
-### Marketing Plugin
-| Key | Service | How to get |
-|-----|---------|------------|
-| `META_ACCESS_TOKEN` | Meta Marketing API | [Facebook Developers](https://developers.facebook.com/tools/explorer/) |
-| `GA4_PROPERTY_ID` | Google Analytics 4 | GA4 Admin -> Property Settings |
-| `GOOGLE_APPLICATION_CREDENTIALS` | GA4 service account | [Google Cloud Console](https://console.cloud.google.com) |
+### Setup
 
-### Video Plugin
-| Key | Service | How to get |
-|-----|---------|------------|
-| `DEEPGRAM_API_KEY` | DeepGram (transcription) | [console.deepgram.com](https://console.deepgram.com) |
-| `HERA_API_KEY` | Hera (motion graphics) | Contact Hera |
-| `OPENROUTER_API_KEY` | OpenRouter (visual analysis) | [openrouter.ai/keys](https://openrouter.ai/keys) |
+**1. Google Sheets (service account)**
 
-## 3. CRM Setup
+1. Go to [Google Cloud Console](https://console.cloud.google.com) → create or select a project
+2. Enable **Google Sheets API** and **Gmail API**
+3. Create a service account: IAM & Admin → Service Accounts → Create → download the JSON key
+4. Create an OAuth 2.0 client ID: APIs & Services → Credentials → Create (Desktop app)
+5. Create a new Google Sheet and share it with the service account email (Editor access)
 
-Each plugin has a `.mcp.json` pointing to your CRM's MCP endpoint. Update all 7 files:
+Full walkthrough: [sales-plugin/scripts/sheets-auth-setup.md](sales-plugin/scripts/sheets-auth-setup.md)
 
-```json
-{
-  "mcpServers": {
-    "your-crm": {
-      "type": "http",
-      "url": "https://your-crm.example.com/api/mcp"
-    }
-  }
-}
+**2. Run setup wizard**
+
+Open this repo in Claude Code, then:
+
+```
+/sales:setup
 ```
 
-If you don't have an MCP-compatible CRM, the plugins still work — CRM calls will fail silently and the pipeline continues.
+The wizard walks through: company identity, consultant profile, integrations, and first offer.
 
-## 4. Customize Reference Files
+**3. First sync**
 
-These files contain `{YOUR_*}` placeholders. Replace them with your actual business data:
+```
+/sales:sync
+```
 
-### Required (core functionality)
-- `audit-plugin/references/pricing.md` — Your pricing tiers, rates, and margins
-- `audit-plugin/skills/shared/email-voice.md` — Your email writing style and tone
+Gmail OAuth triggers a browser consent window automatically on first run.
 
-### Recommended (for sales pipeline)
-- `sales-plugin/references/offer-summary.md` — Your offer, guarantee, ROI framework, objection handlers
-- `sales-plugin/references/pipeline.md` — Your sales-to-delivery pipeline flow
+**4. Launch the board**
 
-## 5. Cowork Configuration
+```
+/sales:launch
+```
 
-If using Cowork (cloud sandbox), update the Desktop Commander project root in each SKILL.md:
+Opens `http://localhost:8765`.
 
-Find: `{PROJECT_ROOT}`
-Replace with: Your actual project path (e.g., `/Users/jane/repos/plugins`)
+---
 
-## 6. Install in Claude Code
+## Content Plugin
 
-To use these plugins with Claude Code, copy the plugin directories into your project, or reference them in your Claude Code configuration.
+### Requirements
+- [Late.dev](https://getlate.dev) account with connected social accounts (publisher)
+- YouTube Data API key (competitive research — optional)
+- OpenRouter API key (image generation)
+- Supabase project (blog publishing — optional)
 
-Each plugin's SKILL.md files can be activated as Claude Code skills. The typical approach is to mirror them into `.claude/skills/` in your project.
+### Setup
 
-## 7. Verify
-
-Activate each agent and verify it loads correctly:
-
-1. Open Claude Code
-2. Invoke a skill (e.g., `/audit-extractor`)
-3. Confirm it loads its SKILL.md, shows the capability menu, and doesn't error on missing config
-
-## Sync Script (For Maintainers)
-
-If you're maintaining a private fork alongside this public repo, use the sync script:
+**1. Install Python dependencies**
 
 ```bash
-bash sanitize.sh \
-  --source ~/path/to/private-repo \
-  --target ~/staging/public-plugins
+pip install requests python-dotenv
 ```
 
-This copies plugins, applies sanitization rules, scans for sensitive patterns, and outputs to a staging directory for review. See `sanitize-rules.json` for the full rule set.
+**2. Connect Late.dev**
+
+1. Sign up at [getlate.dev](https://getlate.dev)
+2. Connect your social accounts (LinkedIn, X, Instagram, TikTok, etc.)
+3. Go to Settings → API → create an API key
+4. Add `LATE_API_KEY=your-key` to `.env`
+
+**3. Configure your style profiles**
+
+Open Claude Code and run:
+
+```
+/content:6-autopilot
+```
+
+Then select `[TS] Test Styles` to configure your content voice and style profiles.
+
+**4. Start creating**
+
+```
+content:1-content-strategist   # research and ideation
+content:2-copywriter            # write posts, scripts, emails
+content:5-publisher             # schedule and publish
+content:6-autopilot             # daily automated drafts
+```
+
+---
+
+## Marketing Plugin
+
+### Requirements
+- Meta Business account with a verified ad account
+- Cloudflare account (for landing page deployment)
+- OpenRouter API key (image generation)
+- fal.ai account (video generation — optional)
+- Apify account (competitor scraping — optional)
+
+### Setup
+
+**1. Meta API token**
+
+1. Go to [business.facebook.com](https://business.facebook.com) → Settings → Users → System Users
+2. Create a system user (Admin role)
+3. Click "Generate New Token" → select your app
+4. Check permissions: `ads_management`, `ads_read`, `business_management`
+5. Add `META_ACCESS_TOKEN=your-token` to `.env`
+
+**2. Cloudflare**
+
+1. Create a free [Cloudflare](https://cloudflare.com) account
+2. Go to Profile → API Tokens → Create Token (Custom) with Cloudflare Pages Edit permission
+3. Your Account ID is in the right sidebar on any Cloudflare dashboard page
+4. Add `CLOUDFLARE_API_TOKEN=` and `CLOUDFLARE_ACCOUNT_ID=` to `.env`
+
+**3. Run setup wizard**
+
+```
+/marketing:setup
+```
+
+The wizard walks through: company identity, brand colors, social proof, Cloudflare config, and integrations.
+
+**4. Create your first campaign**
+
+```
+/marketing:new-campaign
+```
+
+---
+
+## Video Plugin
+
+### Requirements
+- [Deepgram](https://deepgram.com) API key (transcription)
+- OpenRouter API key (visual analysis via Gemini)
+- Hera API key (motion graphics)
+- Supabase project (reference image hosting for Hera)
+- FFmpeg installed (`brew install ffmpeg` on Mac)
+- Node.js 18+ (for Remotion rendering)
+
+### Setup
+
+**1. Install system dependencies**
+
+```bash
+brew install ffmpeg
+# Verify: ffmpeg -version
+```
+
+**2. Configure API keys**
+
+Add to `.env`:
+```
+DEEPGRAM_API_KEY=your-deepgram-key
+OPENROUTER_API_KEY=your-openrouter-key
+HERA_API_KEY=your-hera-key
+SUPABASE_URL=your-supabase-url
+SUPABASE_SERVICE_KEY=your-supabase-service-key
+```
+
+**3. Install Remotion dependencies** (optional — only needed for motion graphics rendering)
+
+```bash
+cd video-plugin/skills/2-remotion/references/template-showcase
+npm install
+```
+
+**4. Start editing**
+
+Open Claude Code and invoke any video agent:
+
+```
+apg-video:1-video-editor   # ingest and transcribe raw footage
+apg-video:3-long-form      # edit a YouTube tutorial
+apg-video:4-short-form     # edit a Reel or TikTok
+apg-video:5-vsl            # edit a VSL
+apg-video:6-ad             # edit a Meta ad
+```
+
+---
+
+## PM Plugin
+
+### Requirements
+- Python 3.9+ with PyYAML (`pip install pyyaml`)
+- WeasyPrint (optional — PDF proposals): `pip install weasyprint`
+- Fathom account (optional — meeting transcript sync)
+- CRM with MCP server (optional — invoicing and task push)
+
+### Setup
+
+**1. Install Python dependencies**
+
+```bash
+pip install pyyaml
+pip install weasyprint   # optional
+```
+
+**2. Run setup wizard**
+
+Open this repo in Claude Code, then:
+
+```
+/pm:setup
+```
+
+The wizard walks through: company identity, consultant profile, brand colors, pricing & tax defaults, and integrations (CRM and Fathom — both optional).
+
+**3. Create your first client**
+
+```
+/pm:new-client
+```
+
+Drop meeting transcripts into `pm-plugin/data/clients/{slug}/meetings/{date-slug}/transcript.txt` and materials into `pm-plugin/data/clients/{slug}/materials/`.
+
+**4. Run the pipeline**
+
+```
+/pm:sync       → index meetings and materials
+/pm:ingest     → analyze all materials
+/pm:scope      → build process map
+/pm:research   → research automation
+/pm:demo       → build a working demo
+```
+
+Full setup guide: [pm-plugin/SETUP.md](pm-plugin/SETUP.md)
+
+---
+
+## Adding a new plugin
+
+Install additional plugins from the [marketplace](.claude-plugin/marketplace.json) by running Claude Code in this directory — it will auto-discover all plugins defined in `marketplace.json`.

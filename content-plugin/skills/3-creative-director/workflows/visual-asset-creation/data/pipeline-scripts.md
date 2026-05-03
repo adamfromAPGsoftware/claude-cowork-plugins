@@ -1,25 +1,29 @@
 # Pipeline Script CLI Reference
 
-## 1. YouTube Thumbnail — generate-thumbnail.py
+## 1. YouTube Thumbnail — fal-ai MCP
 
-**Script:** `scripts/generate-thumbnail.py`
-**Runtime:** Python 3.10+ | Gemini API
-**Model:** `gemini-3-pro-image-preview`
+**Tool:** `mcp__fal-ai__generate_image` or `mcp__fal-ai__generate_image_from_image` (when using reference photos)
+**Auth:** Platform-level MCP — no API key needed
 
-```bash
-python scripts/generate-thumbnail.py \
-    --ref-dir reference-photos \
-    --inspo-dir inspiration \
-    --output output/thumbnails/combo-01.png \
-    --prompt "YouTube thumbnail: ..."
+**Call pattern (text-only):**
+```
+mcp__fal-ai__generate_image(
+  prompt="YouTube thumbnail: ...",
+  image_size="landscape_16_9"
+)
 ```
 
-| Flag | Required | Description |
-|------|----------|-------------|
-| `--ref-dir` | Yes | Directory containing creator reference photos |
-| `--inspo-dir` | Yes | Directory containing inspiration thumbnails |
-| `--output` | Yes | Output file path for the generated thumbnail |
-| `--prompt` | Yes | Full text prompt for thumbnail generation |
+**Call pattern (identity-preserving, with reference photo):**
+```
+1. mcp__fal-ai__upload_file(file_path="reference-photos/creator-hero-front.jpg")
+   → returns reference_url
+
+2. mcp__fal-ai__generate_image_from_image(
+     image_url=reference_url,
+     prompt="YouTube thumbnail showing {creator} ...",
+     image_size="landscape_16_9"
+   )
+```
 
 **Orchestration Rules:**
 - Run combos sequentially — NEVER parallelise (rate limiting)
@@ -29,40 +33,41 @@ python scripts/generate-thumbnail.py \
 - Run CTR validation on every generated combo
 
 **Key Mechanics:**
-- Reference photos loaded in strict order (foundation image first)
-- Up to 14 images total per call, up to 5 human faces
-- 3-5 reference photos is the sweet spot
-- Typical output: single PNG, 500-650 KB
+- For identity preservation: upload reference photo first with `mcp__fal-ai__upload_file`, then pass the URL to `generate_image_from_image`
+- Use 1-3 creator reference photos for best identity consistency
+- `image_size: "landscape_16_9"` produces YouTube-native 1280×720 output
+- To edit an existing thumbnail: use `mcp__fal-ai__edit_image` with a natural language instruction
 
 ---
 
-## 2. General Image — generate-image.py
+## 2. General Image — fal-ai MCP
 
-**Script:** `scripts/generate-image.py`
-**Runtime:** Python 3.10+ | Gemini API
-**Model:** `gemini-3-pro-image-preview`
+**Tool:** `mcp__fal-ai__generate_image` (text-only) or `mcp__fal-ai__generate_image_from_image` (with reference images)
+**Auth:** Platform-level MCP — no API key needed
 
-```bash
-# Text-only generation
-python scripts/generate-image.py \
-    --prompt "A dark comparison graphic showing N8N vs BMAD logos" \
-    --output output/images/comparison.png
-
-# With input images
-python scripts/generate-image.py \
-    --prompt "Combine these logos into a horizontal comparison" \
-    --input logos/n8n.svg \
-    --input logos/bmad.png \
-    --output output/images/comparison.png
+**Call pattern (text-only):**
+```
+mcp__fal-ai__generate_image(
+  prompt="A dark comparison graphic showing Tool A vs Tool B logos",
+  image_size="landscape_4_3"
+)
 ```
 
-| Flag | Required | Description |
-|------|----------|-------------|
-| `--prompt` | Yes | Text prompt for image generation |
-| `--output` | Yes | Output file path |
-| `--input` | No | Input image path (repeatable — use multiple `--input` flags) |
+**Call pattern (with input images):**
+```
+1. mcp__fal-ai__upload_file(file_path="logos/tool-a.png")  → url_a
+2. mcp__fal-ai__generate_image_from_image(
+     image_url=url_a,
+     prompt="Combine these logos into a horizontal comparison",
+     image_size="landscape_16_9"
+   )
+```
 
-**Supported MIME types:** JPEG, PNG, GIF, WebP, SVG
+**Available image_size presets:** `square`, `square_hd`, `portrait_4_3`, `portrait_16_9`, `landscape_4_3`, `landscape_16_9`, `portrait_3_4`, `portrait_4_5`
+
+**Key Mechanics:**
+- Upload local files first with `mcp__fal-ai__upload_file`, then pass the returned URL
+- To resize for platform specs: use `mcp__fal-ai__resize_image` with target_format presets (e.g., `instagram_post`, `youtube_thumbnail`, `linkedin_post`)
 
 ---
 
@@ -115,93 +120,89 @@ node scripts/generate-carousel.js --input slides.json --output output/images/pos
 
 ---
 
-## 4. Instagram Carousel — generate-instagram-carousel.py
+## 4. Instagram Carousel — fal-ai MCP (per-slide)
 
-**Script:** `scripts/generate-instagram-carousel.py`
-**Runtime:** Python 3.10+ | OpenRouter API
-**Model:** `google/gemini-3-pro-image-preview` (nano banana pro, routed via OpenRouter)
-**Auth:** `OPENROUTER_API_KEY` in `.env`
+**Tool:** `mcp__fal-ai__generate_image` (text-only) or `mcp__fal-ai__generate_image_from_image` (hook slides with reference photo)
+**Auth:** Platform-level MCP — no API key needed
 
-```bash
-python3 scripts/generate-instagram-carousel.py \
-    --input slides.json \
-    --output-dir ./output/instagram/
+**Slide generation pattern:**
+
+For each slide in `slides.json`, make a separate MCP call:
+
+```
+# Slides without reference photo (text-only):
+mcp__fal-ai__generate_image(
+  prompt="Portrait Instagram slide 1080x1350. ...",
+  image_size="portrait_4_5"
+)
+
+# Hook slide with real photo reference:
+1. mcp__fal-ai__upload_file(file_path=slide.photo_path)  → photo_url
+2. mcp__fal-ai__generate_image_from_image(
+     image_url=photo_url,
+     prompt="Portrait Instagram slide 1080x1350. Using the attached photo as reference...",
+     image_size="portrait_4_5"
+   )
 ```
 
-| Flag | Required | Description |
-|------|----------|-------------|
-| `--input` | Yes | Path to JSON file with per-slide definitions |
-| `--output-dir` | Yes | Output directory for generated slide PNGs |
-| `--slides` | No | Comma-separated slide numbers to regenerate (e.g., '1,7') |
-
-**JSON Input Schema:**
+**Slides JSON schema** (same format, read by the agent):
 ```json
 {
   "slides": [
     {
       "slide_number": 1,
-      "prompt": "Using the attached photo of this person as the base image, ...",
+      "prompt": "Portrait Instagram slide 1080x1350. ...",
       "photo_path": "/path/to/real-photo.png",
       "embed_images": []
     },
     {
       "slide_number": 2,
-      "prompt": "Generate a 1080x1350 portrait Instagram slide. ...",
+      "prompt": "Portrait Instagram slide 1080x1350. ...",
       "embed_images": ["./screenshots/terminal.png"]
-    },
-    {
-      "slide_number": 7,
-      "prompt": "Generate a 1080x1350 portrait Instagram slide. ...",
-      "embed_images": []
     }
   ]
 }
 ```
 
-**Slide fields:**
-- `slide_number` — sequential number (1-10)
-- `prompt` — full Gemini text prompt for this slide
-- `photo_path` — (optional) path to a real photo for Gemini to composite text around (used on hook slide)
-- `embed_images` — array of file paths for screenshots/images to incorporate into the slide
-
 **Key Mechanics:**
-- Each slide is a separate OpenRouter chat-completions call (routed to Google's nano banana pro) with its own unique prompt
-- Embedded images are loaded as base64 data-URIs and sent alongside the prompt — the model composes them into the design
-- For slides with `photo_path`, the real photo is sent as the first content part — the model analyses it and composites text around the person
-- 2s delay between API calls (rate limiting)
+- Each slide is a separate `mcp__fal-ai__generate_image` (or `generate_image_from_image`) call
+- Upload reference photos first with `mcp__fal-ai__upload_file` before the generation call
+- `image_size: "portrait_4_5"` produces Instagram-native 1080×1350 output
+- 2s delay between calls (rate limiting) — NEVER parallelise
 - Maximum 10 slides per carousel
-- Output: `slide-01.png`, `slide-02.png`, etc.
+- Save each output as `slide-01.png`, `slide-02.png`, etc.
+- To regenerate a specific slide: re-call the MCP tool with that slide's prompt only
 
 ---
 
-## 5. Instagram Scheduling — schedule-instagram-post.py
+## 5. Instagram Scheduling — Buffer MCP
 
-**Script:** `scripts/schedule-instagram-post.py`
-**Runtime:** Python 3.10+
-**Auth:** `INTERNAL_CRM_SUPABASE_URL` + `INTERNAL_CRM_APG_API_KEY` in `.env`
+**Tool:** `mcp__buffer__use_buffer_api`
+**Auth:** Platform-level MCP — no API key needed
 
-```bash
-# Carousel from directory of PNGs
-python3 scripts/schedule-instagram-post.py \
-    --caption "Your caption..." \
-    --media-dir ./output/instagram/ \
-    --scheduled-at "2026-03-10T09:00:00+11:00"
+**Call pattern:**
+```
+# First: discover your channel IDs
+mcp__buffer__buffer_api_help(action="listChannels")
+→ then call mcp__buffer__use_buffer_api with action "listChannels"
 
-# Single image
-python3 scripts/schedule-instagram-post.py \
-    --file path/to/caption.md \
-    --media path/to/image.png
+# Then: create the post
+mcp__buffer__use_buffer_api(
+  action="createPost",
+  payload={
+    "profileIds": ["<instagram-channel-id>"],
+    "text": "Your caption...",
+    "scheduledAt": "2026-03-10T09:00:00+11:00",
+    "media": ["<slide-01-url>", "<slide-02-url>", ...]
+  }
+)
 ```
 
-| Flag | Required | Description |
-|------|----------|-------------|
-| `--file` | No* | Path to caption markdown file (strips frontmatter) |
-| `--caption` | No* | Inline caption text (*one of `--file` or `--caption` required) |
-| `--scheduled-at` | No | ISO 8601 datetime. Omit for immediate posting |
-| `--media` | No | Path to single media file |
-| `--media-dir` | No | Directory of numbered slide PNGs (carousel mode) |
-
-**Instagram account_id:** `a2867c79-f288-4a16-898b-5f12ed71513c`
+**Key Mechanics:**
+- Use `mcp__buffer__buffer_api_help` first to discover exact action names and payload schema
+- Media files can be passed as URLs (upload via `mcp__fal-ai__upload_file` first if local)
+- `scheduledAt` is ISO 8601. Omit for immediate posting.
+- For carousel: pass all slide image URLs in the `media` array
 
 ---
 
@@ -303,7 +304,7 @@ npx tsx scripts/screenshot.ts \
 
 **Script:** `scripts/keyword-research.py`
 **Runtime:** Python 3.10+ | pytrends, requests
-**Auth:** Optional `YOUTUBE_API_KEY` in `.env` for Layer 3
+**Auth:** Layer 3 uses YouTube MCP (`mcp__youtube__*`) — platform-level, no API key needed
 
 ```bash
 python scripts/keyword-research.py \
@@ -326,7 +327,7 @@ python scripts/keyword-research.py \
 |-------|--------|------|------|
 | 1 | YouTube Autocomplete | None | Related search suggestions |
 | 2 | Google Trends (pytrends) | None | Interest over time, rising queries, related topics |
-| 3 | YouTube Data API v3 | `YOUTUBE_API_KEY` | Competitor tags, video metadata |
+| 3 | YouTube MCP (`mcp__youtube__searchVideos`, `mcp__youtube__getVideoDetails`) | Platform-level MCP | Competitor tags, video metadata |
 
 **Output Sections:**
 - **HIGH-SIGNAL Keywords** — appearing in 2+ layers (priority for title wording)
@@ -336,6 +337,6 @@ python scripts/keyword-research.py \
 
 **Key Mechanics:**
 - Layers are independent — if one fails, others still run
-- Layer 3 is optional (requires API key) — script works fine with just Layers 1-2
+- Layer 3 is optional (requires YouTube MCP connection) — script works fine with just Layers 1-2
 - Cross-references results across layers to identify high-signal keywords
 - Non-blocking in workflow context — script failure should never gate the workflow

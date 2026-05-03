@@ -140,11 +140,12 @@ Save the slides JSON config (from step-03 media plan) to:
 
 #### 4c. Run carousel generator
 
-```bash
-node _bmad/custom/workflows/linkedin-carousel-generator/generate-carousel.js \
-  --input "{linkedin_path}{post_slug}-slides.json" \
-  --output "{linkedin_path}{post_slug}-carousel.pdf" \
-  --mode carousel
+Use the carousel generator tool configured in your environment to convert the slides JSON to a PDF carousel.
+
+```
+Input:  {linkedin_path}{post_slug}-slides.json
+Output: {linkedin_path}{post_slug}-carousel.pdf
+Mode:   carousel
 ```
 
 Display the command before executing.
@@ -183,11 +184,12 @@ Save the single-slide JSON config (from step-03 media plan) to:
 
 #### 5c. Run carousel generator in single-image mode
 
-```bash
-node _bmad/custom/workflows/linkedin-carousel-generator/generate-carousel.js \
-  --input "{linkedin_path}{post_slug}-slide.json" \
-  --output "{linkedin_path}{post_slug}-image.png" \
-  --mode single-image
+Use the carousel generator tool configured in your environment to convert the single-slide JSON to a PNG image.
+
+```
+Input:  {linkedin_path}{post_slug}-slide.json
+Output: {linkedin_path}{post_slug}-image.png
+Mode:   single-image
 ```
 
 Display the command before executing.

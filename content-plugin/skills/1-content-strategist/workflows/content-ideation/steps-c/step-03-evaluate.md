@@ -5,8 +5,6 @@ description: 'Score and rank selected content ideas against ICP relevance, uniqu
 nextStepFile: './step-04-tree.md'
 outputFile: '{output_folder}/content-concept-{concept_slug}-{date}.md'
 scoringCriteria: '../data/scoring-criteria.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 3: Evaluate & Rank
@@ -73,8 +71,9 @@ I'll score each idea against four criteria:
 | Uniqueness | Medium (x1) | How differentiated it is from competitor content |
 | Brand Fit | High (x2) | How well it aligns with your brand voice and values |
 | Platform Potential | Medium (x1) | How naturally it maps across multiple platforms |
+| Audience Crossover | Medium (x1) | Whether it captures audiences beyond the primary ICP |
 
-**Max Score: 30**
+**Max Score: 35**
 
 Let me evaluate each concept..."
 
@@ -90,8 +89,9 @@ For each selected concept from Step 2, apply the scoring framework:
 | Uniqueness | [score] | [Why this score — reference competitive landscape] |
 | Brand Fit | [score] | [Why this score — reference brand guidelines] |
 | Platform Potential | [score] | [Why this score — reference platform suitability] |
+| Audience Crossover | [score] | [Why this score — what secondary audiences could this reach beyond the primary ICP?] |
 
-**Total: [weighted total] / 30** — [Rating: Excellent/Good/Fair/Weak]
+**Total: [weighted total] / 35** — [Rating: Excellent/Good/Fair/Weak]
 
 ---"
 
@@ -105,9 +105,9 @@ Present all concepts ranked by total score:
 
 | Rank | Concept | Score | Rating |
 |:----:|---------|:-----:|--------|
-| 1 | [Title] | [score]/30 | [Rating] |
-| 2 | [Title] | [score]/30 | [Rating] |
-| 3 | [Title] | [score]/30 | [Rating] |
+| 1 | [Title] | [score]/35 | [Rating] |
+| 2 | [Title] | [score]/35 | [Rating] |
+| 3 | [Title] | [score]/35 | [Rating] |
 
 **Top Recommendation:** [Title] scored highest because [brief explanation of key strengths].
 
@@ -136,7 +136,7 @@ Wait for user input.
 "**Selected for content tree mapping:**
 
 **[Concept Title]**
-- Score: [score]/30
+- Score: [score]/35
 - Key Strengths: [top 2 scoring criteria]
 - Hook: [The angle from Step 2]
 

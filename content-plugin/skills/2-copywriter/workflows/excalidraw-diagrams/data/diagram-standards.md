@@ -3,98 +3,125 @@
 ## Visual Style Requirements
 
 ### ExcaliDraw Canvas Settings
-- **Roughness:** 1-2 (hand-drawn aesthetic, slight wobble)
-- **Fill Style:** hachure or solid (context-dependent)
-- **Stroke Width:** 2 for standard elements, 4 for emphasis
+- **Background:** `#FAFAFA` (warm off-white — set via `appState.viewBackgroundColor`)
+- **Roughness:** 0 (clean architect style — polished, not hand-drawn)
+- **Fill Style:** solid
+- **Stroke Width:** 2 for standard elements, 3 for emphasis
 - **Font Family:** 1 (Virgil/hand-drawn) for headings, 5 (default) for body text
 
-### Colour Palette (Semantic)
+### Colour Palette — Cold Orange
 
-| Colour | Hex | Usage |
-|--------|-----|-------|
-| Blue | #1971c2 | Primary concepts, main flow |
-| Green | #2f9e44 | Success, positive outcomes, benefits |
-| Red | #e03131 | Errors, warnings, problems, risks |
-| Yellow | #f08c00 | Decisions, choices, turning points |
-| Orange | #e8590c | Highlights, emphasis, call-outs |
-| Violet | #7048e8 | Services, tools, external systems |
-| Dark Grey | #495057 | Secondary text, borders, arrows |
-| Light Grey | #dee2e6 | Backgrounds, containers |
+| Role | Hex | Fill | Usage |
+|------|-----|------|-------|
+| Primary | `#E8590C` | `#FFF4E6` | Main flow boxes, primary concepts |
+| Amber | `#F08C00` | `#FFF9DB` | Tool/service boxes, secondary concepts |
+| Green | `#2F9E44` | `#EBFBEE` | Success, highlights, Opus 4.7/new elements |
+| Purple | `#7048e8` | `#F3F0FF` | External services, analysis steps |
+| Heading | `#1A1A1A` | — | Primary text (near-black on light bg) |
+| Body | `#495057` | — | Secondary text, annotations |
+| Arrow | `#E8590C` | — | Flow arrows (orange = momentum) |
+| Dimmed | `#CED4DA` | `#F8F9FA` | Inactive/background elements in variant diagrams |
+| Canvas | `#FAFAFA` | — | Background |
 
 ### Typography Hierarchy
 
-| Level | fontSize | Font | Usage |
-|-------|----------|------|-------|
-| Segment Heading | 36-42 | Virgil (1), bold | "01  Your Claude Code, In Your Pocket" |
-| Subtitle | 16-20 | Default (5) | Descriptive line below heading |
-| Supporting Text | 20-24 | Virgil (1), bold | Bold takeaway line below illustration |
-| Caption | 12-14 | Default (5), grey | Annotations if needed |
+| Level | fontSize | Font | Color | Usage |
+|-------|----------|------|-------|-------|
+| Diagram Title | 28-32 | Virgil (1), bold | `#1A1A1A` | Top-level heading |
+| Box Label | 16-18 | Virgil (1) | Stroke color | Centered inside boxes |
+| Subtitle | 14-16 | Default (5) | `#495057` | Descriptive line below box |
+| Annotation | 12-13 | Default (5) | `#495057` | Small callout text |
+| Badge | 13 | Default (5) | Stroke color | Highlighted callout badges |
 
-## Segment Anatomy
+## Segment Anatomy (storyboard / horizontal flow)
 
-Each segment in the storyboard follows this vertical structure:
+Each segment in the storyboard follows this horizontal structure:
 
 ```
-┌─────────────────────────────────┐
-│  01  Segment Heading            │  ← Virgil 36-42, bold
-│  Subtitle description line      │  ← Default 16-20
-│                                 │
-│  ┌───────────────────────────┐  │
-│  │                           │  │
-│  │    Hero Illustration      │  │  ← 400-600px wide, Nanobanana-generated
-│  │    (embedded image)       │  │
-│  │                           │  │
-│  └───────────────────────────┘  │
-│                                 │
-│  Bold takeaway line.            │  ← Virgil 20-24, bold
-└─────────────────────────────────┘
-            ──────────→               ← Arrow to next segment
+  ┌─────────────────────┐      ──────→      ┌─────────────────────┐
+  │  Stage Name         │                   │  Next Stage         │
+  │  [Logo if relevant] │                   │  [Logo if relevant] │
+  └─────────────────────┘                   └─────────────────────┘
+       annotation                                annotation
 ```
 
-### Segment Block Dimensions
-- **Block width:** ~700-800px per segment
-- **Block height:** ~700-900px (varies with illustration aspect ratio)
-- **Inter-segment gap:** ~100-150px (room for arrow connector)
+### Pipeline Box Dimensions
+- **Single-stage box:** ~220-250px wide × 70px tall
+- **Cluster box (parallel stages):** ~200px wide × 62px tall, 20-30px gaps
+- **Arrow gap (between stages):** 60-100px for straight arrows
 
-### Hero Illustration Size
-- **Width:** 500-600px display width (the dominant visual element)
-- **Height:** MUST be calculated from the source image's actual aspect ratio — `display_height = display_width / (source_width / source_height)`. NEVER hardcode a square. Gemini typically outputs 1408x768 (1.83:1 landscape), so a 600px wide display = ~327px height.
-- **Style:** Rich, detailed scene illustration — NOT small icons
-- **Background:** White or transparent
-- **Aesthetic:** Hand-drawn sketch, black ink, ExcaliDraw-compatible
+### Logo Placement
+- Size: 36-44px inside or directly beside the box
+- Position: right-aligned inside the box, vertically centered OR to the right of box label
+- Only add logos where they add information (tool identity, brand recognition)
+- Missing logos degrade gracefully — use a text badge instead
 
-## Storyboard Layout
+## Layout Patterns
 
-### Canvas Type
-- **Wide horizontal flow** — segments arranged left-to-right
-- Canvas width scales with segment count: (segments × ~850px) + padding
-- Canvas height: ~900px fixed
+### Horizontal Pipeline (primary pattern)
+- **Direction:** left → right
+- Canvas scales with stage count: `(stages × ~320px)` + padding
+- Canvas height: ~700-800px
+- Vertical center for single-stage boxes: ~350px
+- Parallel/cluster stages centered around the same vertical midpoint
+- Final output: single `.excalidraw` file (no variants unless specifically needed)
 
-### Flow Pattern
-- Each segment block is a vertical stack (heading → subtitle → image → text)
-- Horizontal arrows connect segment blocks in sequence
-- No arrow after the final segment
-- Consistent spacing and alignment across all segments
+### Fan-out / Fan-in
+For parallel stages (e.g., multiple analysis steps running simultaneously):
+- Draw diagonal arrows from the preceding single box to each parallel box (fan out)
+- Draw diagonal arrows from each parallel box back to the next single box (fan in)
+- Add an annotation: "runs simultaneously"
 
-### Visual Hierarchy Rules
-1. Hero illustrations are the dominant visual element — they carry the storytelling
-2. Numbered headings anchor each segment at the top
-3. Subtitles provide brief context below the heading
-4. Supporting text delivers the takeaway below the illustration
-5. Arrows guide the eye through the left-to-right narrative flow
-6. ExcaliDraw is scaffolding only — minimal containers, no complex grids or panels
+### Fork (LF / SF split)
+- Two diagonal arrows from the preceding box — one going up-right, one down-right
+- Fork boxes stacked vertically, centered around the pipeline midpoint
 
-## Hero Illustration Integration Standards
+### Vision / Feedback Loop
+- Curved arc arrow drawn BELOW the pipeline
+- Arcs from the final output box back to the relevant earlier stage
+- Uses green (`#2F9E44`) to distinguish from primary flow
+
+## Logo Integration
+
+Use `scripts/fetch-logo.ts` to source logos before generating diagrams:
+
+```bash
+# Standard brand-color logo (works on light background)
+npx tsx scripts/fetch-logo.ts --name "Anthropic" --output logos/anthropic.png
+
+# Force specific fill color (only if brand colors don't render well)
+npx tsx scripts/fetch-logo.ts --name "ToolName" --output logos/tool.png --color 000000
+```
+
+The `cold_orange_builder.py` `Builder` class handles logo embedding:
+```python
+b.logo("stage_logo", "logos/anthropic.png", x=box_x + 4, y=box_y + 14, size=42)
+```
+
+Missing logos are silently skipped — the box still renders without the logo.
+
+## Hero Illustration Integration (storyboard mode)
 
 ### Image Requirements
-- Rich, detailed scene compositions (multiple elements, visual storytelling)
+- Rich, detailed scene compositions
 - Match ExcaliDraw hand-drawn sketch aesthetic
 - Transparent or white background
-- Consistent style across all segments in a storyboard
+- Consistent style across all segments
 - Large enough to be the hero visual (400-600px wide)
 
 ### Image Placement Rules
 - Centred horizontally within the segment block
 - Below subtitle, above supporting text
-- Minimum 20px padding from surrounding text elements
-- All hero illustrations should be consistently sized within a storyboard
+- Minimum 20px padding from surrounding text
+- All hero illustrations consistently sized within a storyboard
+
+## Shared Builder
+
+All diagrams import from the shared Cold Orange Builder:
+```python
+from cold_orange_builder import Builder, ORANGE, AMBER, GREEN, BODY, DIM
+```
+
+Located at: `content-plugin/skills/2-copywriter/workflows/excalidraw-diagrams/data/cold_orange_builder.py`
+
+Never copy-paste the Builder class into per-project files. Import it.

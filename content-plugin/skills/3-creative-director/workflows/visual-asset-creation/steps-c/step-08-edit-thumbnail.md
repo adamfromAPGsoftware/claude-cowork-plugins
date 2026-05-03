@@ -5,8 +5,6 @@ description: 'Image-to-image refinement of an existing thumbnail with identity p
 promptTemplateData: '../data/thumbnail-prompt-template.md'
 ctrChecklistData: '../data/ctr-checklist.md'
 pipelineScriptsData: '../data/pipeline-scripts.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 8: Edit Thumbnail (Image-to-Image)
@@ -114,19 +112,29 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [C] Execu
 
 ### 5. Execute Edit
 
-Load {pipelineScriptsData} for the generate-thumbnail.py CLI reference.
+Load {pipelineScriptsData} for the fal-ai MCP reference.
 
-Execute using the source thumbnail as an additional input image:
+Execute via fal-ai MCP. For natural language edits to an existing thumbnail:
 
-```bash
-python scripts/generate-thumbnail.py \
-    --ref-dir {reference_photos_folder} \
-    --inspo-dir [source thumbnail directory] \
-    --output [project thumbnails path]/[slug]-edit-[version]-[date].png \
-    --prompt "[the approved edit prompt]"
+```
+mcp__fal-ai__edit_image(
+  image_url="[URL or upload the source thumbnail via mcp__fal-ai__upload_file first]",
+  instruction="[the approved edit instruction]"
+)
 ```
 
-**Note:** The source thumbnail is passed via `--inspo-dir` to give Gemini the existing image as context for the edit. Reference photos are still included for identity preservation.
+For a full regeneration with the existing thumbnail as style reference:
+
+```
+mcp__fal-ai__upload_file(file_path="[source thumbnail path]")  → source_url
+mcp__fal-ai__generate_image_from_image(
+  image_url=source_url,
+  prompt="[the approved edit prompt]",
+  image_size="landscape_16_9"
+)
+```
+
+Save to: `[project thumbnails path]/[slug]-edit-[version]-[date].png`
 
 Report the result:
 - If success: "**Edit complete!** Saved to: {output path} ({size}KB)"

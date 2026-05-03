@@ -20,7 +20,7 @@ A complete script document must contain all of the following sections:
 - Written word-for-word, ready for teleprompter
 - Should establish the video's value proposition early
 - Tone should match brand voice
-- Reference `creator-voice.md` from `inspiration/` for Adam's exact tone profile, contractions, and signature phrases
+- Reference `creator-voice.md` from `inspiration/` for the creator's exact tone profile, contractions, and signature phrases
 
 ## Body Segment Standards
 
@@ -63,7 +63,7 @@ Based on empirical analysis of 15 short-form and 5 long-form high-performing ref
 - Example pattern: "I'm top 1% on Upwork, around $1M on the platform, and over $1M in revenue as an AI agency."
 - Must include at least one specific revenue figure — never round to "six figures"
 - No "let me explain why I'm qualified" setup lines — just state it and go
-- Reference `creator-credentials.md` for Adam's actual proof points
+- Reference `creator-credentials.md` for the creator's actual proof points
 - Reference `creator-voice.md` for credibility delivery style
 
 ### Long-Form Intro Structure Checklist
@@ -79,7 +79,7 @@ Every long-form scripted intro must feel like **natural conversation, not a temp
 - **"I'm going to... Then I'm going to... And then I'm going to..."** — repetitive "I'm going to" stacking sounds robotic. Use variety: "I'm going to show you X, and then Y — and here's the part nobody talks about."
 - **Standalone "Barrier Removal" section** — "You don't need to be a developer. You don't need to know X. You don't need to understand Y." as its own paragraph is filler. If relevant, fold ONE sentence into the value tease naturally. Most videos don't need it at all.
 - **Credibility as a paragraph** — if it takes more than one sentence to deliver your creds, you're over-explaining. Rattle them off and move.
-- **Intros longer than 45 seconds** — if you haven't started the content by 45s, you've lost people. The real Adam videos average 35–40s before "let's jump into it."
+- **Intros longer than 45 seconds** — if you haven't started the content by 45s, you've lost people. The typical video averages 35–40s before "let's jump into it."
 
 ### Short-Form CTA Standards
 - Comment-gated: drive engagement via keyword CTA ("Comment [WORD] and I'll send you...")

@@ -1,6 +1,6 @@
 # Reputation Pillar — Angle Library
 
-> **Purpose:** Evergreen opinion angles, credibility anchors, and hot-take templates for the SF-03 Reputation slot. Adam's POV content — authoritative, contrarian, zero-pitch.
+> **Purpose:** Evergreen opinion angles, credibility anchors, and hot-take templates for the SF-03 Reputation slot. Creator POV content — authoritative, contrarian, zero-pitch.
 
 ---
 
@@ -12,8 +12,8 @@ Use these facts to ground Reputation scripts. Never oversell — drop one fact n
 |--------|-----------------|
 | Upwork track record | "Top 1% {YOUR_CREDENTIAL} on Upwork" / "60+ Upwork engagements" / "I've been ranked in Upwork's top 1% for five years" |
 | Project volume | "300+ projects across 60+ industries" / "I've seen this exact problem 300 times" |
-| Direct operator experience | "I bought a landscaping business doing $200K, injected systems, scaled it to $1M in six months" |
-| Enterprise credibility | "We've built for Fortune 500 companies, World Cup events, Australia's biggest TV shows — and then we bring those same systems to $2M SMEs" |
+| Direct operator experience | "[YOUR_STORY: e.g. 'I bought a $200K business, injected systems, scaled it to $1M in six months']" |
+| Enterprise credibility | "[YOUR_CREDENTIAL: e.g. 'We've built for Fortune 500 companies — and then we bring those same systems to $2M SMEs']" |
 | Longevity | "I've been doing this for over five years — long enough to have seen every tech mistake a business can make" |
 | Audit depth | "I've audited 300+ operations — the patterns are remarkably consistent" |
 
@@ -21,7 +21,7 @@ Use these facts to ground Reputation scripts. Never oversell — drop one fact n
 
 ## Hot Take Templates
 
-Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, the underlying belief, and the credibility tie-in.
+Pre-seeded opinion angles tied to the creator's actual POV. Each has a trigger claim, the underlying belief, and the credibility tie-in.
 
 ### Take 01 — SaaS Pricing is Collapsing
 
@@ -35,7 +35,7 @@ Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, t
 ### Take 02 — Software Projects Fail Before Code is Written
 
 **Hook:** "The reason 90% of software projects fail isn't the code — it's what happens before the first line is written."
-**Underlying POV:** Spec debt, misaligned stakeholders, and skipped discovery phases cause project failure. Most agencies skip the audit because it's harder to sell than the build. Adam leads with it.
+**Underlying POV:** Spec debt, misaligned stakeholders, and skipped discovery phases cause project failure. Most agencies skip the audit because it's harder to sell than the build. Lead with it.
 **Evidence to pull:** Project failure rate stats (McKinsey, Standish Chaos Report).
 **Credibility tie:** "I've been brought in to rescue failed projects more times than I care to count."
 
@@ -44,8 +44,8 @@ Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, t
 ### Take 03 — AI Won't Save You With Scattered Data
 
 **Hook:** "Everyone is telling SMEs to 'start using AI.' Nobody's telling them the actual prerequisite."
-**Underlying POV:** AI operates on data. If your business data is spread across 12 disconnected SaaS tools, AI can't touch 90% of it. The AI conversation is 3 steps ahead of where most Australian SMEs actually are.
-**Evidence to pull:** Australian SME tech adoption lag stats, AI readiness surveys.
+**Underlying POV:** AI operates on data. If your business data is spread across 12 disconnected SaaS tools, AI can't touch 90% of it. The AI conversation is 3 steps ahead of where most local SMEs actually are.
+**Evidence to pull:** Local SME tech adoption lag stats, AI readiness surveys.
 **Credibility tie:** "The first thing I do in every audit is map the data — and it's almost always a mess."
 
 ---
@@ -54,7 +54,7 @@ Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, t
 
 **Hook:** "The tools that got your business to a million dollars will break it at five."
 **Underlying POV:** Startup-phase tools (spreadsheets, Notion, pen-and-paper, the CRM you outgrew) stop working at scale. Business owners delay the infrastructure upgrade because it's uncomfortable — and then growth stalls or breaks operations.
-**Evidence to pull:** Adam's direct case study — Agricultural Equipment dealer on Microsoft Access 2013 at $5M revenue.
+**Evidence to pull:** [YOUR_CASE_STUDY] — e.g. a client running outdated infrastructure at significant revenue scale.
 **Credibility tie:** "I audited a $5M business running on Microsoft Access via remote desktop in 2024. This isn't rare."
 
 ---
@@ -71,8 +71,8 @@ Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, t
 ### Take 06 — I Never Touch a Project Without Doing the Audit First
 
 **Hook:** "I've turned down builds worth over $100K because the client refused to do the audit first."
-**Underlying POV:** Transparency about process positions Adam as principled, not just sales-driven. The audit-first stance is a strong authority signal and differentiator from agencies that jump straight to the quote.
-**Evidence to pull:** Adam's own business rule and reasoning.
+**Underlying POV:** Transparency about process positions the creator as principled, not just sales-driven. The audit-first stance is a strong authority signal and differentiator from agencies that jump straight to the quote.
+**Evidence to pull:** [YOUR_BUSINESS_RULE: your own audit-first policy and reasoning]
 **Credibility tie:** Direct personal policy — first-person authority, no external source needed.
 
 ---
@@ -82,32 +82,32 @@ Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, t
 **Hook:** "HubSpot's share price dropped 40% in 12 months. Here's what that actually means for your business stack."
 **Underlying POV:** Market contraction in mid-market SaaS means these platforms will raise prices, cut features, or get acquired — all of which are bad for the SMEs locked into them. It's a signal to evaluate dependency, not double down.
 **Evidence to pull:** HubSpot/Salesforce market data (use current figures if running fresh research).
-**Credibility tie:** "From an operator who's migrated clients off HubSpot three times in two years."
+**Credibility tie:** "[YOUR_CREDENTIAL: e.g. 'From an operator who's migrated clients off HubSpot three times in two years.']"
 
 ---
 
 ### Take 08 — ROI-Funded Technology is the Only Kind Worth Pursuing
 
 **Hook:** "If your tech investment can't pay for itself within 12 months, I'd question whether it's the right investment."
-**Underlying POV:** Technology spending in SMEs is often emotional (shiny tool) or reactive (solving one pain point). Adam's framework: every investment must have a calculable ROI path. The $3K audit pays for itself inside the first automation.
+**Underlying POV:** Technology spending in SMEs is often emotional (shiny tool) or reactive (solving one pain point). The framework: every investment must have a calculable ROI path. The $3K audit pays for itself inside the first automation.
 **Evidence to pull:** ROI framework — $558K–$934K/year efficiency recovery.
 **Credibility tie:** "We built a guarantee around this. If we don't find $5K/month in savings, you get your money back."
 
 ---
 
-### Take 09 — Australian SMEs Are 2–3 Years Behind on Technology
+### Take 09 — Local SMEs Are 2–3 Years Behind on Technology
 
-**Hook:** "Australian SMEs are running 2 to 3 years behind on technology adoption — and the gap is getting wider."
-**Underlying POV:** Australian market tech lag is real and documented. The US/UK competitors of Adam's clients are already on unified platforms with AI-assisted operations. The window to catch up without being disrupted is narrowing.
-**Evidence to pull:** ABS SME tech adoption surveys, Xero SME data, Deloitte tech reports.
-**Credibility tie:** "I've worked with clients in the US, UK, and AUS — the gap is visible and measurable."
+**Hook:** "Local SMEs are running 2 to 3 years behind on technology adoption — and the gap is getting wider."
+**Underlying POV:** Local market tech lag is real and documented. Competitors in more advanced markets are already on unified platforms with AI-assisted operations. The window to catch up without being disrupted is narrowing.
+**Evidence to pull:** [YOUR_COUNTRY] SME tech adoption surveys, accounting-software SME data, consulting firm tech reports.
+**Credibility tie:** "[YOUR_CREDENTIAL: e.g. 'I've worked with clients across multiple markets — the gap is visible and measurable.']"
 
 ---
 
 ### Take 10 — The 5-Stage Audit Is Overkill for Most Consultants — That's Why It Works
 
 **Hook:** "Most consultants give you a slide deck. We map 5 operational sectors and build an ROI model before we recommend anything."
-**Underlying POV:** The depth of the audit is itself a credibility signal. Most consultants surface-level the problem and sell the solution they already built. Adam maps the problem before proposing anything. Structural integrity of the process as a differentiator.
+**Underlying POV:** The depth of the audit is itself a credibility signal. Most consultants surface-level the problem and sell the solution they already built. Map the problem before proposing anything. Structural integrity of the process as a differentiator.
 **Evidence to pull:** The 5-stage audit structure (Acquisition, Onboarding, Quoting, Fulfilment, Reactivation) from agency-offer.md.
 **Credibility tie:** "After 300+ projects, we know which sectors hide the most waste."
 
@@ -131,11 +131,11 @@ Pre-seeded opinion angles tied to Adam's actual POV. Each has a trigger claim, t
 
 ---
 
-### Take 13 — Why I Bought a Landscaping Business to Prove a Point
+### Take 13 — Why I Invested in a Non-Tech Business to Prove a Point
 
-**Hook:** "In 2022 I bought a landscaping business to prove that our systems actually work — not just for tech companies."
-**Underlying POV:** Adam purchased and systemised a non-tech business himself. That's extraordinary proof of concept and differentiation from every other "systems consultant" who only works in tech. $200K → $1M in 6 months with a team of 15.
-**Evidence to pull:** {CASE_STUDY_1} / personal business acquisition story from agency-offer.md.
+**Hook:** "[YOUR_HOOK: e.g. 'In 2022 I bought a landscaping business to prove that our systems actually work — not just for tech companies.']"
+**Underlying POV:** [YOUR_STORY: Replace with your own proof-of-concept story showing systems work outside pure tech contexts. That's the differentiator from every other "systems consultant" who only works in tech.]
+**Evidence to pull:** [YOUR_CASE_STUDY] / personal business story.
 **Credibility tie:** First-person. This IS the credibility signal.
 
 ---
@@ -159,10 +159,10 @@ Use these stats to anchor hot takes. Update with fresh research in step-01 when 
 | McKinsey: 70% of software projects fail or underperform | McKinsey Digital | Take 02 — Project failure |
 | Standish Chaos Report: 31% of projects cancelled outright | Standish Group | Take 02 — Project failure |
 | Gartner: 85% of AI projects fail to move from pilot to production | Gartner | Take 03 — AI prerequisite |
-| ABS 2023: 44% of AU SMEs still using spreadsheets as primary operations tool | ABS Business Characteristics Survey | Take 09 — AU tech lag |
-| Xero SME Insights: AU SMEs average 6.7 disconnected tools | Xero | SaaS waste amplifier |
+| [YOUR_COUNTRY] SME tech lag stats (replace with local survey data) | Local business survey | Take 09 — local tech lag |
+| SME disconnected tools average (replace with local data, e.g. Xero SME Insights) | Accounting platform research | SaaS waste amplifier |
 | Per-user cost escalation: $50/user × 50 staff = $2,500/mo vs $0 extra on flat-fee | Internal math | Take 05 — per-user penalty |
-| AI readiness: only 9% of AU SMEs have a formal AI strategy (Deloitte 2024) | Deloitte | Take 03 / Take 09 |
+| AI readiness: % of local SMEs with a formal AI strategy (replace with local data) | Local consulting firm report | Take 03 / Take 09 |
 
 ---
 

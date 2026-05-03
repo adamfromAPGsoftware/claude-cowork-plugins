@@ -4,9 +4,7 @@ description: 'Generate format-specific hooks and let user select the best one fo
 
 nextStepFile: './step-03-thread-plan.md'
 hookPatternsData: '../data/hook-patterns.md'
-inspirationLibrary: '{project-root}/_bmad/_memory/copywriter-sidecar/inspiration/x.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
+inspirationLibrary: '{project-root}/content-plugin/data/memory/2-copywriter-sidecar/inspiration/x.md'
 ---
 
 # Step 2: Hook Ideation

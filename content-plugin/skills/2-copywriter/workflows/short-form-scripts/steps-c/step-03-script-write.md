@@ -43,9 +43,9 @@ Load and read {scriptRulesData}. Pay special attention to:
 - **Teleprompter Section** — formatting rules (used for combined teleprompter file)
 
 **Load Voice Reference Data:**
-- Load `creator-voice.md` from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/` — match Adam's sentence structure, contractions, and signature phrases in all scripted hooks and CTAs
+- Load `creator-voice.md` from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/` — match the creator's sentence structure, contractions, and signature phrases in all scripted hooks and CTAs
 - Load `creator-credentials.md` from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/` — reference for any credibility mentions in hooks
-- Load `{project-root}/_bmad/ccs/data/lead-magnet-keywords.yaml` — select keywords for CTA integration
+- Load `{project-root}/content-plugin/data/lead-magnet-keywords.yaml` — select keywords for CTA integration
 - Load `../data/icp-profiles.md` — ICP profiles, angle/ICP matrix, language register guide
 - Load `../data/example-hooks.md` — 6 annotated inspiration examples for hook pattern matching
 
@@ -338,7 +338,7 @@ stepsCompleted: ['script-write']
 After saving all 5 individual scripts, generate a single combined teleprompter file at:
 `{project_folder}/{project-slug}/video-editor/short-form/scripts/sf-all-teleprompter.md`
 
-This file allows Adam to read all 5 scripts back-to-back in a single recording session instead of starting/stopping 5 times.
+This file allows the creator to read all 5 scripts back-to-back in a single recording session instead of starting/stopping 5 times.
 
 **Format:**
 
@@ -393,7 +393,7 @@ Follow the teleprompter formatting rules from script-rules.md for each script's 
 Before marking scripts as complete, verify that every tool/platform mentioned in MG prompts has a matching screenshot in the central reference frame library. This prevents the video editor from hitting missing references during storyboarding.
 
 1. **Scan all 5 scripts** for `[MG:` and `[REF-FRAME:` markers — extract every tool/platform name referenced in prompts and reference fields
-2. **Read the library catalog** at `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/catalog.yaml`
+2. **Read the library catalog** at `{project-root}/content-plugin/data/brand-assets/reference-frames/catalog.yaml`
 3. **Match each tool** against the catalog's tool entries (check `display_name` and `aliases`)
 4. **Report coverage:**
 
@@ -407,7 +407,7 @@ Tools with library coverage:
 - {tool} (0 frames) — needed for {SF-NN list}
 
 Please capture screenshots and drop them into:
-`_bmad/ccs/data/brand-assets/reference-frames/{tool-slug}/`
+`content-plugin/data/brand-assets/reference-frames/{tool-slug}/`
 Then run: `npx tsx scripts/analyze-library-images.ts`"
 
 5. **If all tools are covered** → proceed to summary

@@ -1,0 +1,44 @@
+{
+  "skill-name": "content-6-autopilot",
+  "module-code": "content-6-autopilot",
+  "version": "1.1.0",
+  "has-memory": false,
+  "persona": "Content Autopilot — daily LinkedIn + X drafts and 3x/week Instagram + TikTok carousel generation, both with human-in-the-loop approval gate.",
+  "capabilities": [
+    {
+      "menu-code": "LX",
+      "name": "linkedin-x-daily",
+      "description": "Run the daily LinkedIn + X content generation cycle — research, draft, visual, quality gate, save to review queue",
+      "type": "prompt",
+      "file": "linkedin-x-daily.md"
+    },
+    {
+      "menu-code": "IC",
+      "name": "instagram-carousel",
+      "description": "Run the Instagram + TikTok carousel generation cycle — scrape creator inspiration, research AI/Claude trends, draft carousel copy, generate slides via Gemini, queue for review",
+      "type": "prompt",
+      "file": "instagram-carousel.md"
+    },
+    {
+      "menu-code": "RQ",
+      "name": "review-queue",
+      "description": "Review drafts in the queue — approve to schedule via Buffer, edit, reject, or regenerate",
+      "type": "prompt",
+      "file": "review-queue.md"
+    },
+    {
+      "menu-code": "TS",
+      "name": "test-styles",
+      "description": "Generate one test LinkedIn post per creator style profile (S1-S5) to verify style fidelity — does not affect rotation state or calendar",
+      "type": "prompt",
+      "file": "test-styles.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session context to memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

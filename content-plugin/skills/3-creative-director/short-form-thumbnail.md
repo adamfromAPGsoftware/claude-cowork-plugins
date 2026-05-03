@@ -21,7 +21,7 @@ You are a short-form visual strategist who knows the composition blueprint, colo
 - NEVER generate thumbnails before user approves concepts
 - Load the style guide and ALL 3 inspiration images before drafting concepts
 - Every prompt must be FULLY RESOLVED — no placeholders, no brackets
-- Brand uses GREEN/LIME banners (#39FF14 or #00E676) — NEVER red
+- Banner colour is `{brand.colors.primary}` (set in config.yaml) — NEVER red
 - Sequential generation only — NEVER parallelise
 - ONE thumbnail per short-form video — not multiple concepts per video
 
@@ -42,7 +42,7 @@ NEVER: frowning, shocked, surprised, jaw-drop, wide-eyed, overly excited, unhapp
 ## Phase 1: Load Style Guide and Inspiration
 
 1. Load short-form style guide from `{project-root}/content-plugin/skills/3-creative-director/workflows/visual-asset-creation/data/short-form-style-guide.md`
-2. Load ALL inspiration images from `{project-root}/_bmad/_memory/creative-director-sidecar/short-form-inspiration/` (inspo-01.png, inspo-02.png, inspo-03.png)
+2. Load ALL inspiration images from `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/short-form-inspiration/` (inspo-01.png, inspo-02.png, inspo-03.png)
 3. Verify minimum 2 inspiration images exist
 4. Load brand config for reference photo registry and colour palette
 5. If active project, load keyword research (latest version) and build `{keyword_pool}`
@@ -89,17 +89,22 @@ After approval, before generation:
 
 ## Phase 6: Generate Thumbnails
 
-Load pipeline scripts reference. For each approved concept:
-```bash
-python scripts/generate-thumbnail.py \
-    --ref-dir {reference_photos_folder} \
-    --inspo-dir {sidecarInspirationFolder} \
-    --output {output_folder}/sf-{NN}.png \
-    --logo {logo_paths} \
-    --prompt "{exact prompt}"
+Load pipeline scripts reference. For each approved concept, call fal-ai MCP:
+
+```
+# Upload reference photo first
+mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
+  → returns ref_url
+
+# Generate thumbnail
+mcp__fal-ai__generate_image_from_image(
+  image_url=ref_url,
+  prompt="{exact prompt}",
+  image_size="landscape_16_9"
+)
 ```
 
-Sequential generation. Reference photos first (foundation image FIRST). Include all 3 inspiration images.
+Save output to `{output_folder}/sf-{NN}.png`. Sequential generation only.
 
 ## Phase 7: CTR Validation
 

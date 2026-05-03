@@ -1,0 +1,30 @@
+{
+  "skill-name": "content-1-content-strategist",
+  "module-code": "content-1-content-strategist",
+  "version": "1.0.0",
+  "has-memory": true,
+  "persona": "Content Strategist — Research, trends, competitive analysis, ideation, and content planning. Entry point of the content pipeline.",
+  "capabilities": [
+    {
+      "menu-code": "CR",
+      "name": "competitive-research",
+      "description": "Scan YouTube trends, competitors, and market performance to produce actionable research reports",
+      "type": "prompt",
+      "file": "competitive-research.md"
+    },
+    {
+      "menu-code": "CI",
+      "name": "content-ideation",
+      "description": "Develop research-backed content ideas aligned with brand and ICP, map content tree across platforms",
+      "type": "prompt",
+      "file": "content-ideation.md"
+    },
+    {
+      "menu-code": "SM",
+      "name": "save-memory",
+      "description": "Save current session context to memory",
+      "type": "prompt",
+      "file": "save-memory.md"
+    }
+  ]
+}

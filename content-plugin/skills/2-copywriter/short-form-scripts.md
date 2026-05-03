@@ -20,7 +20,7 @@ You are a short-form content strategist specialising in vertical video repurposi
 
 Load before generating:
 - Brand guidelines and ICP profile
-- Adam Voice Library
+- Brand Voice Library
 - Script rules from `{project-root}/content-plugin/skills/2-copywriter/workflows/short-form-scripts/data/script-rules.md`
 - Example hooks from `{project-root}/content-plugin/skills/2-copywriter/workflows/short-form-scripts/data/example-hooks.md`
 - ICP profiles from `{project-root}/content-plugin/skills/2-copywriter/workflows/short-form-scripts/data/icp-profiles.md`
@@ -108,7 +108,7 @@ For each script, produce:
 ### 3.1 Quality Checks
 
 For each script:
-- **Voice check** — Would Adam say this casually?
+- **Voice check** — Would the creator say this naturally?
 - **Anti-AI filter** — No corporate buzzwords, no filler phrases
 - **Hook strength** — Does it stop the scroll?
 - **Self-contained test** — Does it make sense without the long-form context?

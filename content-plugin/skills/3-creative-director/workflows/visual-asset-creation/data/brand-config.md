@@ -59,17 +59,17 @@
 
 | # | File | Purpose |
 |---|------|---------|
-| 1 | `adam-hero-front.jpg` | Foundation — ALWAYS load first |
-| 2 | `adam-3quarter-left.jpg` | Left angle identity |
-| 3 | `adam-3quarter-right.jpg` | Right angle identity |
-| 4 | `adam-smiling.jpg` | Smiling expression reference |
-| 5 | `adam-talking.jpg` | Speaking expression reference |
+| 1 | `creator-hero-front.jpg` | Foundation — ALWAYS load first |
+| 2 | `creator-3quarter-left.jpg` | Left angle identity |
+| 3 | `creator-3quarter-right.jpg` | Right angle identity |
+| 4 | `creator-smiling.jpg` | Smiling expression reference |
+| 5 | `creator-talking.jpg` | Speaking expression reference |
 
 **Rules:**
 - 3-5 photos is the sweet spot — all 5 recommended
 - Foundation image (hero-front) MUST be first
-- Never describe Adam's face in the text prompt — reference photos handle identity
-- If generating any image with a person, assume it should be Adam unless explicitly told otherwise
+- Never describe the creator's face in the text prompt — reference photos handle identity
+- If generating any image with a person, assume it should be the creator unless explicitly told otherwise
 
 ## Brand Modes (Instagram Carousel)
 
@@ -85,7 +85,7 @@
 | Headline text | #FFFFFF |
 | Body text | #CCCCCC |
 | Accent | #90F23C |
-| Logo | `{brand_assets}/apg-logo-dark.png` — top-right on every slide |
+| Logo | `{brand_assets}/brand-logo-dark.png` — top-right on every slide |
 | Handle | @{YOUR_HANDLE} (bottom-left, content slides) |
 | Caption tone | Professional but accessible. ROI-focused. "We built this" energy. |
 | Logos colour | White-on-transparent (--color ffffff) |

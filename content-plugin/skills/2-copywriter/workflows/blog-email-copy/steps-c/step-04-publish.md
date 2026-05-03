@@ -1,19 +1,16 @@
 ---
 name: 'step-04-publish'
-description: 'Generate SEO metadata, then publish the approved blog post to Supabase with media upload'
+description: 'Generate SEO metadata then save the approved blog post as a complete markdown file ready for any CMS'
 
 outputFile: '{content_output_folder}/projects/{project_slug}/copywriter/blog-email/{format}-{content_slug}-{date}.md'
 blogStandards: '../data/blog-standards.md'
-publishScript: '{project-root}/scripts/publish-to-supabase.py'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 4: Publish
 
 ## STEP GOAL:
 
-To generate final SEO metadata for the approved blog post, then upload all media to Supabase Storage and publish the blog to the lander resources table — all in one approval gate.
+To generate final SEO metadata for the approved blog post then save it as a complete, CMS-ready markdown file. Images stay as local relative paths — the user deploys to their platform of choice (Ghost, WordPress, Astro, Notion, etc.).
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -37,8 +34,8 @@ To generate final SEO metadata for the approved blog post, then upload all media
 ## CONTEXT BOUNDARIES:
 
 - Available: Approved draft from Step 3, format choice and inputs from Step 2 — all in {outputFile}
-- Focus: Metadata generation + Supabase publishing
-- Limits: Do not rewrite the draft — only add metadata and publish
+- Focus: Metadata generation + local file save
+- Limits: Do not rewrite the draft — only add metadata and save
 - Dependencies: Approved draft from Step 3 must exist
 
 ## MANDATORY SEQUENCE
@@ -49,7 +46,7 @@ To generate final SEO metadata for the approved blog post, then upload all media
 
 Load {outputFile} completely — frontmatter and draft body.
 
-Read format from frontmatter. If format is `email`, this step is not applicable — inform user that email publishing uses ConvertKit (handled separately) and return to agent menu.
+Read format from frontmatter. If format is `email`, this step is not applicable — inform user that email publishing is handled separately via your email platform (see step-04-polish.md) and return to agent menu.
 
 Load {blogStandards} for metadata generation rules.
 
@@ -74,52 +71,17 @@ B) {option 2} ({character count} chars)
 
 Wait for user selection.
 
-### 3. Prepare Publish Payload
+### 3. Prepare Export Summary
 
-With metadata selected, prepare the publishing payload:
+With metadata selected:
 
 - **title**: From the H1 heading of the draft
 - **slug**: Use `{project_slug}` (already lowercase with hyphens)
 - **description**: The selected meta_description
 - **category**: From frontmatter `category` field (gathered in Step 2)
-- **thumbnail**: Scan `{content_output_folder}/projects/{project_slug}/creative-director/thumbnails/` for thumbnail images. If multiple exist, ask user which to use. If none, skip (thumbnail is optional).
-- **content**: The full markdown draft body
-- **media files**: Scan the draft for all local image/media references (relative paths in `![alt](path)`, `<img src="path">`, `<video src="path">`). List how many local files will be uploaded.
+- **images**: Note any local image paths in the draft — they stay as relative paths
 
-### 4. Present Publish Preview and Confirm
-
-Present everything in one view:
-
-"**Ready to publish to Supabase.**
-
-**SEO Metadata:**
-- Meta Title: {selected meta title}
-- Meta Description: {selected meta description}
-
-**Publishing Payload:**
-- Title: {extracted title}
-- Slug: {slug}
-- Description: {selected meta description}
-- Category: {category}
-- Thumbnail: {thumbnail path or 'none'}
-- Content: {character count} characters of markdown
-- Media: {count} local files will be uploaded to `resource-media/{slug}/`
-- Published: true
-
-**Target:** Lander — `resources` table + `resource-media` storage
-
-This will upload images to Supabase Storage, rewrite local paths to public URLs, and upsert the resource (insert new or update existing if slug matches).
-
-**Publish now? [Y/N]**"
-
-Wait for user confirmation. This is the single approval gate.
-
-- If N: Return to agent menu. Inform user the draft is saved and can be published later via [PB] Publish Blog.
-- If Y: Continue to step 5.
-
-### 5. Execute Publishing
-
-**5a. Update output file frontmatter:**
+### 4. Update Output File Frontmatter
 
 ```yaml
 title: '{H1 text}'
@@ -135,56 +97,31 @@ format: blog
 images_used: [{list of embedded image filenames from draft}]
 ```
 
-**5b. Rename output file:**
-
 Save as `blog-{content_slug}-{date}.md` in the same directory.
 
-**5c. Run the publish script:**
+### 5. Report Result
 
-```bash
-python3 "{project-root}/scripts/publish-to-supabase.py" \
-  --file "{content_output_folder}/projects/{project_slug}/copywriter/blog-email/{blog_filename}" \
-  --title "{extracted title}" \
-  --slug "{slug}" \
-  --description "{selected meta description}" \
-  --category "{category}" \
-  --thumbnail "{thumbnail path or URL}"
-```
+"**Blog post saved and ready to deploy.**
 
-Omit `--thumbnail` if no thumbnail was selected.
+- **File:** `{file path}`
+- **Meta title:** {selected meta title}
+- **Meta description:** {selected meta description}
+- **Images:** {count local image references — stay as relative paths}
 
-The script reads `APG_LANDER_SUPABASE_URL` and `APG_LANDER_SUPABASE_SECRET_KEY` from environment variables.
+**Deploy your blog:**
+- **Ghost / WordPress:** Import the markdown file directly
+- **Astro / Hugo / Next.js:** Drop into your `content/` directory (frontmatter is pre-structured)
+- **Notion:** Paste body or use Notion API import
+- **Beehiiv / Kit:** Copy body into your email editor
 
-**The script automatically handles:**
-- Uploading all local media files (images, video) to Supabase Storage at `resource-media/{slug}/`
-- Rewriting local paths in the markdown to public URLs
-- Upserting the resource row in the `resources` table
+Images are referenced as relative paths — upload them to your CMS media library when publishing."
 
-### 6. Report Result
+### 6. Update Tracking
 
-**On success:**
+- Update `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/memories.md` with blog save status and timestamp
+- Log: date, slug, title, status (saved)
 
-"**Published!**
-
-- **URL:** `https://{YOUR_DOMAIN}/resources/{slug}`
-- **Media uploaded:** {count} files to `resource-media/{slug}/`
-- **Status:** Live
-
-The blog post is now accessible on the lander."
-
-**On error:**
-
-Display the error from the script. Common issues:
-- Missing env vars → tell user to set `APG_LANDER_SUPABASE_URL` and `APG_LANDER_SUPABASE_SECRET_KEY`
-- Auth error → secret key may be invalid or expired
-- Network error → check connectivity
-
-### 7. Update Tracking
-
-- Update `{project-root}/_bmad/_memory/copywriter-sidecar/memories.md` with blog publish status, timestamp, and URL
-- Log: date, slug, title, status (published/failed)
-
-### 8. Present MENU OPTIONS
+### 7. Present MENU OPTIONS
 
 Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [D] Done
 
@@ -209,21 +146,15 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [D] Done
 
 - Meta title and meta description generated and user-selected
 - Output file updated with final metadata in frontmatter
-- Publish preview presented with full payload details
-- User explicitly confirmed [Y] before any publishing action
-- Publishing script executed successfully
-- Media files uploaded to Supabase Storage
-- Resource upserted in resources table
-- Result reported to user with URL
+- File saved as `blog-{slug}-{date}.md`
+- Deploy instructions presented with CMS options
 - Tracking updated in copywriter sidecar memories
 
 ### SYSTEM FAILURE:
 
-- Publishing without explicit user [Y] confirmation
-- Not generating metadata before publishing
-- Not presenting the publish preview payload
-- Script errors not reported to user
-- Not updating the output file frontmatter before publishing
-- Not updating tracking after publish
+- Not generating metadata before saving
+- Not updating the output file frontmatter before saving
+- Not presenting deploy instructions
+- Not updating tracking after save
 
 **Master Rule:** Skipping steps, optimizing sequences, or not following exact instructions is FORBIDDEN and constitutes SYSTEM FAILURE.

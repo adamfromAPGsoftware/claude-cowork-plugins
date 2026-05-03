@@ -60,8 +60,9 @@ python scripts/keyword-research.py \
 - Extract related queries, interest over time
 - Flag rising and breakout terms
 
-### Layer 3: YouTube Data API
-- Search for videos matching seeds
+### Layer 3: YouTube MCP
+- Call `mcp__youtube__searchVideos` for each seed keyword
+- Fetch video details via `mcp__youtube__getVideoDetails` for top results
 - Extract tags from top 10-20 results
 - Identify high-frequency competitor tags
 

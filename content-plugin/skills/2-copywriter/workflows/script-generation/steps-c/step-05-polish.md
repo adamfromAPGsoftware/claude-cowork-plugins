@@ -103,7 +103,7 @@ Review the full document for:
 
 5. **Formatting** — Clean markdown, proper headers, consistent style
 
-6. **Pattern Compliance** — Verify the scripted intro follows the Hook > Credibility > Value Promise > Barrier Removal > Bridge structure as defined in the "Data-Driven Quality Standards" section of {scriptStandards}. Confirm hook uses a proven formula, includes a specific number, and credibility stacking uses Adam's real credentials.
+6. **Pattern Compliance** — Verify the scripted intro follows the Hook > Credibility > Value Promise > Barrier Removal > Bridge structure as defined in the "Data-Driven Quality Standards" section of {scriptStandards}. Confirm hook uses a proven formula, includes a specific number, and credibility stacking uses the creator's real credentials.
 
 Load {scriptStandards} and verify against the validation criteria.
 

@@ -6,15 +6,13 @@ promptTemplateData: '../data/thumbnail-prompt-template.md'
 shortFormGuideData: '../data/short-form-style-guide.md'
 ctrChecklistData: '../data/ctr-checklist.md'
 pipelineScriptsData: '../data/pipeline-scripts.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 3: Thumbnail Creation
 
 ## STEP GOAL:
 
-To collaboratively design and generate YouTube thumbnails (wide 16:9 or vertical 9:16) using Gemini with identity preservation from reference photos, including optional inspiration images and logo sourcing, followed by CTR validation.
+To collaboratively design and generate YouTube thumbnails (wide 16:9 or vertical 9:16) using FLUX Kontext Pro with identity preservation from reference photos, including optional inspiration images and logo sourcing, followed by CTR validation.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -74,7 +72,7 @@ Check if `{project_folder}/{project-slug}/creative-director/thumbnails/package-p
 - Inform user: "**Package plan detected — running in PLAN MODE.** Using titles and prompts exactly as defined in package-plan.md. Any manual edits you made to the plan will be honoured."
 - **SKIP sections 1, 4, 5** (format selection, design direction, prompt building — all already defined in the plan)
 - **EXECUTE section 2** (inspiration check — auto-check the inspiration folder and report what's found)
-- **EXECUTE section 3** (logo sourcing — scan ALL combo prompts in the plan for brand/tool names, fetch any missing logos via `fetch-logo.ts` with `--logo` flag on generate-thumbnail.py, report results before presenting the generation table)
+- **EXECUTE section 3** (logo sourcing — scan ALL combo prompts in the plan for brand/tool names, fetch any missing logos via `fetch-logo.ts`, upload them via `mcp__fal-ai__upload_file` and include their URLs in the generation prompt, report results before presenting the generation table)
 - **Jump to section 6** with the generation plan table only after logos are confirmed
 
 Present the generation plan:
@@ -149,7 +147,7 @@ No gate question. Logo detection runs automatically after the user describes the
 
 **After receiving the design direction from the user:**
 
-1. Scan the description for any brand or tool names mentioned (e.g., "Claude Code", "BMAD", "Remotion").
+1. Scan the description for any brand or tool names mentioned (e.g., "Claude Code", "n8n", "Remotion").
 2. For each brand identified, check whether a PNG already exists in the logos folder:
    ```
    {project_folder}/{project-slug}/creative-director/logos/{slug}.png
@@ -253,7 +251,7 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [C] Gener
 
 ### 7. Execute Thumbnail Generation
 
-Load {pipelineScriptsData} for the generate-thumbnail.py CLI reference.
+Load {pipelineScriptsData} for the fal-ai MCP reference.
 
 **Output filename convention:** Use the video title as the filename.
 - Convert the video title to kebab-case (lowercase, spaces → hyphens, remove special characters and punctuation)
@@ -261,21 +259,29 @@ Load {pipelineScriptsData} for the generate-thumbnail.py CLI reference.
 - If it does not exist: use `{title-slug}.png`
 - If it already exists: append a number — `{title-slug}-2.png`, `{title-slug}-3.png`, etc.
 
-Example: title "How to Actually Install Claude Code and BMAD from Scratch" → `how-to-actually-install-claude-code-and-bmad-from-scratch.png`
+Example: title "How to Actually Install Claude Code and n8n from Scratch" → `how-to-actually-install-claude-code-and-n8n-from-scratch.png`
 
-Execute the script:
-```bash
-python scripts/generate-thumbnail.py \
-    --ref-dir {reference_photos_folder} \
-    --inspo-dir {project_folder}/{project-slug}/creative-director/thumbnails/inspiration \
-    --output {project_folder}/{project-slug}/creative-director/thumbnails/{title-slug}.png \
-    --prompt "{the approved prompt}"
+Execute via fal-ai MCP:
+
+```
+# 1. Upload reference photo first
+mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
+  → returns ref_url
+
+# 2. Generate thumbnail
+mcp__fal-ai__generate_image_from_image(
+  image_url=ref_url,
+  prompt="{the approved prompt}",
+  image_size="landscape_16_9"
+)
 ```
 
-`--ref-dir` is always passed — reference photos are never optional. `--inspo-dir` always points to the project inspiration folder (empty folder is fine if no images were dropped in). **Include any fetched logo PNGs as part of the generation context.**
+Save to: `{project_folder}/{project-slug}/creative-director/thumbnails/{title-slug}.png`
+
+Reference photos are never optional — always upload and pass as `image_url`.
 
 Report the result:
-- If success: "**Thumbnail generated!** Saved to: {output path} ({size}KB)"
+- If success: "**Thumbnail generated!** Saved to: {output path}"
 - If failure: Report error, ask if user wants to adjust prompt and retry
 
 ### 8. CTR Validation

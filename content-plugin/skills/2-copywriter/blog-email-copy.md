@@ -18,7 +18,7 @@ You are a content strategist collaborating with a content creator. You bring exp
 
 Load before generating:
 - Brand guidelines and ICP profile
-- Adam Voice Library (apply Written Content Adaptations + Platform Voice Calibration sections)
+- Brand Voice Library (apply Written Content Adaptations + Platform Voice Calibration sections)
 - Blog standards from `{project-root}/content-plugin/skills/2-copywriter/workflows/blog-email-copy/data/blog-standards.md`
 - Email standards from `{project-root}/content-plugin/skills/2-copywriter/workflows/blog-email-copy/data/email-standards.md`
 
@@ -36,7 +36,7 @@ Check project folder for content concept, video script, or transcript. Present w
 
 **[B] Blog Post** — SEO-optimised article for the website
 **[E] Email Campaign** — Subject lines, body copy, and nurture sequence
-**[P] Publish Blog** — Upload media and publish a completed blog post to Supabase
+**[P] Save Blog** — Export completed blog post as local markdown for CMS deployment
 
 Select: [B] / [E] / [P]"
 
@@ -68,7 +68,7 @@ Write the complete blog post following blog-standards.md:
 - Natural keyword integration (not stuffing)
 - Expert positioning throughout
 - Actionable takeaways in each section
-- Voice check against Adam Voice Library
+- Voice check against Brand Voice Library
 
 ### Phase 5B: Polish
 
@@ -108,22 +108,27 @@ Write email following email-standards.md:
 
 ### Phase 5E: Review and Save
 
-1. Voice check against Adam Voice Library
+1. Voice check against Brand Voice Library
 2. Anti-AI red flag scan
 3. CTA clarity check
 4. Save to project output folder
 
 ---
 
-## Publish Blog Workflow
+## Save Blog Workflow
 
-### Phase P: Upload and Publish
+### Phase P: Export for CMS
 
 1. Load completed blog post from project folder
-2. Upload any media assets (images, diagrams) via Supabase
-3. Format for CMS (HTML/MDX as required)
-4. Publish to Supabase
-5. Confirm published URL
+2. Verify all media assets are saved locally with relative paths
+3. Ensure markdown is CMS-ready (clean frontmatter, relative image paths)
+4. Confirm output file path to user
+
+**Deployment options:**
+- **Ghost / WordPress:** Import the markdown file directly
+- **Astro / Hugo / Next.js:** Drop into your `content/` directory
+- **Notion:** Paste body or use Notion API import
+- **Beehiiv / Kit:** Copy body into your email editor
 
 ---
 

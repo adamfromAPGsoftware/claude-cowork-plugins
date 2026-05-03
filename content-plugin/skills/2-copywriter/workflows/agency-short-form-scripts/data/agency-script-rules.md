@@ -165,7 +165,7 @@ Scripts map to these value pillars. Note: the **Batch Pillar System** above gove
 **MG Reference Frame format (replaces long-form source/timestamp):**
 
 ```
-[REF-FRAME: source="branded-asset" asset="apg-logo.png" description="{YOUR_COMPANY} logo on dark background" mg_prompt_ref="MG-01"]
+[REF-FRAME: source="branded-asset" asset="brand-logo.png" description="{YOUR_COMPANY} logo on dark background" mg_prompt_ref="MG-01"]
 [REF-FRAME: source="tool-screenshot" tool="hubspot" description="HubSpot pricing page showing per-user fees" mg_prompt_ref="MG-02"]
 [REF-FRAME: source="prompt-only" description="Abstract data flow visualization" mg_prompt_ref="MG-03"]
 ```
@@ -187,7 +187,7 @@ Preferred MG visual concepts for this ICP:
 Each agency script file includes these additional frontmatter fields:
 
 ```yaml
-channel: apgsoftware
+channel: {YOUR_HANDLE}
 content_type: agency-short-form
 pillar_slot: '{BOFU-A / BOFU-B / Reputation / Case-Study / News}'
 value_pillar: '{SaaS Waste / Efficiency / AI Enablement / Case Study / News Commentary / Reputation}'

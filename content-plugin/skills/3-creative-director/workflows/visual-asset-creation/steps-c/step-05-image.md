@@ -3,8 +3,6 @@ name: 'step-05-image'
 description: 'Generate images via Gemini — comparison graphics, annotated screenshots, any non-identity image'
 
 pipelineScriptsData: '../data/pipeline-scripts.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 5: General Image Creation
@@ -36,7 +34,7 @@ To generate images via Gemini for any use case that doesn't require identity pre
 - 🚫 FORBIDDEN to execute the script before user approves the prompt
 - 💬 Help the user describe their desired image with specificity
 - 📋 If the image includes a person, **default to using reference photos** from `{reference_photos_folder}` for identity preservation (same protocol as thumbnails — load all 5 in order, never describe face in prompt)
-- 📋 If the user explicitly wants a person who is NOT Adam, they'll say so — otherwise assume it's Adam
+- 📋 If the user explicitly wants a person who is NOT the creator, they'll say so — otherwise assume it's the creator
 
 ## EXECUTION PROTOCOLS:
 
@@ -108,16 +106,27 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [C] Gener
 
 ### 3. Execute Image Generation
 
-Load {pipelineScriptsData} for the generate-image.py CLI reference.
+Load {pipelineScriptsData} for the fal-ai MCP reference.
 
-Execute:
-```bash
-python scripts/generate-image.py \
-    --prompt "[the approved prompt]" \
-    [--input [path] for each input image] \
-    [--ref-dir {reference_photos_folder} — if image includes a person] \
-    --output [output path]/[slug]-image-[date].png
+Execute via fal-ai MCP:
+
 ```
+# Text-only generation:
+mcp__fal-ai__generate_image(
+  prompt="[the approved prompt]",
+  image_size="[appropriate preset]"
+)
+
+# With input images:
+mcp__fal-ai__upload_file(file_path="[input image path]")  → input_url
+mcp__fal-ai__generate_image_from_image(
+  image_url=input_url,
+  prompt="[the approved prompt]",
+  image_size="[appropriate preset]"
+)
+```
+
+Save to: `[output path]/[slug]-image-[date].png`
 
 Report result:
 - If success: "**Image generated!** Saved to: {output path} ({size}KB)"

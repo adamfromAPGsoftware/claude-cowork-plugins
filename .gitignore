@@ -2,6 +2,7 @@
 .env
 .gmail-token.json
 ga4-service-account.json
+*-service-account.json
 *.mp4
 *.mp4.part
 *.mp4.ytdl
@@ -15,5 +16,41 @@ __pycache__/
 *.pyc
 .wrangler/
 staging/
+dist/
 SANITIZE_REPORT.txt
 SANITIZE_DIFF.txt
+
+# Sales plugin runtime data
+sales-plugin/data/leads.json
+sales-plugin/data/pending-drafts.json
+sales-plugin/data/followup-approved.json
+sales-plugin/data/send-log.jsonl
+sales-plugin/data/pipeline-kanban.html
+sales-plugin/data/recordings/
+sales-plugin/data/.reclassify-cache/
+
+# Content plugin runtime data
+content-plugin/data/draft-queue/
+content-plugin/data/autopilot-state.yaml
+content-plugin/data/instagram-watchlist.yaml
+content-plugin/content/
+
+# Marketing plugin runtime data
+marketing-plugin/data/campaigns/
+marketing-plugin/data/campaign-data.json
+marketing-plugin/data/campaigns.json
+marketing-plugin/data/marketing-data.json
+marketing-plugin/data/reference-images/*.png
+marketing-plugin/data/reference-images/*.jpg
+marketing-plugin/reports/*.html
+
+# Video plugin runtime data (all data is user-generated at runtime)
+video-plugin/data/*
+!video-plugin/data/.gitkeep
+!video-plugin/data/.gitignore
+
+# PM plugin runtime data (all client data is user-generated at runtime)
+pm-plugin/data/clients/
+pm-plugin/data/.memory/
+!pm-plugin/data/.gitkeep
+!pm-plugin/data/.gitignore

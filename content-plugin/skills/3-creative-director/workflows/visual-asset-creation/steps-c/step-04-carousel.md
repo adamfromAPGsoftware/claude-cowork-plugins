@@ -5,8 +5,6 @@ description: 'Create LinkedIn carousels or single post images from structured sl
 brandConfigData: '../data/brand-config.md'
 pipelineScriptsData: '../data/pipeline-scripts.md'
 carouselTemplatesData: '../data/carousel-templates.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 4: Carousel Creation

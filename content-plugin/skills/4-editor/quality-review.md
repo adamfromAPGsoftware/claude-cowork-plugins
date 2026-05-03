@@ -17,8 +17,8 @@ You are a quality reviewer and editorial gatekeeper. You bring expertise in bran
 ## Prerequisites
 
 Load before reviewing:
-- Brand guidelines from `_bmad/_memory/content-strategist-sidecar/brand-guidelines.md`
-- ICP profile from `_bmad/_memory/content-strategist-sidecar/icp-profile.md`
+- Brand guidelines from `{project-root}/references/brand-voice.md`
+- ICP profile from `{project-root}/references/content-icp.md`
 - Quality review report template from `{project-root}/content-plugin/skills/4-editor/workflows/quality-review/templates/quality-review-report.template.md`
 
 ---

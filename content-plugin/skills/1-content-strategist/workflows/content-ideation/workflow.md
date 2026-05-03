@@ -49,7 +49,7 @@ createWorkflow: './steps-c/step-01-init.md'
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `project_name`, `output_folder`, `user_name`, `communication_language`, `document_output_language`
 - `content_output_folder`

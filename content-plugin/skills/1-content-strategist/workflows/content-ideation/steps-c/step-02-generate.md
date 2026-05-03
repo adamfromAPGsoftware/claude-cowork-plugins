@@ -4,8 +4,6 @@ description: 'Generate content concept ideas informed by loaded context and pres
 
 nextStepFile: './step-03-evaluate.md'
 outputFile: '{output_folder}/content-concept-{concept_slug}-{date}.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 2: Generate Ideas
@@ -105,6 +103,7 @@ Present the ideas:
 **1. [Concept Title]**
 **Hook:** [The angle]
 **Why It Works:** [ICP + brand connection]
+**Crossover Audiences:** [What secondary audiences does this concept capture beyond the primary ICP? e.g., "AI developers + freelancers", "automation users + traders". If none, note "primary audience only"]
 **Format Potential:** [Formats]
 
 ---

@@ -31,7 +31,7 @@ To update the content calendar with new entries for all successfully scheduled p
 ### Step-Specific Rules:
 
 - 🎯 Focus ONLY on calendar updates, record creation, and confirmation
-- 🚫 FORBIDDEN to call the Late.dev API in this step — scheduling is complete
+- 🚫 FORBIDDEN to call the Buffer MCP in this step — scheduling is complete
 - 🚫 FORBIDDEN to skip calendar update — if it's scheduled, it must be on the calendar
 - 💬 Present clear, complete confirmation with all details
 
@@ -44,7 +44,7 @@ To update the content calendar with new entries for all successfully scheduled p
 
 ## CONTEXT BOUNDARIES:
 
-- Available: Successfully scheduled posts from step 04, platform details, Late.dev IDs, date/time
+- Available: Successfully scheduled posts from step 04, platform details, Buffer post IDs, date/time
 - Calendar schema from {calendarSchema} (shared with content-calendar workflow)
 - Calendar file at {calendarFile}
 - Project/standalone mode determines scheduling record location
@@ -110,7 +110,7 @@ scheduled_items:
     account: '{account handle}'
     scheduled_date: '{date}'
     scheduled_time: '{time}'
-    late_dev_id: '{id from API response}'
+    buffer_post_id: '{id from Buffer MCP response}'
     content_title: '{title}'
     content_type: '{content_type}'
     status: 'scheduled'
@@ -135,9 +135,9 @@ Use the same schema as project mode, omitting `project_slug`.
 
 **Summary:**
 
-| # | Platform | Account | Scheduled For | Late.dev ID | Calendar ID |
-|---|----------|---------|---------------|-------------|-------------|
-| 1 | {platform} | @{handle} | {date} {time} | {late_dev_id} | #{calendar_id} |
+| # | Platform | Account | Scheduled For | Buffer Post ID | Calendar ID |
+|---|----------|---------|---------------|----------------|-------------|
+| 1 | {platform} | @{handle} | {date} {time} | {buffer_post_id} | #{calendar_id} |
 
 **Files updated:**
 - Content calendar: `{calendarFile}` — {count} new entries
@@ -167,7 +167,7 @@ This is the final step. No further steps to load.
 - Content calendar updated with correct entry format and valid field values
 - Metadata (last_updated, total_entries) updated accurately
 - Scheduling record created in correct location (project or standalone)
-- Confirmation summary displayed with all platform details, Late.dev IDs, and calendar IDs
+- Confirmation summary displayed with all platform details, Buffer post IDs, and calendar IDs
 - Workflow ended cleanly
 
 ### ❌ SYSTEM FAILURE:
@@ -175,8 +175,8 @@ This is the final step. No further steps to load.
 - Not updating the content calendar
 - Writing entries that don't match the shared schema format
 - Not creating scheduling record
-- Missing Late.dev IDs or calendar references in confirmation
-- Calling Late.dev API in this step
+- Missing Buffer post IDs or calendar references in confirmation
+- Calling Buffer MCP in this step
 - Not ending the workflow
 
 **Master Rule:** Skipping steps, optimizing sequences, or not following exact instructions is FORBIDDEN and constitutes SYSTEM FAILURE.

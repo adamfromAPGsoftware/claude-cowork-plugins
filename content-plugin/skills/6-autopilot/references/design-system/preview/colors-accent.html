@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-slide); padding: 18px 20px; font-family: var(--font-sans); }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .sw { border-radius: 6px; overflow: hidden; border: 1px solid rgba(0,0,0,0.06); }
+  .chip { height: 74px; display: flex; align-items: flex-end; padding: 10px; color: #fff; font-family: var(--font-mono); font-weight: 700; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .meta { padding: 8px 10px; background: #fff; }
+  .name { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--fg-1); }
+  .hex  { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:#f4a387">100</div><div class="meta"><div class="name">orange-100</div><div class="hex">#f4a387</div></div></div>
+    <div class="sw"><div class="chip" style="background:#d97757">500</div><div class="meta"><div class="name">orange-500 · accent</div><div class="hex">#d97757</div></div></div>
+    <div class="sw"><div class="chip" style="background:#c05f2a">700</div><div class="meta"><div class="name">orange-700</div><div class="hex">#c05f2a</div></div></div>
+    <div class="sw"><div class="chip" style="background:#6a3820">900</div><div class="meta"><div class="name">orange-900</div><div class="hex">#6a3820</div></div></div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-slide); padding: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; font-family: var(--font-sans); }
+  .panel { background: var(--bg-panel); border: 1px solid var(--border-default); border-radius: 10px; padding: 18px 20px; position: relative; }
+  .panel--t { background: #1c2128; border: 1px solid #30363d; color: #c9d1d9; }
+  .panel--t h4 { color: #f0e6d3; }
+  .panel--t .label { color: #f4a387; }
+  .label { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: #d97757; text-transform: uppercase; letter-spacing: 0.14em; margin-bottom: 8px; display: block; }
+  h4 { margin: 0 0 6px; font-size: 20px; font-weight: 700; color: var(--fg-1); letter-spacing: -0.01em; }
+  p { margin: 0; font-size: 14px; color: var(--fg-2); line-height: 1.4; }
+  .panel--t p { color: #c9d1d9; }
+  .badge { position: absolute; top: 14px; right: 14px; background: #d97757; color: #fff; font-family: var(--font-mono); font-weight: 700; font-size: 12px; padding: 4px 8px; border-radius: 4px; letter-spacing: 0.14em; }
+  .k { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); margin-top: 8px; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="panel">
+      <span class="badge">01</span>
+      <span class="label">Append-only</span>
+      <h4>Raw sources</h4>
+      <p>Source docs captured after every session. Never modified.</p>
+    </div>
+    <div class="k">.panel — cream, 1px hairline</div>
+  </div>
+  <div>
+    <div class="panel panel--t">
+      <span class="badge">02</span>
+      <span class="label">LLM-compiled</span>
+      <h4>The wiki</h4>
+      <p>Agent reads all raw files and compiles a structured index.</p>
+    </div>
+    <div class="k">.panel--terminal</div>
+  </div>
+</body>
+</html>

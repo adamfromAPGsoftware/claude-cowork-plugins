@@ -30,15 +30,11 @@ This workflow uses step-file architecture with sequential enforcement. Each phas
 
 ## Phase 1: Initialization and Mode Selection
 
-### 1.1 Validate Environment
+### 1.1 Validate MCP Connectivity
 
-Confirm `YOUTUBE_API_KEY` is loaded from `{project-root}/.env`. If missing, halt:
+Confirm the YouTube MCP is available by calling `mcp__youtube__searchVideos` with a test query. If unavailable, halt:
 
-"**YouTube API key not found.** Add your key to `{project-root}/.env`:
-```
-YOUTUBE_API_KEY=your_key_here
-```
-Then restart the workflow."
+"**YouTube MCP not connected.** Check your Claude Code MCP settings and ensure the YouTube MCP server is enabled."
 
 ### 1.2 Load Sidecar Configuration
 
@@ -80,8 +76,8 @@ If V: gather user's video idea before proceeding.
 Load `{project-root}/content-plugin/skills/1-content-strategist/workflows/competitive-research/data/youtube-api-reference.md` for API call formats.
 
 For each competitor channel:
-1. **Fetch channel statistics** — `channels.list` with `part=snippet,statistics&id={CHANNEL_ID}`
-2. **Fetch recent videos** — `playlistItems.list` for uploads playlist, then `videos.list` with batched IDs
+1. **Fetch channel statistics** — `mcp__youtube__getChannelStatistics` with `channelId`
+2. **Fetch recent videos** — `mcp__youtube__getChannelTopVideos` then `mcp__youtube__getVideoDetails` with batched IDs
 3. **Calculate channel baseline** — median and mean views across last {video_limit} videos
 4. **Calculate outlier score** — `video_views / channel_median_views`. Flag: 3x+ (standard), 5x+ (strong), 10x+ (super)
 5. **Calculate engagement metrics** — `engagement_rate = (likes + comments) / views`, view velocity

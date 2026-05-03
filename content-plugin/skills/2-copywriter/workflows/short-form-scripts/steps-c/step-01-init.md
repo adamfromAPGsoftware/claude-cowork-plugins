@@ -67,7 +67,7 @@ Load `{scriptRulesData}` — the short-form script structure, hook patterns, and
 
 ### 3. Load Brand Context
 
-Load brand guidelines from `{project-root}/_bmad/_memory/copywriter-sidecar/instructions.md` and `{project-root}/_bmad/_memory/content-strategist-sidecar/brand-guidelines.md` for voice consistency.
+Load brand guidelines from `{project-root}/references/brand-voice.md` for voice consistency.
 
 ### 4. Check for Existing Short-Form Scripts
 

@@ -401,7 +401,7 @@ Two separate fields:
 
 Every script's Platform Copy section MUST include a lead magnet CTA using a keyword from the centralised library.
 
-1. Load `{project-root}/_bmad/ccs/data/lead-magnet-keywords.yaml`
+1. Load `{project-root}/content-plugin/data/lead-magnet-keywords.yaml`
 2. Select ONE keyword from the `keywords` list that best matches the video's topic
 3. Use the platform-appropriate CTA template:
    - **Instagram:** "Comment '{KEYWORD}'" pattern (comment-gated)

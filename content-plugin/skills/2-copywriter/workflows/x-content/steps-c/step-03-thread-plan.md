@@ -4,8 +4,6 @@ description: 'Plan the thread structure: tweet count, tweet-by-tweet outline, bo
 
 nextStepFile: './step-04-content.md'
 writingRulesData: '../data/writing-rules.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 3: Thread Plan

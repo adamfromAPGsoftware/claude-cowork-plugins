@@ -52,7 +52,7 @@ aesthetic. No @handle or bookmark on hook slide.
 
 Pick whichever feels most natural for the slide's layout. The goal is that viewers instinctively know there's more content to the right.
 
-**NOTE:** When the hook slide features Adam, it uses a real photo — see the "Photo Hook Slide" pattern above. The generic hook pattern here is for hook slides that do NOT feature Adam.
+**NOTE:** When the hook slide features the creator, it uses a real photo — see the "Photo Hook Slide" pattern above. The generic hook pattern here is for hook slides that do NOT feature the creator.
 
 ### Screenshot Feature Slide
 
@@ -87,7 +87,7 @@ Bottom-right: Instagram repost icon with "repost" in small text.
 
 ### Photo Hook Slide (Slide 1) — Real Photo Composite
 
-The hook slide uses a **real photo** of Adam (not AI-generated). Gemini analyses the photo to determine where Adam is positioned and places text in available space around him.
+The hook slide uses a **real photo** of the creator (not AI-generated). Gemini analyses the photo to determine where the creator is positioned and places text in available space around them.
 
 ```
 Using the attached photo of this person as the base image, generate a
@@ -104,7 +104,7 @@ on hook slide.
 
 ### CTA Slide (Last Slide) — Text Only
 
-The CTA slide is a text-based "Comment [KEYWORD]" design. No photo of Adam.
+The CTA slide is a text-based "Comment [KEYWORD]" design. No photo of the creator.
 
 ```
 Generate a 1080x1350 portrait Instagram slide. Dark background [black /
@@ -112,7 +112,7 @@ subtle geometric grid / radial glow]. Large bold all-caps centered
 headline: "[HEADLINE]" with "[KEYWORD]" in neon lime (#90F23C), rest in
 white. Below, prominent neon lime (#90F23C) text: "Comment [KEYWORD]"
 with a clean geometric arrow pointing down. [Optional: tool logos or
-brand icon]. Clean, bold, high-contrast. No photo of Adam — text and
+brand icon]. Clean, bold, high-contrast. No photo of the creator — text and
 branding only.
 Bottom-left: small YouTube icon followed by "@{YOUR_HANDLE_PERSONAL}" in small white text.
 Bottom-right: Instagram repost icon with "repost" in small text.
@@ -152,7 +152,7 @@ Each carousel should feel unique. Vary these elements BETWEEN carousels:
 
 ### Personality & Warmth
 - Keep the conversational, builder-to-builder energy in all slides
-- Adam's photo slides should still feel candid and real (not corporate headshot energy)
+- Creator photo slides should still feel candid and real (not corporate headshot energy)
 - Body text tone stays casual and direct — "I just built this" anti-guru energy
 - Dark backgrounds with subtle texture > flat sterile black (texture adds human touch)
 
@@ -169,7 +169,7 @@ Each carousel should feel unique. Vary these elements BETWEEN carousels:
 
 1. **Hook slide** — bold, eye-catching, different energy. Often has a product image, screenshot, or strong visual. No @handle or bookmark. **MUST have a swipe cue** (arrow, "SWIPE →", or cut-off element) so viewers know to swipe right.
 2. **Content slides** (3-6) — each makes ONE point. Vary layouts between slides. Include @{YOUR_HANDLE_PERSONAL} (with YouTube icon) and repost icon.
-3. **CTA slide** — "Comment [KEYWORD]" for lead magnet. Text-only design — no photo of Adam. Bold, high-contrast, clear call to action.
+3. **CTA slide** — "Comment [KEYWORD]" for lead magnet. Text-only design — no photo of the creator. Bold, high-contrast, clear call to action.
 
 ---
 
@@ -228,7 +228,7 @@ The prompt should specify HOW to embed the screenshot:
 
 ## 7. Real Photo Usage
 
-The hook slide (slide 1) uses a **real photo** of Adam — not AI-generated. The photo is provided by the user and sent to Gemini as-is.
+The hook slide (slide 1) uses a **real photo** of the creator — not AI-generated. The photo is provided by the user and sent to Gemini as-is.
 
 ### Rules
 
@@ -236,7 +236,7 @@ The hook slide (slide 1) uses a **real photo** of Adam — not AI-generated. The
 - The photo is sent to Gemini as the first content part — Gemini analyses where the person is positioned and composites text/branding around them
 - Gemini must NOT alter the person's face, body, pose, or clothing — the person must appear exactly as in the source photo
 - The prompt describes only: text content, text placement strategy, background treatment, and brand elements
-- The CTA slide (last slide) does NOT feature Adam — it's a text-based "Comment [KEYWORD]" design
+- The CTA slide (last slide) does NOT feature the creator — it's a text-based "Comment [KEYWORD]" design
 - Only the hook slide uses a real photo; content slides (text-only, screenshot features) remain fully Gemini-generated
 
 ---
@@ -280,30 +280,30 @@ Include the fetched logo PNG in the slide's `embed_images` array. The prompt sho
 
 ### Hook Slide — Real Photo + Gemini Text Composite
 
-The hook slide (slide 1) uses a **real photo** of Adam provided by the user. Gemini receives the photo and composites text/branding around the person without modifying their appearance. Set `photo_path` in the slide JSON pointing to the photo file.
+The hook slide (slide 1) uses a **real photo** of the creator provided by the user. Gemini receives the photo and composites text/branding around the person without modifying their appearance. Set `photo_path` in the slide JSON pointing to the photo file.
 
 ### CTA Slide — Text Only
 
-The CTA slide (last slide) is fully Gemini-generated from a text prompt — no photo of Adam. It's a bold "Comment [KEYWORD]" design with brand styling. See the CTA Slide prompt pattern in Section 2.
+The CTA slide (last slide) is fully Gemini-generated from a text prompt — no photo of the creator. It's a bold "Comment [KEYWORD]" design with brand styling. See the CTA Slide prompt pattern in Section 2.
 
 ### Content Slides — Fully Gemini-Generated
 
-Content slides (text-only, screenshot features) are fully Gemini-generated from text prompts and optional `embed_images`. No photos of Adam on content slides.
+Content slides (text-only, screenshot features) are fully Gemini-generated from text prompts and optional `embed_images`. No photos of the creator on content slides.
 
 ### B-Roll & Screenshots
 
 1. **Review B-roll/screenshots** from the project folder to understand what the video covers visually — tools shown, interfaces demonstrated, settings used.
 2. **Use these observations to write better prompts** — describe the scenes, tools, and settings you saw in the video so Gemini generates contextually accurate slides.
 3. **NEVER add B-roll images or extracted video frames to `embed_images`** — they are reference material for the prompt author (you), not input images for Gemini.
-4. **Screenshots of tool UIs** (e.g., Claude Code interface, IDE windows) are an EXCEPTION — these are product screenshots, not video frames of Adam. Tool UI screenshots CAN be embedded via `embed_images` when a slide discusses that specific tool.
+4. **Screenshots of tool UIs** (e.g., Claude Code interface, IDE windows) are an EXCEPTION — these are product screenshots, not video frames of the creator. Tool UI screenshots CAN be embedded via `embed_images` when a slide discusses that specific tool.
 
 ### Rules
 
 - **Hook slide uses a real photo** — set `photo_path` in the slide JSON, Gemini composites text around the person
-- **CTA slide is text-only** — no photo of Adam, bold "Comment [KEYWORD]" design
+- **CTA slide is text-only** — no photo of the creator, bold "Comment [KEYWORD]" design
 - **Content slides are fully Gemini-generated** — text prompts + optional embedded screenshots/logos
 - **B-roll/extracts = prompt inspiration only** — study them, describe what you see, but never embed them
-- **Tool UI screenshots are allowed** as `embed_images` (product screenshots ≠ video frames of Adam)
+- **Tool UI screenshots are allowed** as `embed_images` (product screenshots ≠ video frames of the creator)
 
 ---
 

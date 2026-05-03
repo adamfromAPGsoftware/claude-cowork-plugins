@@ -4,8 +4,6 @@ description: 'Generate creative direction pitch with title ideas, angle, and des
 
 nextStepFile: './step-03-draft.md'
 outputFile: '{content_output_folder}/projects/{project_slug}/copywriter/scripts/script-{concept_slug}-{date}.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 2: Direction Pitch
@@ -83,8 +81,9 @@ Also consider:
 
 **Load Pattern Reference Data:**
 - Load `long-form-patterns.md` from `inspiration/` — reference the **Hook Patterns** and **Credibility Stacking Patterns** sections for proven formulas
-- Load `creator-credentials.md` from `inspiration/` — reference pre-written credibility sequences and Adam's actual proof points
-- Load `creator-voice.md` from `inspiration/` — reference Adam's natural speaking patterns, signature phrases, and tone markers for direction alignment
+- Load `creator-credentials.md` from `inspiration/` — reference pre-written credibility sequences and the creator's actual proof points
+- Load `creator-voice.md` from `inspiration/` — reference the creator's natural speaking patterns, signature phrases, and tone markers for direction alignment
+- Load `engagement-patterns.md` from `inspiration/` — reference the **Emotional Sequence Template** and the **Niche Crossover Strategy** in `long-form-patterns.md` when designing the hook strategy and angle
 
 ### 2. Generate Direction Pitch
 
@@ -125,7 +124,7 @@ Using proven hook formulas from pattern library (select 3 different formulas):
 [Brief summary of what the YouTube description would emphasize — value proposition, key topics, audience hook]
 
 **Tone & Energy:**
-[Match Adam's voice profile from creator-voice.md — calm authority, Australian conversational, zero clickbait. Note any topic-specific tone adjustments.]
+[Match the creator's voice profile from creator-voice.md — calm authority, conversational, zero clickbait. Note any topic-specific tone adjustments.]
 
 **Target Length:** [Confirm or suggest based on content depth]
 

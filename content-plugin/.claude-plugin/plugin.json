@@ -1,25 +1,25 @@
 {
   "name": "content",
-  "description": "Personal Brand Content Pipeline \u2014 research, copywriting, visual design, editorial review, and publishing",
-  "version": "1.0.0",
+  "description": "Personal Brand Content Pipeline — research, copywriting, visual design, editorial review, and publishing",
+  "version": "1.2.0",
   "author": {
-    "name": "{YOUR_NAME}",
-    "url": "https://{YOUR_DOMAIN}"
+    "name": "APG Software",
+    "url": "https://apgsoftware.com"
   },
   "keywords": [
     "content",
     "copywriting",
     "video",
     "social",
-    "publishing",
-    "apg"
+    "publishing"
   ],
   "agents": [
     "./agents/1-content-strategist.md",
     "./agents/2-copywriter.md",
     "./agents/3-creative-director.md",
     "./agents/4-editor.md",
-    "./agents/5-publisher.md"
+    "./agents/5-publisher.md",
+    "./agents/6-autopilot.md"
   ],
   "skills": "./skills/"
 }

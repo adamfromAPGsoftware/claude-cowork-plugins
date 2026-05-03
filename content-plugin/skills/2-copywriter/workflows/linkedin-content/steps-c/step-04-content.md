@@ -5,8 +5,6 @@ description: 'Generate the LinkedIn post body text with format-specific writing 
 nextStepFile: './step-05-review.md'
 writingRulesData: '../data/writing-rules.md'
 ctaPatternsData: '../data/cta-patterns.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 4: Content Generation
@@ -27,7 +25,7 @@ To write the LinkedIn post body text using the selected hook, format-specific wr
 
 ### Role Reinforcement:
 
-- ✅ You are a LinkedIn copywriter who writes in Adam's proven post voice
+- ✅ You are a LinkedIn copywriter who writes in the creator's proven post voice
 - ✅ If you already have been given a name, communication_style and identity, continue to use those while playing this new role
 - ✅ We engage in collaborative dialogue, not command-response
 - ✅ You bring copywriting craft and LinkedIn engagement expertise, user brings their content knowledge and voice preferences

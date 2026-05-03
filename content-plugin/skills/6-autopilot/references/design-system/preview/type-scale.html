@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-slide); padding: 20px 28px; font-family: var(--font-sans); color: var(--fg-1); }
+  .row { display: flex; align-items: baseline; gap: 20px; padding: 8px 0; border-bottom: 1px dashed #eae4de; }
+  .row:last-child { border: 0; }
+  .k { width: 90px; font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+  .display { font-weight: 900; font-size: 42px; letter-spacing: -0.03em; line-height: 0.95; }
+  .h1 { font-weight: 800; font-size: 32px; letter-spacing: -0.02em; }
+  .h2 { font-weight: 700; font-size: 22px; }
+  .h3 { font-weight: 700; font-size: 18px; }
+  .body { font-size: 15px; color: var(--fg-2); }
+  .label { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: #d97757; text-transform: uppercase; letter-spacing: 0.14em; }
+</style>
+</head>
+<body>
+  <div class="row"><div class="k">display 900</div><div class="display">Context that compounds</div></div>
+  <div class="row"><div class="k">h1 · 800</div><div class="h1">The three-layer schema</div></div>
+  <div class="row"><div class="k">h2 · 700</div><div class="h2">Append-only source files</div></div>
+  <div class="row"><div class="k">h3 · 700</div><div class="h3">Never modified, permanent audit trail</div></div>
+  <div class="row"><div class="k">body 400</div><div class="body">Agent reads all raw files simultaneously and compiles one structured document.</div></div>
+  <div class="row"><div class="k">label mono</div><div class="label">Append-only · layer 01</div></div>
+</body>
+</html>

@@ -1,12 +1,10 @@
-# Schedule Instagram Post to Internal CRM
+# Schedule Instagram Post via Buffer MCP
 
 ## Prerequisites
 
 - Instagram caption content must be ready (from a file or inline)
 - Media files (slide PNGs for carousel, or single image) must be accessible at an absolute path
-- Environment variables must be set in `.env` at the project root:
-  - `INTERNAL_CRM_SUPABASE_URL` — Supabase API URL for the internal CRM project
-  - `INTERNAL_CRM_APG_API_KEY` — API key (`apg_` format)
+- Buffer MCP connected in Claude Code (platform-level — no API key needed) and Instagram account connected in Buffer
 
 ## Workflow
 
@@ -16,65 +14,69 @@ Gather the following from the user or from context:
 
 - **Caption** — the post text (from a markdown file, agent output, or direct input)
 - **Media** — either:
-  - `--media-dir` — directory of numbered slide PNGs for carousel (slide-01.png, slide-02.png, etc.)
-  - `--media` — single image file path
-- **Schedule date/time** — when to publish. Default timezone: AEST (UTC+10) / AEDT (UTC+11). If "now", omit `--scheduled-at`
+  - Directory of numbered slide PNGs for carousel (slide-01.png, slide-02.png, etc.)
+  - Single image file path
+- **Schedule date/time** — when to publish. Default timezone: AEST (UTC+10) / AEDT (UTC+11)
 
-### 2. Preview Payload
+### 2. Fetch Instagram Channel ID
+
+Call the Buffer MCP to find the Instagram channel:
+
+```
+mcp__buffer__use_buffer_api(action: "listChannels")
+```
+
+Locate the Instagram channel in the results and note its `channelId`.
+
+### 3. Preview Payload
 
 Present the scheduling payload to the user:
 
 ```
-SCHEDULING TO: {YOUR_CRM} → Instagram
-Account:     {YOUR_NAME}
+SCHEDULING TO: Buffer → Instagram
+Account:     {handle from scheduling-config.md}
 Caption:     {first 100 chars}... ({total chars} chars)
-Media:       {file count} files from {directory} OR {filename}
-Schedule:    {formatted date/time AEST or "now"}
+Media:       {file count} files OR {filename}
+Schedule:    {formatted date/time AEST}
 ```
 
-### 3. Confirm
+### 4. Confirm
 
 **MANDATORY** — Get explicit user confirmation before sending.
 
-### 4. Execute
+### 5. Execute
 
-Run the scheduling script:
+Call the Buffer MCP:
 
-```bash
-# Carousel (directory of PNGs)
-python3 scripts/schedule-instagram-post.py \
-  --file "{path/to/caption.md}" \
-  --media-dir "{path/to/slides/}" \
-  --scheduled-at "{ISO 8601 datetime}"
-
-# Single image
-python3 scripts/schedule-instagram-post.py \
-  --caption "Caption text here" \
-  --media "{path/to/image.png}" \
-  --scheduled-at "{ISO 8601 datetime}"
+```
+mcp__buffer__use_buffer_api(
+  action: "createPost",
+  channelIds: ["{instagram_channel_id}"],
+  text: "{caption}",
+  scheduledAt: "{ISO 8601 UTC datetime}",
+  media: [
+    "{slides_dir}/slide-01.png",
+    "{slides_dir}/slide-02.png",
+    ...
+  ]
+)
 ```
 
-**Flags:**
-- `--file` — path to markdown file with caption (strips frontmatter)
-- `--caption` — inline caption text (alternative to `--file`)
-- `--scheduled-at` — ISO 8601 datetime. Omit for immediate posting
-- `--media` — path to single media file
-- `--media-dir` — directory of numbered slide PNGs (carousel mode)
+For a single image, pass a single-item `media` array.
 
-### 5. Report Result
+### 6. Report Result
 
-**On success (201):** Display `post_id`, `status`, `scheduled_at`, media count, and any `media` URLs.
+**On success:** Display the Buffer `postId`, `status`, and `scheduledAt`.
 
-**On error:** Display the error `code`, `message`, and `hint`. Common issues:
-- `AUTH_ERROR` — check `INTERNAL_CRM_APG_API_KEY` in `.env`
-- `VALIDATION_ERROR` — caption too long, bad file type, or missing field
-- `NOT_FOUND` — wrong `account_id`
-- `UPLOAD_ERROR` — storage issue, retry
+**On error:** Display the error message. Common issues:
+- Buffer MCP not connected — check Claude Code MCP settings
+- Instagram account not connected — connect it in your Buffer dashboard
+- File path not accessible — verify the media files exist at the specified paths
 
-### 6. Update Tracking (if called from an agent)
+### 7. Update Tracking (if called from an agent)
 
 If triggered from an agent session:
-- Log the schedule event to the agent's `memories.md`
+- Log the schedule event to the agent's memory sidecar
 - Update any caption file frontmatter with `status: scheduled` and `scheduled_at`
 
 ---
@@ -83,18 +85,7 @@ If triggered from an agent session:
 
 | Field | Value |
 |-------|-------|
-| Instagram account_id | `a2867c79-f288-4a16-898b-5f12ed71513c` |
-| API Endpoint | `{SUPABASE_URL}/functions/v1/social-media-posts` |
-| Auth | `apikey` header with `apg_` key |
 | Instagram max caption chars | 2,200 |
 | Max carousel slides | 10 |
-
-## Adam's Social Accounts
-
-| Platform | account_id |
-|----------|------------|
-| LinkedIn | `d9ed774a-cc62-4131-a08d-64be36f864bd` |
-| Instagram | `a2867c79-f288-4a16-898b-5f12ed71513c` |
-| TikTok | `38f9261d-b51e-4582-b92c-8764058f62dd` |
-| Twitter | `e7773628-6c48-4de7-b602-cd23b9194a11` |
-| YouTube | `80ffdc97-924a-4a38-a4fe-213aaa24cd40` |
+| Scheduling | Via `mcp__buffer__use_buffer_api(action: "createPost")` |
+| Channel IDs | From `mcp__buffer__use_buffer_api(action: "listChannels")` or `scheduling-config.md` |

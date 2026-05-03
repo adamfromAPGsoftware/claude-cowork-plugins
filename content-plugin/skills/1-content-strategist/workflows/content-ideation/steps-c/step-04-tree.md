@@ -4,8 +4,6 @@ description: 'Map the selected content concept across all target platforms with 
 
 nextStepFile: './step-05-brief.md'
 outputFile: '{output_folder}/content-concept-{concept_slug}-{date}.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 4: Content Tree Mapping

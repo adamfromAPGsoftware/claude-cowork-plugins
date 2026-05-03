@@ -53,7 +53,7 @@ This uses **step-file architecture** for disciplined execution:
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `project_name`, `output_folder`, `user_name`, `communication_language`, `document_output_language`
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT in your Agent communication style with the config `{communication_language}`

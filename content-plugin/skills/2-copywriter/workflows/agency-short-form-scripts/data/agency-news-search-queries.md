@@ -33,13 +33,13 @@
 - `"AI employee productivity gains" OR "AI workplace adoption statistics"`
 - `"generative AI business ROI" OR "AI automation business results 2026"`
 
-### Australian-Specific
+### Country/Region-Specific (replace [YOUR_COUNTRY] with your market)
 
-- `"MYOB AI agents" OR "Xero AI features" OR "Australian accounting software AI"`
-- `"Australian Government AI Action Plan SME" OR "Australia AI policy business"`
-- `"Australian small business technology adoption" OR "SME digital transformation Australia"`
-- `"R&D tax incentive AI software Australia" OR "Australian government technology grants SME"`
-- `"Australian trades business technology" OR "construction technology adoption Australia"`
+- `"[YOUR_COUNTRY] accounting software AI agents" OR "[YOUR_COUNTRY] SME software AI"`
+- `"[YOUR_COUNTRY] Government AI plan SME" OR "[YOUR_COUNTRY] AI policy business"`
+- `"[YOUR_COUNTRY] small business technology adoption" OR "SME digital transformation [YOUR_COUNTRY]"`
+- `"[YOUR_COUNTRY] government technology grants SME" OR "[YOUR_COUNTRY] R&D incentive software"`
+- `"[YOUR_COUNTRY] trades business technology" OR "construction technology adoption [YOUR_COUNTRY]"`
 
 ### General BOFU / Industry Trends
 
@@ -87,6 +87,6 @@ Use these when the news cycle is quiet or Exa returns insufficient current resul
 
 ### Case Study / Social Proof Evergreens
 
-10. **"We purchased a $200K business and hit $1M in 6 months — here's the operating system"** — Adam's landscaping business transformation. Systems injection story
+10. **"We purchased a $200K business and hit $1M in 6 months — here's the operating system"** — [YOUR_STORY: replace with a real business transformation case study]. Systems injection story
 11. **"40 staff, $18M revenue, and every contract was on paper"** — {CASE_STUDY_1} case study. Scale + manual process contrast
 12. **"Custom software used to cost $1M. AI dropped that by 50x."** — Market timing angle. The math has flipped — custom is now cheaper than annual SaaS

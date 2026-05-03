@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/_bmad/_memory/bmad-apg-ccs-3-creative-director-sidecar/` for persistent memory.
+Creating `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -23,13 +23,13 @@ Creating:
 
 1. **Reference photos** — Confirm reference photos exist at `{reference_photos_folder}` from CCS config (minimum 3, recommended 5)
 2. **Short-form inspiration** — Confirm 3 inspiration PNGs exist in the sidecar `short-form-inspiration/` folder
-3. **Brand colours** — Confirm Brand uses GREEN/LIME banners (#39FF14 or #00E676)
+3. **Brand colours** — Confirm primary brand colour from `{brand.colors.primary}` in config.yaml
 
 ## Creating Memory Files
 
 Once confirmed, create the following files:
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-3-creative-director-sidecar/index.md`
+### `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/index.md`
 
 ```markdown
 # CCS Creative Director — Session Index
@@ -40,13 +40,13 @@ Once confirmed, create the following files:
 ## Configuration
 - Reference photos: confirmed ({count} photos)
 - Short-form inspiration: confirmed ({count} PNGs)
-- Brand colour: GREEN/LIME (#39FF14 / #00E676)
+- Brand colour: {brand.colors.primary} (from config.yaml)
 
 ## Last Session
 (none)
 ```
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-3-creative-director-sidecar/patterns.md`
+### `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/patterns.md`
 
 ```markdown
 # Creative Director Patterns
@@ -64,7 +64,7 @@ Once confirmed, create the following files:
 (which angles, expressions, and styles work best)
 ```
 
-### `{project-root}/_bmad/_memory/bmad-apg-ccs-3-creative-director-sidecar/chronology.md`
+### `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

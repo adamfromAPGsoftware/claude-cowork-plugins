@@ -6,7 +6,7 @@ Reusable carousel patterns with hardcoded design decisions. Agents fill in text 
 
 ## Template: Saraev Alternating
 
-**Style:** Nick Saraev / Maker School — alternating photo slides and text slides with a clean dark aesthetic.
+**Style:** Alternating photo slides and text slides with a clean dark aesthetic.
 
 **Best for:** Lead magnet carousels, educational breakdowns, nurture content.
 
@@ -24,22 +24,22 @@ Reusable carousel patterns with hardcoded design decisions. Agents fill in text 
 | 8 | `photo-title` | CTA — Gemini-generated CTA photo + follow bubble (NO swipe) |
 
 **Design rules:**
-- **Photo slides (intro):** Gemini-generated image as full-bleed bg (Adam on right, dark branded bg with green blobs), gradient overlay, headline at bottom-left, "SWIPE >>>" bottom-right.
+- **Photo slides (intro):** Gemini-generated image as full-bleed bg (creator on right, dark branded bg with green blobs), gradient overlay, headline at bottom-left, "SWIPE >>>" bottom-right.
 - **Photo slides (CTA / last slide):** Same as intro BUT no swipe — instead a green pill-shaped "Follow" bubble at bottom-right. Optional `ctaText` field customises the bubble text.
 - **Text-only slides:** Dark bg + blobs, white body text. If `imagePath` is provided, image renders in the upper portion (rounded, contained) with text directly below it. If no image, text is vertically centered. "SWIPE >>>" bottom-right.
 - **Body slides:** Dark bg + blobs + green accent bar, with uppercase green label above headline (e.g., "WHAT IT DOES"). Clear spacing between accent bar → label → headline. "SWIPE >>>" bottom-right.
 - **All slides:** Company brand top-right, author bottom-left.
 - **Text colour:** White (`#ffffff`) for body text on text-only slides, grey (`#999999`) for supporting body on other slide types.
 
-**Hardcoded photo paths (Gemini-generated, dark branded bg with Adam):**
+**Hardcoded photo paths (Gemini-generated, dark branded bg with the creator):**
 - Slide 1 (intro — warm/smiling): `{reference_photos_folder}/carousel-bg-intro.png`
 - Slide 8 (CTA — confident/direct): `{reference_photos_folder}/carousel-bg-cta.png`
 
-Where `{reference_photos_folder}` = `_bmad/ccs/data/reference-photos`
+Where `{reference_photos_folder}` = `content-plugin/data/reference-photos`
 
-These backgrounds were generated via `scripts/generate-carousel-photos.py` using Gemini with reference photos. They show Adam naturally placed on the right side over a dark background with subtle green blobs — text space is on the left. To regenerate or create new variants, run:
+These backgrounds were generated via `scripts/generate-carousel-photos.py` using Gemini with reference photos. They show the creator naturally placed on the right side over a dark background with subtle green blobs — text space is on the left. To regenerate or create new variants, run:
 ```bash
-python3 scripts/generate-carousel-photos.py --ref-dir _bmad/ccs/data/reference-photos --output-dir _bmad/ccs/data/reference-photos --slides intro,cta
+python3 scripts/generate-carousel-photos.py --ref-dir content-plugin/data/reference-photos --output-dir content-plugin/data/reference-photos --slides intro,cta
 ```
 
 **JSON skeleton:**

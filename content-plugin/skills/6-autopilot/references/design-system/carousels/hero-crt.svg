@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="1080" height="1350">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="55%" r="60%">
+      <stop offset="0%" stop-color="#ff9a6b" stop-opacity="0.55"></stop>
+      <stop offset="40%" stop-color="#d97757" stop-opacity="0.35"></stop>
+      <stop offset="100%" stop-color="#0a0706" stop-opacity="1"></stop>
+    </radialGradient>
+    <linearGradient id="desk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a2418"></stop>
+      <stop offset="100%" stop-color="#1a0f0a"></stop>
+    </linearGradient>
+    <linearGradient id="wallVignette" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0706" stop-opacity="0.9"></stop>
+      <stop offset="50%" stop-color="#0a0706" stop-opacity="0"></stop>
+      <stop offset="100%" stop-color="#0a0706" stop-opacity="0.95"></stop>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"></feTurbulence>
+      <feColorMatrix values="0 0 0 0 0.95  0 0 0 0 0.6  0 0 0 0 0.4  0 0 0 0.08 0"></feColorMatrix>
+      <feComposite in2="SourceGraphic" operator="in"></feComposite>
+    </filter>
+  </defs>
+
+  
+  <rect width="1080" height="1350" fill="#0a0706"></rect>
+  <rect width="1080" height="1350" fill="url(#glow)"></rect>
+
+  
+  <g opacity="0.25">
+    <polygon points="540,200 380,700 700,700" fill="#ff9a6b"></polygon>
+    <polygon points="540,220 440,700 640,700" fill="#ffb089"></polygon>
+  </g>
+
+  
+  <g opacity="0.5">
+    <ellipse cx="180" cy="820" rx="90" ry="130" fill="#1a0f0a"></ellipse>
+    <ellipse cx="270" cy="830" rx="80" ry="120" fill="#2a1812"></ellipse>
+    <ellipse cx="810" cy="830" rx="90" ry="130" fill="#1a0f0a"></ellipse>
+    <ellipse cx="900" cy="820" rx="80" ry="120" fill="#2a1812"></ellipse>
+  </g>
+
+  
+  <rect x="0" y="900" width="1080" height="450" fill="url(#desk)"></rect>
+  <rect x="0" y="895" width="1080" height="10" fill="#4a2e1e" opacity="0.6"></rect>
+
+  
+  <rect x="340" y="540" width="400" height="360" rx="24" fill="#d9cfc1"></rect>
+  <rect x="340" y="540" width="400" height="30" rx="8" fill="#b8ac9b"></rect>
+  <rect x="375" y="590" width="330" height="250" rx="12" fill="#0a0706"></rect>
+  <rect x="385" y="600" width="310" height="230" rx="6" fill="#14100c"></rect>
+
+  
+  <g font-family="JetBrains Mono, monospace" fill="#f4a387">
+    <text x="400" y="625" font-size="14" font-weight="700">CLAUDE</text>
+    <text x="400" y="645" font-size="14" font-weight="700" fill="#d97757">OPUS 4.7</text>
+    <rect x="400" y="660" width="280" height="1" fill="#3a2418"></rect>
+    <text x="400" y="685" font-size="11" fill="#a8907a">$ claude --version</text>
+    <text x="400" y="705" font-size="11" fill="#6a5948">4.7.0-release</text>
+    <text x="400" y="730" font-size="11" fill="#a8907a">$ claude chat</text>
+    <text x="400" y="750" font-size="11" fill="#d97757">▋</text>
+  </g>
+
+  
+  <rect x="500" y="900" width="80" height="30" fill="#b8ac9b"></rect>
+  <rect x="440" y="925" width="200" height="15" rx="4" fill="#8a7e6c"></rect>
+
+  
+  <rect width="1080" height="1350" fill="url(#wallVignette)"></rect>
+  <rect width="1080" height="1350" filter="url(#grain)" opacity="0.4"></rect>
+</svg>

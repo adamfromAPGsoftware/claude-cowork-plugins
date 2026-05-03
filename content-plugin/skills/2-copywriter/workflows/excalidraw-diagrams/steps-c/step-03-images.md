@@ -1,6 +1,6 @@
 ---
 name: 'step-03-images'
-description: 'Batch-generate hero illustrations per segment via Gemini/Nano Banana with review and revision loop'
+description: 'Batch-generate hero illustrations per segment via fal-ai MCP with review and revision loop'
 
 nextStepFile: './step-04-compose.md'
 imagePromptTemplates: '../data/image-prompt-templates.md'
@@ -11,7 +11,7 @@ diagramStandards: '../data/diagram-standards.md'
 
 ## STEP GOAL:
 
-To batch-generate one rich, detailed hero illustration per segment using Gemini/Nano Banana, present them for review, and iterate on specific images until the user is satisfied with the full set.
+To batch-generate one rich, detailed hero illustration per segment using fal-ai MCP, present them for review, and iterate on specific images until the user is satisfied with the full set.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -107,8 +107,8 @@ Generate images sequentially in main thread:
 - Track progress and report as each completes
 
 For each segment:
-1. Execute the prepared prompt via the Gemini API using the model and endpoint specified in `{imagePromptTemplates}` (Model: `gemini-3-pro-image-preview`, requires `GEMINI_API_KEY` from `.env`). Send the prompt as a text part with `generationConfig: {"responseModalities": ["TEXT", "IMAGE"]}`. Extract the base64 image data from the `inlineData` part of the response.
-2. Decode the base64 image and save to `{output_path}/images/segment-{NN}-{heading-slug}.png`
+1. Call `mcp__fal-ai__generate_image` with the prepared prompt and `image_size: "landscape_4_3"`. The fal-ai MCP is platform-level — no API key needed.
+2. Save the returned image to `{output_path}/images/segment-{NN}-{heading-slug}.png`
 3. Record: filename, prompt used, generation timestamp
 
 "**Generation complete: {count}/{total} hero illustrations generated successfully.**"

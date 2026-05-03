@@ -49,10 +49,10 @@ To scan across ALL of YouTube (not just competitor channels) using keyword-based
 
 ## CONTEXT BOUNDARIES:
 
-- Available: Sidecar config with `niche_scan` keywords and thresholds, YouTube Data API + `YOUTUBE_API_KEY`, Exa web search (MCP tool), competitor list from sidecar (for flagging known vs new creators)
+- Available: Sidecar config with `niche_scan` keywords and thresholds, YouTube MCP (`mcp__youtube__*`) — platform-level, no API key needed, Exa MCP (`mcp__exa__web_search_exa`), competitor list from sidecar (for flagging known vs new creators)
 - Focus: Niche-wide keyword-based trend discovery and cross-platform signal detection
 - Limits: Do not analyse transcripts or identify gaps — that comes in later steps
-- Dependencies: Step 01 must have completed, step 02a or 02b must have completed, sidecar must be loaded, `YOUTUBE_API_KEY` must be validated
+- Dependencies: Step 01 must have completed, step 02a or 02b must have completed, sidecar must be loaded, YouTube MCP must be validated
 
 ## MANDATORY SEQUENCE
 
@@ -82,23 +82,17 @@ Display: "**Scanning niche-wide trends across {N} keywords (last {timeframe_days
 
 For each keyword in `niche_scan.keywords`:
 
-1. **Search YouTube** — use `search.list` with:
-   - `part=snippet`
-   - `q={keyword}`
-   - `type=video`
-   - `order=viewCount`
-   - `publishedAfter={calculated_date}`
-   - `maxResults={max_results_per_keyword}` (default: 25)
-
-   **Quota note:** Each `search.list` call costs 100 units. Track cumulative usage and stop if `quota_budget` is reached.
+1. **Search YouTube** — use `mcp__youtube__searchVideos` with:
+   - `query: keyword`
+   - `maxResults: max_results_per_keyword` (default: 25)
 
 2. **Collect all video IDs** across all keyword searches
 
 3. **De-duplicate video IDs** — a video may appear in multiple keyword results. Track which keywords matched each video.
 
-4. **Batch fetch video statistics** — use `videos.list` with `part=snippet,statistics,contentDetails` and batch up to 50 video IDs per call (1 unit per call)
+4. **Batch fetch video statistics** — use `mcp__youtube__getVideoDetails` with batched video IDs (up to 50 per call)
 
-5. **Batch fetch channel statistics** — collect unique channel IDs from results and use `channels.list` with `part=statistics` and batch up to 50 channel IDs per call (1 unit per call). Extract subscriber counts.
+5. **Batch fetch channel statistics** — collect unique channel IDs from results and call `mcp__youtube__getChannelStatistics` with batched channel IDs. Extract subscriber counts.
 
 6. **Filter** — remove videos below `min_views` threshold
 
@@ -145,7 +139,7 @@ niche_trend_score = (view_velocity_norm × 0.40)
 
 For each query in `niche_scan.exa_queries`:
 
-1. **Search using `web_search_exa`** with a 7-day date filter
+1. **Search using `mcp__exa__web_search_exa`** with a 7-day date filter
 2. **Extract trending topics** from blogs, news, forums, and social media results
 
 Cross-reference web results with YouTube keyword search results:

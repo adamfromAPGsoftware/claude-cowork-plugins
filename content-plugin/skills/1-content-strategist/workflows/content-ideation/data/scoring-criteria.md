@@ -32,15 +32,22 @@ Rate each content idea on a scale of 1-5 for each criterion.
 - **2** - Primarily suited to 1-2 platforms
 - **1** - Single-platform concept only
 
+### Criterion 5: Audience Crossover (Weight: Medium)
+- **5** - Naturally captures 2+ distinct audience segments beyond the primary ICP (e.g., AI developers + video editors, automation + traders, AI + freelancers)
+- **4** - Strong secondary audience appeal with a clear crossover hook in the title or angle
+- **3** - Some crossover potential if the angle is framed correctly
+- **2** - Primarily single-audience appeal with weak secondary draw
+- **1** - Niche-locked — no meaningful crossover potential
+
 ## Scoring Formula
 
-**Total Score = (ICP Relevance x 2) + Uniqueness + (Brand Fit x 2) + Platform Potential**
+**Total Score = (ICP Relevance x 2) + Uniqueness + (Brand Fit x 2) + Platform Potential + Audience Crossover**
 
-**Max Score: 30**
+**Max Score: 35**
 
 | Range | Rating |
 |-------|--------|
-| 25-30 | Excellent — Strong candidate |
-| 19-24 | Good — Worth pursuing |
-| 13-18 | Fair — Needs refinement |
-| 6-12  | Weak — Reconsider |
+| 29-35 | Excellent — Strong candidate |
+| 22-28 | Good — Worth pursuing |
+| 15-21 | Fair — Needs refinement |
+| 7-14  | Weak — Reconsider |

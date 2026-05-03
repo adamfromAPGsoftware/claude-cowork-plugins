@@ -5,8 +5,6 @@ description: 'Draft 3-element composition tables, expression directions, and ful
 nextStepFile: './step-06-ctr-pre-validation.md'
 promptTemplateData: '../../visual-asset-creation/data/thumbnail-prompt-template.md'
 shortFormGuideData: '../../visual-asset-creation/data/short-form-style-guide.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 5: Composition Drafting

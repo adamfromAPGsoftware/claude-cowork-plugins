@@ -59,7 +59,7 @@ Examples:
 ### Example 3: Product Drop (New Tool Launch)
 
 **Hook line:** "Google just launched Pomelli. It's their new AI agent for marketing..."
-**Source:** @nick_saraev | 38K likes / 648K plays
+**Source:** @sample_creator | 38K likes / 648K plays
 **Angle type:** Tool-Focus
 **ICP:** Primary (TOFU)
 **Hook pattern:** Product Drop
@@ -84,7 +84,7 @@ Examples:
 ### Example 4: Elimination (Free Alternative)
 
 **Hook line:** "You don't need to pay for Veo 3 or Sora 2 anymore. Instead, just use this free open-source alternative..."
-**Source:** @nick_saraev | 33K likes / 413K plays
+**Source:** @sample_creator | 33K likes / 413K plays
 **Angle type:** Concept
 **ICP:** Primary (TOFU)
 **Hook pattern:** Elimination
@@ -110,7 +110,7 @@ Examples:
 ### Example 5: Authority + Curiosity (Leaked/Insider Info)
 
 **Hook line:** "Someone just leaked the full system prompts Claude uses..."
-**Source:** @nick_saraev | 15K likes / 160K plays
+**Source:** @sample_creator | 15K likes / 160K plays
 **Angle type:** Concept
 **ICP:** Primary (TOFU)
 **Hook pattern:** Authority / Curiosity
@@ -164,7 +164,7 @@ Examples:
 |---|---|---|---|---|---|
 | 1 | @nateherkai | Story | Step-by-Step Tease | Curious / Energised | Automation journey, system build |
 | 2 | @nateherkai | Value-Drop | Value-Drop | Relieved / Grateful | Free resource, tool access |
-| 3 | @nick_saraev | Tool-Focus | Product Drop | Excited / Empowered | New tool launch, product update |
-| 4 | @nick_saraev | Concept | Elimination | Challenged / Validated | Free alternative, cost-saving |
-| 5 | @nick_saraev | Concept | Authority / Curiosity | Curious / Impatient | Insider info, leaked data, research |
+| 3 | @sample_creator | Tool-Focus | Product Drop | Excited / Empowered | New tool launch, product update |
+| 4 | @sample_creator | Concept | Elimination | Challenged / Validated | Free alternative, cost-saving |
+| 5 | @sample_creator | Concept | Authority / Curiosity | Curious / Impatient | Insider info, leaked data, research |
 | 6 | @adrien.ninet | Story | Step-by-Step Tease | Curious / Energised | Design-to-code, quick build |

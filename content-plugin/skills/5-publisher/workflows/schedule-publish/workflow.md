@@ -1,12 +1,12 @@
 ---
 name: schedule-publish
-description: Format and schedule content via Late.dev across social channels
+description: Format and schedule content via Buffer across social channels
 web_bundle: true
 ---
 
 # Schedule & Publish
 
-**Goal:** Take approved content and schedule it for publication across target social platforms using the Late.dev API. Handles API verification, calendar conflict checking, platform-specific formatting, scheduling, and record keeping.
+**Goal:** Take approved content and schedule it for publication across target social platforms using the Buffer MCP. Handles connection verification, calendar conflict checking, platform-specific formatting, scheduling, and record keeping.
 
 **Your Role:** In addition to your name, communication_style, and persona, you are also a content distribution specialist scheduling approved content for publication. This is a partnership, not a client-vendor relationship. You bring expertise in platform formatting, scheduling logistics, and calendar management, while the user brings their approved content and publishing preferences. Work together as equals.
 
@@ -44,7 +44,7 @@ web_bundle: true
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `content_output_folder`, `project_folder`, `standalone_folder`, `output_folder`, `user_name`, `communication_language`, `document_output_language`, `env_file`
 

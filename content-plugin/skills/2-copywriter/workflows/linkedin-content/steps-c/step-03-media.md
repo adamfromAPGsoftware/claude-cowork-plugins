@@ -3,8 +3,6 @@ name: 'step-03-media'
 description: 'Plan visual media assets for the selected hook — branches internally by format'
 
 nextStepFile: './step-04-content.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 3: Media Planning

@@ -1,0 +1,285 @@
+/* =========================================================================
+   {YOUR_NAME} — Design System
+   Colors & Type tokens — v2 (simplified, AI-tech)
+   -----
+   Two-color system: warm neutral paper + Claude orange accent.
+   Typography: Inter for everything, JetBrains Mono for code/labels.
+   Caveat remains available as an optional "handwritten mark" for
+   illustrative diagrams, but is no longer the default body voice.
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Caveat:wght@600;700&display=swap');
+
+:root {
+
+  /* =======================================================================
+     COLORS — two families, one accent
+     ======================================================================= */
+
+  /* --- Neutral warm scale (the "paper") --- */
+  --neutral-50:   #fafaf8;   /* slide / card body                            */
+  --neutral-100:  #f2ede8;   /* inset panel on a slide                       */
+  --neutral-150:  #e8e4dc;   /* outer workbench                              */
+  --neutral-200:  #d8d2cc;   /* hairline borders                             */
+  --neutral-300:  #b9b2ab;   /* subtle separators                            */
+  --neutral-500:  #9a928c;   /* muted text                                   */
+  --neutral-700:  #5c5550;   /* body text                                    */
+  --neutral-900:  #1a1614;   /* primary ink, almost-black                    */
+
+  /* --- Dark scale (terminal / code surfaces) --- */
+  --dark-900:     #1c2128;   /* terminal fill                                */
+  --dark-700:     #30363d;   /* terminal border / hairline                   */
+  --dark-100:     #c9d1d9;   /* body on terminal                             */
+  --dark-50:      #f0e6d3;   /* title on terminal (warm cream)               */
+
+  /* --- Accent: Claude orange (single accent) --- */
+  --orange-100:   #f4a387;   /* soft / hover lift                            */
+  --orange-500:   #d97757;   /* THE accent                                   */
+  --orange-700:   #c05f2a;   /* orange-as-text                               */
+  --orange-900:   #6a3820;   /* deep accent for emphasis on cream            */
+
+  /* =======================================================================
+     SEMANTIC ALIASES
+     ======================================================================= */
+  --bg-workspace:     var(--neutral-150);
+  --bg-slide:         var(--neutral-50);
+  --bg-panel:         var(--neutral-100);
+  --bg-terminal:      var(--dark-900);
+
+  --border-default:   var(--neutral-200);
+  --border-strong:    var(--neutral-300);
+  --border-dark:      var(--dark-700);
+
+  --fg-1:             var(--neutral-900);
+  --fg-2:             var(--neutral-700);
+  --fg-3:             var(--neutral-500);
+  --fg-on-dark:       var(--dark-100);
+
+  --accent:           var(--orange-500);
+  --accent-hover:     var(--orange-700);
+  --accent-soft:      var(--orange-100);
+  --accent-ink:       var(--orange-700);
+
+  /* =======================================================================
+     TYPOGRAPHY
+     ======================================================================= */
+
+  /* --- Families --- */
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'SF Mono', 'Fira Code', Consolas, ui-monospace, monospace;
+  --font-hand:    'Caveat', cursive;   /* optional — for illustrative marks only */
+
+  /* --- Weights --- */
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-heavy:     800;
+  --fw-black:     900;
+
+  /* --- Scale (modular) --- */
+  --fs-display:   72px;
+  --fs-h1:        48px;
+  --fs-h2:        32px;
+  --fs-h3:        22px;
+  --fs-body:      16px;
+  --fs-small:     14px;
+  --fs-label:     12px;
+  --fs-mono:      13px;
+
+  /* --- Tracking --- */
+  --track-tight:   -0.03em;
+  --track-normal:   0;
+  --track-label:    0.14em;
+
+  /* --- Leading --- */
+  --lh-tight:      0.95;
+  --lh-snug:       1.15;
+  --lh-body:       1.55;
+
+  /* =======================================================================
+     SHAPE — blocky, not soft
+     ======================================================================= */
+  --radius-sm:     4px;    /* buttons, tags                                 */
+  --radius-md:     6px;    /* inputs, small cards                           */
+  --radius-lg:     10px;   /* panels, main cards                            */
+  --radius-pill:   999px;  /* pills, badges                                 */
+
+  --border-hairline: 1px solid var(--border-default);
+  --border-1:        1px solid var(--border-default);
+  --border-2:        2px solid var(--neutral-900);   /* blocky emphasis border */
+
+  /* Shadows are restrained — paper, not material. */
+  --shadow-toolbar:  0 2px 16px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06);
+  --shadow-card:     0 1px 2px rgba(26,22,20,0.04), 0 2px 8px rgba(26,22,20,0.05);
+
+  /* =======================================================================
+     SPACING — 4px base
+     ======================================================================= */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* =======================================================================
+     MOTION — minimal
+     ======================================================================= */
+  --ease-out:     cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast:     120ms;
+  --dur-med:      220ms;
+
+  /* =======================================================================
+     BACKGROUNDS — signature dotted grid
+     ======================================================================= */
+  --dot-size:     32px;
+  --dot-radius:   1.5px;
+}
+
+/* =========================================================================
+   ELEMENT DEFAULTS
+   ========================================================================= */
+
+html, body {
+  background: var(--bg-workspace);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.ag-dotted-bg {
+  background-color: var(--bg-workspace);
+  background-image: radial-gradient(
+    circle,
+    var(--neutral-200) var(--dot-radius),
+    transparent var(--dot-radius)
+  );
+  background-size: var(--dot-size) var(--dot-size);
+}
+
+h1, .h1 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--track-tight);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+h2, .h2 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-heavy);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-tight);
+  color: var(--fg-1);
+  margin: 0;
+}
+
+h3, .h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--fg-1);
+  margin: 0;
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  color: var(--fg-1);
+  margin: 0;
+}
+
+p, .body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  color: var(--fg-2);
+  line-height: var(--lh-body);
+  margin: 0;
+}
+
+.eyebrow,
+.kicker,
+.label {
+  font-family: var(--font-mono);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-label);
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: var(--track-label);
+}
+
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-small);
+  color: var(--fg-3);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--fg-1);
+}
+
+/* Optional handwritten accent (diagrams only). */
+.hand {
+  font-family: var(--font-hand);
+  font-weight: var(--fw-bold);
+  color: var(--accent-ink);
+}
+
+/* --- Panels --- */
+
+.panel {
+  background: var(--bg-panel);
+  border: var(--border-1);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.panel--terminal {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-dark);
+  color: var(--fg-on-dark);
+}
+
+.panel--terminal h1,
+.panel--terminal h2,
+.panel--terminal h3,
+.panel--terminal h4 { color: var(--dark-50); }
+
+.panel--terminal p    { color: var(--dark-100); }
+.panel--terminal code { color: var(--dark-100); }
+.panel--terminal .label { color: var(--orange-100); }
+
+/* --- Numbered badge --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-weight: var(--fw-bold);
+  font-size: 13px;
+  line-height: 1;
+  letter-spacing: var(--track-label);
+}

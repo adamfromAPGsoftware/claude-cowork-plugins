@@ -3,8 +3,6 @@ name: 'step-09-validate-ctr'
 description: 'Run 7-point CTR checklist on any thumbnail + title pair — standalone validation'
 
 ctrChecklistData: '../data/ctr-checklist.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 9: Validate CTR (Standalone)

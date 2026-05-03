@@ -48,7 +48,7 @@ web_bundle: true
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `content_output_folder`, `project_folder`, `standalone_folder`, `output_folder`, `user_name`, `communication_language`, `document_output_language`, `env_file`
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`

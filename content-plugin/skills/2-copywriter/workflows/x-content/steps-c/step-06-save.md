@@ -1,6 +1,6 @@
 ---
 name: 'step-06-save'
-description: 'Save approved X post with frontmatter and optionally schedule via Late.dev'
+description: 'Save approved X post with frontmatter and optionally schedule via Buffer'
 
 nextStepFile: './step-07-more.md'
 ---
@@ -9,7 +9,7 @@ nextStepFile: './step-07-more.md'
 
 ## STEP GOAL:
 
-To save the approved X post as a markdown file with structured YAML frontmatter, save any companion media files, and optionally schedule the post via the Late.dev API for the X account.
+To save the approved X post as a markdown file with structured YAML frontmatter, save any companion media files, and optionally schedule the post via the Buffer API for the X account.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -47,7 +47,7 @@ To save the approved X post as a markdown file with structured YAML frontmatter,
 - Approved post content, thread tweets (if thread), hook, CTA all available from previous steps
 - Media file is ALREADY confirmed on disk by step-05b — do not re-check or re-produce it
 - Output paths use `x/` subfolder (not `linkedin/`)
-- Late.dev API available for scheduling — use X account (not LinkedIn)
+- Buffer API available for scheduling — use X account (not LinkedIn)
 - Focus: File output and distribution — no content changes
 
 ## MANDATORY SEQUENCE
@@ -124,13 +124,13 @@ Update the agent's memories with derivative tracking:
 
 If project mode: update `{project_folder}/project.md` with X content status.
 
-### 5. Late.dev Scheduling (Optional)
+### 5. Buffer Scheduling (Optional)
 
 Ask the user:
 
 "**When should this post go live?**
 
-**[N] Now** — publish immediately via Late.dev
+**[N] Now** — publish immediately via Buffer
 **[T] Time** — schedule for a specific date and time
 **[S] Skip** — save as draft only"
 
@@ -138,123 +138,49 @@ Ask the user:
 
 **If Now or Time:**
 
-#### 5a. Read API key from .env
-
-```bash
-LATE_API_KEY=$(grep '^LATE_API_KEY=' "{project-root}/.env" | cut -d'=' -f2)
-```
-
-Verify `LATE_API_KEY` is non-empty. If empty, report the error and ask the user to check the `.env` file. Do NOT proceed with scheduling.
-
-#### 5b. If Time — get schedule datetime
+#### 5a. If Time — get schedule datetime
 
 Ask: "**What date and time? (e.g. 2026-03-10 09:00 AEST)**"
 Convert to ISO 8601 UTC. Store as `{scheduled_for}`.
-If Now: set `"publishNow": true` and omit `scheduledFor`.
 
-#### 5c. Fetch X accountId and confirm account
+#### 5b. List channels via Buffer MCP
 
-```bash
-curl -s -X GET "https://getlate.dev/api/v1/accounts" \
-  -H "Authorization: Bearer $LATE_API_KEY"
-```
+Call `mcp__buffer__use_buffer_api(action: "listChannels")` to retrieve connected accounts.
 
-Filter the response to X/Twitter accounts only (`platform === "twitter"` or `platform === "x"` and `isActive === true`).
-
-**If one X account found:** Present it for confirmation:
+Filter to X/Twitter channels only. Present for confirmation:
 
 "**Posting to X:** {displayName} (@{username})
 Is this the right account? **[Y]** Yes / **[N]** No"
 
-- If Y: store `{accountId}` and `{profileId}`, proceed.
-- If N: list all available X accounts and ask user to select by number.
+If multiple X channels found, list them and ask user to select.
 
-**If multiple X accounts found:** List them and ask user to select:
+**If no X channel found:** Halt — user must connect X in Buffer at buffer.com/manage/channels.
 
-"**Which X account should this post to?**
+#### 5c. Upload media (if post has media)
 
-1. {displayName} (@{username})
-2. {displayName} (@{username})
-...
+Use the Buffer MCP tool for media upload if available. For image/video formats, attach via the post creation call.
 
-Select a number."
+#### 5d. Schedule the post via Buffer MCP
 
-Store selected account's `_id` as `{accountId}` and `profileId._id` as `{profileId}`.
-
-**If no active X account found:** Report the error and halt — do NOT proceed. Remind user to connect X account in Late.dev.
-
-#### 5d. Upload media (if post has media)
-
-**For image or video formats:**
-
-```bash
-curl -s -X POST "https://getlate.dev/api/v1/media" \
-  -H "Authorization: Bearer $LATE_API_KEY" \
-  -F "files=@{confirmed_media_path}"
+Call:
+```
+mcp__buffer__use_buffer_api(
+  action: "createPost",
+  profileIds: [selected X channel ID],
+  text: approved post body,
+  scheduledAt: ISO 8601 UTC datetime,
+  media: [media file path if applicable]
+)
 ```
 
-Store the returned `url` from the response as `{media_url}`.
-Store the returned `type` as `{media_type}` (e.g. `video`, `image`).
+**For THREAD format:** If Buffer supports thread scheduling, structure tweets as a thread. Otherwise save as draft and note: "Post these tweets manually in X's native thread composer."
 
-If upload fails, report the error and halt — do NOT proceed to post creation.
-
-**For single, thread, or long post format:** skip this section, no media to upload.
-
-#### 5e. Create and schedule the post
-
-Build the JSON payload. For **Now**:
-```json
-{
-  "platforms": [
-    {
-      "platform": "twitter",
-      "accountId": "{accountId}"
-    }
-  ],
-  "profileId": "{profileId}",
-  "content": "{approved post body text}",
-  "mediaItems": [{"type": "{media_type}", "url": "{media_url}"}],
-  "publishNow": true,
-  "title": "{post_slug}"
-}
-```
-
-For **Time** (omit `publishNow`, include `scheduledFor`):
-```json
-{
-  "platforms": [
-    {
-      "platform": "twitter",
-      "accountId": "{accountId}"
-    }
-  ],
-  "profileId": "{profileId}",
-  "content": "{approved post body text}",
-  "mediaItems": [{"type": "{media_type}", "url": "{media_url}"}],
-  "scheduledFor": "{scheduled_for}",
-  "title": "{post_slug}"
-}
-```
-
-For **text-only posts** (single, thread, long post): omit the `mediaItems` field entirely.
-
-**For THREAD format:** If Late.dev supports thread scheduling, pass tweets as an array. Otherwise, note for user:
-
-"**Thread note:** If Late.dev doesn't support thread scheduling for X, the thread tweets will be saved as draft in the markdown file. You can post them manually or use X's native thread composer."
-
-```bash
-curl -s -X POST "https://getlate.dev/api/v1/posts" \
-  -H "Authorization: Bearer $LATE_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{payload}'
-```
-
-#### 5f. Handle response
+#### 5e. Handle response
 
 **Success:** Update frontmatter `status: scheduled` (or `published` if Now), `scheduled_at: {datetime or "now"}`.
-Display: "**Post scheduled via Late.dev for X.** ID: {response id}"
+Display: "**Post scheduled via Buffer for X.** ID: {response id}"
 
-**Failure:** Display the full error response. Offer:
+**Failure:** Display the full error. Offer:
 - **[R]** Retry
 - **[S]** Skip scheduling — save as draft instead
 
@@ -298,20 +224,19 @@ ONLY WHEN all files are saved, derivative tracking is updated, and scheduling de
 - Thread tweets clearly formatted in the markdown body (if thread format)
 - Output path uses `x/` not `linkedin/`
 - Derivative tracking updated
-- Late.dev API key auto-read from .env — never asked from user
-- X account fetched (not LinkedIn account)
-- Media uploaded to Late.dev before post creation (if media format)
-- Post scheduled or published via API without manual curl from user
-- Save confirmation presented with file paths and Late.dev post ID
+- Buffer MCP used to list channels (`listChannels`) and create post (`createPost`)
+- X channel fetched (not LinkedIn channel)
+- Post scheduled or published via Buffer MCP without manual API calls from user
+- Save confirmation presented with file paths and Buffer post ID
 
 ### ❌ SYSTEM FAILURE:
 
 - Saving to `linkedin/` subfolder instead of `x/`
-- Using LinkedIn account instead of X account in Late.dev
+- Using LinkedIn account instead of X account in Buffer
 - Missing frontmatter fields
 - Not formatting thread tweets in the markdown body
 - Overwriting existing files without confirmation
 - Not updating derivative tracking
-- Skipping Late.dev scheduling option
+- Skipping Buffer scheduling option
 
 **Master Rule:** Skipping steps, optimizing sequences, or not following exact instructions is FORBIDDEN and constitutes SYSTEM FAILURE.

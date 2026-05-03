@@ -48,10 +48,10 @@ To pull transcripts from the top 3-5 outlier videos identified in step 2 (either
 
 ## CONTEXT BOUNDARIES:
 
-- Available: Outlier video list from step 2 (in output report), `youtube-transcript-api` Python library for transcript retrieval (no auth needed), YouTube Data API + `YOUTUBE_API_KEY` for video metadata if needed
+- Available: Outlier video list from step 2 (in output report), `youtube-transcript-api` Python library for transcript retrieval (no auth needed), YouTube MCP (`mcp__youtube__getTranscripts`) for video metadata if needed
 - Focus: Deep content analysis of top outlier transcripts
 - Limits: Do not identify gaps or make recommendations — that comes next
-- Dependencies: Step 2a or 2b must have completed with outlier videos identified, `YOUTUBE_API_KEY` must be validated
+- Dependencies: Step 2a or 2b must have completed with outlier videos identified, YouTube MCP must be validated
 
 ## MANDATORY SEQUENCE
 
@@ -98,8 +98,8 @@ The script accepts either a bare 11-char video ID or a full YouTube URL (watch, 
 **Important:** Add a 1-second delay between requests if fetching multiple transcripts.
 
 **Fallback if `youtube-transcript-api` fails for a video:**
-1. YouTube MCP Server — if available
-2. Web search — search for "{video title} transcript"
+1. `mcp__youtube__getTranscripts` — try the YouTube MCP
+2. Web search via `mcp__exa__web_search_exa` — search for "{video title} transcript"
 3. Video description + comments — extract insight from metadata as partial substitute
 
 **For each video:**
@@ -143,7 +143,14 @@ Each sub-agent MUST analyse the transcript for:
    - What makes this shareable?
    - How does it create retention (keeping viewers watching)?
 
-6. **Return structured findings to parent:**
+6. **Niche Crossover Analysis:**
+   - Does this video combine a trending topic with a crossover audience?
+   - What is the PRIMARY audience (e.g., AI developers)?
+   - What is the SECONDARY audience captured (e.g., video editors, traders, productivity enthusiasts)?
+   - Is the crossover explicit (stated in title/hook) or implicit (embedded in content)?
+   - How does the crossover contribute to the outlier score? (small channels capturing 2+ audiences = viral signal)
+
+7. **Return structured findings to parent:**
 
 ```json
 {
@@ -156,7 +163,14 @@ Each sub-agent MUST analyse the transcript for:
   "key_talking_points": [],
   "engagement_drivers": [],
   "unique_differentiator": "",
-  "estimated_hook_duration_seconds": 0
+  "estimated_hook_duration_seconds": 0,
+  "niche_crossover": {
+    "has_crossover": false,
+    "primary_audience": "",
+    "secondary_audience": "",
+    "crossover_type": "",
+    "crossover_contribution": ""
+  }
 }
 ```
 
@@ -171,6 +185,7 @@ Once all sub-agents return, synthesise across all analysed transcripts:
 3. **Recurring talking points:** What themes or arguments keep appearing?
 4. **Engagement patterns:** What drives engagement across multiple outliers?
 5. **Differentiation strategies:** How do top performers stand out from each other?
+6. **Niche crossover patterns:** Which outliers combine trending topics with crossover audiences? Is there a correlation between crossover presence and outlier score magnitude?
 
 **For Idea Validation mode additionally:**
 - Compare the user's planned approach against what's working in the transcripts

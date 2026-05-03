@@ -4,8 +4,6 @@ description: 'Generate the video script — fully scripted intro, dot-point body
 
 nextStepFile: './step-04-assets.md'
 outputFile: '{content_output_folder}/projects/{project_slug}/copywriter/scripts/script-{concept_slug}-{date}.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 excalidrawCreateStep: '{project-root}/content-plugin/skills/2-copywriter/workflows/excalidraw-diagrams/steps-c/step-01-init.md'
 ---
 
@@ -31,7 +29,7 @@ To generate the video script content — a fully scripted word-for-word intro, d
 - ✅ You are a Copywriter drafting a YouTube video script
 - ✅ We engage in collaborative dialogue, not command-response
 - ✅ You bring expertise in scriptwriting, hooks, retention, and natural speaking patterns
-- ✅ The user brings their voice, style, and domain expertise — the script should sound like THEM, not a generic AI. Reference `creator-voice.md` for Adam's exact speaking patterns.
+- ✅ The user brings their voice, style, and domain expertise — the script should sound like THEM, not a generic AI. Reference `creator-voice.md` for the creator's exact speaking patterns.
 
 ### Step-Specific Rules:
 
@@ -70,8 +68,9 @@ Before drafting, review:
 
 **Load Pattern Reference Data:**
 - Load `long-form-patterns.md` from `inspiration/` — reference the **Key Takeaways** section for intro structure and pacing
-- Load `creator-credentials.md` from `inspiration/` — reference Adam's actual credentials for the credibility stacking sequence
-- Load `creator-voice.md` from `inspiration/` — match Adam's sentence structure, contractions, signature phrases, and opening formulas when writing the scripted intro
+- Load `creator-credentials.md` from `inspiration/` — reference the creator's actual credentials for the credibility stacking sequence
+- Load `creator-voice.md` from `inspiration/` — match the creator's sentence structure, contractions, signature phrases, and opening formulas when writing the scripted intro
+- Load `engagement-patterns.md` from `inspiration/` — use the **Emotional Sequence Template** to structure the intro's psychological beats, and apply **Open Loop Mechanics** to body segment transitions
 
 ### 2. Generate Script Draft
 
@@ -83,7 +82,7 @@ Generate and present the complete script draft:
 
 ### INTRO (Word-for-Word Script)
 
-Write the intro as **natural conversation** — it must sound like Adam talking, not a template being filled in. Target 35–45 seconds total, ~120 words. The sections below should FLOW into each other seamlessly — if you can feel where one section ends and the next begins, it's too rigid.
+Write the intro as **natural conversation** — it must sound like the creator talking, not a template being filled in. Target 35–45 seconds total, ~120 words. The sections below should FLOW into each other seamlessly — if you can feel where one section ends and the next begins, it's too rigid.
 
 **Voice check:** Intro must match creator-voice.md — contractions throughout, signature phrases preferred ("jump into", "with all the boring stuff out of the way", "without wasting any more of your time", "genuinely", "actually"), 60/40 long/short sentence mix, "you" every 2-3 sentences, calm authority tone. Open with "Look" or "So" or a direct statement — never "Hey guys" or formal preamble.
 
@@ -97,7 +96,7 @@ Write the intro as **natural conversation** — it must sound like Adam talking,
 [Natural tease of what you'll cover. DO NOT use "By the end of this video, you're going to..." followed by a bulleted list. Instead, weave it conversationally: "I'm going to show you [main thing], and then [the surprising part] — because [reason this matters]." One flowing thought. If there's a barrier to address (e.g., "you don't need to be a developer"), fold it in naturally as a single clause — NOT as a standalone paragraph. Most videos don't need barrier removal at all.]
 
 **BRIDGE (30–40s):**
-[Adam's signature transition. Pick one: "So with all the boring stuff out of the way — let's jump into it." / "So without wasting any more of your time — let's get into it." / "Let me start by showing you [first thing]." One sentence. Done.]
+[Signature transition. Pick one: "So with all the boring stuff out of the way — let's jump into it." / "So without wasting any more of your time — let's get into it." / "Let me start by showing you [first thing]." One sentence. Done.]
 
 **ANTI-PATTERNS — NEVER DO THESE:**
 - "By the end of this video, you're going to..." + enumerated list = sounds like a table of contents

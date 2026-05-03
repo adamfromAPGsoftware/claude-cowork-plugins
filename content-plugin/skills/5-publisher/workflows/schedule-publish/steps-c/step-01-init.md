@@ -1,6 +1,6 @@
 ---
 name: 'step-01-init'
-description: 'Verify Late.dev API connection, fetch connected accounts, locate approved content, and gather scheduling inputs'
+description: 'Verify Buffer connection, fetch connected channels, locate approved content, and gather scheduling inputs'
 
 nextStepFile: './step-02-calendar-check.md'
 scheduleGuide: '../data/posting-schedule-guide.md'
@@ -10,7 +10,7 @@ scheduleGuide: '../data/posting-schedule-guide.md'
 
 ## STEP GOAL:
 
-To verify the Late.dev API connection, fetch the user's connected social accounts, locate approved content for scheduling, and gather all required inputs (platforms, timing) before proceeding to calendar checks.
+To verify the Buffer MCP connection, fetch the user's connected social channels, locate approved content for scheduling, and gather all required inputs (platforms, timing) before proceeding to calendar checks.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -34,7 +34,7 @@ To verify the Late.dev API connection, fetch the user's connected social account
 
 - 🎯 Focus ONLY on verification, content discovery, and input gathering
 - 🚫 FORBIDDEN to format content or schedule anything in this step
-- 🚫 FORBIDDEN to proceed if LATE_API_KEY is not configured
+- 🚫 FORBIDDEN to proceed if Buffer MCP connection fails
 - 💬 Approach: Systematic verification before gathering inputs
 
 ## EXECUTION PROTOCOLS:
@@ -42,76 +42,58 @@ To verify the Late.dev API connection, fetch the user's connected social account
 - 🎯 Follow the MANDATORY SEQUENCE exactly
 - 💾 Collect and hold all inputs in context for next steps
 - 📖 Verify all prerequisites before gathering user inputs
-- 🚫 Do not proceed past verification if API connection fails
+- 🚫 Do not proceed past verification if Buffer connection fails
 
 ## CONTEXT BOUNDARIES:
 
 - Available context: CCS config loaded by workflow.md, project/standalone mode from startup-protocol
-- Focus: API verification, account discovery, content location, input gathering
+- Focus: Buffer verification, channel discovery, content location, input gathering
 - Limits: Do NOT check calendar, format content, or call scheduling API
-- Dependencies: LATE_API_KEY env var, Late.dev API availability
+- Dependencies: Buffer MCP availability (platform-level — no env var required)
 
 ## MANDATORY SEQUENCE
 
 **CRITICAL:** Follow this sequence exactly. Do not skip, reorder, or improvise unless user explicitly requests a change.
 
-### 1. Verify Late.dev API Key
+### 1. Verify Buffer MCP Connection
 
-Check that the `LATE_API_KEY` environment variable is configured:
+The Buffer MCP is connected at the platform level — no API key or `.env` entry is required. Proceed directly to fetching channels. If the MCP call fails, halt and report the error.
 
-- Read the env file specified in CCS config (`{env_file}`)
-- Look for `LATE_API_KEY`
+### 2. Fetch Connected Channels
 
-**If missing:**
-"**LATE_API_KEY is not configured.** To use this workflow, you need a Late.dev API key.
+Call the Buffer MCP to fetch connected channels:
 
-1. Sign up at https://getlate.dev
-2. Generate an API key in your Late.dev dashboard
-3. Add `LATE_API_KEY=your_key_here` to your `.env` file
-
-Once configured, run this workflow again."
-
-**STOP — do not proceed.**
-
-**If present:** Continue to next section.
-
-### 2. Verify Late.dev API Connection & Fetch Connected Accounts
-
-Call the Late.dev API to verify connection and fetch connected accounts:
-
-**API Call:**
+**MCP Call:**
 ```
-GET https://getlate.dev/api/v1/accounts
-Authorization: Bearer {LATE_API_KEY}
+mcp__buffer__use_buffer_api(action: "listChannels")
 ```
 
-This returns an array of connected social accounts with platform name, account ID, handle, and follower data.
+This returns an array of connected social channels with platform name, channel ID, and handle.
 
-**If connection fails (non-200 response or network error):**
-"**Late.dev API connection failed.** Please check:
-- Is your API key valid?
-- Is Late.dev available?
-- Check https://getlate.dev for service status."
-
-**STOP — do not proceed.**
-
-**If connection succeeds but no accounts returned (empty array):**
-"**No social media accounts connected to Late.dev.** Please connect at least one account in your Late.dev dashboard before scheduling content."
+**If connection fails (error or no response):**
+"**Buffer MCP connection failed.** Please check:
+- Is the Buffer MCP connected in Claude Code settings?
+- Run `/content:0-setup` and verify Buffer MCP connectivity."
 
 **STOP — do not proceed.**
 
-**If connection succeeds with accounts:**
-"**Late.dev connection verified.**
+**If connection succeeds but no channels returned:**
+"**No social channels connected to Buffer.** Please connect at least one social account in your [Buffer dashboard](https://buffer.com) before scheduling content."
 
-**Connected accounts:**
+**STOP — do not proceed.**
 
-| # | Platform | Account | ID |
-|---|----------|---------|-----|
-| 1 | {platform} | @{handle/name} | {accountId} |
+**If connection succeeds with channels:**
+"**Buffer connection verified.**
 
-Which account(s) would you like to schedule to? (Enter numbers, comma-separated)"
+**Connected channels:**
 
-Wait for user selection. Store the selected `accountId` (the account's `_id` field) AND the `profileId` (from `profileId._id` in the response) for use in step 04. Both are needed — `accountId` goes inside each platform object, `profileId` goes at the root of the post request.
+| # | Platform | Account | Channel ID |
+|---|----------|---------|------------|
+| 1 | {platform} | @{handle/name} | {channelId} |
+
+Which channel(s) would you like to schedule to? (Enter numbers, comma-separated)"
+
+Wait for user selection. Store the selected `channelId` values for use in step 04.
 
 ### 3. Locate Approved Content
 
@@ -178,7 +160,7 @@ Wait for user selection. Confirm the exact date/time.
 "**Here's what we're working with:**
 
 **Content:** {content file name/description}
-**Platform(s):** {selected platforms and accounts}
+**Platform(s):** {selected platforms and channels}
 **Scheduled for:** {date and time}
 
 **Proceeding to calendar check...**"
@@ -197,7 +179,7 @@ Display: **[C]** Continue to Calendar Check
 
 ## CRITICAL STEP COMPLETION NOTE
 
-ONLY WHEN all inputs are gathered (platforms selected, content located, timing confirmed) and user selects 'C' will you load and read fully `step-02-calendar-check.md` to execute the calendar check.
+ONLY WHEN all inputs are gathered (channels selected, content located, timing confirmed) and user selects 'C' will you load and read fully `step-02-calendar-check.md` to execute the calendar check.
 
 ---
 
@@ -205,9 +187,8 @@ ONLY WHEN all inputs are gathered (platforms selected, content located, timing c
 
 ### ✅ SUCCESS:
 
-- LATE_API_KEY verified as present
-- Late.dev API connection confirmed working
-- Connected social accounts fetched and presented
+- Buffer MCP connection confirmed working
+- Connected social channels fetched and presented
 - User selected target platform(s)
 - Approved content located and loaded
 - Publish date/time confirmed
@@ -216,8 +197,8 @@ ONLY WHEN all inputs are gathered (platforms selected, content located, timing c
 
 ### ❌ SYSTEM FAILURE:
 
-- Proceeding without verifying API key
-- Not fetching connected accounts from Late.dev
+- Proceeding without attempting Buffer MCP connectivity check
+- Not fetching connected channels from Buffer
 - Skipping content discovery
 - Not confirming all inputs with user before proceeding
 - Attempting to format or schedule in this step

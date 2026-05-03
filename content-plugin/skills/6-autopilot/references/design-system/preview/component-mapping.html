@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg-slide); padding: 20px 22px; font-family: var(--font-sans); }
+  .mapping { display: grid; grid-template-columns: 1fr 32px 1fr; gap: 10px; align-items: stretch; }
+  .col { background: var(--bg-panel); border: 1px solid var(--border-default); border-radius: 10px; padding: 14px 16px; }
+  h4 { margin: 0 0 10px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .row { margin-top: 8px; }
+  .name { font-family: var(--font-mono); font-size: 12px; color: #1a1614; font-weight: 700; }
+  .val  { font-family: var(--font-mono); font-size: 11px; color: #6a3820; margin-top: 2px; }
+  .note { font-family: var(--font-mono); font-size: 11px; color: #9a928c; margin-top: 2px; }
+  .sep { border-top: 1px solid #e8e1d9; margin: 8px -16px; }
+  .swap { align-self: center; text-align: center; font-family: var(--font-mono); font-size: 20px; color: #d97757; }
+</style>
+</head>
+<body>
+  <div class="mapping">
+    <div class="col">
+      <h4>Sample Tutorial</h4>
+      <div class="row"><div class="name">raw/</div><div class="val">source docs</div><div class="note">// immutable</div></div>
+      <div class="sep"></div>
+      <div class="row"><div class="name">wiki/</div><div class="val">compiled index</div></div>
+    </div>
+    <div class="swap">→</div>
+    <div class="col">
+      <h4>agency OS</h4>
+      <div class="row"><div class="name">meetings/</div><div class="val">Fathom transcripts</div><div class="note">// read-only</div></div>
+      <div class="sep"></div>
+      <div class="row"><div class="name">audit-data.json</div><div class="val">extractor output</div></div>
+    </div>
+  </div>
+</body>
+</html>

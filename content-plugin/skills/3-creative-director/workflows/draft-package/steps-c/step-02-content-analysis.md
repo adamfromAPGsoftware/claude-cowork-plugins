@@ -3,8 +3,6 @@ name: 'step-02-content-analysis'
 description: 'Analyze available content to extract thumbnail angles, hooks, and visual direction'
 
 nextStepFile: './step-03-keyword-research.md'
-advancedElicitationTask: '{project-root}/_bmad/core/workflows/advanced-elicitation/workflow.xml'
-partyModeWorkflow: '{project-root}/_bmad/core/workflows/party-mode/workflow.md'
 ---
 
 # Step 2: Content Analysis

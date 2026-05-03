@@ -12,7 +12,7 @@ web_bundle: true
 
 **Meta-Context:** Each X post format is a distinct discipline — single posts are precision copywriting, threads are structured storytelling, long posts are article-craft, image posts are visual amplification, video posts are demo theatre. This workflow treats each format with the craft it deserves while maintaining a unified creation flow.
 
-**Platform Note:** Confirm you have Late.dev X account connected and note your API post limits before scheduling (X API Free: 1,500 posts/month; Basic: 3,000/month at $100/mo).
+**Platform Note:** Confirm you have Buffer X channel connected and note your X API post limits before scheduling (X API Free: 1,500 posts/month; Basic: 3,000/month at $100/mo).
 
 ---
 
@@ -64,7 +64,7 @@ This uses **step-file architecture** for disciplined execution:
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `project_name`, `output_folder`, `user_name`, `communication_language`, `document_output_language`
 - ✅ YOU MUST ALWAYS SPEAK OUTPUT In your Agent communication style with the config `{communication_language}`

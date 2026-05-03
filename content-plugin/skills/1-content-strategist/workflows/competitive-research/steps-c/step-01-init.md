@@ -58,19 +58,13 @@ To load persistent configuration (niche scope, competitor channels), detect the 
 
 **CRITICAL:** Follow this sequence exactly. Do not skip, reorder, or improvise unless user explicitly requests a change.
 
-### 1. Validate Environment Variables
+### 1. Validate MCP Connectivity
 
-Confirm that `YOUTUBE_API_KEY` was loaded during workflow initialization (step 2 of workflow.md). This variable must be present and non-empty before any YouTube Data API calls can be made in subsequent steps.
+Confirm that the YouTube MCP is available by calling `mcp__youtube__searchVideos` with a test query. The YouTube MCP is a platform-level MCP — no API key or `.env` entry is needed.
 
-**If `YOUTUBE_API_KEY` is not available:**
+**If YouTube MCP is unavailable:**
 
-"**YouTube API key not found.** Please add your key to `{project-root}/.env`:
-
-```
-YOUTUBE_API_KEY=your_key_here
-```
-
-Then restart the workflow."
+"**YouTube MCP not connected.** Check your Claude Code MCP settings and ensure the YouTube MCP server is enabled."
 
 STOP — do not proceed.
 
@@ -153,7 +147,7 @@ ONLY WHEN the user selects T or V (and provides their video idea if V) will you 
 
 ### ✅ SUCCESS:
 
-- YOUTUBE_API_KEY validated as present and non-empty
+- YouTube MCP connectivity validated
 - Sidecar config loaded with valid competitors
 - Project context detected and output path resolved
 - Output report file created from template
@@ -163,7 +157,7 @@ ONLY WHEN the user selects T or V (and provides their video idea if V) will you 
 
 ### ❌ SYSTEM FAILURE:
 
-- Proceeding without validating YOUTUBE_API_KEY
+- Proceeding without validating YouTube MCP connectivity
 - Proceeding without valid competitors in sidecar
 - Not detecting project context
 - Not creating the output report file

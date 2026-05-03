@@ -34,7 +34,7 @@
 |------|---------|----------|-------|
 | Top | Main topic brand logo | Top center, ~10-15% from top | Largest icon — establishes topic instantly |
 | Mid-flanks | 2 floating icons/logos | Left and right of head | Slight 3D tilt, app-icon rounded-square style |
-| Center | Person (Adam) | Centered, chest/shoulders up | Head in upper third of frame |
+| Center | Person | Centered, chest/shoulders up | Head in upper third of frame |
 | Bottom text | Text block | Bottom 20-25% of frame | 2 lines |
 | Bottom padding | Dark empty space | Below text, bottom ~8-10% | CRITICAL: platforms overlay UI here. 150-190px dark space. |
 
@@ -56,7 +56,7 @@
 | Role | Hex | Notes |
 |------|-----|-------|
 | Background | `#0D0D0D` - `#1A1A1A` | Subtle themed texture — NOT flat black |
-| Banner | `#39FF14` or `#00E676` | Bright, saturated — must pop at phone size |
+| Banner | `{brand.colors.primary}` (set in config.yaml) | Bright, saturated — must pop at phone size |
 | Banner text | `#FFFFFF` | Bold, high contrast on green |
 | Line 1 text | `#FFFFFF` | Regular weight |
 | Icons/logos | **Original brand colours ONLY** | YouTube = red (#FF0000), Claude = orange (#E07A3A). NEVER monochrome, greyscale, or white-on-dark. Generic icons white or green. |
@@ -85,7 +85,7 @@ Expression: [specific expression direction].
 Top zone: [main topic logo/icon] centered, 10-15% from top.
 Floating icons: [Icon A] on left and [Icon B] on right of head, rounded-square app-icon style with slight 3D tilt. IMPORTANT: all brand logos must use their real brand colours (YouTube = red, Claude = orange) — NEVER monochrome or greyscale.
 Text line 1: "[DESCRIPTIVE TEXT]" in white regular weight ALL CAPS, positioned in bottom 20-25%.
-Text line 2: "[HOOK TEXT]" in white bold on bright green (#39FF14) rectangle banner, below line 1.
+Text line 2: "[HOOK TEXT]" in white bold on bright accent-colour (`{brand.colors.primary}` from config.yaml) rectangle banner, below line 1.
 Background: [themed texture — NOT flat black] at low opacity behind person.
 Bottom padding: 150-190px of dark empty space below green banner (platform UI safe zone).
 Style reference: match the composition and colour palette of the provided inspiration thumbnails.

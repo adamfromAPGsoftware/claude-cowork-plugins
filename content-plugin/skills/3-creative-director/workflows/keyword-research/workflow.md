@@ -25,7 +25,7 @@ web_bundle: true
 
 ### 1. Module Configuration Loading
 
-Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
+Load and read full config from {project-root}/config.yaml and resolve:
 
 - `user_name`, `communication_language`, `content_output_folder`, `project_folder`, `standalone_folder`, `env_file`
 

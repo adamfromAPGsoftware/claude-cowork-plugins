@@ -1,6 +1,6 @@
 # Memory System for CCS Editor
 
-**Memory location:** `{project-root}/_bmad/_memory/bmad-apg-ccs-4-editor-sidecar/`
+**Memory location:** `{project-root}/content-plugin/data/memory/4-editor-sidecar/`
 
 ## Core Principle
 

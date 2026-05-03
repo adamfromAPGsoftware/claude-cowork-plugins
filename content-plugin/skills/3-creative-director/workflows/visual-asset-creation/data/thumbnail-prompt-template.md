@@ -25,11 +25,11 @@ Aspect ratio: 16:9. High contrast, bold, mobile-readable.
 
 - **Always load from `{reference_photos_folder}`** (resolved from CCS config) — foundation image first
 - **Loading order matters:**
-  1. adam-hero-front.jpg (foundation — ALWAYS FIRST)
-  2. adam-3quarter-left.jpg
-  3. adam-3quarter-right.jpg
-  4. adam-smiling.jpg
-  5. adam-talking.jpg
+  1. creator-hero-front.jpg (foundation — ALWAYS FIRST)
+  2. creator-3quarter-left.jpg
+  3. creator-3quarter-right.jpg
+  4. creator-smiling.jpg
+  5. creator-talking.jpg
 - **3-5 photos is the sweet spot** — all 5 recommended
 - **API limits:** Up to 14 images total, up to 5 human faces, up to 6 get high fidelity
 

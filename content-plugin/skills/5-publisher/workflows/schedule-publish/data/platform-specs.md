@@ -1,55 +1,51 @@
 # Platform-Specific Formatting Specs
 
-**Purpose:** Reference data for formatting content per social platform before scheduling via Late.dev API.
-**Source:** Late.dev API documentation (https://docs.getlate.dev/platforms)
-**Last verified:** 2026-02-27
+**Purpose:** Reference data for formatting content per social platform before scheduling via Buffer MCP.
+**Source:** Buffer API documentation (https://buffer.com/developers/api)
+**Last verified:** 2026-04-30
 
 ---
 
-## Late.dev API Overview
+## Buffer MCP Overview
 
-### Post Endpoint
-`POST https://getlate.dev/api/v1/posts`
+### Authentication
+Platform-level MCP — no API key or `.env` entry needed. Connected in Claude Code settings.
 
-### Key Request Parameters
+### Key MCP Tools
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `platforms` | array | Required — array of objects: `[{"platform": "linkedin", "accountId": "ACC_ID", "platformSpecificData": {...}}]` |
-| `content` | string | Main post text (optional if all platforms have `customContent`) |
-| `customContent` | object | Platform-specific text overrides — allows unique copy per platform |
-| `scheduledFor` | string | ISO 8601 datetime for scheduling |
-| `publishNow` | boolean | Immediately publish (returns `platformPostUrl`) |
-| `firstComment` | string | **GOES INSIDE `platformSpecificData`** per platform, NOT at root level. Root-level is silently ignored. |
-| `mediaItems` | array | Media attachments: `[{"type": "image|video|document", "url": "PUBLIC_URL"}]` |
-| `title` | string | Post title/identifier |
-| `profileId` | string | Assign to specific profile |
-| `tags` | array | Custom labels for organisation |
+| Tool | Description |
+|------|-------------|
+| `mcp__buffer__use_buffer_api` | Generic action gateway — list channels, create/update/delete posts |
+| `mcp__buffer__buffer_api_help` | Returns Buffer API documentation and available action schemas |
 
-**CRITICAL:** `platforms` is NOT a string array. Each entry must be an object with `platform`, `accountId`, and optionally `platformSpecificData`.
+Call `mcp__buffer__buffer_api_help` first to discover exact action names and payload schemas.
 
-### Media Upload Endpoint
-`POST https://getlate.dev/api/v1/media`
+### Common Action Examples
 
-**Method:** Multipart form-data with field name `files`
-**Returns:** `{files: [{type, url, filename, size, mimeType}]}`
-**Use the returned `url`** in `mediaItems` when creating a post.
+| Action | Description |
+|--------|-------------|
+| `listChannels` | List connected social accounts with platform and channel ID |
+| `createPost` | Create and schedule a post across one or more channels |
+| `listSentPosts` | List published posts |
+| `listScheduledPosts` | List upcoming scheduled posts |
 
-```bash
-curl -X POST "https://getlate.dev/api/v1/media" \
-  -H "Authorization: Bearer $LATE_API_KEY" \
-  -F "files=@/path/to/file.pdf;type=application/pdf"
-```
+### Key Parameters for Post Creation
 
-### List Connected Accounts
-`GET https://getlate.dev/api/v1/accounts`
+| Parameter | Description |
+|-----------|-------------|
+| `profileIds` | Array of channel IDs to post to |
+| `text` | Post body text |
+| `scheduledAt` | ISO 8601 UTC datetime for scheduling |
+| `media` | Media attachments (images, videos) |
+| `retweet` | (X only) retweet existing post |
 
-Returns connected social accounts with platform, ID, and follower data.
+### Supported Platforms
+Facebook, Instagram, LinkedIn, TikTok, X (Twitter), Pinterest, Threads, YouTube, Bluesky, Mastodon
 
-### Important API Constraints
-- Published posts CANNOT be deleted via API (only draft/scheduled)
-- Documents cannot be mixed with images/videos in the same post
-- LinkedIn rejects duplicate content with 422 error
+### Important Constraints
+- Buffer does not support Reddit — exclude from cross-posting plans
+- Some platform-specific features (first comments, TikTok privacy settings) — verify current Buffer MCP tool schema
+- LinkedIn rejects duplicate content — always vary text across platforms
 
 ---
 
@@ -70,7 +66,7 @@ Returns connected social accounts with platform, ID, and follower data.
 | Link handling | Put external links in `firstComment` to avoid algorithm suppression |
 | Duplicate detection | LinkedIn rejects identical text with 422 error regardless of timing |
 
-**Late.dev `platformSpecificData`:**
+**Buffer MCP post options:**
 - `documentTitle` — required for document posts (falls back to filename)
 - `firstComment` — auto-posted as first comment after publish (VERIFIED WORKING — must be here, not root level)
 - `organizationUrn` — for multi-org posting (`urn:li:organization:123456`)
@@ -88,7 +84,7 @@ Returns connected social accounts with platform, ID, and follower data.
 | Spec | Value |
 |------|-------|
 | Platform key | `twitter` |
-| Max post length | 280 characters (free), 25,000 (premium) |
+| Max post length | **25,000 characters (X Premium)** |
 | URL handling | URLs consume 23 characters regardless of actual length |
 | Emoji handling | Each emoji counts as 2 characters |
 | Post types | Text, images (up to 4), video (1), GIF (1, uses all 4 image slots), threads |
@@ -126,7 +122,7 @@ Returns connected social accounts with platform, ID, and follower data.
 | Rate limit | 100 posts per 24-hour rolling window (all content types combined) |
 | Stories limitation | Text captions not displayed; link stickers not available via API |
 
-**Late.dev `platformSpecificData`:**
+**Buffer MCP post options:**
 - `contentType` — `"story"` or `"reels"`
 - `collaborators` — up to 3 usernames for co-authoring (Business/Creator only)
 - `userTags` — tag users with coordinates (0.0–1.0 range)
@@ -158,7 +154,7 @@ Returns connected social accounts with platform, ID, and follower data.
 | Account type | Pages only — cannot post to personal profiles or Groups |
 | Multi-page | Single account can manage multiple Pages via `pageId` parameter |
 
-**Late.dev `platformSpecificData`:**
+**Buffer MCP post options:**
 - `contentType` — `"story"` or `"reel"`
 - `title` — Reel title (separate from caption)
 - `firstComment` — auto-posted comment text
@@ -187,7 +183,7 @@ Returns connected social accounts with platform, ID, and follower data.
 | First comment | **YES** — max 10,000 characters. Immediate posts: posts right away. Scheduled: posts when video goes live |
 | Privacy settings | `public`, `private`, `unlisted` — scheduled videos upload as private, change at scheduled time |
 
-**Late.dev `platformSpecificData`:**
+**Buffer MCP post options:**
 - `madeForKids` — COPPA flag (permanently disables comments, notification bells, personalized ads)
 - `categoryId` — video categorisation
 - `containsSyntheticMedia` — AI-generated content disclosure
@@ -196,7 +192,7 @@ Returns connected social accounts with platform, ID, and follower data.
 - Keywords in first 2-3 lines of description
 - Timestamps in description
 - Links below the fold
-- Shorts: vertical 9:16, ≤3 min, auto-detected by Late.dev
+- Shorts: vertical 9:16, ≤3 min, auto-detected by YouTube
 
 ---
 
@@ -216,10 +212,10 @@ Returns connected social accounts with platform, ID, and follower data.
 | Comments | Write-only — cannot read comments via API |
 
 **IMPORTANT — Video vs Photo content field mapping:**
-- **Video posts:** `content` = the full caption (max 2,200 chars). There is NO separate title field for videos through the Late.dev API. Structure the caption with CTA first line, then description, then hashtags — all in one field.
+- **Video posts:** `content` = the full caption (max 2,200 chars). There is NO separate title field for TikTok video posts. Structure the caption with CTA first line, then description, then hashtags — all in one field.
 - **Photo carousel posts:** `content` = the title (auto-truncated to 90 chars, hashtags stripped). Use `description` in `tiktokSettings` for the full caption (max 4,000 chars). Split content strategically: punchy hook in title, detail + CTA + hashtags in description.
 
-**Late.dev `platformSpecificData` (several REQUIRED):**
+**Buffer MCP post options (several REQUIRED):**
 - `privacy_level` — REQUIRED: `PUBLIC_TO_EVERYONE`, `MUTUAL_FOLLOW_FRIENDS`, `FOLLOWER_OF_CREATOR`, `SELF_ONLY`
 - `allow_comment` — REQUIRED: enable/disable comments
 - `allow_duet` / `allow_stitch` — REQUIRED for video posts
@@ -257,8 +253,8 @@ Returns connected social accounts with platform, ID, and follower data.
 | Text-only pins | **Not supported** — media is mandatory |
 | No carousels | Multi-image posts not supported |
 
-**Late.dev `platformSpecificData`:**
-- `boardId` — REQUIRED. Get boards via `GET /v1/accounts/{accountId}/pinterest-boards`
+**Buffer MCP post options:**
+- `boardId` — REQUIRED. Fetch available boards via the Buffer MCP or your Buffer dashboard to find the correct board ID
 - `title` — searchable pin title (max 100 chars, defaults to first line of content)
 - `link` — destination HTTPS URL
 - `coverImageUrl` — custom cover for video pins
@@ -284,8 +280,8 @@ Returns connected social accounts with platform, ID, and follower data.
 | Video | **Not supported** via API (Reddit platform restriction) |
 | First comment | No |
 | Subreddit | Via `platformSpecificData.subreddit` (without `r/` prefix). REQUIRED — posting fails without one |
-| Flair | Many subreddits require flair. Late attempts auto-fallback to first available if required but not provided |
-| Failure rate | 53.9% across Late platform — mostly preventable by checking subreddit rules |
+| Flair | Many subreddits require flair — check subreddit rules and provide the correct flair ID |
+| Failure rate | High — mostly preventable by checking subreddit rules before posting |
 
 **Best practices:**
 - Check subreddit rules before posting
@@ -369,17 +365,17 @@ Returns connected social accounts with platform, ID, and follower data.
 | Image specs | JPEG, PNG, GIF, WebP — max 10 MB (auto-compressed) |
 | Video specs | MP4, MOV — max 50 MB (auto-compressed) |
 | First comment | No |
-| Bot setup | Uses managed bot @LateScheduleBot — must be added as admin to channel/group |
+| Bot setup | Requires a Buffer-managed bot added as admin to channel/group — check Buffer dashboard for setup instructions |
 | Formatting | HTML, Markdown, or MarkdownV2 supported |
 
-**Late.dev `platformSpecificData`:**
+**Buffer MCP post options:**
 - `disableNotification` — silent message delivery
 - `disableWebPagePreview` — suppress link previews
 - `protectContent` — content protection
 
 **Best practices:**
-- Add @LateScheduleBot as admin before posting
-- Channel posts appear under channel name; group posts appear as "LateScheduleBot"
+- Ensure the Buffer bot is added as admin before posting
+- Channel posts appear under channel name; group posts appear under the bot's name
 
 ---
 
@@ -450,9 +446,9 @@ When cross-posting, always check these limits — the #1 cause of API failures:
 ## General Formatting Rules
 
 1. **Never post raw/unformatted content** — every platform gets native-feeling output
-2. **Use `customContent`** — Late.dev supports per-platform text overrides in a single API call
+2. **Per-platform formatting** — use separate `mcp__buffer__use_buffer_api(action: "createPost")` calls for each platform, each with its own formatted content
 3. **Respect character limits** — truncate or rework content per platform. Cross-posting without adaptation is the #1 cause of failures
-4. **Use `firstComment` inside `platformSpecificData`** — LinkedIn (links), Instagram (hashtags), Facebook, YouTube. NEVER put at root level — it is silently ignored.
+4. **Use `firstComment`** — LinkedIn (links), Instagram (hashtags), Facebook, YouTube. Pass first comment text via Buffer MCP `create_post` first comment option.
 5. **Adapt tone per platform** — LinkedIn (professional), X (concise/punchy), Instagram (visual-first), Facebook (conversational), Reddit (community-native)
 6. **Handle media per platform** — each platform has different format, size, and count limits
 7. **Check platform-specific required fields** — TikTok requires `privacy_level`, `content_preview_confirmed`, `express_consent_given`; Pinterest requires `boardId`; Reddit requires `subreddit`
@@ -465,19 +461,10 @@ When cross-posting, always check these limits — the #1 cause of API failures:
 Custom thumbnails for short-form video content (Reels, Shorts, TikTok). Generated thumbnails are found at:
 `{project_folder}/creative-director/short-form/{video-title-slug}/sf-{NN}.png`
 
-| Platform | Supports Custom Thumbnail? | Field in `platformSpecificData` | Format | Notes |
-|----------|:--------------------------:|-------------------------------|--------|-------|
-| **Instagram Reels** | YES | `thumbnail` on `mediaItems` entry | PNG/JPEG, 1080x1920 recommended | Set on mediaItems: `{"type":"video","url":"...mp4","thumbnail":"...png"}`. DO NOT use `instagramThumbnail` in platformSpecificData — silently dropped by API. |
-| **TikTok** | NO (frame select only) | `video_cover_timestamp_ms` | Integer (milliseconds) | Extracts frame at given timestamp — no custom image upload |
-| **YouTube** | YES | `thumbnail` field on `mediaItems` entry | JPEG/PNG/GIF, max 2MB, 1280x720 (min 640px wide) | Include `thumbnail` URL alongside `type` and `url` in the mediaItems array. Works for regular videos; Shorts support via API is inconsistent (YouTube may ignore it) |
-| **YouTube (mediaItems example)** | — | `{"type":"video","url":"...mp4","thumbnail":"...jpg"}` | — | Thumbnail goes ON the media item, NOT in platformSpecificData |
+| Platform | Supports Custom Thumbnail? | Notes |
+|----------|:--------------------------:|-------|
+| **Instagram Reels** | YES | Attach thumbnail alongside video in Buffer MCP media array |
+| **TikTok** | NO (frame select only) | Set `video_cover_timestamp_ms` if Buffer MCP supports it; otherwise TikTok auto-generates |
+| **YouTube** | YES | Include thumbnail URL alongside video in Buffer MCP media array |
 
-**First Comment on YouTube:** `firstComment` inside `platformSpecificData` — up to ~10,000 chars. For scheduled posts, the comment posts automatically when the video goes live. Use for lead magnet CTAs, hashtags, and links.
-
-**Workflow:**
-1. Check if thumbnails exist at the discovery path above
-2. If found, upload via `POST /v1/media/presign` (presigned URL flow — supports up to 5GB, bypasses Vercel payload limit). For small files (<4MB), `POST /v1/media` multipart also works.
-3. Attach the returned `publicUrl` to the appropriate `platformSpecificData` field
-4. If not found, skip — platforms auto-generate a cover frame
-
-**YouTube first comment:** Always prepare a `firstComment` for YouTube posts. Goes inside `platformSpecificData`. Up to ~10,000 chars. Auto-posts when scheduled video goes live. YouTube first comments should drive to the free community with a direct link — e.g. "I put together free resources on this inside my free community → {YOUR_COMMUNITY_URL}". Never use "Comment X" keyword CTAs on YouTube — those only work on Instagram/TikTok via ManyChat.
+**YouTube first comment:** Always prepare a first comment for YouTube posts (where Buffer MCP supports it). Use for lead magnet CTAs and links. YouTube first comments should drive to the free community — e.g. "Free resources on this inside my free community → {YOUR_COMMUNITY_URL}". Never use "Comment X" keyword CTAs on YouTube — those only work on Instagram/TikTok via ManyChat.

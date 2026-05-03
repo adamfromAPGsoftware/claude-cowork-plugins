@@ -1,6 +1,6 @@
 ---
 name: schedule-publish
-description: Format and schedule content for publication via Late.dev across social platforms
+description: Format and schedule content for publication via Buffer across social platforms
 menu-code: SP
 ---
 
@@ -8,7 +8,7 @@ menu-code: SP
 
 ## Purpose
 
-Take approved content and schedule it for publication across target social platforms using the Late.dev API. Handles API verification, calendar conflict checking, platform-specific formatting, scheduling, and record keeping.
+Take approved content and schedule it for publication across target social platforms using the Buffer MCP. Handles channel verification, calendar conflict checking, platform-specific formatting, scheduling, and record keeping.
 
 ## Role Context
 
@@ -22,27 +22,23 @@ Load:
 
 ---
 
-## Phase 1: API Verification
+## Phase 1: Channel Verification
 
-### 1.1 Check Late.dev API Key
+### 1.1 Verify Buffer MCP Connection
 
-Verify `LATE_API_KEY` is set in environment. If missing, halt.
+The Buffer MCP is connected at the platform level — no API key is required. Proceed directly to listing channels. If the MCP call fails, halt and ask the user to check their Claude Code MCP configuration.
 
-### 1.2 Verify Account Health
+### 1.2 List Available Channels
 
-```bash
-curl -s "https://getlate.dev/api/v1/accounts/health" -H "Authorization: Bearer $LATE_API_KEY"
+Use the Buffer MCP to retrieve connected social accounts:
+
+```
+mcp__buffer__use_buffer_api(action: "listChannels")
 ```
 
-Report account status. Flag any disconnected or expired accounts.
+Present available channels: platform, name, channel ID.
 
-### 1.3 List Available Accounts
-
-```bash
-curl -s "https://getlate.dev/api/v1/accounts" -H "Authorization: Bearer $LATE_API_KEY"
-```
-
-Present available accounts: platform, name, accountId.
+Report any disconnected or missing channels.
 
 ---
 
@@ -70,62 +66,42 @@ Report any conflicts. Allow user to override or adjust timing.
 
 ## Phase 4: Platform Formatting
 
-For each target platform, format the content:
+For each target platform, format the content per the specs in platform-specs.md:
 
-**LinkedIn:**
-- Character limit: 3,000
-- Hashtags: 3-5
-- Document/carousel: upload via presigned URL
-- First comment: inside platformSpecificData
+**LinkedIn:** 3,000 chars max. 3-5 hashtags. External links in first comment.
 
-**X/Twitter:**
-- Single: 280 characters
-- Thread: plan tweet breaks
-- Media: image or video attachment
+**X/Twitter:** 280 chars (free) / 25,000 chars (X Premium). Use threads for longer content.
 
-**Instagram:**
-- Caption: 2,200 characters max
-- Carousel: PDF or multi-image
-- Reels: video + caption
+**Instagram:** 2,200 chars. First comment for hashtags. 4:5 portrait ratio preferred.
 
-**TikTok:**
-- Caption: 2,200 characters
-- Video: via presigned URL upload
-- No custom thumbnail support
+**TikTok:** 2,200 chars caption. Privacy settings required. No text-only posts.
 
-**YouTube:**
-- Title in platformSpecificData
-- First comment for captions/CTAs
-- Thumbnail on mediaItems entry
+**Facebook:** 63,206 chars. Pages only.
+
+**Pinterest:** 500 chars description. Board ID required. Link field essential.
+
+**Threads:** 500 chars max — hard limit.
+
+**Bluesky:** 300 chars max — hard limit.
 
 Present formatted preview for each platform. Wait for approval.
 
 ## Phase 5: Media Upload
 
-For any content with media:
-1. Check file size
-2. Under 4MB: use `POST /media` multipart upload
-3. Over 4MB: use `POST /media/presign` presigned URL flow
-4. Store public URLs for post creation
+Buffer MCP handles media attachment during post creation. Pass media file paths to the MCP tool. For large files, check Buffer's size limits per platform before calling the tool.
 
 ## Phase 6: Schedule
 
-For each platform:
-```bash
-curl -X POST "https://getlate.dev/api/v1/posts" \
-  -H "Authorization: Bearer $LATE_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "content": "{formatted_content}",
-    "platforms": [{
-      "platform": "{platform}",
-      "accountId": "{account_id}",
-      "platformSpecificData": { ... }
-    }],
-    "scheduledFor": "{iso_datetime}",
-    "mediaItems": [{...}],
-    "title": "{internal_title}"
-  }'
+For each platform, use the Buffer MCP:
+
+```
+mcp__buffer__use_buffer_api(
+  action: "createPost",
+  profileIds: [channel_id_for_platform],
+  text: formatted_content_for_platform,
+  scheduledAt: iso_datetime_utc,
+  media: [file paths if applicable]
+)
 ```
 
 Report per-platform results: post ID, scheduled time, status.
@@ -146,23 +122,22 @@ Report per-platform results: post ID, scheduled time, status.
 
 ---
 
-## Key API Rules
+## Key Platform Rules
 
-- `firstComment` goes INSIDE `platformSpecificData`, NOT at root level
-- Published posts CANNOT be deleted — only draft/scheduled
-- PUT updates revert posts to "draft" — delete and recreate instead
-- Media presigned URL: `POST /media/presign` (not GET, not /presigned-url)
-- Field name for multipart upload: `files` (not file, media, or upload)
-- LinkedIn rejects duplicate content with 422
+- LinkedIn first comment goes in `platformSpecificData` (verify Buffer MCP supports this)
+- TikTok requires privacy_level, content_preview_confirmed, express_consent_given
+- Pinterest requires boardId on every pin
+- Bluesky: 300 chars is a hard limit — ruthlessly concise
+- Threads: 500 chars — the #1 cause of failures on this platform
+- Buffer supports: Facebook, Instagram, LinkedIn, TikTok, X, Pinterest, Threads, YouTube, Bluesky, Mastodon
 
 ---
 
 ## Success Criteria
 
-- API verified and accounts healthy
+- Channels verified via Buffer MCP
 - Calendar conflicts checked before scheduling
 - Content formatted per platform specs
-- Media uploaded via correct flow (multipart vs presigned)
-- Posts created with correct platform-specific data
+- Posts created via Buffer MCP with platform-specific data
 - Calendar updated with new entries
 - Memory updated with scheduling details

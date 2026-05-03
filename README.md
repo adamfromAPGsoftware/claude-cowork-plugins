@@ -1,119 +1,135 @@
 # Claude Cowork Plugins
 
-A collection of 5 AI-powered business operations plugins for [Claude Code](https://claude.ai/code) and [Cowork](https://cowork.anthropic.com). These plugins implement a full consulting delivery pipeline — from sales prospecting through to client deliverable generation — using numbered AI agents that chain together through structured data contracts.
+A collection of production-grade plugins for [Claude Code](https://claude.ai/code) — each one a complete vertical workflow you can install into your own Claude Code environment.
 
 ## Plugins
 
-| Plugin | Agents | Purpose | Key Integrations |
-|--------|--------|---------|-----------------|
-| **sales-plugin** | Call Prep, Sales Closer | Pre-call research, competitor analysis, close pages, follow-up emails | Fathom, Gmail, CRM |
-| **audit-plugin** | Extractor, Researcher, Builder, Designer | Process mapping, improvement research, HTML deliverables, solution architecture | CRM, Cloudflare |
-| **content-plugin** | Strategist, Copywriter, Creative Director, Editor, Publisher | Content research, copywriting, visual design, quality gates, publishing | YouTube, Late.dev, OpenRouter, Supabase |
-| **marketing-plugin** | Campaign Collector, Performance Analyst, Funnel Mapper | Ad campaign data collection, performance analysis, funnel mapping | Meta Ads, Google Analytics |
-| **video-plugin** | Video Editor | Video ingest, transcription, clipping, storyboarding, motion graphics | DeepGram, Hera, OpenRouter |
+### Sales Plugin
 
-## Architecture
+A Google-Sheets-powered B2B sales pipeline. Syncs lead activity from Gmail, Twilio, and Fathom into a Google Sheet, classifies leads, drafts personalised follow-up sequences, and presents everything in a local Kanban UI.
 
-Each plugin is self-contained and follows this structure:
+| Command | What happens |
+|---------|-------------|
+| `/sales:setup` | Interactive config wizard — writes `config.yaml` with your company, consultant profile, and integrations |
+| `/sales:sync` | Pulls Gmail threads, Twilio SMS/calls, and Fathom transcripts into your Google Sheet |
+| `/sales:classify` | AI classifies each lead against your ICP and assigns a nurture sequence |
+| `/sales:draft` | Batch-drafts personalised follow-ups for all leads due today |
+| `/sales:send` | Dispatches approved drafts via Gmail and Twilio SMS |
+| `/sales:launch` | Opens the Kanban UI at `http://localhost:8765` |
 
-```
-{domain}-plugin/
-├── .claude-plugin/plugin.json    # Plugin metadata
-├── .mcp.json                     # CRM MCP server binding
-├── .env.example                  # Required API keys
-├── agents/                       # Agent persona definitions
-├── skills/{N}-{name}/            # Numbered skill implementations
-│   ├── SKILL.md                  # On-activation instructions + capability menu
-│   ├── bmad-manifest.json        # Capability registry (codes → prompt files)
-│   └── {capability}.md           # Implementation prompts per capability
-├── commands/                     # CLI command definitions
-├── hooks/                        # Event-triggered automation
-├── references/                   # Business logic docs, API guides
-├── scripts/                      # Python/bash automation
-└── templates/                    # HTML/email templates
-```
+**Requirements:** Python 3.9+, Google Cloud project (Sheets + Gmail APIs), Twilio (optional), Fathom (optional)
 
-### How Agents Chain
+---
 
-Agents are numbered to reflect pipeline order. Each agent produces structured data (typically in `audit-data.json`) that downstream agents consume:
+### Content Plugin
 
-```
-1-Call Prep → 2-Sales Closer → 3-Audit Extractor → 4-Improvement Researcher
-→ 5-Deliverable Builder → 6-Solution Designer
-```
+A personal brand content pipeline across 13+ social platforms. Research trending topics, generate scripts and LinkedIn posts, design thumbnails and carousels, run editorial quality gates, and publish — all from Claude Code.
 
-Data flows one-way through `audit-data.json`, which accumulates structured extractions at each stage. See `references/pipeline.md` in the sales or audit plugin for the full pipeline definition and data contracts.
+| Command / Agent | What happens |
+|----------------|-------------|
+| `content:1-content-strategist` | Research, trends, competitive analysis, content ideation |
+| `content:2-copywriter` | Scripts, LinkedIn posts, X posts, blogs, email copy |
+| `content:3-creative-director` | Thumbnails, carousels, visual asset creation |
+| `content:4-editor` | Quality gates — brand voice, ICP relevance, value delivery |
+| `content:5-publisher` | Schedule and publish via Late.dev across 13+ platforms |
+| `content:6-autopilot` | Daily LinkedIn + X drafts, 3×/week Instagram carousels |
 
-### CRM Integration
+**Requirements:** Late.dev API key (publisher), YouTube Data API (research), OpenRouter (images), Supabase (blog publishing — optional)
 
-All plugins sync to a CRM via HTTP MCP (Model Context Protocol). The `.mcp.json` in each plugin points to your CRM endpoint. CRM updates are best-effort — failures never block the pipeline.
+---
 
-### Dual Environment: Terminal & Cowork
+### Marketing Plugin
 
-Plugins run in both environments without code changes:
+End-to-end paid campaign pipeline. Plan campaigns, scrape competitor ads, generate creatives, deploy landing pages, launch Meta campaigns, and analyse performance — all in one workflow.
 
-- **Claude Code (terminal)**: Skills use native file system access directly
-- **Cowork (cloud sandbox)**: Skills detect the sandbox and route through Desktop Commander MCP to proxy operations back to your host machine
+| Command | What happens |
+|---------|-------------|
+| `/marketing:setup` | Configure company identity, brand, and integrations |
+| `/marketing:new-campaign` | Define audience, angle, and funnel for a new campaign |
+| `/marketing:generate-creatives` | AI-generate ad images and video scripts |
+| `/marketing:build-landing-page` | Generate and deploy a Cloudflare Pages landing page |
+| `/marketing:launch-campaign` | Create and launch Meta ad campaign |
+| `/marketing:pull-meta` | Pull Meta performance data |
+| `/marketing:review-performance` | Analyse results and recommend next actions |
 
-Each SKILL.md includes a "Desktop Commander / Cowork Execution" section that activates automatically when running in Cowork.
+**Requirements:** Meta Marketing API token, Cloudflare account (landing pages), OpenRouter (images), fal.ai (video — optional), Apify (competitor scraping — optional)
+
+---
+
+### Video Plugin
+
+A complete video production pipeline. Ingest raw footage, transcribe, analyse pacing, generate storyboards, build motion graphics with Remotion, and render final edits — for long-form YouTube, short-form Reels/TikTok, VSLs, and Meta ads.
+
+| Agent | Specialty |
+|-------|-----------|
+| `apg-video:1-video-editor` | Infrastructure — ingest, transcribe, analyse, clip |
+| `apg-video:2-remotion` | 41-component Remotion motion graphics library |
+| `apg-video:3-long-form` | 16:9 YouTube tutorials — intro decomposition + body passthrough |
+| `apg-video:4-short-form` | 9:16 Reels/TikTok/Shorts — MG-first vertical editing |
+| `apg-video:5-vsl` | Direct-response VSLs — overlay density, pacing rules |
+| `apg-video:6-ad` | 20-30s Meta ads — speaker-first, split-screen |
+
+**Requirements:** Deepgram API key (transcription), OpenRouter (visual analysis), Hera API key (motion graphics), Node.js + FFmpeg (rendering)
+
+---
+
+### PM Plugin
+
+A complete client project delivery pipeline. Create clients, drop in meeting transcripts and materials, ingest them into a structured knowledge base, map the client's process, research automation opportunities, and build a working Claude Desktop demo — all without leaving Claude Code.
+
+| Command | What happens |
+|---------|-------------|
+| `/pm:setup` | Configure the plugin for your business — company identity, brand, pricing, integrations |
+| `/pm:new-client` | Create a client folder with structured materials and meetings directories |
+| `/pm:new-project` | Collect engagement scope and generate a branded HTML/PDF proposal |
+| `/pm:sync` | Scan for new meeting transcripts and materials (or pull from Fathom if enabled) |
+| `/pm:ingest` | Analyze all client materials → structured materials-summary.json |
+| `/pm:scope` | Build a granular process map → interactive HTML visual for client review |
+| `/pm:research` | Research automation tools and build a phase-collapse plan |
+| `/pm:demo` | Build a working Claude Desktop skill or HTML prototype for the demo call |
+
+**Requirements:** Python 3.9+, PyYAML. WeasyPrint optional (PDF proposals). Fathom optional (auto transcript sync). CRM MCP optional (invoice creation and task push).
+
+---
 
 ## Quick Start
 
-1. **Clone this repo**
-   ```bash
-   git clone https://github.com/your-org/public-claude-cowork-plugins.git
-   cd public-claude-cowork-plugins
-   ```
+```bash
+# 1. Clone
+git clone https://github.com/your-org/public-claude-cowork-plugins
+cd public-claude-cowork-plugins
 
-2. **Configure your business identity** — copy and fill in `config.example.json`
+# 2. Configure environment
+cp .env.example .env
+# Fill in the credentials for the plugins you want to use
 
-3. **Set up API keys** — copy `.env.example` to `.env` and add credentials for the plugins you plan to use
+# 3. Open in Claude Code
+claude
 
-4. **Point CRM to your endpoint** — update the `url` in each plugin's `.mcp.json`
+# 4. Run the setup wizard for the plugin you want
+/sales:setup
+/marketing:setup
+```
 
-5. **Install plugins in Claude Code** — copy the plugin directories to your project or reference them
+See [SETUP.md](SETUP.md) for full per-plugin setup instructions.
 
-See [SETUP.md](SETUP.md) for detailed step-by-step instructions.
+## Plugin Structure
 
-## Plugin Details
+Each plugin follows the same structure:
 
-### Sales Plugin
-**Agents**: 1-Call Prep, 2-Sales Closer
-
-Pre-discovery research, competitor battle cards, close page generation, post-call transcript analysis, follow-up email and SMS drafting. Includes the CLOSER sales framework and nurture email sequences.
-
-### Audit Plugin
-**Agents**: 3-Extractor, 4-Researcher, 5-Builder, 6-Designer
-
-The core consulting delivery pipeline. Extracts structured process data from meeting transcripts, researches improvement opportunities with ROI estimates, generates HTML deliverables (process maps, findings, waste analysis, strategic approaches), and builds clickable prototypes for custom solutions.
-
-### Content Plugin
-**Agents**: Strategist, Copywriter, Creative Director, Editor, Publisher
-
-Full content production pipeline — competitive research and trend analysis, script writing across platforms (YouTube, LinkedIn, X, blog, email), visual asset generation, editorial quality gates, and multi-platform publishing.
-
-### Marketing Plugin
-**Agents**: Campaign Collector, Performance Analyst, Funnel Mapper
-
-Pulls Meta ad campaign data, analyzes landing page performance via GA4, maps ad-to-conversion funnels through UTM parameters, and maintains marketing-data.json as the analytics source of truth.
-
-### Video Plugin
-**Agent**: Video Editor
-
-Full video pipeline — ingest, transcription (DeepGram), visual analysis, B-roll extraction, storyboarding, Remotion-based editing, motion graphics (Hera), and short-form clip generation.
-
-## Customization
-
-All plugins use `{YOUR_*}` placeholders for business-specific values. Key files to customize:
-
-| File | What to customize |
-|------|-------------------|
-| Each `.mcp.json` | Your CRM endpoint URL |
-| Each `plugin.json` | Your name and domain |
-| `audit-plugin/references/pricing.md` | Your pricing tiers and rates |
-| `audit-plugin/skills/shared/email-voice.md` | Your email writing style |
-| `sales-plugin/references/offer-summary.md` | Your offer, ROI framework, objection handlers |
+```
+{name}-plugin/
+├── .claude-plugin/plugin.json   # Plugin manifest
+├── agents/                      # Agent definitions
+├── commands/                    # Slash command shortcuts
+├── skills/                      # Capability menus and prompts
+├── scripts/                     # Python automation scripts
+├── references/                  # Framework and schema docs
+├── data/                        # Runtime data (gitignored)
+├── config.yaml                  # Business config (written by /setup)
+└── CLAUDE.md                    # Plugin wiki (auto-loaded by Claude Code)
+```
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT

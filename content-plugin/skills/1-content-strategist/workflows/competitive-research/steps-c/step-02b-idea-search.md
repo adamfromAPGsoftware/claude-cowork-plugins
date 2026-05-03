@@ -47,10 +47,10 @@ To search YouTube for existing content that matches the user's video idea, asses
 
 ## CONTEXT BOUNDARIES:
 
-- Available: User's video idea (from step-01 frontmatter), YouTube MCP Server / Data API, `YOUTUBE_API_KEY` (loaded at workflow init from `{project-root}/.env`), competitor list from sidecar
+- Available: User's video idea (from step-01 frontmatter), YouTube MCP (`mcp__youtube__*`) — platform-level, no API key needed, competitor list from sidecar
 - Focus: Searching for existing content on the user's topic and assessing competition
 - Limits: Do not analyse transcripts, identify gaps, or make recommendations yet
-- Dependencies: Step 01 must have completed with videoIdea captured, `YOUTUBE_API_KEY` must be validated
+- Dependencies: Step 01 must have completed with videoIdea captured, YouTube MCP must be validated
 
 ## MANDATORY SEQUENCE
 
@@ -74,12 +74,12 @@ List the search queries being used.
 
 For each search query, follow the API reference in {youtubeApiReference}:
 
-1. **Search for videos** — use `search.list` with `part=snippet&q={QUERY}&type=video&maxResults=25` to retrieve top 20-30 results per query. Note: `search.list` costs 100 quota units per call — be mindful of quota.
-2. **For each result, fetch full statistics** — collect all video IDs from search results and batch them into `videos.list` calls with `part=snippet,statistics,contentDetails&id={ID1},{ID2},...` (up to 50 IDs per call, costs only 1 unit):
+1. **Search for videos** — use `mcp__youtube__searchVideos` with `query: QUERY, maxResults: 25` to retrieve top results per query.
+2. **For each result, fetch full statistics** — collect all video IDs from search results and batch them into `mcp__youtube__getVideoDetails` calls (up to 50 IDs per call):
    - Video title, video ID, channel name, channel ID
    - View count, like count, comment count
    - Published date, video duration
-   - For channel subscriber counts, batch unique channel IDs into `channels.list` with `part=statistics&id={CH_ID1},{CH_ID2},...` (use `id` parameter, NOT `channelId`)
+   - For channel subscriber counts, batch unique channel IDs into `mcp__youtube__getChannelStatistics`
 
 3. **De-duplicate** results across queries (same video ID appearing in multiple searches)
 

@@ -6,7 +6,7 @@ nextStepFile: './step-02-concept-generate.md'
 agencyScriptRulesData: '../data/agency-script-rules.md'
 newsSearchQueries: '../data/agency-news-search-queries.md'
 reputationAnglesData: '../data/reputation-angles.md'
-icpBofuDoc: '{project-root}/_bmad/ccs/_memory/agency-sidecar/agency-offer.md'
+icpBofuDoc: '{project-root}/content-plugin/data/memory/agency-sidecar/agency-offer.md'
 ---
 
 # Step 1: Research — Per-Pillar Content Discovery
@@ -43,7 +43,7 @@ Load and read ALL of the following before any research:
 - `{icpBofuDoc}` — ICP profile with pain points, value framework, case studies, and CTA patterns
 - `{agencyScriptRulesData}` — especially the Batch Pillar System, CTA rules by pillar, hook patterns, and brand voice overrides
 - `{reputationAnglesData}` — evergreen Reputation angle library, credibility anchors, hot-take templates
-- Brand guidelines from `{project-root}/_bmad/_memory/content-strategist-sidecar/brand-guidelines.md`
+- Brand guidelines from `{project-root}/references/brand-voice.md`
 
 ### 2. Load News Search Query Templates
 
@@ -79,7 +79,7 @@ Run research for each of the 5 pillar slots. Each slot has a different source st
 
 #### SLOT SF-03 — Reputation (Opinion / Authority)
 
-**Goal:** Identify 2–3 strong opinion angles that build Adam's authority without pitching.
+**Goal:** Identify 2–3 strong opinion angles that build authority without pitching.
 
 **Source strategy:**
 - Pull 2–3 pre-seeded hot takes from `{reputationAnglesData}` that haven't been used recently (check memories)
@@ -107,11 +107,11 @@ Run research for each of the 5 pillar slots. Each slot has a different source st
 
 #### SLOT SF-05 — News (Current Events Hook)
 
-**Goal:** Find 2–3 angles anchored in recent news that Adam can opine on.
+**Goal:** Find 2–3 angles anchored in recent news that the creator can opine on.
 
 **Source strategy:**
 - Run 1–2 Exa searches using News Commentary queries from `{newsSearchQueries}`
-- Prioritise: Australian SME tech news, SaaS platform changes/pricing, AI adoption stats, government digital policy
+- Prioritise: local SME tech news, SaaS platform changes/pricing, AI adoption stats, government digital policy
 - Every News angle needs both a news hook AND an opinion angle — pure news recap is not enough
 - If news cycle is quiet (fewer than 2 usable fresh/recent items), note it and use a Recent (14–30 days) angle rather than skipping the slot
 
@@ -177,7 +177,7 @@ stepsCompleted: ['step-01-research']
 - **Source:** {source}
 - **Core POV / Key finding:** {1-2 sentences}
 - **ICP connection:** {pain point or audience state}
-- **offer bridge:** {connection to audit/APG}
+- **offer bridge:** {connection to your sales/audit pipeline}
 - **Hook format:** {format}
 - **Freshness:** {Fresh/Recent/Evergreen}
 

@@ -7,11 +7,13 @@ niche: "AI education, automation, and agentic coding"
 # Competitor channels to monitor
 # Uses channel_id (UC...) where available, or @handle for YouTube API resolution
 competitors:
-  # --- Adam's named competitors ---
-  - name: "Nick Saraev"
-    channel_id: "UCbo-KbSjJDG6JWQ_MTZ_rNA"
-    handle: "@nicksaraev"
-    focus: "n8n, Make.com, AI automation agency"
+  # --- configured competitors ---
+  # Replace this list with channels in your niche
+  # Example entry — replace with actual competitors:
+  - name: "Example Creator"  # Replace with actual competitors in your niche
+    channel_id: ""           # Find via YouTube API or channel URL
+    handle: "@example"       # YouTube handle
+    focus: "Replace with the topics this creator covers"
   - name: "Nate Herk"
     channel_id: "UC2ojq-nuP8ceeHqiroeKhBA"
     handle: "@nateherk"
@@ -70,6 +72,12 @@ niche_scan:
     - "MCP servers"
     - "AI workflow"
     - "cursor vs claude"
+    # Crossover niche keywords — trending topics + secondary audience combinations
+    - "Claude video editing"
+    - "AI for traders"
+    - "AI side hustle"
+    - "Claude for beginners"
+    - "AI freelancing"
 
   # Exa web intelligence queries
   exa_queries:
@@ -77,6 +85,8 @@ niche_scan:
     - "AI agents news this week"
     - "agentic coding tools 2026"
     - "AI automation trends"
+    - "AI tools for non-developers"
+    - "Claude Code creative use cases"
 
   # Scoring (no channel baseline — use absolute thresholds)
   scoring:

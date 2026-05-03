@@ -1,0 +1,145 @@
+# =============================================================================
+# Marketing Plugin — Configuration
+# =============================================================================
+# This file configures the plugin for your company.
+# Every script, template, and agent reads from here.
+#
+# HOW TO SET UP:
+#   Run /marketing:setup in Claude Code — it will walk you through each section
+#   interactively and write everything to this file for you.
+#
+#   Or fill in the values below manually, then run /marketing:setup → [VC] to
+#   validate everything is correct.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# COMPANY IDENTITY                                                    REQUIRED
+# These values appear throughout landing pages, ad creatives, and emails.
+# -----------------------------------------------------------------------------
+company:
+  name: "{YOUR_COMPANY}"
+  website: "https://{YOUR_DOMAIN}"
+  email: "{YOUR_EMAIL}"
+  logo_url: ""           # OPTIONAL — Hosted URL to your logo (must be a URL, not a file path)
+                         #            e.g. "https://cdn.acmecorp.com/logo.png"
+  logo_path: ""          # OPTIONAL — Local path to logo file (relative to plugin root)
+                         #            Used by [GV] for end screen generation
+                         #            e.g. "data/reference-images/my-logo.png"
+
+# -----------------------------------------------------------------------------
+# DOMAINS                                                             REQUIRED
+# Landing pages are deployed as subdomains of your base domain.
+# Each campaign gets its own: {campaign-slug}.{base}
+# Example: audit.acmecorp.com, ai.acmecorp.com
+# -----------------------------------------------------------------------------
+domains:
+  base: "{YOUR_DOMAIN}"
+  landing_traffic: "{YOUR_LANDING_DOMAIN}"
+
+# -----------------------------------------------------------------------------
+# BRAND                                                               REQUIRED
+# Colors are injected as CSS variables into every landing page template.
+# All color values must be valid hex codes (e.g. "#FF5500").
+# Tone guides all AI copy generation — describe your voice in 3-5 words.
+# -----------------------------------------------------------------------------
+brand:
+  colors:
+    primary: ""      # e.g. "#1B2A4A" — headers, nav, authority elements
+    accent: ""       # e.g. "#3B82F6" — CTAs, links, interactive elements
+    highlight: ""    # e.g. "#7DFF00" — badges, callouts, key stats
+    bg: ""           # e.g. "#0F1923" — dark background
+    surface: ""      # e.g. "#162231" — card/section backgrounds
+  tone: ""           # e.g. "Professional but approachable. Confident, not arrogant. Proof-led, outcome-first."
+
+# -----------------------------------------------------------------------------
+# SOCIAL PROOF                                                        OPTIONAL
+# Used in landing page templates and ad creative prompts.
+# You can leave this empty and add it later — it won't block setup.
+# -----------------------------------------------------------------------------
+social_proof:
+  founder:
+    name: "{YOUR_NAME}"
+    title: "{YOUR_TITLE}"
+    headshot_path: ""
+    credentials:
+      - "{YOUR_CREDENTIAL_1}"
+      - "{YOUR_CREDENTIAL_2}"
+      - "{YOUR_CREDENTIAL_3}"
+  headline_stat: "{YOUR_HEADLINE_STAT}"
+  testimonials:
+    - author: "{TESTIMONIAL_NAME}"
+      company: "{TESTIMONIAL_COMPANY}"
+      role: "{TESTIMONIAL_ROLE}"
+      quote: "{TESTIMONIAL_QUOTE}"
+    - author: "{TESTIMONIAL_2_NAME}"
+      company: "{TESTIMONIAL_2_COMPANY}"
+      role: "{TESTIMONIAL_2_ROLE}"
+      quote: "{TESTIMONIAL_2_QUOTE}"
+    - author: "{TESTIMONIAL_3_NAME}"
+      company: "{TESTIMONIAL_3_COMPANY}"
+      role: "{TESTIMONIAL_3_ROLE}"
+      quote: "{TESTIMONIAL_3_QUOTE}"
+
+# -----------------------------------------------------------------------------
+# CRM                                                                 REQUIRED
+# Where lead capture webhooks send form submissions.
+# If you don't have a CRM API yet, leave blank and add later.
+# -----------------------------------------------------------------------------
+crm:
+  api_base_url: ""
+  default_pipeline: "marketing-leads"
+
+# -----------------------------------------------------------------------------
+# CLOUDFLARE                                                          REQUIRED
+# Landing pages deploy to Cloudflare Pages.
+# Prerequisites:
+#   1. A Cloudflare account with Pages enabled
+#   2. CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID set in .env
+# See SETUP.md → "Setting Up Cloudflare" for step-by-step instructions.
+# -----------------------------------------------------------------------------
+cloudflare:
+  pages_project: "{YOUR_CF_PAGES_PROJECT}"
+
+# -----------------------------------------------------------------------------
+# ANALYTICS                                                           OPTIONAL
+# GA4 property IDs for tracking landing page conversions.
+# Leave blank to skip — the plugin runs fine without tracking.
+# Find Property IDs in: Google Analytics → Admin → Property Settings → Property ID
+# See SETUP.md → "Setting Up Google Analytics 4" for full walkthrough.
+# Note: GA4 service account credentials live in .env (never commit those).
+# -----------------------------------------------------------------------------
+analytics:
+  ga4_landing_property_id: ""    # OPTIONAL — Numeric ID, e.g. "123456789"
+  ga4_home_property_id: ""       # OPTIONAL — Your main website GA4 property (separate from landing)
+
+# -----------------------------------------------------------------------------
+# INTEGRATIONS
+# Lead capture destinations beyond the primary CRM.
+# Google Sheets is the default safety net — set up once, all campaign leads
+# flow into one sheet. Optional webhooks fan out to any additional tool.
+# Run /marketing:setup → [SI] to configure.
+# -----------------------------------------------------------------------------
+integrations:
+  google_sheets:
+    enabled: false
+    spreadsheet_id: ""
+    spreadsheet_url: ""
+    sheet_name: "Leads"      # Tab name within the spreadsheet
+    share_with_email: ""     # Email given Editor access during setup
+    created_at: ""
+  webhooks: []               # Optional extra destinations: [{name, url, enabled}]
+                             # Accepts any POST endpoint: HubSpot, n8n, Make, Zapier, custom CRM
+
+# -----------------------------------------------------------------------------
+# BOOKING                                                             OPTIONAL
+# Calendar booking link shown after form submission.
+# cal.com is recommended — free plan, API access for automated reminders.
+# CAL_COM_API_KEY goes in .env — never here.
+# Run /marketing:setup → [SI] to configure interactively.
+# -----------------------------------------------------------------------------
+booking:
+  provider: "cal.com"
+  username: "{YOUR_HANDLE}"
+  event_slug: "{YOUR_EVENT_SLUG}"
+  booking_url: "{YOUR_BOOKING_URL}"
+  reminder_workflow_id: ""   # Populated by setup-cal-reminders.py after creation

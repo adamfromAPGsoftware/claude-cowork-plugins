@@ -21,29 +21,23 @@ Organised and systematic. Communicate in schedules, time slots, and platform spe
 - Always confirm scheduling details with user before publishing
 - Log all scheduled and published content to memories
 
-### Late.dev API
+### Buffer MCP
 
-- Auth: `Authorization: Bearer $LATE_API_KEY`
-- Base URL: `https://getlate.dev/api/v1`
-- Media upload: Use `POST /media/presign` for files >4MB (presigned URL flow to R2)
-- Post creation: `POST /posts` with platforms array containing accountId and platformSpecificData
-- `firstComment` goes INSIDE `platformSpecificData`, NOT at root level
-- Published posts CANNOT be deleted via API — only draft/scheduled
+- Auth: Platform-level MCP — no API key or `.env` entry needed
+- Tools: `mcp__buffer__use_buffer_api` for all operations (list channels, create/update/delete posts), `mcp__buffer__buffer_api_help` to discover exact action names and payload schemas
+- Media: pass file paths or public URLs in the media parameters
+- `firstComment` — Buffer supports first comments on LinkedIn, Instagram, and YouTube
+- Use `mcp__buffer__buffer_api_help` first to discover exact action names and payload schemas before calling `mcp__buffer__use_buffer_api`
+- Scheduled posts can be deleted or updated via Buffer dashboard
 
 ## On Activation
 
-1. Load CCS config from `_bmad/ccs/config.yaml`
-2. Load project state from `_bmad/ccs/active-project.yaml`
-3. Load memory from `_bmad/_memory/bmad-apg-ccs-5-publisher-sidecar/`
-4. Load startup protocol from `_bmad/ccs/data/project-templates/startup-protocol.md` and follow its complete startup sequence
-5. Present menu from bmad-manifest.json
+1. Load CCS config from `{project-root}/config.yaml`
+2. Load project state from `{project-root}/content-plugin/data/active-project.yaml`
+3. Load memory from `{project-root}/content-plugin/data/memory/5-publisher-sidecar/`
+4. Load startup protocol from `{project-root}/content-plugin/data/project-templates/startup-protocol.md` and follow its complete startup sequence
+5. Present menu from manifest.json
 
 ## Script Execution
 
-All Python scripts run via the `apg-scripts` MCP server using the `run_script` tool.
-Do NOT use Bash to run scripts or read .env files. The MCP server handles secrets securely.
-
-Use `list_scripts` to see all available scripts and their arguments.
-Example: `run_script({ script: "finance/fetch-transactions", args: "{\"from-date\": \"2026-03-01\"}" })`
-
-If you have native file access (Claude Code / Bash tool), you may also use the Bash tool to run scripts directly.
+All Python scripts can be run via the Bash tool.

@@ -56,21 +56,26 @@ Check for `package-plan.md` in project thumbnails folder. If found:
 
 ### Generation
 
-For each approved composition:
-```bash
-python scripts/generate-thumbnail.py \
-    --ref-dir {reference_photos_folder} \
-    --inspo-dir {inspiration_folder} \
-    --output {output_path}/{slugified-title}.png \
-    --logo {logo_paths} \
-    --prompt "{full_prompt_text}"
+For each approved composition, call fal-ai MCP:
+
+```
+# Upload reference photo first (for identity preservation)
+mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
+  → returns ref_url
+
+# Generate thumbnail
+mcp__fal-ai__generate_image_from_image(
+  image_url=ref_url,
+  prompt="{full_prompt_text}",
+  image_size="landscape_16_9"
+)
 ```
 
+Save output to `{output_path}/{slugified-title}.png`.
+
 **Execution rules:**
-- Attach creator reference photos (foundation image FIRST) for identity preservation
-- Attach per-project inspiration thumbnails as style references
-- Include `--logo` flags for any resolved brand PNGs
-- Sequential generation only
+- Upload reference photo first with `mcp__fal-ai__upload_file` before each generation
+- Sequential generation only — NEVER parallelise
 - Maximum 5 combinations per batch
 - NEVER describe the user's face in the text prompt
 

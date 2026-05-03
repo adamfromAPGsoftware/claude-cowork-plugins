@@ -6,7 +6,7 @@ shortFormGuideData: '../visual-asset-creation/data/short-form-style-guide.md'
 ctrChecklistData: '../visual-asset-creation/data/ctr-checklist.md'
 pipelineScriptsData: '../visual-asset-creation/data/pipeline-scripts.md'
 brandConfigData: '../visual-asset-creation/data/brand-config.md'
-sidecarInspirationFolder: '{project-root}/_bmad/_memory/creative-director-sidecar/short-form-inspiration'
+sidecarInspirationFolder: '{project-root}/content-plugin/data/memory/3-creative-director-sidecar/short-form-inspiration'
 ---
 
 # Short-Form Thumbnail Generation
@@ -29,7 +29,7 @@ This is a single-file workflow. Follow the mandatory sequence below.
 - 📖 Load the style guide and ALL 3 inspiration images before drafting concepts
 - 📋 Every prompt must be FULLY RESOLVED — no placeholders, no brackets
 - ✅ Communicate in your Agent communication style with `{communication_language}`
-- 🚫 Brand uses GREEN/LIME banners (#39FF14 or #00E676) — NEVER red
+- 🚫 Banner colour is `{brand.colors.primary}` (set in config.yaml) — NEVER red
 - 📋 Sequential generation only — NEVER parallelise
 - 🎭 Expressions must be SUBTLE and NATURAL — see Expression Rules below
 - 1️⃣ ONE thumbnail per short-form video — not multiple concepts per video
@@ -58,7 +58,7 @@ NEVER use: frowning, shocked, surprised, jaw-drop, wide-eyed, overly excited, un
 
 ### 1. Module Configuration Loading
 
-Load and read full config from `{project-root}/_bmad/ccs/config.yaml`:
+Load and read full config from `{project-root}/config.yaml`:
 - `user_name`, `communication_language`
 - `content_output_folder`, `project_folder`, `standalone_folder`
 - `reference_photos_folder`
@@ -258,20 +258,26 @@ No gate question. Run automatically after concept approval, before generation.
 
 ### 5. Generate Approved Thumbnails
 
-Load {pipelineScriptsData} for the generate-thumbnail.py CLI reference.
+For each approved concept, execute generation via fal-ai MCP:
 
-For each approved concept, execute a generation call, including one `--logo` flag per resolved PNG:
+```
+# 1. Upload creator reference photo first (identity preservation)
+mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
+  → returns ref_url
 
-```bash
-python scripts/generate-thumbnail.py \
-    --ref-dir {reference_photos_folder} \
-    --inspo-dir {sidecarInspirationFolder} \
-    --output {output_folder}/sf-{NN}.png \
-    --logo {logo_paths[0]} --logo {logo_paths[1]} \
-    --prompt "{exact prompt from the approved concept}"
+# 2. Upload each logo PNG and capture URLs for prompt inclusion
+mcp__fal-ai__upload_file(file_path="{logo_paths[0]}")  → logo_url_1
+mcp__fal-ai__upload_file(file_path="{logo_paths[1]}")  → logo_url_2
+
+# 3. Generate thumbnail (logos are described in the prompt — reference their URLs)
+mcp__fal-ai__generate_image_from_image(
+  image_url=ref_url,
+  prompt="{exact prompt from the approved concept, with logo URLs referenced}",
+  image_size="portrait_4_5"
+)
 ```
 
-Omit `--logo` flags entirely if no logos were resolved for this concept.
+Omit logo upload steps if no logos were resolved for this concept.
 
 **Execution rules:**
 - Attach creator reference photos (foundation image FIRST) for identity preservation
@@ -337,7 +343,7 @@ Wait for user selection.
 - User approved concepts before generation
 - Logo sourcing (Step 4.5) ran after approval and before generation
 - Correct brand logos fetched via fetch-logo.ts waterfall (not hallucinated)
-- `--logo` flags passed to generate-thumbnail.py for each resolved PNG
+- Logo PNGs uploaded via `mcp__fal-ai__upload_file` and referenced by URL in the prompt for each resolved PNG
 - Prompts reference provided logo images by brand name explicitly
 - Reference photos attached for identity preservation
 - Inspiration images attached as style reference
