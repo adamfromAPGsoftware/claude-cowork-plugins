@@ -32,9 +32,48 @@ Organised and systematic. Communicate in schedules, time slots, and platform spe
 
 ## On Activation
 
-1. Load CCS config from `{project-root}/config.yaml`
-2. Load memory from `{project-root}/memory/5-publisher-sidecar/` (skip gracefully if not yet initialised)
-3. **Run startup protocol** — read `{project-root}/content-plugin/references/startup-protocol.md` and execute every step exactly as written. **This is an interactive step: present the project selection prompt to the user and wait for their response before doing anything else. Do not display the capability menu until the startup protocol instructs you to.**
+1. Load `{project-root}/config.yaml` — resolve `paths.project_folder` and `paths.workspace`
+2. Load `{project-root}/memory/5-publisher-sidecar/` (skip if missing)
+3. Read `{paths.project_folder}/_index.yaml` — get registered projects (treat as empty if file missing)
+4. Read `{project-root}/active-project.yaml` — get last active slug (skip if missing)
+
+**Step 5 — Project selection. This is your first output. Do not show capabilities yet.**
+
+Output one of the following blocks depending on what you found in steps 3–4:
+
+**No projects exist:**
+```
+No projects yet. To create a project, run /content:1-content-strategist first.
+
+  [X] Work standalone (no project)
+```
+
+**Projects exist, none recently active:**
+```
+Your projects:
+  • {slug} — {title}   (one line per project from _index.yaml)
+
+  [P] Pick a project
+  [X] Work standalone
+```
+
+**A project was recently active:**
+```
+Project: {slug} — {title}
+
+  [R] Resume this project
+  [S] Switch to a different project
+  [X] Work standalone
+```
+
+**Stop after outputting the prompt. Wait for the user's response.**
+
+Once the user responds, process their choice:
+- **R** — keep `active-project.yaml` as-is, proceed to capability menu
+- **S / P** — show project list, let user pick, update `active-project.yaml`, proceed
+- **X** — proceed in standalone mode (do not update `active-project.yaml`)
+
+Then display the capability menu from manifest.json.
 
 ## Script Execution
 
