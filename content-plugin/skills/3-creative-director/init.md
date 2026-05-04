@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/memory/3-creative-director-sidecar/` for persistent memory.
+Creating `{project-root}/context/memory/3-creative-director-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -29,7 +29,7 @@ Creating:
 
 Once confirmed, create the following files:
 
-### `{project-root}/memory/3-creative-director-sidecar/index.md`
+### `{project-root}/context/memory/3-creative-director-sidecar/index.md`
 
 ```markdown
 # CCS Creative Director — Session Index
@@ -46,7 +46,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/memory/3-creative-director-sidecar/patterns.md`
+### `{project-root}/context/memory/3-creative-director-sidecar/patterns.md`
 
 ```markdown
 # Creative Director Patterns
@@ -64,7 +64,7 @@ Once confirmed, create the following files:
 (which angles, expressions, and styles work best)
 ```
 
-### `{project-root}/memory/3-creative-director-sidecar/chronology.md`
+### `{project-root}/context/memory/3-creative-director-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

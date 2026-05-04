@@ -37,7 +37,7 @@ CONTENT AUTOPILOT
 Show current state from `autopilot-state.yaml`:
 - LX — Today's pillar (next): `{next pillar}` | Format: `{next format}` | Last run: `{lx last_date}`
 - IC — Next angle: `{next topic_angle}` | Inspiration: `{days since last scrape}d old` | Last run: `{ic last_date}`
-- Drafts in queue: `{count from draft-queue/ with status: draft}`
+- Drafts in queue: `{count from context/draft-queue/ with status: draft}`
 
 ## Script Execution
 
@@ -46,11 +46,11 @@ All Python scripts can be run via the Bash tool.
 ## Key Paths
 
 - State file: `{project-root}/autopilot-state.yaml`
-- Draft queue: `{project-root}/draft-queue/`
+- Draft queue: `{project-root}/context/draft-queue/`
 - Content calendar: `{content_output_folder}/calendar/content-calendar.yaml`
 - YouTube library: `{project-root}/context/youtube/channel-library.json`
 - Lead magnet keywords: `{project-root}/context/lead-magnet-keywords.yaml`
-- LX inspiration: `{project-root}/memory/2-copywriter-sidecar/inspiration/linkedin.md`
+- LX inspiration: `{project-root}/context/memory/2-copywriter-sidecar/inspiration/linkedin.md`
 - IC watchlist: `{project-root}/context/instagram-watchlist.yaml`
 - IC inspiration: `{project-root}/context/inspiration/instagram/`
 - Buffer channel IDs: fetched at runtime via `mcp__buffer__use_buffer_api(action: "listChannels")` — stored in scheduling-config.md after setup

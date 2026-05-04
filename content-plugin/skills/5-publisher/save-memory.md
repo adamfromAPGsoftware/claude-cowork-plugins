@@ -14,7 +14,7 @@ Persist current session progress to sidecar memory so the next session picks up 
 
 ### Step 1: Update `index.md`
 
-Read current `memory/5-publisher-sidecar/index.md` and update:
+Read current `context/memory/5-publisher-sidecar/index.md` and update:
 
 **Lead Magnet Keyword Registry** — Add any new keywords assigned this session.
 

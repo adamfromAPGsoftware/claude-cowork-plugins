@@ -14,7 +14,7 @@ Persist current session progress to sidecar memory so the next session picks up 
 
 ### Step 1: Update `index.md`
 
-Read current `memory/4-editor-sidecar/index.md` and update:
+Read current `context/memory/4-editor-sidecar/index.md` and update:
 
 **Active Reviews section** — Update review status and gate results.
 

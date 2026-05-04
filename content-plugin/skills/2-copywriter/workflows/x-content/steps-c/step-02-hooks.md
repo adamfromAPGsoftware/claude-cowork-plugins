@@ -4,7 +4,7 @@ description: 'Generate format-specific hooks and let user select the best one fo
 
 nextStepFile: './step-03-thread-plan.md'
 hookPatternsData: '../data/hook-patterns.md'
-inspirationLibrary: '{project-root}/memory/2-copywriter-sidecar/inspiration/x.md'
+inspirationLibrary: '{project-root}/context/memory/2-copywriter-sidecar/inspiration/x.md'
 ---
 
 # Step 2: Hook Ideation

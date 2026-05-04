@@ -3,10 +3,10 @@ name: linkedin-x-daily
 description: Daily LinkedIn + X content generation cycle — 8-step automated workflow
 projectRoot: '{project-root}'
 stateFile: '{project-root}/autopilot-state.yaml'
-draftQueue: '{project-root}/draft-queue/'
+draftQueue: '{project-root}/context/draft-queue/'
 contentCalendar: '{content_output_folder}/calendar/content-calendar.yaml'
 youtubeLibrary: '{project-root}/context/youtube/channel-library.json'
-inspirationLibrary: '{project-root}/memory/2-copywriter-sidecar/inspiration/linkedin.md'
+inspirationLibrary: '{project-root}/context/memory/2-copywriter-sidecar/inspiration/linkedin.md'
 leadMagnetKeywords: '{project-root}/context/lead-magnet-keywords.yaml'
 brandVoice: '{project-root}/context/references/brand-voice.md'
 contentICP: '{project-root}/context/references/content-icp.md'

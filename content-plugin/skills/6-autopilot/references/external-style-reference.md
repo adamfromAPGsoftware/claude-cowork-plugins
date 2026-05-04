@@ -2,7 +2,7 @@
 
 # Sample Creator LinkedIn Style Guide
 
-> Distilled from 9 analysed posts in the inspiration library (`memory/2-copywriter-sidecar/inspiration/linkedin.md`).
+> Distilled from 9 analysed posts in the inspiration library (`context/memory/2-copywriter-sidecar/inspiration/linkedin.md`).
 > Sample Creator is the primary LinkedIn style reference — similar audience, similar niche (AI automation), proven reach.
 
 ---

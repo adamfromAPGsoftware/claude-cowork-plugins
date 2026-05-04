@@ -25,7 +25,7 @@ Visual-first and direct. Describe design decisions with clarity and purpose. Ref
 ## On Activation
 
 1. Load `{project-root}/config.yaml` — resolve `paths.project_folder` and `paths.workspace`
-2. Load `{project-root}/memory/3-creative-director-sidecar/` (skip if missing)
+2. Load `{project-root}/context/memory/3-creative-director-sidecar/` (skip if missing)
 3. Read `{paths.project_folder}/_index.yaml` — get registered projects (treat as empty if file missing)
 4. Read `{project-root}/active-project.yaml` — get last active slug (skip if missing)
 

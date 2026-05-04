@@ -18,7 +18,7 @@ Required fields:
 - `paths.content_output_folder` — must not be empty
 - `paths.standalone_folder` — must not be empty
 
-Also verify the workspace directory exists on disk: check that `paths.workspace` is an existing directory and that `projects/`, `context/references/`, `standalone/`, `context/brand-assets/`, `memory/`, and `draft-queue/` subdirectories exist. If missing, the scaffold was never created or the path was changed manually.
+Also verify the workspace directory exists on disk: check that `paths.workspace` is an existing directory and that `projects/`, `context/references/`, `standalone/`, `context/brand-assets/`, `context/memory/`, and `context/draft-queue/` subdirectories exist. If missing, the scaffold was never created or the path was changed manually.
 
 ### Section 1 — Brand Identity
 

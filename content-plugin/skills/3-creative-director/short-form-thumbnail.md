@@ -42,7 +42,7 @@ NEVER: frowning, shocked, surprised, jaw-drop, wide-eyed, overly excited, unhapp
 ## Phase 1: Load Style Guide and Inspiration
 
 1. Load short-form style guide from `{project-root}/content-plugin/skills/3-creative-director/workflows/visual-asset-creation/data/short-form-style-guide.md`
-2. Load ALL inspiration images from `{project-root}/memory/3-creative-director-sidecar/short-form-inspiration/` (inspo-01.png, inspo-02.png, inspo-03.png)
+2. Load ALL inspiration images from `{project-root}/context/memory/3-creative-director-sidecar/short-form-inspiration/` (inspo-01.png, inspo-02.png, inspo-03.png)
 3. Verify minimum 2 inspiration images exist
 4. Load brand config for reference photo registry and colour palette
 5. If active project, load keyword research (latest version) and build `{keyword_pool}`

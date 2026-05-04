@@ -1,6 +1,6 @@
 # Memory System for CCS Copywriter
 
-**Memory location:** `{project-root}/memory/2-copywriter-sidecar/`
+**Memory location:** `{project-root}/context/memory/2-copywriter-sidecar/`
 
 ## Core Principle
 

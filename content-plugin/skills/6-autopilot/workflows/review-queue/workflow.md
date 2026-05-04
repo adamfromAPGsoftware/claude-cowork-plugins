@@ -1,7 +1,7 @@
 ---
 name: review-queue
 description: Review, approve, edit, reject, or regenerate drafts from the autopilot queue — handles LinkedIn/X posts and Instagram/TikTok carousels
-draftQueue: '{project-root}/draft-queue/'
+draftQueue: '{project-root}/context/draft-queue/'
 contentCalendar: '{content_output_folder}/calendar/content-calendar.yaml'
 platformSpecs: '{project-root}/content-plugin/skills/5-publisher/workflows/schedule-publish/data/platform-specs.md'
 schedulingConfig: '{project-root}/context/references/scheduling-config.md'

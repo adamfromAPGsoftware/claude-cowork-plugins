@@ -15,7 +15,7 @@ Plan the hook slide composition, build the slides.json input, and run the carous
 ### 1. Set Output Directory
 
 ```
-slides_dir = {project-root}/draft-queue/carousels/YYYY-MM-DD-instagram/
+slides_dir = {project-root}/context/draft-queue/carousels/YYYY-MM-DD-instagram/
 ```
 
 Create the directory if it doesn't exist. Derive the date from today's date.

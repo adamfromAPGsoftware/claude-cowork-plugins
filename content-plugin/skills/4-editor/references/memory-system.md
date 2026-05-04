@@ -1,6 +1,6 @@
 # Memory System for CCS Editor
 
-**Memory location:** `{project-root}/memory/4-editor-sidecar/`
+**Memory location:** `{project-root}/context/memory/4-editor-sidecar/`
 
 ## Core Principle
 

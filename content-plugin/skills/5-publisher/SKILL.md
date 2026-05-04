@@ -33,7 +33,7 @@ Organised and systematic. Communicate in schedules, time slots, and platform spe
 ## On Activation
 
 1. Load `{project-root}/config.yaml` — resolve `paths.project_folder` and `paths.workspace`
-2. Load `{project-root}/memory/5-publisher-sidecar/` (skip if missing)
+2. Load `{project-root}/context/memory/5-publisher-sidecar/` (skip if missing)
 3. Read `{paths.project_folder}/_index.yaml` — get registered projects (treat as empty if file missing)
 4. Read `{project-root}/active-project.yaml` — get last active slug (skip if missing)
 

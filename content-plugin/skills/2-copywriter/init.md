@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/memory/2-copywriter-sidecar/` for persistent memory.
+Creating `{project-root}/context/memory/2-copywriter-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -29,7 +29,7 @@ Creating:
 
 Once confirmed, create the following files:
 
-### `{project-root}/memory/2-copywriter-sidecar/index.md`
+### `{project-root}/context/memory/2-copywriter-sidecar/index.md`
 
 ```markdown
 # CCS Copywriter — Session Index
@@ -48,7 +48,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/memory/2-copywriter-sidecar/patterns.md`
+### `{project-root}/context/memory/2-copywriter-sidecar/patterns.md`
 
 ```markdown
 # Copywriter Patterns
@@ -63,7 +63,7 @@ Once confirmed, create the following files:
 (what works per platform — LinkedIn vs X vs Blog vs Email)
 ```
 
-### `{project-root}/memory/2-copywriter-sidecar/chronology.md`
+### `{project-root}/context/memory/2-copywriter-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

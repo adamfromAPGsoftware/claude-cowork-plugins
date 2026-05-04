@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/memory/4-editor-sidecar/` for persistent memory.
+Creating `{project-root}/context/memory/4-editor-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -29,7 +29,7 @@ Creating:
 
 Once confirmed, create the following files:
 
-### `{project-root}/memory/4-editor-sidecar/index.md`
+### `{project-root}/context/memory/4-editor-sidecar/index.md`
 
 ```markdown
 # CCS Editor — Session Index
@@ -46,7 +46,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/memory/4-editor-sidecar/patterns.md`
+### `{project-root}/context/memory/4-editor-sidecar/patterns.md`
 
 ```markdown
 # Editor Patterns
@@ -61,7 +61,7 @@ Once confirmed, create the following files:
 (feedback approaches that led to best revisions)
 ```
 
-### `{project-root}/memory/4-editor-sidecar/chronology.md`
+### `{project-root}/context/memory/4-editor-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

@@ -66,7 +66,7 @@ After completing the setup wizard, the plugin creates or populates:
 | File / Location | Contents |
 |------|---------|
 | `config.yaml` | Workspace paths, env var names, brand config |
-| Your content workspace folder | `projects/`, `context/references/`, `context/brand-assets/`, `context/youtube/`, `context/inspiration/`, `standalone/`, `memory/`, `draft-queue/` — created automatically |
+| Your content workspace folder | `projects/`, `context/references/`, `context/brand-assets/`, `context/youtube/`, `context/inspiration/`, `standalone/`, `context/memory/`, `context/draft-queue/` — created automatically |
 | `context/references/brand-voice.md` | Tone guide, vocabulary list, anti-AI filter |
 | `context/references/content-icp.md` | Ideal viewer/reader profile |
 | `context/references/platform-config.md` | Active platforms, account handles, format specs |
@@ -116,8 +116,8 @@ After running setup, your project root contains:
     youtube/                 Cached channel library and transcripts
     inspiration/
       instagram/             Scraped carousel inspiration
-  memory/                  Agent memory sidecars (created on first agent run)
-  draft-queue/             Autopilot-generated drafts awaiting review
+    memory/                  Agent memory sidecars (created on first agent run)
+    draft-queue/             Autopilot-generated drafts awaiting review
   projects/                Content projects (one folder per slug)
   standalone/              Non-project content
   content-plugin/          The plugin (read-only)

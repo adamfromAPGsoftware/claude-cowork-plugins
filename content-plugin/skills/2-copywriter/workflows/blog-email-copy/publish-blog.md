@@ -72,4 +72,4 @@ format: blog
 
 ### 6. Update Tracking
 
-- Update `{project-root}/memory/2-copywriter-sidecar/memories.md` with blog export status and timestamp
+- Update `{project-root}/context/memory/2-copywriter-sidecar/memories.md` with blog export status and timestamp

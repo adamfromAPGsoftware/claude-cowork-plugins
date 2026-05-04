@@ -14,7 +14,7 @@ Persist current session progress to sidecar memory so the next session picks up 
 
 ### Step 1: Update `index.md`
 
-Read current `memory/3-creative-director-sidecar/index.md` and update:
+Read current `context/memory/3-creative-director-sidecar/index.md` and update:
 
 **Active Projects section** — Update project and visual asset status.
 

@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/memory/5-publisher-sidecar/` for persistent memory.
+Creating `{project-root}/context/memory/5-publisher-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -39,7 +39,7 @@ Store discovered channels in index.md.
 
 Once confirmed, create the following files:
 
-### `{project-root}/memory/5-publisher-sidecar/index.md`
+### `{project-root}/context/memory/5-publisher-sidecar/index.md`
 
 ```markdown
 # CCS Publisher — Session Index
@@ -58,7 +58,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/memory/5-publisher-sidecar/patterns.md`
+### `{project-root}/context/memory/5-publisher-sidecar/patterns.md`
 
 ```markdown
 # Publisher Patterns
@@ -73,7 +73,7 @@ Once confirmed, create the following files:
 (scheduling history for reference)
 ```
 
-### `{project-root}/memory/5-publisher-sidecar/chronology.md`
+### `{project-root}/context/memory/5-publisher-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

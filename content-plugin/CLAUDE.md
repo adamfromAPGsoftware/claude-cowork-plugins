@@ -45,8 +45,8 @@ All `{project_folder}`, `{content_output_folder}`, `{standalone_folder}`, and `{
 | Content workspace root | `paths.workspace` in `config.yaml` |
 | Active project slug | `active-project.yaml` |
 | Autopilot run state | `autopilot-state.yaml` |
-| Agent memory sidecars | `memory/{N}-{agent-name}-sidecar/` |
-| Autopilot draft queue | `draft-queue/` |
+| Agent memory sidecars | `context/memory/{N}-{agent-name}-sidecar/` |
+| Autopilot draft queue | `context/draft-queue/` |
 | Project registry | `{project_folder}/_index.yaml` |
 | Project metadata | `{project_folder}/{slug}/project.yaml` |
 | CCS module config (paths, env vars) | `config.yaml` |
@@ -90,7 +90,7 @@ npm install && npx playwright install chromium
 
 **Project mode is mandatory on activation.** Every agent runs the startup protocol from `content-plugin/references/startup-protocol.md` before displaying its menu. It checks `active-project.yaml` and offers to resume, switch, create, or go standalone. New project creation is restricted to the Content Strategist only.
 
-**Module code is `content`.** Memory sidecars are stored at `memory/{N}-{agent-name}-sidecar/`. All five agents have `has-memory: true` in their manifests.
+**Module code is `content`.** Memory sidecars are stored at `context/memory/{N}-{agent-name}-sidecar/`. All five agents have `has-memory: true` in their manifests.
 
 **Brand voice is a hard gate.** The Copywriter must apply the Anti-AI Red Flags filter from `context/references/brand-voice.md` before presenting any draft. The Editor will reject content that scores below 7/10 on voice consistency.
 
@@ -135,7 +135,7 @@ npm install && npx playwright install chromium
 | Editor quality gate config | `content-plugin/skills/4-editor/SKILL.md` |
 | Publisher capabilities / Buffer MCP notes | `content-plugin/skills/5-publisher/SKILL.md` |
 | Agent persona definitions | `content-plugin/agents/{N}-{name}.md` |
-| Agent memory | `memory/{N}-{agent-name}-sidecar/` |
+| Agent memory | `context/memory/{N}-{agent-name}-sidecar/` |
 | Competitive research workflow steps | `content-plugin/skills/1-content-strategist/workflows/competitive-research/` |
 | Script generation workflow | `content-plugin/skills/2-copywriter/workflows/script-generation/` |
 | LinkedIn comment processor (Node.js) | `content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/` |

@@ -16,7 +16,7 @@ This capability does NOT:
 - Send push notifications
 - Auto-queue for publishing
 
-Outputs save to `{project-root}/draft-queue/test-styles/` for manual review only.
+Outputs save to `{project-root}/context/draft-queue/test-styles/` for manual review only.
 
 ---
 
@@ -147,7 +147,7 @@ Reference post: {activity_id}
 TEST SUMMARY
 Styles generated: 5/5
 All passing: {yes/no — list any that need review}
-Test drafts saved to: draft-queue/test-styles/
+Test drafts saved to: context/draft-queue/test-styles/
 ```
 
 ---

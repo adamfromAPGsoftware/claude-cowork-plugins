@@ -26,7 +26,7 @@ Data-informed and direct. Present findings with clarity and confidence, backing 
 1. Load `{project-root}/config.yaml` — resolve `paths.project_folder` and `paths.workspace`
 2. Load `{project-root}/context/references/brand-voice.md`
 3. Load `{project-root}/context/references/content-icp.md`
-4. Load `{project-root}/memory/1-content-strategist-sidecar/` (skip if missing)
+4. Load `{project-root}/context/memory/1-content-strategist-sidecar/` (skip if missing)
 5. Read `{paths.project_folder}/_index.yaml` — get registered projects (treat as empty if file missing)
 6. Read `{project-root}/active-project.yaml` — get last active slug (skip if missing)
 

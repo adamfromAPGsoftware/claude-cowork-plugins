@@ -67,16 +67,16 @@ Load {outputFile} and read:
 - Format-specific inputs (keywords, URLs, format A/B, etc.)
 
 **Load brand context from the copywriter agent's sidecar memory:**
-- `memory/2-copywriter-sidecar/brand-guidelines.md` — Brand voice, tone, positioning
-- `memory/2-copywriter-sidecar/icp-profiles.md` — ICP pain points, language, resonance triggers (if exists)
+- `context/memory/2-copywriter-sidecar/brand-guidelines.md` — Brand voice, tone, positioning
+- `context/memory/2-copywriter-sidecar/icp-profiles.md` — ICP pain points, language, resonance triggers (if exists)
 
 **IF format is blog:**
 - Load {blogStandards} completely. These are your generation rules.
-- Load `memory/2-copywriter-sidecar/inspiration/blog.md` if it exists — for style pattern guidance
+- Load `context/memory/2-copywriter-sidecar/inspiration/blog.md` if it exists — for style pattern guidance
 
 **IF format is email:**
 - Load {emailStandards} completely. These are your generation rules.
-- Load `memory/2-copywriter-sidecar/inspiration/email.md` if it exists — for style pattern guidance
+- Load `context/memory/2-copywriter-sidecar/inspiration/email.md` if it exists — for style pattern guidance
 
 ### 1b. Pre-Generation Checks (Email Only)
 

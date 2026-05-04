@@ -6,7 +6,7 @@ nextStepFile: './step-02-concept-generate.md'
 agencyScriptRulesData: '../data/agency-script-rules.md'
 newsSearchQueries: '../data/agency-news-search-queries.md'
 reputationAnglesData: '../data/reputation-angles.md'
-icpBofuDoc: '{project-root}/memory/agency-sidecar/agency-offer.md'
+icpBofuDoc: '{project-root}/context/memory/agency-sidecar/agency-offer.md'
 ---
 
 # Step 1: Research — Per-Pillar Content Discovery

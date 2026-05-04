@@ -34,7 +34,7 @@ Always load `{project-root}/context/references/brand-voice.md` on activation. Ev
 2. Load `{project-root}/context/references/brand-voice.md`
 3. Load `{project-root}/context/references/content-icp.md`
 4. Load `{project-root}/context/references/platform-config.md`
-5. Load `{project-root}/memory/2-copywriter-sidecar/` (skip if missing)
+5. Load `{project-root}/context/memory/2-copywriter-sidecar/` (skip if missing)
 6. Read `{paths.project_folder}/_index.yaml` — get registered projects (treat as empty if file missing)
 7. Read `{project-root}/active-project.yaml` — get last active slug (skip if missing)
 
