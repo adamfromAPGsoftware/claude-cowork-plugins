@@ -66,12 +66,12 @@ After completing the setup wizard, the plugin creates or populates:
 | File / Location | Contents |
 |------|---------|
 | `config.yaml` | Workspace paths, env var names, brand config |
-| Your content workspace folder | `projects/`, `references/`, `standalone/`, `brand-assets/logos/`, `brand-assets/reference-photos/` — created automatically |
-| `references/brand-voice.md` | Tone guide, vocabulary list, anti-AI filter |
-| `references/content-icp.md` | Ideal viewer/reader profile |
-| `references/platform-config.md` | Active platforms, account handles, format specs |
-| `references/scheduling-config.md` | Buffer channel names, posting cadence per platform |
-| `references/brand-assets.md` | Primary colour, logo path, email header/footer config |
+| Your content workspace folder | `projects/`, `context/references/`, `standalone/`, `context/brand-assets/logos/`, `context/brand-assets/reference-photos/` — created automatically |
+| `context/references/brand-voice.md` | Tone guide, vocabulary list, anti-AI filter |
+| `context/references/content-icp.md` | Ideal viewer/reader profile |
+| `context/references/platform-config.md` | Active platforms, account handles, format specs |
+| `context/references/scheduling-config.md` | Buffer channel names, posting cadence per platform |
+| `context/references/brand-assets.md` | Primary colour, logo path, email header/footer config |
 
 ## Blog publishing
 
@@ -99,15 +99,16 @@ After running setup, your project root contains:
 ```
 {project-root}/
   config.yaml            Brand, voice, ICP, platform, and scheduling config
-  references/
-    brand-voice.md       Tone guide, vocabulary rules, anti-AI filter
-    content-icp.md       Ideal viewer/reader profile
-    platform-config.md   Active platforms, cadence, repurposing flow
-    scheduling-config.md Buffer channel names, timezone
-    brand-assets.md      Colours, logos, email config, content strategy
-  brand-assets/
-    logos/                Brand logos (brand-logo.png, brand-logo-dark.png, etc.)
-    reference-photos/    Creator headshots for identity-preserving generation
+  context/
+    references/
+      brand-voice.md       Tone guide, vocabulary rules, anti-AI filter
+      content-icp.md       Ideal viewer/reader profile
+      platform-config.md   Active platforms, cadence, repurposing flow
+      scheduling-config.md Buffer channel names, timezone
+      brand-assets.md      Colours, logos, email config, content strategy
+    brand-assets/
+      logos/               Brand logos (brand-logo.png, brand-logo-dark.png, etc.)
+      reference-photos/    Creator headshots for identity-preserving generation
   projects/              Content projects (one folder per project slug)
   standalone/            Non-project content
   content-plugin/        The plugin (skills, agents, workflows, data)

@@ -51,13 +51,13 @@ If changed:
 |----------------|------------------------------|
 | Content Workspace (W) | No reference files — only config.yaml paths updated |
 | Brand Identity (1) | Update header in all five reference files |
-| Brand Voice (2) | `{project-root}/references/brand-voice.md` |
-| Content ICP (3) | `{project-root}/references/content-icp.md` |
-| Platforms (4) | `{project-root}/references/platform-config.md` |
+| Brand Voice (2) | `{project-root}/context/references/brand-voice.md` |
+| Content ICP (3) | `{project-root}/context/references/content-icp.md` |
+| Platforms (4) | `{project-root}/context/references/platform-config.md` |
 | Credentials (5) | No reference files to regenerate |
-| Scheduling (6) | `{project-root}/references/scheduling-config.md` |
-| Brand Assets (7) | `{project-root}/references/brand-assets.md` |
-| Content Strategy (8) | `{project-root}/references/brand-assets.md` (strategy section) |
+| Scheduling (6) | `{project-root}/context/references/scheduling-config.md` |
+| Brand Assets (7) | `{project-root}/context/references/brand-assets.md` |
+| Content Strategy (8) | `{project-root}/context/references/brand-assets.md` (strategy section) |
 
 ---
 
@@ -69,5 +69,5 @@ If changed:
   {key: value for each field in the section}
 
 {if reference file regenerated}
-  references/{filename}.md regenerated ✓
+  context/references/{filename}.md regenerated ✓
 ```

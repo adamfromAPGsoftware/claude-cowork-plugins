@@ -30,10 +30,10 @@ Enter an absolute path or press Enter to use the default."
 - Create the folder scaffold using `mkdir -p` for each subdirectory (skip if already exists):
   ```
   {workspace}/projects/
-  {workspace}/references/
+  {workspace}/context/references/
   {workspace}/standalone/
-  {workspace}/brand-assets/logos/
-  {workspace}/brand-assets/reference-photos/
+  {workspace}/context/brand-assets/logos/
+  {workspace}/context/brand-assets/reference-photos/
   ```
 - If `{workspace}/projects/_index.yaml` does not exist, create it with content:
   ```yaml
@@ -53,7 +53,7 @@ Show confirmation:
 ```
 Workspace configured:
   Path:    {workspace}
-  Created: projects/, references/, standalone/, brand-assets/logos/, brand-assets/reference-photos/
+  Created: projects/, context/references/, standalone/, context/brand-assets/logos/, context/brand-assets/reference-photos/
   (Existing directories were left unchanged)
 ```
 
@@ -252,12 +252,12 @@ Ask:
 2. "Do you have a secondary/supporting colour? (hex code, or press Enter to skip)"
    → `brand.colors.secondary` (optional)
 
-3. "Your logo files go in `brand-assets/logos/` in your workspace. Drop your logo files there — expected: `brand-logo.png`, `brand-logo-dark.png`, `brand-logo-light.png`."
-   Default: `{workspace}/brand-assets/logos/`
+3. "Your logo files go in `context/brand-assets/logos/` in your workspace. Drop your logo files there — expected: `brand-logo.png`, `brand-logo-dark.png`, `brand-logo-light.png`."
+   Default: `{workspace}/context/brand-assets/logos/`
    → `brand.assets.logo_dir`
 
-4. "Reference photos for identity-preserving thumbnail generation go in `brand-assets/reference-photos/`. These are headshots/portraits of you that AI uses to keep your face consistent in thumbnails. Expected: `creator-hero-front.jpg`, `creator-3quarter-left.jpg`, `creator-3quarter-right.jpg`, `creator-smiling.jpg`, `creator-talking.jpg`."
-   Default: `{workspace}/brand-assets/reference-photos/`
+4. "Reference photos for identity-preserving thumbnail generation go in `context/brand-assets/reference-photos/`. These are headshots/portraits of you that AI uses to keep your face consistent in thumbnails. Expected: `creator-hero-front.jpg`, `creator-3quarter-left.jpg`, `creator-3quarter-right.jpg`, `creator-smiling.jpg`, `creator-talking.jpg`."
+   Default: `{workspace}/context/brand-assets/reference-photos/`
    → `brand.assets.reference_photos_dir`
 
 5. "How do you sign off your emails? (the closing line above your name)"
@@ -321,7 +321,7 @@ Show confirmation:
 
 After all 8 sections are saved, generate five reference files:
 
-### 1. `{project-root}/references/brand-voice.md`
+### 1. `{project-root}/context/references/brand-voice.md`
 
 ```markdown
 # Brand Voice — {brand.creator_name}
@@ -369,7 +369,7 @@ Flag and remove any of these before presenting a draft:
 "AI cuts the time to publish by 80%. Here's the exact workflow."
 ```
 
-### 2. `{project-root}/references/content-icp.md`
+### 2. `{project-root}/context/references/content-icp.md`
 
 ```markdown
 # Content ICP — {brand.name}
@@ -395,7 +395,7 @@ Avoid these mistakes when writing for this audience:
 {icp.anti_patterns as bullet list}
 ```
 
-### 3. `{project-root}/references/platform-config.md`
+### 3. `{project-root}/context/references/platform-config.md`
 
 ```markdown
 # Platform Config — {brand.name}
@@ -425,7 +425,7 @@ Avoid these mistakes when writing for this audience:
 - Schedule for impact, not convenience — timing is distribution strategy
 ```
 
-### 4. `{project-root}/references/scheduling-config.md`
+### 4. `{project-root}/context/references/scheduling-config.md`
 
 ```markdown
 # Scheduling Config — {brand.name}
@@ -445,7 +445,7 @@ Connect social accounts at: buffer.com/manage/channels
 {for each account in scheduling.accounts: | {platform} | {account_name} |}
 ```
 
-### 5. `{project-root}/references/brand-assets.md`
+### 5. `{project-root}/context/references/brand-assets.md`
 
 ```markdown
 # Brand Assets — {brand.name}
@@ -511,11 +511,11 @@ config.yaml:
   config.yaml                                      ✓
 
 Reference files:
-  references/brand-voice.md        ✓
-  references/content-icp.md        ✓
-  references/platform-config.md    ✓
-  references/scheduling-config.md  ✓
-  references/brand-assets.md       ✓
+  context/references/brand-voice.md        ✓
+  context/references/content-icp.md        ✓
+  context/references/platform-config.md    ✓
+  context/references/scheduling-config.md  ✓
+  context/references/brand-assets.md       ✓
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next step: run /content:1-content-strategist → type CR to start research.
