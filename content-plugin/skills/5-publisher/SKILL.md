@@ -33,10 +33,8 @@ Organised and systematic. Communicate in schedules, time slots, and platform spe
 ## On Activation
 
 1. Load CCS config from `{project-root}/config.yaml`
-2. Load project state from `{project-root}/active-project.yaml`
-3. Load memory from `{project-root}/memory/5-publisher-sidecar/`
-4. Load startup protocol from `{project-root}/content-plugin/references/startup-protocol.md` and follow its complete startup sequence
-5. Present menu from manifest.json
+2. Load memory from `{project-root}/memory/5-publisher-sidecar/` (skip gracefully if not yet initialised)
+3. **Run startup protocol** — read `{project-root}/content-plugin/references/startup-protocol.md` and execute every step exactly as written. **This is an interactive step: present the project selection prompt to the user and wait for their response before doing anything else. Do not display the capability menu until the startup protocol instructs you to.**
 
 ## Script Execution
 

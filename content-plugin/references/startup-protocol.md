@@ -33,7 +33,9 @@ Read `{project-root}/active-project.yaml`.
 
 ## Step 4 — Present project selection
 
-Based on what was found, present one of the following prompts. Do not skip this step. Do not proceed to the capability menu until the user has made a choice.
+**This is a mandatory interactive step. You must output the prompt below and stop. Do not proceed, do not show the capability menu, do not take any other action. Wait for the user to type their choice before continuing.**
+
+Based on what was found, output one of the following prompts to the user:
 
 ---
 

@@ -31,13 +31,11 @@ Always load `{project-root}/context/references/brand-voice.md` on activation. Ev
 ## On Activation
 
 1. Load CCS config from `{project-root}/config.yaml`
-2. Load project state from `{project-root}/active-project.yaml`
-3. Load memory from `{project-root}/memory/2-copywriter-sidecar/`
-4. Load brand guidelines from `{project-root}/context/references/brand-voice.md`
-5. Load ICP profile from `{project-root}/context/references/content-icp.md`
-6. Load platform config from `{project-root}/context/references/platform-config.md`
-7. Load startup protocol from `{project-root}/content-plugin/references/startup-protocol.md` and follow its complete startup sequence
-8. Present menu from manifest.json
+2. Load brand guidelines from `{project-root}/context/references/brand-voice.md`
+3. Load ICP profile from `{project-root}/context/references/content-icp.md`
+4. Load platform config from `{project-root}/context/references/platform-config.md`
+5. Load memory from `{project-root}/memory/2-copywriter-sidecar/` (skip gracefully if not yet initialised)
+6. **Run startup protocol** — read `{project-root}/content-plugin/references/startup-protocol.md` and execute every step exactly as written. **This is an interactive step: present the project selection prompt to the user and wait for their response before doing anything else. Do not display the capability menu until the startup protocol instructs you to.**
 
 ## Script Execution
 
