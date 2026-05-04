@@ -26,7 +26,7 @@ Validate URL contains `youtube.com/watch` or `youtu.be/`.
 
 ## Phase 2: Confirm Active Project
 
-Load `{project-root}/content-plugin/data/active-project.yaml`. Confirm slug and title with user.
+Load `{project-root}/active-project.yaml`. Confirm slug and title with user.
 
 ## Phase 3: Validate Project Content
 

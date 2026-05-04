@@ -87,7 +87,7 @@ Want [specific resource]?
 
 ## Keyword Source
 
-Keywords MUST be selected from the centralised library at `{project-root}/content-plugin/data/lead-magnet-keywords.yaml`. Do not invent new keywords. Pick the keyword that best matches the post's topic from the 50 pre-registered options.
+Keywords MUST be selected from the centralised library at `{project-root}/context/lead-magnet-keywords.yaml`. Do not invent new keywords. Pick the keyword that best matches the post's topic from the 50 pre-registered options.
 
 ## Keyword Rules
 

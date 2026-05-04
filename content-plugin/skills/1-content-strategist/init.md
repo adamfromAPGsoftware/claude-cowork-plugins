@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/content-plugin/data/memory/1-content-strategist-sidecar/` for persistent memory.
+Creating `{project-root}/memory/1-content-strategist-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -34,7 +34,7 @@ Creating:
 
 Once confirmed, create the following files:
 
-### `{project-root}/content-plugin/data/memory/1-content-strategist-sidecar/index.md`
+### `{project-root}/memory/1-content-strategist-sidecar/index.md`
 
 ```markdown
 # CCS Content Strategist — Session Index
@@ -51,7 +51,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/content-plugin/data/memory/1-content-strategist-sidecar/patterns.md`
+### `{project-root}/memory/1-content-strategist-sidecar/patterns.md`
 
 ```markdown
 # Content Strategist Patterns
@@ -66,7 +66,7 @@ Once confirmed, create the following files:
 (which concept types score highest and perform best after publication)
 ```
 
-### `{project-root}/content-plugin/data/memory/1-content-strategist-sidecar/chronology.md`
+### `{project-root}/memory/1-content-strategist-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

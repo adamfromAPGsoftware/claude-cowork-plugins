@@ -55,7 +55,7 @@ Load and read `{project-root}/config.yaml`. Resolve:
 - `standalone_folder`
 - `output_folder`
 
-Also load the active project from `{project-root}/content-plugin/data/active-project.yaml`.
+Also load the active project from `{project-root}/active-project.yaml`.
 
 ### 2. Mode Selection
 

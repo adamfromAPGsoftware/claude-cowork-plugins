@@ -14,9 +14,9 @@ Content automation engine for social platforms. Runs on-demand (or on a schedule
 
 ## On Activation
 
-1. Load autopilot state from `{project-root}/content-plugin/data/autopilot-state.yaml`
-2. Load brand voice from `{project-root}/references/brand-voice.md`
-3. Load content ICP from `{project-root}/references/content-icp.md`
+1. Load autopilot state from `{project-root}/autopilot-state.yaml`
+2. Load brand voice from `{project-root}/context/references/brand-voice.md`
+3. Load content ICP from `{project-root}/context/references/content-icp.md`
 4. Present capability menu below
 
 ## Capability Menu
@@ -37,7 +37,7 @@ CONTENT AUTOPILOT
 Show current state from `autopilot-state.yaml`:
 - LX — Today's pillar (next): `{next pillar}` | Format: `{next format}` | Last run: `{lx last_date}`
 - IC — Next angle: `{next topic_angle}` | Inspiration: `{days since last scrape}d old` | Last run: `{ic last_date}`
-- Drafts in queue: `{count from data/draft-queue/ with status: draft}`
+- Drafts in queue: `{count from draft-queue/ with status: draft}`
 
 ## Script Execution
 
@@ -45,12 +45,12 @@ All Python scripts can be run via the Bash tool.
 
 ## Key Paths
 
-- State file: `{project-root}/content-plugin/data/autopilot-state.yaml`
-- Draft queue: `{project-root}/content-plugin/data/draft-queue/`
+- State file: `{project-root}/autopilot-state.yaml`
+- Draft queue: `{project-root}/draft-queue/`
 - Content calendar: `{content_output_folder}/calendar/content-calendar.yaml`
-- YouTube library: `{project-root}/content-plugin/data/youtube/channel-library.json`
-- Lead magnet keywords: `{project-root}/content-plugin/data/lead-magnet-keywords.yaml`
-- LX inspiration: `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/inspiration/linkedin.md`
-- IC watchlist: `{project-root}/content-plugin/data/instagram-watchlist.yaml`
-- IC inspiration: `{project-root}/content-plugin/data/inspiration/instagram/`
+- YouTube library: `{project-root}/context/youtube/channel-library.json`
+- Lead magnet keywords: `{project-root}/context/lead-magnet-keywords.yaml`
+- LX inspiration: `{project-root}/memory/2-copywriter-sidecar/inspiration/linkedin.md`
+- IC watchlist: `{project-root}/context/instagram-watchlist.yaml`
+- IC inspiration: `{project-root}/context/inspiration/instagram/`
 - Buffer channel IDs: fetched at runtime via `mcp__buffer__use_buffer_api(action: "listChannels")` — stored in scheduling-config.md after setup

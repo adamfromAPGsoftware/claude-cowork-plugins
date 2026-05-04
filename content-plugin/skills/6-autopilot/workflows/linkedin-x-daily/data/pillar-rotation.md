@@ -52,7 +52,7 @@ The `current_index` in `autopilot-state.yaml` advances by 1 each run, wrapping t
 **CTA type:** Comment keyword — Style B 3-step (like + comment "[KEYWORD]" + connect)
 **Tone:** Expert-confident without arrogance. Technical credibility woven in naturally.
 **Key rules:**
-- Keyword must be ALL-CAPS, selected from `content-plugin/data/lead-magnet-keywords.yaml`
+- Keyword must be ALL-CAPS, selected from `context/lead-magnet-keywords.yaml`
 - 2-step CTA mechanic: 1. Like this post 2. Comment "[KEYWORD]" 3. Connect so I can DM
 - Post must deliver real value preview (✅ checklist or → arrow list) before the CTA
 - P.S. line with honest caveat builds trust and counters the CTA feel

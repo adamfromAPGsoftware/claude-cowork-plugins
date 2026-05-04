@@ -27,7 +27,7 @@ The `current_index` in `autopilot-state.yaml` advances by 1 each run, wrapping t
 **X specs:** 1200x675 recommended.
 **Best for:** Lead magnet posts (image + keyword CTA = high engagement). Personal posts with a visual metaphor.
 **Generation steps:**
-1. Check `brand-assets/` for any indexed reference images (screenshots, tool logos) relevant to the post topic — use these first
+1. Check `context/brand-assets/` for any indexed reference images (screenshots, tool logos) relevant to the post topic — use these first
 2. If no suitable existing image, generate via fal-ai MCP:
    - Call `mcp__fal-ai__generate_image` with `image_size: "square_hd"` for LinkedIn, `image_size: "landscape_16_9"` for X
    - For tool logos: use the logo sourcing hierarchy (Simple Icons → SVG Repo → CompanyEnrich)
@@ -38,7 +38,7 @@ The `current_index` in `autopilot-state.yaml` advances by 1 each run, wrapping t
 **Asset required:** 15-30s sped-up clip from an existing YouTube video.
 **Best for:** Technical/educational posts where seeing a demo is more convincing than reading about it.
 **Generation steps:**
-1. Identify the most relevant YouTube video from `content-plugin/data/youtube/channel-library.json`
+1. Identify the most relevant YouTube video from `context/youtube/channel-library.json`
 2. Select a 15-30 second segment from the video transcript that best illustrates the post's key point
 3. Output an ffmpeg command to extract + speed up the segment:
    ```

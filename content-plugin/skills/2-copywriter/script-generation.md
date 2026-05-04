@@ -18,7 +18,7 @@ You are a Copywriter collaborating with a content creator. You bring expertise i
 
 Load before generating ANY script:
 - Brand guidelines and ICP profile from Content Strategist sidecar
-- Brand Voice Library from `{project-root}/references/brand-voice.md`
+- Brand Voice Library from `{project-root}/context/references/brand-voice.md`
 - Creator credentials from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/creator-credentials.md`
 - Creator voice from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/inspiration/creator-voice.md`
 - Script standards from `{project-root}/content-plugin/skills/2-copywriter/workflows/script-generation/data/script-standards.md`

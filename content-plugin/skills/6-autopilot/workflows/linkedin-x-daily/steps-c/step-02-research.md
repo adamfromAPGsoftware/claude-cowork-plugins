@@ -23,7 +23,7 @@ For each recent video:
 - If NO companion post found for this video → **select this video as today's topic** (YouTube-repurpose path)
 
 If a YouTube-repurpose candidate is found:
-- Load the video's transcript from `{project-root}/content-plugin/data/youtube/transcripts/{video_id}.json` if it exists, otherwise use the video title and description
+- Load the video's transcript from `{project-root}/context/youtube/transcripts/{video_id}.json` if it exists, otherwise use the video title and description
 - Extract 3-5 key insights or memorable moments from the transcript (look for moments where the creator shares a specific number, process step, or surprising result)
 - Set `topic_source: youtube-repurpose`, `youtube_video_id: {id}`
 - Skip sections 2 and 3 below, proceed directly to output

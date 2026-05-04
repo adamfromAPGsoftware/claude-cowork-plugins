@@ -35,11 +35,11 @@ Reusable carousel patterns with hardcoded design decisions. Agents fill in text 
 - Slide 1 (intro — warm/smiling): `{reference_photos_folder}/carousel-bg-intro.png`
 - Slide 8 (CTA — confident/direct): `{reference_photos_folder}/carousel-bg-cta.png`
 
-Where `{reference_photos_folder}` = `content-plugin/data/reference-photos`
+Where `{reference_photos_folder}` = `context/brand-assets/reference-photos`
 
 These backgrounds were generated via `scripts/generate-carousel-photos.py` using Gemini with reference photos. They show the creator naturally placed on the right side over a dark background with subtle green blobs — text space is on the left. To regenerate or create new variants, run:
 ```bash
-python3 scripts/generate-carousel-photos.py --ref-dir content-plugin/data/reference-photos --output-dir content-plugin/data/reference-photos --slides intro,cta
+python3 scripts/generate-carousel-photos.py --ref-dir context/brand-assets/reference-photos --output-dir context/brand-assets/reference-photos --slides intro,cta
 ```
 
 **JSON skeleton:**

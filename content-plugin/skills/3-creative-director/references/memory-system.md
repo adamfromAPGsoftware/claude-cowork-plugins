@@ -1,6 +1,6 @@
 # Memory System for CCS Creative Director
 
-**Memory location:** `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/`
+**Memory location:** `{project-root}/memory/3-creative-director-sidecar/`
 
 ## Core Principle
 

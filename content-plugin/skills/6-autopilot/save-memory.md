@@ -6,7 +6,7 @@ menu-code: SM
 
 # [SM] Save Memory
 
-Append a session entry to `content-plugin/data/memory/6-autopilot-sidecar/index.md` (create the sidecar directory and file if they don't exist):
+Append a session entry to `memory/6-autopilot-sidecar/index.md` (create the sidecar directory and file if they don't exist):
 
 ```
 ## {today} — Autopilot Run

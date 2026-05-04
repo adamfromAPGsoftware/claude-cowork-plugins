@@ -59,7 +59,7 @@ load_env_config()
 PROJECT_ROOT = Path(__file__).resolve().parents[6]
 CONTENT_PROJECTS = PROJECT_ROOT / os.environ.get("CONTENT_PROJECTS", "content/projects")
 ACTIVE_PROJECT_PATH = PROJECT_ROOT / "content-plugin" / "data" / "active-project.yaml"
-LOG_DIR = PROJECT_ROOT / os.environ.get("LOG_DIR", "content-plugin/data/logs/post-publish-logs")
+LOG_DIR = PROJECT_ROOT / os.environ.get("LOG_DIR", "publisher/logs")
 
 STEP_TIMEOUT = int(os.environ.get("STEP_TIMEOUT", "1800"))
 HEARTBEAT_INTERVAL = int(os.environ.get("HEARTBEAT_INTERVAL", "30"))
@@ -581,7 +581,7 @@ def prompt_linkedin_lead_magnet(slug: str, project_folder: Path,
         f"At step-05b (media production): skip video creation — the file already exists.\n\n"
         f"Content category: Lead Magnet — create a post that offers value and drives engagement "
         f"through a lead magnet CTA. Select a keyword from the centralised library at "
-        f"content-plugin/data/lead-magnet-keywords.yaml that best matches this video's topic. "
+        f"context/lead-magnet-keywords.yaml that best matches this video's topic. "
         f"Use the LinkedIn CTA template from the library.\n\n"
         f"Complete the entire LinkedIn content generation workflow end-to-end."
     )

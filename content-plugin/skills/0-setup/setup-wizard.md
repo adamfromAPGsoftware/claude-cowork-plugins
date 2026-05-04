@@ -31,9 +31,13 @@ Enter an absolute path or press Enter to use the default."
   ```
   {workspace}/projects/
   {workspace}/context/references/
-  {workspace}/standalone/
   {workspace}/context/brand-assets/logos/
   {workspace}/context/brand-assets/reference-photos/
+  {workspace}/context/youtube/
+  {workspace}/context/inspiration/
+  {workspace}/standalone/
+  {workspace}/memory/
+  {workspace}/draft-queue/
   ```
 - If `{workspace}/projects/_index.yaml` does not exist, create it with content:
   ```yaml
@@ -53,7 +57,7 @@ Show confirmation:
 ```
 Workspace configured:
   Path:    {workspace}
-  Created: projects/, context/references/, standalone/, context/brand-assets/logos/, context/brand-assets/reference-photos/
+  Created: projects/, context/references/, context/brand-assets/, context/youtube/, context/inspiration/, standalone/, memory/, draft-queue/
   (Existing directories were left unchanged)
 ```
 

@@ -28,10 +28,10 @@ Scans YouTube trends, competitor channels, and market performance using the YouT
 Consumes the ideation brief from the Strategist. Writes long-form video scripts (with YouTube metadata and production assets), short-form scripts (5 scripts + B-roll plan + MG prompts), LinkedIn posts (text/image/carousel/video), X threads, blog posts, email campaigns, and Claude Design interactive flowchart presentations. Outputs live in `{project_folder}/{slug}/copywriter/scripts/`, `linkedin/`, `social/`, `blog-email/`, `presentations/`.
 
 **3 — Creative Director**
-Consumes the script and ideation brief. Runs keyword research (YouTube autocomplete + Google Trends), produces title/thumbnail combos with CTR pre-validation, generates wide (16:9) and vertical (9:16) thumbnails, carousels, and visual assets via fal-ai MCP. Identity-preserving generation uses creator reference photos from `brand-assets/reference-photos/`. Outputs live in `{project_folder}/{slug}/creative-director/thumbnails/`, `carousels/`, `motion-graphics/`.
+Consumes the script and ideation brief. Runs keyword research (YouTube autocomplete + Google Trends), produces title/thumbnail combos with CTR pre-validation, generates wide (16:9) and vertical (9:16) thumbnails, carousels, and visual assets via fal-ai MCP. Identity-preserving generation uses creator reference photos from `context/brand-assets/reference-photos/`. Outputs live in `{project_folder}/{slug}/creative-director/thumbnails/`, `carousels/`, `motion-graphics/`.
 
 **4 — Editor (Finch)**
-Runs three scored pass/fail quality gates against any content handed to it: Brand Voice (≥7/10 against `references/brand-voice.md`), ICP Relevance (≥7/10 against `references/content-icp.md`), and Value Delivery (≥7/10). Produces a structured review report with specific line-level feedback. Content that fails any gate is returned to the originating agent for revision. Review outputs live in `{project_folder}/{slug}/editor/reviews/`.
+Runs three scored pass/fail quality gates against any content handed to it: Brand Voice (≥7/10 against `context/references/brand-voice.md`), ICP Relevance (≥7/10 against `context/references/content-icp.md`), and Value Delivery (≥7/10). Produces a structured review report with specific line-level feedback. Content that fails any gate is returned to the originating agent for revision. Review outputs live in `{project_folder}/{slug}/editor/reviews/`.
 
 **5 — Publisher**
 Receives editor-approved content. Formats it to each platform's native spec, schedules via the Buffer MCP (`mcp__buffer__use_buffer_api`). Also handles post-publish repurposing (auto-generates derivative content from a published YouTube video), LinkedIn "comment X for Y" lead magnet DM automation via a Node.js Playwright workflow, and a TikTok comment processor. Scheduling outputs live in `{project_folder}/{slug}/publisher/scheduled/`.
@@ -43,21 +43,25 @@ All `{project_folder}`, `{content_output_folder}`, `{standalone_folder}`, and `{
 | Artefact | Location |
 |---|---|
 | Content workspace root | `paths.workspace` in `config.yaml` |
-| Active project slug | `content-plugin/data/active-project.yaml` |
+| Active project slug | `active-project.yaml` |
+| Autopilot run state | `autopilot-state.yaml` |
+| Agent memory sidecars | `memory/{N}-{agent-name}-sidecar/` |
+| Autopilot draft queue | `draft-queue/` |
 | Project registry | `{project_folder}/_index.yaml` |
 | Project metadata | `{project_folder}/{slug}/project.yaml` |
 | CCS module config (paths, env vars) | `config.yaml` |
-| Project folder scaffold definition | `content-plugin/data/project-templates/folder-structure.yaml` |
-| Startup protocol | `content-plugin/data/project-templates/startup-protocol.md` |
-| Lead magnet keyword registry | `content-plugin/data/lead-magnet-keywords.yaml` |
-| ManyChat setup guide | `content-plugin/data/manychat-setup-guide.md` |
-| Agent memory sidecars | `content-plugin/data/memory/{N}-{agent-name}-sidecar/` |
-| Plugin config | `config.yaml` |
-| Brand voice & anti-AI filter | `references/brand-voice.md` |
-| Content ICP profile | `references/content-icp.md` |
-| Platform config | `references/platform-config.md` |
-| Brand asset logos | `brand-assets/logos/` |
-| Creator reference photos (thumbnails) | `brand-assets/reference-photos/` |
+| Project folder scaffold definition | `content-plugin/references/folder-structure.yaml` |
+| Startup protocol | `content-plugin/references/startup-protocol.md` |
+| Brand voice & anti-AI filter | `context/references/brand-voice.md` |
+| Content ICP profile | `context/references/content-icp.md` |
+| Platform config | `context/references/platform-config.md` |
+| Lead magnet keyword registry | `context/lead-magnet-keywords.yaml` |
+| Instagram watchlist | `context/instagram-watchlist.yaml` |
+| YouTube channel library + transcripts | `context/youtube/` |
+| Instagram inspiration cache | `context/inspiration/instagram/` |
+| Brand asset logos | `context/brand-assets/logos/` |
+| Creator reference photos (thumbnails) | `context/brand-assets/reference-photos/` |
+| ManyChat setup guide | `content-plugin/references/manychat-setup-guide.md` |
 | Standalone content | `{standalone_folder}/` |
 
 Content between agents is passed by working within the same project folder — each agent reads from previous agents' subfolders and writes to its own. There is no single data-contract JSON file (unlike the audit pipeline); the project folder is the shared state.
@@ -84,11 +88,11 @@ npm install && npx playwright install chromium
 
 ## Conventions & gotchas
 
-**Project mode is mandatory on activation.** Every agent runs the startup protocol from `content-plugin/data/project-templates/startup-protocol.md` before displaying its menu. It checks `content-plugin/data/active-project.yaml` and offers to resume, switch, create, or go standalone. New project creation is restricted to the Content Strategist only.
+**Project mode is mandatory on activation.** Every agent runs the startup protocol from `content-plugin/references/startup-protocol.md` before displaying its menu. It checks `active-project.yaml` and offers to resume, switch, create, or go standalone. New project creation is restricted to the Content Strategist only.
 
-**Module code is `content`.** Memory sidecars are stored at `content-plugin/data/memory/{N}-{agent-name}-sidecar/`. All five agents have `has-memory: true` in their manifests.
+**Module code is `content`.** Memory sidecars are stored at `memory/{N}-{agent-name}-sidecar/`. All five agents have `has-memory: true` in their manifests.
 
-**Brand voice is a hard gate.** The Copywriter must apply the Anti-AI Red Flags filter from `references/brand-voice.md` before presenting any draft. The Editor will reject content that scores below 7/10 on voice consistency.
+**Brand voice is a hard gate.** The Copywriter must apply the Anti-AI Red Flags filter from `context/references/brand-voice.md` before presenting any draft. The Editor will reject content that scores below 7/10 on voice consistency.
 
 **Image generation: sequential only.** The Creative Director must NEVER parallelise `mcp__fal-ai__generate_image` calls — generate images one at a time. Violating this causes rate limit failures.
 
@@ -112,26 +116,26 @@ npm install && npx playwright install chromium
 |---|---|
 | Content workspace root | `paths.workspace` in `config.yaml` |
 | Content projects | `{project_folder}/{slug}/` |
-| Active project / last active | `content-plugin/data/active-project.yaml` |
+| Active project / last active | `active-project.yaml` |
 | All projects index | `{project_folder}/_index.yaml` |
-| Brand voice rules & anti-AI filter | `references/brand-voice.md` |
-| Content ICP profile | `references/content-icp.md` |
-| Platform config | `references/platform-config.md` |
-| Scheduling config / Buffer channel config | `references/scheduling-config.md` |
-| Brand colours, logos, email config | `references/brand-assets.md` |
-| Logo files | `brand-assets/logos/` |
-| Creator reference photos | `brand-assets/reference-photos/` |
+| Brand voice rules & anti-AI filter | `context/references/brand-voice.md` |
+| Content ICP profile | `context/references/content-icp.md` |
+| Platform config | `context/references/platform-config.md` |
+| Scheduling config / Buffer channel config | `context/references/scheduling-config.md` |
+| Brand colours, logos, email config | `context/references/brand-assets.md` |
+| Logo files | `context/brand-assets/logos/` |
+| Creator reference photos | `context/brand-assets/reference-photos/` |
 | Plugin config | `config.yaml` |
 | Setup wizard | `content-plugin/skills/0-setup/` |
 | Content module paths and env var list | `config.yaml` |
-| Lead magnet keyword registry | `content-plugin/data/lead-magnet-keywords.yaml` |
+| Lead magnet keyword registry | `context/lead-magnet-keywords.yaml` |
 | Strategist capabilities | `content-plugin/skills/1-content-strategist/manifest.json` |
 | Copywriter capabilities | `content-plugin/skills/2-copywriter/manifest.json` |
 | Creative Director capabilities | `content-plugin/skills/3-creative-director/manifest.json` |
 | Editor quality gate config | `content-plugin/skills/4-editor/SKILL.md` |
 | Publisher capabilities / Buffer MCP notes | `content-plugin/skills/5-publisher/SKILL.md` |
 | Agent persona definitions | `content-plugin/agents/{N}-{name}.md` |
-| Agent memory | `content-plugin/data/memory/{N}-{agent-name}-sidecar/` |
+| Agent memory | `memory/{N}-{agent-name}-sidecar/` |
 | Competitive research workflow steps | `content-plugin/skills/1-content-strategist/workflows/competitive-research/` |
 | Script generation workflow | `content-plugin/skills/2-copywriter/workflows/script-generation/` |
 | LinkedIn comment processor (Node.js) | `content-plugin/skills/5-publisher/workflows/linkedin-comment-processor/` |

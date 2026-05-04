@@ -58,7 +58,7 @@ To select the content project (or standalone source), auto-ingest all existing p
 
 ### 0. Load Voice Library (before anything else)
 
-Load `{project-root}/references/brand-voice.md` immediately. Apply the Written Content Adaptations and Anti-AI Red Flags sections to all blog and email drafts generated in this workflow. Run anti-AI scan before presenting any output to the user.
+Load `{project-root}/context/references/brand-voice.md` immediately. Apply the Written Content Adaptations and Anti-AI Red Flags sections to all blog and email drafts generated in this workflow. Run anti-AI scan before presenting any output to the user.
 
 ### 1. Greet and Determine Mode
 

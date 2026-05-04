@@ -1,0 +1,16 @@
+# Project folder scaffold — created for every new content project
+
+directories:
+  - strategist/research/
+  - strategist/ideation/
+  - copywriter/scripts/
+  - copywriter/linkedin/
+  - copywriter/social/
+  - copywriter/blog-email/
+  - copywriter/presentations/
+  - creative-director/thumbnails/
+  - creative-director/carousels/
+  - creative-director/motion-graphics/
+  - editor/reviews/
+  - publisher/scheduled/
+  - publisher/logs/

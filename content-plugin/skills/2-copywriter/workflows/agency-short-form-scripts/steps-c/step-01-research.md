@@ -6,7 +6,7 @@ nextStepFile: './step-02-concept-generate.md'
 agencyScriptRulesData: '../data/agency-script-rules.md'
 newsSearchQueries: '../data/agency-news-search-queries.md'
 reputationAnglesData: '../data/reputation-angles.md'
-icpBofuDoc: '{project-root}/content-plugin/data/memory/agency-sidecar/agency-offer.md'
+icpBofuDoc: '{project-root}/memory/agency-sidecar/agency-offer.md'
 ---
 
 # Step 1: Research — Per-Pillar Content Discovery
@@ -43,7 +43,7 @@ Load and read ALL of the following before any research:
 - `{icpBofuDoc}` — ICP profile with pain points, value framework, case studies, and CTA patterns
 - `{agencyScriptRulesData}` — especially the Batch Pillar System, CTA rules by pillar, hook patterns, and brand voice overrides
 - `{reputationAnglesData}` — evergreen Reputation angle library, credibility anchors, hot-take templates
-- Brand guidelines from `{project-root}/references/brand-voice.md`
+- Brand guidelines from `{project-root}/context/references/brand-voice.md`
 
 ### 2. Load News Search Query Templates
 

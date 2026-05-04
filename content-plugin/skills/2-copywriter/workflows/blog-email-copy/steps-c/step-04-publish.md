@@ -118,7 +118,7 @@ Images are referenced as relative paths — upload them to your CMS media librar
 
 ### 6. Update Tracking
 
-- Update `{project-root}/content-plugin/data/memory/2-copywriter-sidecar/memories.md` with blog save status and timestamp
+- Update `{project-root}/memory/2-copywriter-sidecar/memories.md` with blog save status and timestamp
 - Log: date, slug, title, status (saved)
 
 ### 7. Present MENU OPTIONS

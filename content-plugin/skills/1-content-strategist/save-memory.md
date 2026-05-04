@@ -14,7 +14,7 @@ Persist current session progress to sidecar memory so the next session picks up 
 
 ### Step 1: Update `index.md`
 
-Read current `content-plugin/data/memory/1-content-strategist-sidecar/index.md` and update:
+Read current `memory/1-content-strategist-sidecar/index.md` and update:
 
 **Active Projects section** — For the current project, update or add:
 ```

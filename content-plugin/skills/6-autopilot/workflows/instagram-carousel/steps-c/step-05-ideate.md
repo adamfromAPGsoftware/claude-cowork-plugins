@@ -71,7 +71,7 @@ The keyword must:
 
 ### 4. YouTube Tie-In (Optional)
 
-Check `{project-root}/content-plugin/data/youtube/channel-library.json` for any video that covers the selected topic.
+Check `{project-root}/context/youtube/channel-library.json` for any video that covers the selected topic.
 
 If a relevant video exists:
 - Note the video ID for metadata tracking in the draft file

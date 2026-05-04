@@ -66,7 +66,7 @@ After completing the setup wizard, the plugin creates or populates:
 | File / Location | Contents |
 |------|---------|
 | `config.yaml` | Workspace paths, env var names, brand config |
-| Your content workspace folder | `projects/`, `context/references/`, `standalone/`, `context/brand-assets/logos/`, `context/brand-assets/reference-photos/` — created automatically |
+| Your content workspace folder | `projects/`, `context/references/`, `context/brand-assets/`, `context/youtube/`, `context/inspiration/`, `standalone/`, `memory/`, `draft-queue/` — created automatically |
 | `context/references/brand-voice.md` | Tone guide, vocabulary list, anti-AI filter |
 | `context/references/content-icp.md` | Ideal viewer/reader profile |
 | `context/references/platform-config.md` | Active platforms, account handles, format specs |
@@ -98,18 +98,30 @@ After running setup, your project root contains:
 
 ```
 {project-root}/
-  config.yaml            Brand, voice, ICP, platform, and scheduling config
+  config.yaml              Brand, voice, ICP, platform, and scheduling config
+  active-project.yaml      Current active project pointer (runtime)
+  autopilot-state.yaml     Autopilot rotation state (runtime)
   context/
     references/
-      brand-voice.md       Tone guide, vocabulary rules, anti-AI filter
-      content-icp.md       Ideal viewer/reader profile
-      platform-config.md   Active platforms, cadence, repurposing flow
-      scheduling-config.md Buffer channel names, timezone
-      brand-assets.md      Colours, logos, email config, content strategy
+      brand-voice.md         Tone guide, vocabulary rules, anti-AI filter
+      content-icp.md         Ideal viewer/reader profile
+      platform-config.md     Active platforms, cadence, repurposing flow
+      scheduling-config.md   Buffer channel names, timezone
+      brand-assets.md        Colours, logos, email config, content strategy
     brand-assets/
-      logos/               Brand logos (brand-logo.png, brand-logo-dark.png, etc.)
-      reference-photos/    Creator headshots for identity-preserving generation
-  projects/              Content projects (one folder per project slug)
-  standalone/            Non-project content
-  content-plugin/        The plugin (skills, agents, workflows, data)
+      logos/                 Brand logos
+      reference-photos/      Creator headshots for identity-preserving generation
+    lead-magnet-keywords.yaml  Registered CTA keywords (populated on first use)
+    instagram-watchlist.yaml   Accounts to monitor for carousel inspiration
+    youtube/                 Cached channel library and transcripts
+    inspiration/
+      instagram/             Scraped carousel inspiration
+  memory/                  Agent memory sidecars (created on first agent run)
+  draft-queue/             Autopilot-generated drafts awaiting review
+  projects/                Content projects (one folder per slug)
+  standalone/              Non-project content
+  content-plugin/          The plugin (read-only)
+    references/
+      startup-protocol.md  Project selection flow (all agents run this on boot)
+      folder-structure.yaml New project scaffold definition
 ```

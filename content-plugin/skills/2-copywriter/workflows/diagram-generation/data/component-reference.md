@@ -142,7 +142,7 @@ Pinned photo with tape/pin — for real screenshots or placeholder.
 ```jsx
 <ScreenshotNode
   x={1300} y={100} w={420} h={280}
-  src="../../../brand-assets/reference-frames/claude-code/claude-code-initial-state-with-prompt.png"
+  src="../../../context/brand-assets/reference-frames/claude-code/claude-code-initial-state-with-prompt.png"
   caption="claude code — initial setup"
   label="CLAUDE CODE"
   rotate={-2.5}
@@ -166,14 +166,14 @@ Pinned photo with tape/pin — for real screenshots or placeholder.
 
 **Size estimation:** Total height ≈ `h + 50px` (for tape/pin + caption padding).
 
-**Relative path from output dir:** The HTML is saved to `{project}/copywriter/diagrams/diagram-{slug}.html`. To reference a catalog image at `brand-assets/reference-frames/claude-code/...`, the relative path is:
-`../../../../brand-assets/reference-frames/claude-code/...`
+**Relative path from output dir:** The HTML is saved to `{project}/copywriter/diagrams/diagram-{slug}.html`. To reference a catalog image at `context/brand-assets/reference-frames/claude-code/...`, the relative path is:
+`../../../../context/brand-assets/reference-frames/claude-code/...`
 (4 levels up: diagrams → copywriter → {project-slug} → content/projects → repo root is 5 levels from content, but content sits at repo root + content/projects/{slug}/copywriter/diagrams)
 
 **Exact relative path calculation:**
 - Output HTML: `content/projects/{slug}/copywriter/diagrams/diagram-{slug}.html`
-- Reference frames: `brand-assets/reference-frames/{tool}/{file}.png`
-- Relative: `../../../../../brand-assets/reference-frames/{tool}/{file}.png`
+- Reference frames: `context/brand-assets/reference-frames/{tool}/{file}.png`
+- Relative: `../../../../../context/brand-assets/reference-frames/{tool}/{file}.png`
   (5 levels up: diagrams/ → copywriter/ → {slug}/ → projects/ → content/ → [repo root])
 
 ---

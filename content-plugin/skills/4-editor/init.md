@@ -10,7 +10,7 @@ Welcome! Setting up your workspace.
 
 ## Memory Location
 
-Creating `{project-root}/content-plugin/data/memory/4-editor-sidecar/` for persistent memory.
+Creating `{project-root}/memory/4-editor-sidecar/` for persistent memory.
 
 ## Initial Structure
 
@@ -21,15 +21,15 @@ Creating:
 
 ## Setup Questions
 
-1. **Brand guidelines** — Confirm brand guidelines accessible at `{project-root}/references/brand-voice.md`
-2. **ICP profile** — Confirm ICP profile accessible at `{project-root}/references/content-icp.md`
+1. **Brand guidelines** — Confirm brand guidelines accessible at `{project-root}/context/references/brand-voice.md`
+2. **ICP profile** — Confirm ICP profile accessible at `{project-root}/context/references/content-icp.md`
 3. **Pass threshold** — Confirm quality gate pass threshold is 7/10 for all three gates
 
 ## Creating Memory Files
 
 Once confirmed, create the following files:
 
-### `{project-root}/content-plugin/data/memory/4-editor-sidecar/index.md`
+### `{project-root}/memory/4-editor-sidecar/index.md`
 
 ```markdown
 # CCS Editor — Session Index
@@ -46,7 +46,7 @@ Once confirmed, create the following files:
 (none)
 ```
 
-### `{project-root}/content-plugin/data/memory/4-editor-sidecar/patterns.md`
+### `{project-root}/memory/4-editor-sidecar/patterns.md`
 
 ```markdown
 # Editor Patterns
@@ -61,7 +61,7 @@ Once confirmed, create the following files:
 (feedback approaches that led to best revisions)
 ```
 
-### `{project-root}/content-plugin/data/memory/4-editor-sidecar/chronology.md`
+### `{project-root}/memory/4-editor-sidecar/chronology.md`
 
 ```markdown
 # Session Chronology

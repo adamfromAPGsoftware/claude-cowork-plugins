@@ -2,7 +2,7 @@
 
 > Derived from analysis of your proven LinkedIn posts. Each style has been extracted from real posts with real performance data.
 > Use this as the primary structural reference during drafting — these are your actual voice patterns, not generic templates.
-> Full post text + analysis lives in `references/linkedin-posts/{activity-id}/`.
+> Full post text + analysis lives in `context/references/linkedin-posts/{activity-id}/`.
 >
 > **HOW TO POPULATE:** Run /content:2-copywriter → [LI] and ask it to analyse your best-performing posts and populate this file.
 

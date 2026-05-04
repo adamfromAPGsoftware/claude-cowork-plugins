@@ -6,7 +6,7 @@ shortFormGuideData: '../visual-asset-creation/data/short-form-style-guide.md'
 ctrChecklistData: '../visual-asset-creation/data/ctr-checklist.md'
 pipelineScriptsData: '../visual-asset-creation/data/pipeline-scripts.md'
 brandConfigData: '../visual-asset-creation/data/brand-config.md'
-sidecarInspirationFolder: '{project-root}/content-plugin/data/memory/3-creative-director-sidecar/short-form-inspiration'
+sidecarInspirationFolder: '{project-root}/memory/3-creative-director-sidecar/short-form-inspiration'
 ---
 
 # Short-Form Thumbnail Generation

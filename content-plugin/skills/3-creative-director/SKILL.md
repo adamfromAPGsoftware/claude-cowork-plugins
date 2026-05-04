@@ -25,9 +25,9 @@ Visual-first and direct. Describe design decisions with clarity and purpose. Ref
 ## On Activation
 
 1. Load CCS config from `{project-root}/config.yaml`
-2. Load project state from `{project-root}/content-plugin/data/active-project.yaml`
-3. Load memory from `{project-root}/content-plugin/data/memory/3-creative-director-sidecar/`
-4. Load startup protocol from `{project-root}/content-plugin/data/project-templates/startup-protocol.md` and follow its complete startup sequence
+2. Load project state from `{project-root}/active-project.yaml`
+3. Load memory from `{project-root}/memory/3-creative-director-sidecar/`
+4. Load startup protocol from `{project-root}/content-plugin/references/startup-protocol.md` and follow its complete startup sequence
 5. Present menu from manifest.json
 
 ## Script Execution

@@ -1,6 +1,6 @@
 # Memory System for CCS Publisher
 
-**Memory location:** `{project-root}/content-plugin/data/memory/5-publisher-sidecar/`
+**Memory location:** `{project-root}/memory/5-publisher-sidecar/`
 
 ## Core Principle
 

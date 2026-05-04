@@ -107,7 +107,7 @@ Repeat for each selected platform.
 
 ### 3b. Validate Lead Magnet Keywords
 
-If any platform copy contains a lead magnet keyword CTA (e.g., "Comment 'X'" or "DM me 'X'"), validate that the keyword exists in the centralised library at `{project-root}/content-plugin/data/lead-magnet-keywords.yaml`.
+If any platform copy contains a lead magnet keyword CTA (e.g., "Comment 'X'" or "DM me 'X'"), validate that the keyword exists in the centralised library at `{project-root}/context/lead-magnet-keywords.yaml`.
 
 - Load the keyword library
 - Extract any keyword referenced in comment-gated or DM-gated CTAs

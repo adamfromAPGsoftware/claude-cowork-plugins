@@ -8,8 +8,8 @@ brandConfigData: '../data/brand-config.md'
 pipelineScriptsData: '../data/pipeline-scripts.md'
 instagramInspirationDir: '../data/instagram-carousel-inspiration'
 scheduleInstagramData: '{project-root}/content-plugin/skills/2-copywriter/workflows/linkedin-content/data/schedule-instagram.md'
-brandLogoDark: '{project-root}/brand-assets/brand-logo-dark.png'
-brandLogoLight: '{project-root}/brand-assets/brand-logo-light.png'
+brandLogoDark: '{project-root}/context/context/brand-assets/brand-logo-dark.png'
+brandLogoLight: '{project-root}/context/context/brand-assets/brand-logo-light.png'
 ---
 
 # Step 10: Instagram Carousel Creation
@@ -116,7 +116,7 @@ From these, autonomously determine:
 3. **Slide count** — based on content density (typically 5-8)
 4. **CTA keyword** — derived from the topic
 5. **B-roll/screenshots for inspiration** — review project B-roll to understand what tools and settings appear in the video. Use as prompt inspiration only — do NOT embed video frames. Tool UI screenshots (e.g., Claude Code interface) CAN be embedded.
-6. **Hook slide photo** — the hook slide (slide 1) features the creator using a real photo. **PAUSE AUTO MODE HERE** and prompt the user to provide a photo. List available photos from `content-plugin/data/logs/headshots/` as quick-select options. The user can select one or provide a custom file path. Store the selected path as `photo_path` in the slide JSON. The CTA slide (last slide) is text-only — "Comment [KEYWORD]" design, no photo of the creator.
+6. **Hook slide photo** — the hook slide (slide 1) features the creator using a real photo. **PAUSE AUTO MODE HERE** and prompt the user to provide a photo. List available photos from `context/brand-assets/reference-photos/` as quick-select options. The user can select one or provide a custom file path. Store the selected path as `photo_path` in the slide JSON. The CTA slide (last slide) is text-only — "Comment [KEYWORD]" design, no photo of the creator.
 
 **3b. Fetch logos** — Identify all tools/brands mentioned. For each, run `fetch-logo.ts` fresh (delete existing first). Verify each logo visually. If a logo fails or looks wrong, skip it silently — do not embed a wrong logo.
 
@@ -182,7 +182,7 @@ Then proceed to step 11 (Schedule) — this is the ONLY point where AUTO mode ha
 2. **Key points** — the 3-6 main points (these become content slides)
 3. **CTA keyword** — what should people comment to get the lead magnet? (e.g., "AGENT", "TOOLS", "GUIDE")
 4. **Screenshots to embed** — do you have any screenshots/images to incorporate into slides? Provide file paths.
-5. **Photo for hook slide** — provide a photo of yourself for the first slide. Available headshots in `content-plugin/data/logs/headshots/` — or provide a custom file path.
+5. **Photo for hook slide** — provide a photo of yourself for the first slide. Available headshots in `context/brand-assets/reference-photos/` — or provide a custom file path.
 
 I'll decide the slide count and which slides should feature you based on the inspiration patterns. Give me the raw content and I'll shape it."
 

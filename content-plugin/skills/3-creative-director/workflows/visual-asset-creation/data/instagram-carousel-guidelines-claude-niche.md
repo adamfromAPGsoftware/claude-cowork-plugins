@@ -586,7 +586,7 @@ All slides share the same footer chrome from SlideFrame.jsx. Describe it consist
 When using a real photo of the creator as the hero background:
 
 **Step 1 — Choose the photo.**
-Available photos: `brand-assets/reference-photos/`
+Available photos: `context/brand-assets/reference-photos/`
 Current files: `IMG_7883.jpg`, `IMG_7884.jpg`, `IMG_7885.jpg`, `IMG_7886.jpg`, `IMG_7887.jpg`
 View each photo and assess where the creator is positioned in the frame.
 
@@ -618,7 +618,7 @@ Check `content-plugin/skills/6-autopilot/references/hook-slide-inspiration/` for
 
 ## 10. Reference Screenshots
 
-Available at `brand-assets/reference-frames/`. Use as inputs to Gemini for ScreenshotSlide frames and HookSlide screenshot-forward hooks.
+Available at `context/brand-assets/reference-frames/`. Use as inputs to Gemini for ScreenshotSlide frames and HookSlide screenshot-forward hooks.
 
 | Topic | Directory | Best for |
 |---|---|---|
@@ -639,4 +639,4 @@ Available at `brand-assets/reference-frames/`. Use as inputs to Gemini for Scree
 
 **How to pick:** Match the screenshot to the slide's prompt topic. A slide about Claude Code skills → `claude-code/`. A slide about automating research → `exa/` or `claude-desktop/`. A slide about agency delivery → `your-client-portal/`.
 
-Check the catalog file at `brand-assets/reference-frames/catalog.yaml` for the full annotated list with Gemini analysis of each frame.
+Check the catalog file at `context/brand-assets/reference-frames/catalog.yaml` for the full annotated list with Gemini analysis of each frame.

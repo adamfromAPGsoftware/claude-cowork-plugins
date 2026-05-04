@@ -25,7 +25,7 @@ Wait for user to provide the URL. Validate it looks like a YouTube URL (contains
 
 ### 2. Confirm Active Project
 
-Load `{project-root}/content-plugin/data/active-project.yaml` and read the current `slug` and `title`.
+Load `{project-root}/active-project.yaml` and read the current `slug` and `title`.
 
 "**Active project:** {title} (`{slug}`)
 

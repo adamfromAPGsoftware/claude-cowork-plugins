@@ -9,7 +9,7 @@ description: Configure the Content Plugin for your brand — interactive setup w
 
 This skill configures the content plugin for your brand. It walks you through each setting conversationally, writes `config.yaml` and generates the reference files every downstream skill depends on — all in your project root.
 
-**Run this first.** Skills 1–5 load `{project-root}/references/brand-voice.md` and `{project-root}/references/content-icp.md` on activation. Nothing will work correctly until setup is complete and those files exist.
+**Run this first.** Skills 1–5 load `{project-root}/context/references/brand-voice.md` and `{project-root}/context/references/content-icp.md` on activation. Nothing will work correctly until setup is complete and those files exist.
 
 ## Identity
 
