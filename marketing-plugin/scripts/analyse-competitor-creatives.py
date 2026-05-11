@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 """
-analyse-competitor-creatives.py — Analyse competitor ad creatives using Gemini vision via OpenRouter.
+analyse-competitor-creatives.py — Analyse competitor ad creatives using Claude vision (Anthropic API).
 
 Reads competitor-data.json, finds ads with local_path but no analysis,
-sends images AND videos natively to Gemini for detailed creative analysis
+sends images and video frames to Claude for detailed creative analysis
 (visual composition, person description, hooks, copy strategy, etc.),
 and stores structured results back.
 
-Videos are sent directly to Gemini (no ffmpeg needed) for full temporal analysis.
-Large videos (>50MB) fall back to multi-frame extraction via ffmpeg if available.
+Videos are analysed via multi-frame extraction (ffmpeg required for videos).
 
-Default model is Gemini 2.5 Flash. Use --quality high for Gemini 2.5 Pro.
+Default model is claude-haiku-4-5 (fast/cheap). Use --quality high for claude-sonnet-4-6.
 
 Usage:
-  python3 marketing-plugin/scripts/analyse-competitor-creatives.py
-  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --limit 10
-  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --competitor 12345678
-  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --quality high
-  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --skip-videos
+  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --campaign-id marketing-plugin
+  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --campaign-id marketing-plugin --limit 10
+  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --campaign-id marketing-plugin --competitor 12345678
+  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --campaign-id marketing-plugin --quality high
+  python3 marketing-plugin/scripts/analyse-competitor-creatives.py --campaign-id marketing-plugin --skip-videos
 
 Requires:
   pip install requests python-dotenv
+  ANTHROPIC_API_KEY in .env (or environment)
 """
 
 import argparse
@@ -56,11 +56,12 @@ except ImportError:
 
 PLUGIN_ROOT = Path(__file__).parent.parent  # marketing-plugin/
 REPO_ROOT = PLUGIN_ROOT.parent
-COMPETITOR_DATA_PATH = PLUGIN_ROOT / "data" / "competitor-data.json"
+COMPETITOR_DATA_PATH: Path = None  # Set in main() after --campaign-id is parsed
 
-OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL_FLASH = "google/gemini-2.5-flash"
-MODEL_PRO = "google/gemini-2.5-pro-preview-06-05"
+ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
+ANTHROPIC_VERSION = "2023-06-01"
+MODEL_FLASH = "claude-haiku-4-5-20251001"
+MODEL_PRO = "claude-sonnet-4-6"
 MODEL = MODEL_FLASH
 
 API_DELAY_SECONDS = 2
@@ -229,12 +230,12 @@ def load_env():
     if repo_env.exists():
         load_dotenv(repo_env, override=False)
 
-    api_key = os.environ.get("OPENROUTER_API_KEY")
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
 
     if not api_key:
-        print("Error: OPENROUTER_API_KEY not set.", file=sys.stderr)
-        print("  Add OPENROUTER_API_KEY to your .env file at the repo root.", file=sys.stderr)
-        print("  Get a key from: https://openrouter.ai/keys", file=sys.stderr)
+        print("Error: ANTHROPIC_API_KEY not set.", file=sys.stderr)
+        print("  Add ANTHROPIC_API_KEY to your .env file at the repo root.", file=sys.stderr)
+        print("  Get a key from: https://console.anthropic.com/settings/keys", file=sys.stderr)
         sys.exit(1)
 
     return api_key
@@ -256,22 +257,13 @@ def save_competitor_data(data):
 
 
 def image_to_base64_part(file_path):
-    """Convert an image file to an OpenAI-compatible base64 image_url part."""
+    """Convert an image file to an Anthropic-compatible base64 image content block."""
     data = file_path.read_bytes()
     b64 = base64.b64encode(data).decode()
     ext = file_path.suffix.lower().lstrip(".")
     mime = {"png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg",
             "webp": "image/webp", "gif": "image/gif"}.get(ext, "image/png")
-    return {"type": "image_url", "image_url": {"url": "data:%s;base64,%s" % (mime, b64)}}
-
-
-def video_to_base64_part(file_path):
-    """Convert a video file to an OpenRouter-compatible base64 video_url part."""
-    data = file_path.read_bytes()
-    b64 = base64.b64encode(data).decode()
-    ext = file_path.suffix.lower().lstrip(".")
-    mime = {"mp4": "video/mp4", "mov": "video/quicktime", "webm": "video/webm"}.get(ext, "video/mp4")
-    return {"type": "video_url", "video_url": {"url": "data:%s;base64,%s" % (mime, b64)}}
+    return {"type": "image", "source": {"type": "base64", "media_type": mime, "data": b64}}
 
 
 def extract_frames(video_path, count=4):
@@ -310,12 +302,12 @@ def extract_frames(video_path, count=4):
     return frames
 
 
-# ─── OpenRouter API ──────────────────────────────────────────────────────────
+# ─── Anthropic API ───────────────────────────────────────────────────────────
 
 def analyse_creative(api_key, file_path, is_video=False,
                      ad_copy="", headline="", page_name="",
                      days_running=0, longevity_tier="unknown"):
-    """Send an image or video to OpenRouter for creative analysis. Returns parsed JSON or None."""
+    """Send an image (or video frames) to Anthropic Claude for creative analysis. Returns parsed JSON or None."""
 
     prompt_template = ANALYSIS_PROMPT_VIDEO if is_video else ANALYSIS_PROMPT_IMAGE
     prompt = prompt_template.format(
@@ -326,25 +318,17 @@ def analyse_creative(api_key, file_path, is_video=False,
         longevity_tier=longevity_tier,
     )
 
-    # Build content parts
+    # Build content parts — Anthropic does not support native video; extract frames for videos
     content_parts = []
 
     if is_video and file_path.suffix.lower() in VIDEO_EXTENSIONS:
-        file_size_mb = file_path.stat().st_size / (1024 * 1024)
-
-        if file_size_mb <= MAX_VIDEO_SIZE_MB:
-            # Native video upload
-            content_parts.append(video_to_base64_part(file_path))
+        frames = extract_frames(file_path, count=4)
+        if frames:
+            for frame in frames:
+                content_parts.append(image_to_base64_part(frame))
         else:
-            # Too large — fall back to multi-frame extraction
-            print(f"    Video too large ({file_size_mb:.0f}MB > {MAX_VIDEO_SIZE_MB}MB), extracting frames...")
-            frames = extract_frames(file_path, count=4)
-            if frames:
-                for frame in frames:
-                    content_parts.append(image_to_base64_part(frame))
-            else:
-                print("    Warning: frame extraction failed.")
-                return None
+            print("    Warning: frame extraction failed (ffmpeg required for video analysis).")
+            return None
     else:
         content_parts.append(image_to_base64_part(file_path))
 
@@ -352,15 +336,17 @@ def analyse_creative(api_key, file_path, is_video=False,
 
     payload = {
         "model": MODEL,
+        "max_tokens": 4096,
         "messages": [{"role": "user", "content": content_parts}],
     }
 
     try:
         resp = requests.post(
-            OPENROUTER_URL,
+            ANTHROPIC_API_URL,
             headers={
-                "Authorization": "Bearer %s" % api_key,
-                "Content-Type": "application/json",
+                "x-api-key": api_key,
+                "anthropic-version": ANTHROPIC_VERSION,
+                "content-type": "application/json",
             },
             json=payload,
             timeout=API_TIMEOUT,
@@ -376,7 +362,7 @@ def analyse_creative(api_key, file_path, is_video=False,
             print(f"    API error: {result['error']}")
             return None
 
-        content = result["choices"][0]["message"]["content"]
+        content = result["content"][0]["text"]
 
         # Strip markdown code fences if present
         content = content.strip()
@@ -390,7 +376,10 @@ def analyse_creative(api_key, file_path, is_video=False,
 
     except json.JSONDecodeError as e:
         print(f"    Failed to parse JSON response: {e}")
-        print(f"    Raw content: {content[:200]}")
+        try:
+            print(f"    Raw content: {content[:200]}")
+        except UnboundLocalError:
+            print(f"    Raw content: (unavailable — response body was not valid JSON)")
         return None
 
     except requests.exceptions.Timeout:
@@ -416,17 +405,21 @@ def get_field(d, key):
 
 def main():
     parser = argparse.ArgumentParser(description="Analyse competitor ad creatives via Gemini vision.")
+    parser.add_argument("--campaign-id", type=str, required=True,
+                        help="Campaign ID (e.g. marketing-plugin). Competitor data is scoped per campaign.")
     parser.add_argument("--competitor", type=str, default=None,
                         help="Filter by Page ID.")
     parser.add_argument("--limit", type=int, default=None,
                         help="Maximum number of creatives to analyse per run.")
     parser.add_argument("--quality", type=str, choices=["high"], default=None,
-                        help="Use 'high' for Gemini 2.5 Pro (default uses Flash).")
+                        help="Use 'high' for claude-sonnet-4-6 (default uses claude-haiku-4-5).")
     parser.add_argument("--skip-videos", action="store_true",
                         help="Skip video files (analyse images only — saves cost).")
     args = parser.parse_args()
 
-    global MODEL
+    global COMPETITOR_DATA_PATH, MODEL
+    COMPETITOR_DATA_PATH = PLUGIN_ROOT / "data" / "campaigns" / args.campaign_id / "competitor-data.json"
+
     if args.quality == "high":
         MODEL = MODEL_PRO
 
@@ -486,7 +479,7 @@ def main():
         print(f"  Filtered to competitor: {args.competitor}")
     print(f"  Model: {MODEL}")
     if video_count > 0:
-        print(f"  Videos: native upload to Gemini (no ffmpeg frame extraction)")
+        print(f"  Videos: frame extraction via ffmpeg (4 frames per video)")
 
     analysed_count = 0
     failed_count = 0

@@ -125,6 +125,20 @@ For each file copied, verify it exists at the destination.
 **If sidecar templates directory is missing or empty:**
 "WARNING: Sidecar templates not found at {sidecarTemplatesPath}. Template components will need to be created manually."
 
+### 4b. Copy Showcase Components
+
+Copy all `.tsx` files from `{project-root}/video-plugin/skills/2-remotion/references/template-showcase/src/components/` into `src/components/showcase/` (create the directory if it doesn't exist):
+
+```bash
+mkdir -p src/components/showcase
+cp {project-root}/video-plugin/skills/2-remotion/references/template-showcase/src/components/*.tsx src/components/showcase/
+```
+
+These components are the default for all `showcase-mg` segments in long-form and VSL videos. Verify the directory contains the expected files (BoldStatement, ChecklistReveal, NumberCountUp, FlowchartAnimation, ToolLogoGrid, etc.).
+
+**If showcase directory is missing:**
+"WARNING: Showcase components not found at {showcase_path}. All `showcase-mg` segments will fail to render. Ensure `video-plugin` is installed and the template-showcase project exists."
+
 ### 5. Copy Branded Assets
 
 Copy all files from `{project-root}/_bmad/_memory/video-editor-sidecar/branded-assets/` into `public/branded-assets/`:
@@ -172,7 +186,8 @@ This file must be created at scaffold time (not deferred to step 05) so Remotion
 "**Remotion Project Scaffolded**
 
 - Project: {composition-name}/
-- Templates copied: {count}/12 (9 standard + 2 branded + 1 renderer)
+- Sidecar templates copied: {count}/12 (9 standard + 2 branded + 1 renderer)
+- Showcase components copied: {showcase_count} files → src/components/showcase/
 - Video assets hardlinked: {asset_count} (no symlinks)
 
 Proceeding to theme generation..."
@@ -188,6 +203,7 @@ Load, read entire file, then execute {nextStepFile}.
 - Project directory created with correct structure
 - package.json and tsconfig.json created
 - All 12 sidecar templates copied to src/ (9 standard + 2 branded + 1 renderer)
+- Showcase components copied to src/components/showcase/ (all .tsx files from template-showcase)
 - Branded assets copied to public/branded-assets/
 - Video assets hardlinked (NOT symlinked) in public/
 - src/index.ts created with registerRoot
@@ -195,6 +211,7 @@ Load, read entire file, then execute {nextStepFile}.
 ### FAILURE:
 
 - Missing any sidecar template without warning
+- Not creating src/components/showcase/ or missing showcase component files
 - Incorrect project structure
 - Not creating package.json or tsconfig.json
 - Using symlinks instead of hardlinks for video assets (causes media-playback-error in Studio)

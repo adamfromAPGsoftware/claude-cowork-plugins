@@ -76,17 +76,17 @@ Propose **3-5 specific image options** for the selected hook, prioritised:
 2. **Existing screenshots** — Reference screenshots from project assets that show relevant IDE views, terminal output, or UI states
 3. **Existing logo canvases** — Composite images from project assets that combine tool logos. Good for comparison/vs posts
 4. **Rendered poster frames** — Still frames from rendered video outputs
-5. **Gemini-generated image** — If no existing asset fits, propose a Gemini image generation prompt
+5. **fal-ai/nano-banana-2-generated image** — If no existing asset fits, propose an image generation prompt for fal-ai/nano-banana-2
 
 **Personal mode:**
 
 1. **Branded single slide** (recommended) — Use carousel generator in `single-image` mode. Bold headline image matching the hook
-2. **Gemini-generated image** — Custom image via Gemini generation
+2. **fal-ai/nano-banana-2-generated image** — Custom image via fal-ai/nano-banana-2
 
 For each option, present:
 ```
 IMAGE OPTION {n}: {brief description}
-Source: {filename or "carousel generator (single-image)" or "Gemini generation"}
+Source: {filename or "carousel generator (single-image)" or "fal-ai/nano-banana-2 generation"}
 What viewer sees: {description}
 Why it works: {how it supports the hook}
 ```

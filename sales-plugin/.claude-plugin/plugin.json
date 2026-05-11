@@ -1,24 +1,31 @@
 {
   "name": "sales",
-  "description": "Sales Pipeline \u2014 pre-discovery research, battle cards, discovery calls, close pages, and follow-up communications with CRM lead tracking",
-  "version": "1.0.0",
+  "description": "Sales Pipeline — sync leads from Gmail/SMS/Fathom, classify, draft personalised outreach, and send via a local Kanban UI backed by Google Sheets",
+  "version": "3.1.0",
   "author": {
     "name": "{YOUR_NAME}",
     "url": "https://{YOUR_DOMAIN}"
   },
   "keywords": [
     "sales",
-    "discovery",
-    "lead",
-    "apg"
+    "nurture",
+    "lead"
   ],
   "commands": [
-    "./commands/new-client.md"
+    "./commands/setup.md",
+    "./commands/new-offer.md",
+    "./commands/build-nurture-playbook.md",
+    "./commands/sync.md",
+    "./commands/classify.md",
+    "./commands/draft.md",
+    "./commands/send.md",
+    "./commands/launch.md",
+    "./commands/call-lead.md",
+    "./commands/kanban.md"
   ],
   "agents": [
-    "./agents/1-call-prep.md",
-    "./agents/2-sales-closer.md"
+    "./agents/0-setup.md",
+    "./agents/1-sales.md"
   ],
-  "skills": "./skills/",
-  "mcpServers": "./.mcp.json"
+  "skills": "./skills/"
 }

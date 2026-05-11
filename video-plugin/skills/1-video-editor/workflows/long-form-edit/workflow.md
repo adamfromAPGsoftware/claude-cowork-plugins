@@ -120,7 +120,7 @@ The pipeline uses targeted parallelism where operations are provably independent
 
 **Step 2 — Analysis (single-file):** Boundary VA runs in parallel with audio analysis + transcription. All three must complete before boundary detection.
 
-**Step 3 — Clipping:** All 4 FFmpeg clip commands (intro-proxy, intro-raw, body-proxy, body-raw) run as parallel background processes. Both transcript remaps run in parallel. Audio concatenation launches as a background process after clips complete (runs during VA + storyboard). Both Gemini VA calls (intro + body) run simultaneously.
+**Step 3 — Clipping:** All 4 FFmpeg clip commands (intro-proxy, intro-raw, body-proxy, body-raw) run as parallel background processes. Both transcript remaps run in parallel. Per-clip audio extraction launches as background processes after clips complete (runs during VA + storyboard). Both Gemini VA calls (intro + body) run simultaneously.
 
 **Step 4 — Storyboard:** Optional logo pre-fetch in background when tool names are known from MG markers.
 

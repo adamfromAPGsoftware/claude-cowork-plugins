@@ -1,6 +1,6 @@
 ---
 name: 'step-10-instagram-carousel'
-description: 'Create Instagram carousels with Gemini-generated slides, embedded screenshots, and brand styling'
+description: 'Create Instagram carousels with nano-banana-2-generated slides, embedded screenshots, and brand styling'
 
 instagramGuidelinesDark: '../data/instagram-carousel-guidelines-dark.md'
 instagramGuidelinesLight: '../data/instagram-carousel-guidelines-light.md'
@@ -16,7 +16,12 @@ brandLogoLight: '{project-root}/context/context/brand-assets/brand-logo-light.pn
 
 ## STEP GOAL:
 
-To collaboratively create Instagram carousel slides using Gemini image generation, with embedded screenshots, custom per-slide prompts, and consistent brand styling. Each slide is uniquely crafted — not templated.
+To collaboratively create Instagram carousel slides using fal-ai MCP (`fal-ai/nano-banana-2` model), with embedded screenshots, custom per-slide prompts, and consistent brand styling. Each slide is uniquely crafted — not templated.
+
+> **MANDATORY TOOL + MODEL RULE:**
+> - Hook slides (reference photo) → `edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
+> - Content slides (text-only) → `generate_image` with `model_id: "fal-ai/nano-banana-2"`
+> - Never use `generate_image_from_image` — model expects `image_urls` array, not `image_url` string. `edit_image` handles this correctly.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -66,6 +71,16 @@ To collaboratively create Instagram carousel slides using Gemini image generatio
 Read {brandConfigData} for branding values, reference photo details, and Brand Modes configuration.
 
 **ALWAYS** load and review all images from {instagramInspirationDir}. These are the style reference for every carousel. Study the layouts, typography, backgrounds, visual elements, photo treatments, and flow patterns. Use these to inform every prompt you craft. Do NOT ask the user whether to review them — this is automatic.
+
+**Additionally, check global inspiration folders:**
+
+1. Check `{workspace}/context/inspiration/carousels/` for any user-provided carousel inspiration.
+2. Check `{workspace}/context/inspiration/instagram/` for autopilot-scraped Instagram posts.
+
+If images are found in either folder:
+- Load `{workspace}/context/references/visual-inspiration.md` and extract the "Carousel Patterns" section.
+- Merge these patterns with the static inspiration from {instagramInspirationDir}: the static library remains the baseline, but global user-provided inspiration may surface brand-specific design preferences to apply.
+- Note any patterns that are particularly relevant to this brand's identity (e.g., a preference for minimal text, specific composition tendencies, unique colour usage).
 
 ### 2. Brand & Mode Selection
 
@@ -235,15 +250,15 @@ Do NOT proceed to prompt crafting until all needed logos are resolved (fetched o
 
 ### 5. Craft Per-Slide Prompts (COLLAB only — AUTO handles this in step 3c)
 
-**NOTE:** The hook slide (slide 1) uses the user's real photo — use the "Photo Hook Slide" prompt pattern from the guidelines. The CTA slide (last slide) is text-only — use the "CTA Slide" prompt pattern. Content slides are fully Gemini-generated.
+**NOTE:** The hook slide (slide 1) uses the user's real photo — use the "Photo Hook Slide" prompt pattern from the guidelines. The CTA slide (last slide) is text-only — use the "CTA Slide" prompt pattern. Content slides are generated via `fal-ai/nano-banana-2`.
 
-Using the guidelines from {instagramGuidelinesData} AND the inspiration images reviewed in step 1, craft a detailed Gemini prompt for EACH slide. Each prompt must:
+Using the guidelines from {instagramGuidelinesData} AND the inspiration images reviewed in step 1, craft a detailed image prompt for EACH slide. Each prompt must:
 
 - Start with "Generate a 1080x1350 portrait Instagram slide."
 - Include the brand anchors (green accent, font styles, dark palette)
 - Be unique in layout and visual treatment (vary backgrounds, visual elements per inspiration)
 - Reference any embedded screenshots with instructions on how to display them
-- **Include fetched logos as `embed_images`** when a slide discusses a specific tool/brand — tell Gemini how to display the logo (e.g., "Show the attached logo in the top-right corner at roughly 80px", "Display the attached tool logo inside a rounded dark card alongside the headline")
+- **Include fetched logos as `embed_images`** when a slide discusses a specific tool/brand — describe logo placement in the image prompt (e.g., "Show the attached logo in the top-right corner at roughly 80px", "Display the attached tool logo inside a rounded dark card alongside the headline")
 - Include `@{YOUR_HANDLE_PERSONAL}` and bookmark on content slides (not hook)
 - For the hook slide: include `photo_path` pointing to the user's selected photo. For the CTA slide: text-only, no `photo_path`.
 
@@ -295,20 +310,24 @@ Load {pipelineScriptsData} for the fal-ai MCP reference.
 Build the `slides.json` file from the approved prompts. Then for each slide, call fal-ai MCP:
 
 ```
-# Hook slide (with reference photo):
+# Hook slide (with reference photo) — use edit_image, NOT generate_image_from_image:
 mcp__fal-ai__upload_file(file_path="/path/to/real-photo.png")  → photo_url
-mcp__fal-ai__generate_image_from_image(
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=photo_url,
-  prompt="Using the attached photo of this person as the base image, ...",
-  image_size="portrait_4_5"
+  prompt="Using the attached photo of this person as the hero background, ...",
+  strength=0.92
 )
 
-# Content slide (text-only):
+# Content slides (text-only):
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="Generate a 1080x1350 portrait Instagram slide. ...",
   image_size="portrait_4_5"
 )
 ```
+
+> **TOOL + MODEL RULE:** Hook slides with reference photos → `edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`. Content slides (text-only) → `generate_image` with `model_id: "fal-ai/nano-banana-2"`. Never use `generate_image_from_image` — it sends `image_url` as a string but nano-banana-2 expects an array.
 
 Save each slide as `slide-01.png`, `slide-02.png`, etc. in `{project output}/instagram/`.
 

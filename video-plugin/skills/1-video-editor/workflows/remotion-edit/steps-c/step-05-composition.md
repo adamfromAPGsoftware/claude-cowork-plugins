@@ -9,7 +9,7 @@ nextStepFile: './step-06-qa.md'
 
 ## STEP GOAL:
 
-Generate the `Root.tsx` composition file that assembles all segments into a single Remotion composition with exactly ONE `<Audio>` element and all `<Sequence>` wrappers with `premountFor={30}` and descriptive `name` props.
+Generate the `Root.tsx` composition file that assembles all segments into a single Remotion composition with per-clip `<Audio>` elements (one per clipped source video) and all `<Sequence>` wrappers with `premountFor={30}` and descriptive `name` props.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -22,7 +22,7 @@ Generate the `Root.tsx` composition file that assembles all segments into a sing
 ### Step-Specific Rules:
 
 - This is an automated step — no user interaction
-- Exactly ONE `<Audio>` element in the entire composition
+- One `<Audio>` per clipped source video in Root.tsx (typically 2 for multi-clip — never concatenated)
 - EVERY `<Sequence>` must have `premountFor={30}`
 - EVERY `<Sequence>` must have a descriptive `name` prop
 - Zero frame gaps between sequences
@@ -88,24 +88,36 @@ The sequence chain becomes:
 
 This replaces the manual segment-by-segment Sequence chain. Same rules apply: zero frame gaps, premountFor={30}, descriptive names, single Audio element.
 
-### 2. Build Audio Element
+### 2. Build Audio Elements
 
-Exactly ONE `<Audio>` element using the audio source from theme.ts. Accept `audioOffsetMs` from input props and convert to frames:
+One `<Audio>` per clipped source video, each in its own `<Sequence>` in Root.tsx. Accept `audioOffsetMs` from input props and convert to frames. Apply the offset to every Audio Sequence.
 
 ```typescript
 const { audioOffsetMs } = props;
 const audioOffsetFrames = Math.round((audioOffsetMs / 1000) * PROJECT.fps);
 
-{audioOffsetFrames > 0 ? (
-  <Sequence from={audioOffsetFrames} name="Audio Offset">
-    <Audio src={PROJECT.audioSource} pauseWhenBuffering />
-  </Sequence>
-) : (
-  <Audio src={PROJECT.audioSource} pauseWhenBuffering />
-)}
+{/* Intro Audio */}
+<Sequence
+  from={audioOffsetFrames}
+  durationInFrames={INTRO.durationInFrames}
+  premountFor={30}
+  name="Intro Audio"
+>
+  <Audio src={staticFile('intro-audio.m4a')} pauseWhenBuffering />
+</Sequence>
+
+{/* Body Audio */}
+<Sequence
+  from={BODY.startFrame + audioOffsetFrames}
+  durationInFrames={BODY.durationInFrames}
+  premountFor={30}
+  name="Body Audio"
+>
+  <Audio src={staticFile('body-audio.m4a')} pauseWhenBuffering />
+</Sequence>
 ```
 
-**CRITICAL:** This is the ONLY `<Audio>` element in the entire project. No segment component may contain an `<Audio>` tag. The `audioOffsetMs` prop is adjustable live in Remotion Studio's sidebar — tweak until lip sync matches, then render.
+**CRITICAL:** These are the ONLY `<Audio>` elements — one per clipped source video. No segment component may contain an `<Audio>` tag. NEVER concatenate audio files into a single source (causes 500ms+ sync drift — see `wiki/audio-sync.md`). The `audioOffsetMs` prop is adjustable live in Remotion Studio's sidebar — tweak until lip sync matches, then render.
 
 ### 3. Build Sequence Chain
 

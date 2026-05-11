@@ -13,7 +13,7 @@ Parse a video script into a treasure-map-style visual diagram. A navigable HTML 
 Each diagram includes:
 - **ConceptNodes** — titled cards for key ideas
 - **CodeNodes** — terminal panels for prompts, code, commands
-- **ScreenshotNodes** — real screenshots pinned from the reference frame library (or Gemini-generated where no match exists)
+- **ScreenshotNodes** — real screenshots pinned from the reference frame library (or fal-ai/nano-banana-2-generated where no match exists)
 - **PromptNodes** — short Claude prompt bubbles
 - **SectionSigns** — chapter dividers marking the start of each section
 - **DecisionNodes** — branching points

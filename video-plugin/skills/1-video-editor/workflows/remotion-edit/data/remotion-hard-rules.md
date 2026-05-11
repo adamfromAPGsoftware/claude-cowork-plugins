@@ -31,7 +31,7 @@ These rules are enforced during QA (step 06). Every single rule must PASS for th
 <OffthreadVideo src={videoPath} />
 ```
 
-Why: B-roll clips should never play their own audio. The single Audio element in Root.tsx handles all audio.
+Why: B-roll clips should never play their own audio. Separate Audio elements in Root.tsx handle all audio (one per clipped source video).
 
 ---
 
@@ -74,13 +74,31 @@ Why: Prevents audio/video desync when media files are loading.
 
 ---
 
-## Rule 4: Single Audio Element
+## Rule 4: Per-Clip Audio Elements
 
-**There must be exactly ONE `<Audio>` element in the ENTIRE project. It lives in Root.tsx only.**
+**All `<Audio>` elements live in Root.tsx only. For single-clip compositions, use one `<Audio>`. For multi-clip compositions, use one `<Audio>` PER clipped source video, each in its own `<Sequence>`.**
 
 No segment file (Seg{NN}.tsx) may contain an `<Audio>` element.
 
-**Multi-clip compositions:** When the composition includes both intro segments and a body video clip, concatenate all audio sources into a single file (e.g., `full-audio.m4a`) BEFORE building the composition. Use FFmpeg concat filter: `[intro:a][silence:a][body:a]concat=n=3:v=0:a=1`. The single Audio element plays this concatenated file.
+**Multi-clip compositions:** Extract audio per clip via stream copy from each clipped source video. Each section gets its own `<Audio>` element inside its own `<Sequence>` in Root.tsx, with matching `from` and `durationInFrames`. NEVER concatenate audio files — concatenation includes clip dead-air that has already been removed from the video, causing 500ms+ sync drift (see `wiki/audio-sync.md`).
+
+```bash
+# Extract per-clip audio (stream copy — no re-encode, no drift)
+ffmpeg -i intro-clipped.mp4 -vn -acodec copy public/intro-audio.m4a
+ffmpeg -i body-clipped.mp4 -vn -acodec copy public/body-audio.m4a
+```
+
+```tsx
+// Root.tsx — per-clip Audio elements
+<Sequence from={AUDIO_OFFSET_FRAMES} durationInFrames={INTRO.durationInFrames} premountFor={30} name="Intro Audio">
+  <Audio src={staticFile('intro-audio.m4a')} pauseWhenBuffering />
+</Sequence>
+<Sequence from={BODY.startFrame + AUDIO_OFFSET_FRAMES} durationInFrames={BODY.durationInFrames} premountFor={30} name="Body Audio">
+  <Audio src={staticFile('body-audio.m4a')} pauseWhenBuffering />
+</Sequence>
+```
+
+Where `AUDIO_OFFSET_FRAMES` is a theme.ts constant (default 1 frame) for residual AAC priming delay correction — adjustable live in Remotion Studio.
 
 **Short-form exception:** Short-form compositions (9:16 vertical) may have a SECOND `<Audio>` element for background music (or a pre-mixed file containing background music + transition SFX). Whether the file is a raw music track or a pre-mixed music+SFX file, it counts as one element. This second Audio must use a volume callback for ducking and include `pauseWhenBuffering`. Both Audio elements must be in Root.tsx only — no Audio in segment files (Rule 9 still applies).
 
@@ -444,7 +462,7 @@ This is a SHOULD rule (not MUST) — it applies to long-form intro speaker segme
 
 **Audio MUST be continuous across all visual transitions. The voiceover bridges every visual cut — there are no audio gaps at visual boundaries.**
 
-This is already enforced by Rule 4 (Single Audio Element), but this rule makes the intent explicit: the viewer should never experience an audio gap or glitch when the visual type changes. The single Audio element in Root.tsx plays continuously while visual segments change underneath it.
+This is already enforced by Rule 4 (Per-Clip Audio Elements), but this rule makes the intent explicit: the viewer should never experience an audio gap or glitch when the visual type changes. The per-clip Audio elements in Root.tsx play continuously while visual segments change underneath them.
 
 **Confirmed pattern:** Universal across all 5 inspiration creators — audio is 100% continuous.
 

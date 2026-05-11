@@ -95,7 +95,7 @@ Score all combos using the same 7-point checklist (section 2). For any FAIL item
 - **Text >15 chars** → shorten to <12 using strongest words
 - **Weak curiosity gap** → rewrite title to strengthen info gap (keep keywords)
 - **Expression mismatch** → swap to matching expression per Expression Performance Ranking
-- **Missing composition element** → add it and update Gemini prompt
+- **Missing composition element** → add it and update image prompt (fal-ai/nano-banana-2)
 - **Title-thumbnail redundancy** → rewrite overlay to complement, not duplicate
 - **Mobile readability fail** → simplify/enlarge text
 - **ICP relevance fail** → adjust visual direction

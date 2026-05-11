@@ -2,7 +2,7 @@
 
 ## Overview
 
-Landing pages are deployed to a dedicated Cloudflare Pages project (`apg-landing-pages`) and accessed via custom subdomains on `{YOUR_DOMAIN}`. Domain setup requires two API calls: creating a CNAME DNS record and adding the domain to the Pages project.
+Landing pages are deployed to a dedicated Cloudflare Pages project (`{YOUR_CF_PAGES_PROJECT}`) and accessed via custom subdomains on `{YOUR_DOMAIN}`. Domain setup requires two API calls: creating a CNAME DNS record and adding the domain to the Pages project.
 
 ## Required Environment Variables
 
@@ -34,7 +34,7 @@ Payload for subdomain CNAME:
 {
   "type": "CNAME",
   "name": "audit",
-  "content": "apg-landing-pages.pages.dev",
+  "content": "{YOUR_CF_PAGES_PROJECT}.pages.dev",
   "proxied": true,
   "ttl": 1
 }
@@ -92,12 +92,12 @@ GET /accounts/{account_id}/pages/projects/{project_name}/domains
 
 ## CNAME Record Format
 
-For a subdomain `audit.{YOUR_DOMAIN}` pointing to the `apg-landing-pages` project:
+For a subdomain `audit.{YOUR_DOMAIN}` pointing to the `{YOUR_CF_PAGES_PROJECT}` project:
 
 ```
 Type:    CNAME
 Name:    audit
-Target:  apg-landing-pages.pages.dev
+Target:  {YOUR_CF_PAGES_PROJECT}.pages.dev
 Proxied: Yes
 TTL:     Auto
 ```

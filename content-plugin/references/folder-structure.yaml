@@ -14,3 +14,29 @@ directories:
   - editor/reviews/
   - publisher/scheduled/
   - publisher/logs/
+
+files:
+  - path: CLAUDE.md
+    template: "project-wiki"
+    # Template content (substitute {project_name}, {slug}, {created_date}, {status}):
+    # ---
+    # # {Project Name}
+    #
+    # Content project: **{slug}** | Created: {created_date} | Status: {status}
+    #
+    # ## Agent Folders
+    #
+    # | Folder | Agent | Contents |
+    # |--------|-------|----------|
+    # | `strategist/` | Content Strategist | Research reports, content tree ideation briefs |
+    # | `copywriter/` | Copywriter | Scripts, LinkedIn posts, X threads, blog/email, presentations |
+    # | `creative-director/` | Creative Director | Thumbnails, carousels, motion graphics |
+    # | `editor/` | Editor | Quality gate review reports |
+    # | `publisher/` | Publisher | Scheduled post metadata, publish logs |
+    #
+    # ## Project file
+    #
+    # `project.yaml` — project metadata (name, slug, created date, status, platform targets)
+    #
+    # _Managed by the Content Strategist agent._
+    # ---

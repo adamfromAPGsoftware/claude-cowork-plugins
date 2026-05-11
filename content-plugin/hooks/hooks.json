@@ -1,3 +1,15 @@
 {
-  "hooks": {}
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=\"$CLAUDE_TOOL_RESULT_FILE_PATH\"; DIR=$(dirname \"$FILE\"); WIKI=\"$DIR/CLAUDE.md\"; if [ -f \"$WIKI\" ] && [[ \"$(basename \"$FILE\")\" != \"CLAUDE.md\" ]]; then echo \"Folder wiki may be stale: $WIKI\"; fi'"
+          }
+        ]
+      }
+    ]
+  }
 }

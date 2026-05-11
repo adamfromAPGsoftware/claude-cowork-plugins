@@ -97,6 +97,7 @@ interface GapAction {
 const THRESHOLDS = {
   intro: {
     buffer_ms: 150,
+    start_buffer_ms: 50,
     silence_cut_threshold_ms: 1000,       // Cut silences >= 1s
     silence_compress_min_ms: 300,          // Compress silences 300ms-999ms
     silence_compress_target_ms: 150,       // Compress to 150ms
@@ -108,6 +109,7 @@ const THRESHOLDS = {
   },
   main: {
     buffer_ms: 300,
+    start_buffer_ms: 50,
     silence_cut_threshold_ms: 2000,        // Cut silences >= 2s
     silence_compress_min_ms: 500,          // Compress silences 500ms-1999ms
     silence_compress_target_ms: 300,       // Compress to 300ms
@@ -120,6 +122,7 @@ const THRESHOLDS = {
   },
   short: {
     buffer_ms: 100,
+    start_buffer_ms: 50,
     silence_cut_threshold_ms: 300,         // Cut silences >= 300ms (aggressive)
     silence_compress_min_ms: 100,          // Compress silences 100ms-299ms
     silence_compress_target_ms: 50,        // Compress to 50ms
@@ -206,6 +209,7 @@ function applyBoundaryPrecision(
   boundaryDetail: BoundaryDetail[],
   totalDurationMs: number,
   bufferMs: number,
+  startBufferMs: number,
 ): { trimInMs: number; trimOutMs: number } {
   if (speechRegions.length === 0) return { trimInMs: 0, trimOutMs: totalDurationMs };
 
@@ -237,7 +241,7 @@ function applyBoundaryPrecision(
     }
   }
 
-  const trimInMs = Math.max(0, speechStartMs - bufferMs);
+  const trimInMs = Math.max(0, speechStartMs - startBufferMs);
   const trimOutMs = Math.min(totalDurationMs, speechEndMs + bufferMs);
 
   return { trimInMs, trimOutMs };
@@ -584,7 +588,7 @@ function main() {
 
   // Step 2: Apply boundary precision
   const { trimInMs, trimOutMs } = applyBoundaryPrecision(
-    filteredSpeech, data.speech_boundary_detail ?? [], totalDurationMs, t.buffer_ms
+    filteredSpeech, data.speech_boundary_detail ?? [], totalDurationMs, t.buffer_ms, t.start_buffer_ms
   );
   console.log(`Trim: ${trimInMs}ms → ${trimOutMs}ms (removing ${trimInMs}ms start, ${totalDurationMs - trimOutMs}ms end)`);
 

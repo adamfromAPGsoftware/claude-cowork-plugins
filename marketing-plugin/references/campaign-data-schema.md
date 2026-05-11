@@ -150,6 +150,21 @@ draft → planning → creatives → landing_page → review → live → paused
     "social_proof": ["string — testimonials, stats, logos"],
     "cta_text": "string — e.g. 'Get Your Free Audit'",
     "form_fields": ["string — e.g. 'name', 'email', 'phone', 'company'"]
+  },
+  "creative_brief": {
+    "budget_tier": "testing | testing_plus | validated | scaling | aggressive",
+    "daily_budget": 50,
+    "prescribed_angles": 4,
+    "images_per_angle": 1,
+    "videos_per_angle": 1,
+    "total_prescribed_images": 4,
+    "total_prescribed_videos": 4,
+    "primary_aspect": "3:4",
+    "stories_aspect": "9:16",
+    "format_split": "55% image / 45% video",
+    "refresh_cadence_days": 12,
+    "testing_budget_pct": 20,
+    "derived_from": "creative-testing-framework.md"
   }
 }
 ```
@@ -160,6 +175,25 @@ draft → planning → creatives → landing_page → review → live → paused
 | active_angle_ids | Yes | Angles currently running in Meta |
 | retired_angle_ids | Yes | Angles retired due to poor performance |
 | landing_page_copy | No | Copy for the campaign landing page (populated by CS capability) |
+| creative_brief | No | Andromeda-backed creative production prescription — populated by [CS] Campaign Strategy. Specifies how many angles, images, videos, and formats to produce based on daily budget. Creator [GI]/[GV] reads this to show production targets. |
+
+### creative_brief Fields
+
+| Field | Description |
+|-------|-------------|
+| budget_tier | Tier classification from `creative-testing-framework.md` |
+| daily_budget | Daily budget in dollars (from meta_campaign.daily_budget) |
+| prescribed_angles | Number of distinct creative angles to produce |
+| images_per_angle | Images to generate per angle (primary Feed aspect) |
+| videos_per_angle | Videos to generate per angle (9:16 Reels/Stories) |
+| total_prescribed_images | prescribed_angles × images_per_angle |
+| total_prescribed_videos | prescribed_angles × videos_per_angle |
+| primary_aspect | Primary image format — always "3:4" (Feed portrait) |
+| stories_aspect | Video/Stories format — always "9:16" |
+| format_split | Descriptive split e.g. "55% image / 45% video" |
+| refresh_cadence_days | Days between creative refresh cycles |
+| testing_budget_pct | Percentage of budget allocated to new creative tests (default 20) |
+| derived_from | Source reference (always "creative-testing-framework.md") |
 
 ## Performance
 
@@ -167,6 +201,9 @@ draft → planning → creatives → landing_page → review → live → paused
 {
   "last_review": "ISO 8601 | null",
   "review_cadence_days": 7,
+  "phase": "learning | evaluation | optimization",
+  "phase_start_date": "ISO 8601 | null",
+  "optimization_events_count": 0,
   "auto_retire_threshold": {
     "min_spend": 50,
     "min_days": 7,
@@ -195,6 +232,9 @@ draft → planning → creatives → landing_page → review → live → paused
 |-------|----------|-------------|
 | last_review | Yes | When the last performance review was run (null if never) |
 | review_cadence_days | Yes | How often to review (default 7 days) |
+| phase | No | Current campaign phase (default: learning). See `performance-optimization-playbook.md` for phase definitions and evaluation rules |
+| phase_start_date | No | When the current phase began (ISO 8601). Set to campaign activation date initially, updated on phase transitions |
+| optimization_events_count | No | Number of optimization events (conversions) accumulated. Learning phase ends at 50 events |
 | auto_retire_threshold | Yes | Thresholds for auto-retiring underperforming angles |
 | auto_retire_threshold.min_spend | Yes | Minimum spend before evaluating (don't retire too early) |
 | auto_retire_threshold.min_days | Yes | Minimum days active before evaluating |
@@ -269,7 +309,11 @@ draft → planning → creatives → landing_page → review → live → paused
   "ad_set_ids": ["string — Meta ad set IDs"],
   "ad_ids": ["string — Meta ad IDs"],
   "daily_budget": 0,
-  "objective": "OUTCOME_LEADS | OUTCOME_TRAFFIC | OUTCOME_AWARENESS",
+  "objective": "OUTCOME_LEADS | OUTCOME_TRAFFIC | OUTCOME_AWARENESS | OUTCOME_SALES | OUTCOME_ENGAGEMENT",
+  "bid_strategy": "LOWEST_COST_WITHOUT_CAP | COST_CAP | BID_CAP | MINIMUM_ROAS",
+  "campaign_budget_optimization": false,
+  "budget_tier": "testing | validated | scaling",
+  "advantage_plus": false,
   "approved_at": "ISO 8601 | null",
   "approved_by": "string | null"
 }
@@ -282,7 +326,11 @@ draft → planning → creatives → landing_page → review → live → paused
 | ad_set_ids | No | Meta ad set IDs (populated after creation) |
 | ad_ids | No | Meta ad IDs (populated after creation) |
 | daily_budget | Yes | Daily budget in cents (Meta API format) |
-| objective | Yes | Campaign objective |
+| objective | Yes | Campaign objective (must use OUTCOME_* format) |
+| bid_strategy | No | Bidding strategy (default: LOWEST_COST_WITHOUT_CAP). See `campaign-setup-strategy.md` for selection guidance |
+| campaign_budget_optimization | No | Whether CBO is enabled at campaign level (default: false = ABO). When true, daily_budget is set on the campaign, not individual ad sets |
+| budget_tier | No | Budget tier classification for strategy reference (testing/validated/scaling). See `campaign-setup-strategy.md` |
+| advantage_plus | No | Whether Advantage+ is intentionally enabled (default: false). When true, CBO + broad targeting + all placements are configured |
 | approved_at | No | When the campaign was approved for creation |
 | approved_by | No | Who approved it |
 
@@ -303,6 +351,106 @@ draft → planning → creatives → landing_page → review → live → paused
 | crm_pipeline | Yes | Which CRM pipeline to create leads in |
 | auto_create_lead | Yes | Whether to auto-create CRM leads on form submission |
 | notification_email | Yes | Email to notify on new leads |
+
+## Funnel
+
+Configures the inline qualification funnel on the landing page. When `enabled: true`, the generate-landing-page.py script replaces the standard form with a multi-step question flow. Qualifying visitors see a Cal.com booking calendar inline; disqualified visitors see an alternative offer.
+
+When `enabled: false` or the `funnel` key is absent, the standard form is used unchanged.
+
+```json
+{
+  "enabled": true,
+  "heading": "See if we're a fit",
+  "subtext": "Answer 3 quick questions — takes 30 seconds.",
+  "questions": [
+    {
+      "id": "revenue",
+      "label": "What's your approximate annual revenue?",
+      "type": "slider",
+      "required": true,
+      "slider": {
+        "min": 0,
+        "max": 2000000,
+        "step": 50000,
+        "format": "currency",
+        "currency": "AUD",
+        "labels": ["$0", "$500K", "$1M", "$1.5M", "$2M+"]
+      }
+    },
+    {
+      "id": "intent",
+      "label": "Are you ready to invest in improving your operations?",
+      "type": "radio",
+      "required": true,
+      "options": [
+        { "label": "Yes — actively looking", "value": "yes_active" },
+        { "label": "Yes — still researching", "value": "yes_research" },
+        { "label": "Not sure yet", "value": "unsure" },
+        { "label": "No — just exploring", "value": "no" }
+      ]
+    }
+  ],
+  "qualification": {
+    "logic": "all",
+    "rules": [
+      { "field": "revenue", "operator": "gte", "values": ["100000"] },
+      { "field": "intent", "operator": "in", "values": ["yes_active", "yes_research"] }
+    ]
+  },
+  "pass": {
+    "action": "booking",
+    "heading": "You're a great fit — book your free strategy call",
+    "subtext": "Choose a time below. 30 minutes, no pressure.",
+    "booking_embed": {
+      "cal_link": "username/event-slug",
+      "layout": "month_view",
+      "theme": "dark",
+      "brand_color": "#1B2A4A"
+    }
+  },
+  "fail": {
+    "action": "message",
+    "heading": "Not quite the right fit — yet",
+    "message": "Body text explaining the situation.",
+    "alternative_offer": {
+      "label": "Optional label above CTA",
+      "url": "https://example.com",
+      "cta_text": "CTA button text"
+    }
+  }
+}
+```
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `funnel.enabled` | Yes | When false, page uses standard form instead |
+| `funnel.heading` | No | Section heading shown above the quiz |
+| `funnel.subtext` | No | Supporting text below heading |
+| `funnel.questions[].id` | Yes | Unique key — used in qualification rules |
+| `funnel.questions[].label` | Yes | Question text shown to visitor |
+| `funnel.questions[].type` | Yes | `radio` / `slider` / `checkbox` / `text` |
+| `funnel.questions[].options[]` | For radio/checkbox | Array of `{ label, value }` pairs |
+| `funnel.questions[].slider{}` | For slider | `{ min, max, step, format, currency, labels }` |
+| `funnel.qualification.logic` | Yes | `all` (AND) or `any` (OR) across rules |
+| `funnel.qualification.rules[].field` | Yes | Question id to evaluate |
+| `funnel.qualification.rules[].operator` | Yes | See operator table below |
+| `funnel.qualification.rules[].values` | Yes | Acceptable values for the rule |
+| `funnel.pass.action` | Yes | `booking` (Cal.com embed) or `message` |
+| `funnel.pass.booking_embed.cal_link` | For booking | `username/event-slug` — overrides `config.yaml booking` |
+| `funnel.fail.alternative_offer` | No | Optional CTA card: `{ label, url, cta_text }` |
+
+**Operator reference:**
+
+| Operator | Description | Example |
+|----------|-------------|---------|
+| `in` | Answer value is in the values array | `{ "operator": "in", "values": ["yes_active", "yes_research"] }` |
+| `not_in` | Answer value is NOT in values array | `{ "operator": "not_in", "values": ["no"] }` |
+| `eq` | String equality | `{ "operator": "eq", "values": ["solo"] }` |
+| `gte` | Numeric ≥ (slider answers) | `{ "operator": "gte", "values": ["100000"] }` |
+| `lte` | Numeric ≤ (slider answers) | `{ "operator": "lte", "values": ["50"] }` |
+
+Configure via: `/marketing:1-strategist` → `[CF]`
 
 ## Approval Log
 

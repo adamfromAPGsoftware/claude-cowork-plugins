@@ -49,7 +49,7 @@ Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
 
 ### 2. Resolve Active Project and Ingest Path
 
-Load the Video Editor sidecar memories from `{project-root}/_bmad/_memory/video-editor-sidecar/memories.md` and read `last_active_project`.
+Load the wiki session log from `{plugin-root}/video-plugin/wiki/index.md` and read the most recent session row to determine `last_active_project`.
 
 **If `last_active_project` exists:**
 - Set `{active_project}` to the slug value

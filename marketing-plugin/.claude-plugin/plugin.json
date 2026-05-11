@@ -1,7 +1,7 @@
 {
   "name": "marketing",
-  "description": "Marketing \u2014 end-to-end campaign pipeline: planning, intelligence, creative generation, landing page deployment, Meta campaign creation, performance-driven iteration, and lead capture",
-  "version": "1.0.0",
+  "description": "Marketing — end-to-end campaign pipeline: planning, intelligence, creative generation, landing page deployment, Meta campaign creation, performance-driven iteration, and lead capture",
+  "version": "1.2.0",
   "author": {
     "name": "{YOUR_NAME}",
     "url": "https://{YOUR_DOMAIN}"
@@ -12,34 +12,31 @@
     "facebook",
     "ga4",
     "analytics",
-    "campaigns",
-    "apg"
+    "campaigns"
   ],
   "commands": [
-    "./commands/build-angles.md",
-    "./commands/build-landing-page.md",
-    "./commands/campaign-status.md",
-    "./commands/campaign-summary.md",
-    "./commands/funnel-overview.md",
-    "./commands/generate-creatives.md",
-    "./commands/intelligence-briefing.md",
-    "./commands/launch-campaign.md",
+    "./commands/setup.md",
     "./commands/new-campaign.md",
-    "./commands/pull-meta.md",
-    "./commands/review-performance.md",
+    "./commands/campaign-status.md",
+    "./commands/intelligence-briefing.md",
     "./commands/scrape-competitors.md",
-    "./commands/status.md",
-    "./commands/track-winners.md"
+    "./commands/track-winners.md",
+    "./commands/build-angles.md",
+    "./commands/generate-creatives.md",
+    "./commands/generate-vsl.md",
+    "./commands/build-landing-page.md",
+    "./commands/launch-campaign.md",
+    "./commands/pull-meta.md",
+    "./commands/campaign-summary.md",
+    "./commands/review-performance.md",
+    "./commands/funnel-overview.md",
+    "./commands/status.md"
   ],
   "agents": [
-    "./agents/1-campaign-collector.md",
-    "./agents/2-performance-analyst.md",
-    "./agents/3-funnel-mapper.md",
-    "./agents/4-competitor-intelligence.md",
-    "./agents/5-creative-generator.md",
-    "./agents/6-campaign-planner.md",
-    "./agents/7-landing-page-builder.md",
-    "./agents/8-campaign-launcher.md"
+    "./agents/0-setup.md",
+    "./agents/1-strategist.md",
+    "./agents/2-creator.md",
+    "./agents/3-analyst.md"
   ],
   "skills": "./skills/"
 }

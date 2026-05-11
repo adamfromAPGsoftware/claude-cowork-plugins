@@ -60,17 +60,17 @@ To present the available visual asset pipelines and route the user to the correc
 
 "**What visual asset would you like to create?**
 
-**[TH] Thumbnail** — YouTube thumbnail with your face (wide 16:9 or vertical 9:16 for Shorts). Uses Gemini with reference photos for identity preservation. Includes CTR validation.
+**[TH] Thumbnail** — YouTube thumbnail with your face (wide 16:9 or vertical 9:16 for Shorts). Uses fal-ai/nano-banana-2 with reference photos for identity preservation. Includes CTR validation.
 
 **[CA] Carousel** — LinkedIn carousel PDF (multi-slide) or single post image (PNG). Branded 1080x1080 slides with your design system.
 
-**[IM] General Image** — Any image via Gemini — comparison graphics, annotated screenshots, style transfer. No identity preservation needed.
+**[IM] General Image** — Any image via fal-ai/nano-banana-2 — comparison graphics, annotated screenshots, style transfer. No identity preservation needed.
 
 **[LG] Logo** — Fetch a tool/brand logo (4-tier waterfall: Simple Icons → SVG Logos → Logotypes.dev → Logo.dev) and optionally compose onto a canvas.
 
 **[WC] Web Capture** — Screenshot a web page with viewport presets, dark mode support, and automatic overlay hiding.
 
-**[IC] Instagram Carousel** — Instagram carousel (up to 10 slides, 1080x1350). Gemini-generated slides with embedded screenshots, custom layouts, and your brand style.
+**[IC] Instagram Carousel** — Instagram carousel (up to 10 slides, 1080x1350). fal-ai/nano-banana-2-generated slides with embedded screenshots, custom layouts, and your brand style.
 
 **Select:** [TH] / [CA] / [IM] / [LG] / [WC] / [IC]"
 

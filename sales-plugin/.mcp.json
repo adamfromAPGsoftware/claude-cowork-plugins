@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "your-crm": {
-      "type": "http",
-      "url": "https://your-crm.example.com/api/mcp"
-    }
-  }
-}

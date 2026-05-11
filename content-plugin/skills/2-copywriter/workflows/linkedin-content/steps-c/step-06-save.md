@@ -81,7 +81,7 @@ cta_style: "{cta_style}"
 cta_keyword: "{cta_keyword or null}"
 lead_magnet: "{lead_magnet_path or null}"
 media_path: "{media file path or none}"
-media_source: "{carousel-generator|existing-asset|gemini-generated|none}"
+media_source: "{carousel-generator|existing-asset|nano-banana-generated|none}"
 slides_json: "{path to slides JSON if carousel, else null}"
 hashtags: []  # Never include hashtags — they are an AI-generated tell
 status: draft

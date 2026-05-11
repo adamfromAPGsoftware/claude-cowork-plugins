@@ -6,8 +6,11 @@ Used in Step 3 when a section needs a generated image (no matching reference fra
 
 Images are generated via the fal-ai MCP tool `mcp__fal-ai__generate_image`:
 
+> **MANDATORY MODEL RULE:** Always use `model_id: "fal-ai/nano-banana-2"`. Never use Flux, Gemini, or any other model.
+
 ```
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="PROMPT_HERE",
   image_size="landscape_4_3"
 )

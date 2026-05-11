@@ -46,7 +46,7 @@ Use this template when compiling the package-plan.md file in step 07.
 
 **Full Prompt:**
 ```
-{complete Gemini prompt — this is the source of truth for generation}
+{complete image prompt for fal-ai/nano-banana-2 — this is the source of truth for generation}
 ```
 
 **CTR Pre-Validation:**

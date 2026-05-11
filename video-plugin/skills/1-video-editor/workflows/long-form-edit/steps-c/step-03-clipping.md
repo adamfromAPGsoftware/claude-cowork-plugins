@@ -35,7 +35,7 @@ Remove dead air (silence, breaths, filler words) from each content section using
 ### ⚡ Parallelization Rules:
 
 - **FFmpeg execution (section 5):** After false start detection, run ALL FFmpeg clip commands simultaneously as background processes (`&` + `wait`): intro-proxy, intro-raw, body-proxy, body-raw. Also run both transcript remaps in parallel (pure math, instant).
-- **Audio concatenation (section 5):** Immediately after all FFmpeg clips complete, launch audio concatenation as a background process. It runs during VA + storyboard instead of waiting until step 5.
+- **Per-clip audio extraction (section 7):** Immediately after all FFmpeg clips complete, extract audio from each clipped video as background processes (`ffmpeg -vn -acodec copy`). They run during VA + storyboard instead of waiting until step 5.
 - **Visual Analysis (section 8b):** Launch BOTH Gemini VA calls simultaneously (intro @ 1fps and body @ 0.2fps) — they are independent API calls.
 - All background processes must be `wait`-ed with exit code checks before proceeding past their dependent step.
 
@@ -196,20 +196,18 @@ ffprobe -v error -select_streams v:0 \
 
 Store `{intro_clipped_duration}`, `{body_clipped_duration}`, `{intro_clipped_frames}`, `{body_clipped_frames}`.
 
-**⚡ Early Audio Concatenation:** Immediately after probing confirms all clips are valid, launch audio concatenation as a **background process**. This removes it from the critical path — it runs during VA + storyboard instead of blocking step 5.
+**⚡ Per-Clip Audio Extraction:** Immediately after probing confirms all clips are valid, extract audio from each clipped video as **background processes**. This removes them from the critical path — they run during VA + storyboard instead of blocking step 5. Stream copy preserves the exact audio timeline from each clipped video with no re-encode and no drift.
 
 ```bash
-ffmpeg -i "{clips_dir}/intro-clipped.mp4" -i "{clips_dir}/body-clipped.mp4" \
-  -filter_complex "[0:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[a0]; \
-                    [1:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[a1]; \
-                    anullsrc=channel_layout=stereo:sample_rate=48000:d=0.5[silence]; \
-                    [a0][silence][a1]concat=n=3:v=0:a=1[out]" \
-  -map "[out]" -c:a aac -b:a 192k \
-  "{remotion_dir}/full-audio.m4a" &
-PID_AUDIO_CONCAT=$!
+ffmpeg -i "{clips_dir}/intro-clipped.mp4" -vn -acodec copy \
+  "{remotion_dir}/public/intro-audio.m4a" &
+PID_INTRO_AUDIO=$!
+ffmpeg -i "{clips_dir}/body-clipped.mp4" -vn -acodec copy \
+  "{remotion_dir}/public/body-audio.m4a" &
+PID_BODY_AUDIO=$!
 ```
 
-The background audio concat will be verified in section 8c.
+NEVER concatenate these into a single file — concatenation includes dead-air already removed from the video, causing 500ms+ sync drift (see `wiki/audio-sync.md`). The extractions will be verified in section 8c.
 
 ### 8. Clipping Complete — FIRST COLLAB CHECKPOINT
 
@@ -254,19 +252,20 @@ Wait for both VA calls to complete before proceeding.
 
 Log VA summary and auto-proceed — no checkpoint for VA results.
 
-### 8c. Verify Background Audio Concatenation
+### 8c. Verify Per-Clip Audio Extraction
 
-Before proceeding to the next step, verify the background audio concatenation launched in section 7 has completed:
+Before proceeding to the next step, verify the per-clip audio extractions launched in section 7 have completed:
 
 ```bash
-wait $PID_AUDIO_CONCAT || echo "FAILED: audio concatenation"
+wait $PID_INTRO_AUDIO || echo "FAILED: intro audio extraction"
+wait $PID_BODY_AUDIO || echo "FAILED: body audio extraction"
 ```
 
-Verify `{remotion_dir}/full-audio.m4a`:
-- File exists and is playable
-- Duration ≈ intro_clipped_duration + 0.5s + body_clipped_duration (within ±0.1s)
+Verify each file:
+- `{remotion_dir}/public/intro-audio.m4a`: exists, is playable, duration matches `intro_clipped_duration` (within ±0.1s)
+- `{remotion_dir}/public/body-audio.m4a`: exists, is playable, duration matches `body_clipped_duration` (within ±0.1s)
 
-If the background process failed, re-run audio concatenation in the foreground before proceeding. Store verification result so step 5 knows audio concat is already done.
+If either extraction failed, re-run that extraction in the foreground before proceeding. Store verification result so step 5 knows per-clip audio is already extracted.
 
 Load, read entire file, then execute {nextStepFile}.
 

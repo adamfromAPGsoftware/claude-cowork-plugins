@@ -66,117 +66,75 @@ Load {geminiPrompt} and {classificationTaxonomy} to prepare the analysis prompt 
 - Read the Pydantic schema / JSON schema from {classificationTaxonomy}
 - Confirm FPS, chunking plan, and media resolution from step-01 configuration
 
-### 2. Upload Video to Gemini Files API
+### 2. Extract Frames via FFmpeg
 
-"**Uploading video to Gemini Files API...**"
+**Default approach: extract frames at configured FPS, send as base64 image_url via OpenRouter.**
 
-**Upload process:**
+No Files API upload needed — frames are extracted locally and sent inline.
 
-```python
-from google import genai
-from google.genai import types
-
-client = genai.Client(api_key=GEMINI_API_KEY)
-
-# Upload via Files API (recommended for all production use)
-video_file = client.files.upload(file=video_path)
-
-# Wait for processing to complete
-# Files API processes video asynchronously — poll until state is ACTIVE
+```bash
+ffmpeg -i "{proxy_path}" \
+  -vf "fps={configured_fps},scale=1280:-1" \
+  -q:v 5 \
+  "{frames_dir}/frame_%04d.jpg" \
+  -y -loglevel error
 ```
 
-**Report upload status:**
-"**Upload complete.** File URI: {file_uri}
-Waiting for Gemini to finish processing..."
+- Output: JPEG frames at 1280px wide (good quality/size balance)
+- Frame N timestamp = N × (1 / fps) seconds
+- Total frames: duration_s × fps (e.g. 1034s × 0.2 = ~207 frames)
 
-**Wait for processing:**
-- Poll `client.files.get(name=video_file.name)` until state is `ACTIVE`
-- Report when ready: "**Video processed and ready for analysis.**"
+**Chunk plan:** Split into batches of MAX_FRAMES_PER_CHUNK (100) to stay within context limits.
 
-### 3. Execute Analysis
+Report: "**Extracted {N} frames, splitting into {chunks} chunk(s) of up to 100 frames...**"
 
-**IF NO CHUNKING NEEDED (video within single-request limits):**
+### 3. Execute Analysis via OpenRouter
 
-"**Running visual analysis on full video...**"
-
-Send single request to Gemini with:
-- The uploaded video file
-- System prompt from {geminiPrompt}
-- Custom FPS via `videoMetadata(fps=configured_fps)`
-- Media resolution setting (default or low based on step-01 assessment)
-- Structured output config: `response_mime_type: "application/json"`, `response_schema: VisualAnalysisSegments`
-- `temperature: 0.2`
+**Model:** `google/gemini-3.1-pro-preview` via OpenRouter (Nano Banana Pro)
+**API:** OpenAI-compatible chat completions at `https://openrouter.ai/api/v1`
+**Auth:** `OPENROUTER_API_KEY` from `.env`
 
 ```python
-response = client.models.generate_content(
-    model="gemini-3.1-pro-preview",  # Note: gemini-3-pro-preview was deprecated March 9, 2026. Always use gemini-3.1-pro-preview.
-    contents=[
-        types.Content(
-            parts=[
-                types.Part(
-                    file_data=types.FileData(
-                        file_uri=video_file.uri,
-                        mime_type="video/mp4"
-                    ),
-                    video_metadata=types.VideoMetadata(fps=configured_fps)
-                ),
-                types.Part(text=system_prompt),
-            ],
-        ),
-    ],
-    config={
-        "response_mime_type": "application/json",
-        "response_schema": VisualAnalysisSegments,
-        "temperature": 0.2,
-        "media_resolution": media_resolution_setting
-    }
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY
 )
 ```
 
-Store the response segments.
+**For each chunk:**
 
-**IF CHUNKING IS NEEDED (video exceeds single-request limits):**
-
-"**Video requires chunked analysis ({chunk_count} chunks)...**"
-
-For each chunk:
-
-1. Use `videoMetadata` with `start_offset` and `end_offset` to query a time range
-2. Send the same prescriptive prompt and schema for each chunk
-3. Report progress: "**Analysing chunk {N} of {total} ({start_time} - {end_time})...**"
-4. Store chunk results
+Build a message with:
+1. System prompt text from {geminiPrompt} (first chunk) or continuation prompt (subsequent chunks)
+2. For each frame: a `[MM:SS]` timestamp text part followed by an `image_url` base64 JPEG part
+3. Closing instruction: "Return ONLY the JSON object with 'segments' array."
 
 ```python
-for i, chunk in enumerate(chunk_plan):
-    response = client.models.generate_content(
-        model="gemini-3.1-pro-preview",  # Note: gemini-3-pro-preview was deprecated March 9, 2026. Always use gemini-3.1-pro-preview.
-        contents=[
-            types.Content(
-                parts=[
-                    types.Part(
-                        file_data=types.FileData(
-                            file_uri=video_file.uri,
-                            mime_type="video/mp4"
-                        ),
-                        video_metadata=types.VideoMetadata(
-                            fps=configured_fps,
-                            start_offset=f"{chunk['start_seconds']}s",
-                            end_offset=f"{chunk['end_seconds']}s"
-                        )
-                    ),
-                    types.Part(text=system_prompt),
-                ],
-            ),
-        ],
-        config={
-            "response_mime_type": "application/json",
-            "response_schema": VisualAnalysisSegments,
-            "temperature": 0.2,
-            "media_resolution": media_resolution_setting
-        }
-    )
-    # Store chunk results with offset metadata
+content = [{"type": "text", "text": system_prompt}]
+for frame_path, ts in chunk:
+    b64 = base64.b64encode(frame_path.read_bytes()).decode()
+    content.append({"type": "text", "text": f"[{ts_label(ts)}]"})
+    content.append({
+        "type": "image_url",
+        "image_url": {"url": f"data:image/jpeg;base64,{b64}"}
+    })
+content.append({"type": "text", "text": "Return ONLY the JSON object with 'segments' array. No markdown."})
+
+response = client.chat.completions.create(
+    model="google/gemini-3.1-pro-preview",
+    messages=[{"role": "user", "content": content}],
+    max_tokens=16000,
+    temperature=0.2
+)
 ```
+
+**JSON cleanup:** Strip markdown code fences if present before parsing.
+
+**Rate limiting:** 2-second delay between chunks.
+
+**Continuation prompt for chunks 2+:**
+"Continue the visual analysis. These frames cover {chunk_start} to {chunk_end}. Return JSON with the same structure — 'segments' array, timestamp/endTimestamp in MM:SS, same field names. No gaps — first segment starts at {chunk_start}."
 
 ### 4. Validate Analysis Results
 

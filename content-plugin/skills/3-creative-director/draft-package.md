@@ -123,7 +123,7 @@ For each selected title, draft a thumbnail composition **sourced from the inspir
 - **Background treatment** — MUST match one of the palettes extracted from inspiration (e.g. if inspiration uses cream/warm backgrounds, compositions should default to cream/warm; if dark, default to dark). Do NOT invent a palette that doesn't appear in the inspiration set.
 - **Colour palette** — explicitly reference the hex codes and colour relationships observed in inspiration thumbnails
 - **Composition pattern** — mirror the face position, text placement, and object layout from the highest-performing inspiration thumbnails
-- **Full Gemini prompt** — exact text ready for API, no placeholders. Every prompt MUST:
+- **Full image prompt (fal-ai/nano-banana-2)** — exact text ready for API, no placeholders. Every prompt MUST:
   1. Open with: "YouTube thumbnail matching the style of the provided inspiration thumbnails."
   2. Reference the specific colour palette extracted from inspiration (not generic defaults)
   3. Match the background treatment observed in inspiration (light/dark/gradient/texture)
@@ -187,7 +187,7 @@ Present completion summary. This package plan is the input for [VA] Visual Asset
 ## Success Criteria
 
 - Keyword research performed (3-layer waterfall)
-- 3-5 title/thumbnail combos drafted with full Gemini prompts
+- 3-5 title/thumbnail combos drafted with full image prompt (fal-ai/nano-banana-2)s
 - CTR pre-validated (7-point checklist)
 - YouTube description complete
 - Package plan saved for downstream consumption

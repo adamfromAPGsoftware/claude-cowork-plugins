@@ -134,7 +134,7 @@ Match the tool/platform mention against the reference frame catalog (`catalog.ya
 **When to use:** The script mentions a tool by name, a relevant reference frame exists, and Tier 1 didn't apply.
 **Output path:** `{ref_path_prefix}{tool}/{frame-file}.png`
 
-### Tier 3: FLUX-Generated Concept Image
+### Tier 3: AI-Generated Concept Image (fal-ai/nano-banana-2)
 Generate an image via `mcp__fal-ai__generate_image` (fal-ai MCP). Use the **concept-on-backdrop** approach: describe the concept being illustrated and specify a relevant tool's visual aesthetic as the backdrop. This is better than using a generic tool screenshot that doesn't match the content.
 
 **When to use:** No URL to capture, no catalog match — but a visual would help explain the concept.

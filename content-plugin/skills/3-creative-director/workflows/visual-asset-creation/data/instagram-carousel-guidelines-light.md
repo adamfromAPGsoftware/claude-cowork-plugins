@@ -1,6 +1,6 @@
 # Instagram Carousel — Prompt Guidelines ({YOUR_NAME} / Dark Mode)
 
-Reference for crafting Gemini image-generation prompts for **@{YOUR_HANDLE_PERSONAL}** Instagram carousel slides. Every prompt MUST include the brand anchors. The personal brand is casual, builder-focused, and tech-forward — DM Sans typography, neon lime (#90F23C) accents on dark backgrounds. Direct, anti-guru energy targeting aspiring AI builders and developers.
+Reference for crafting fal-ai/nano-banana-2 image-generation prompts for **@{YOUR_HANDLE_PERSONAL}** Instagram carousel slides. Every prompt MUST include the brand anchors. The personal brand is casual, builder-focused, and tech-forward — DM Sans typography, neon lime (#90F23C) accents on dark backgrounds. Direct, anti-guru energy targeting aspiring AI builders and developers.
 
 ---
 
@@ -24,7 +24,7 @@ These constants must appear in every prompt:
 > "Generate a 1080x1350 portrait Instagram slide."
 
 **🛑 CRITICAL — Font Names in Prompts:**
-NEVER include font names (e.g., "DM Sans", "Inter", "Helvetica") in Gemini prompts. Gemini will render font names as visible text on the slide. Instead, describe the STYLE you want: "bold all-caps headline", "clean sans-serif body text", "regular weight text". Describe appearance, not font names.
+NEVER include font names (e.g., "DM Sans", "Inter", "Helvetica") in image prompts. The model will render font names as visible text on the slide. Instead, describe the STYLE you want: "bold all-caps headline", "clean sans-serif body text", "regular weight text". Describe appearance, not font names.
 
 ---
 
@@ -87,7 +87,7 @@ Bottom-right: Instagram repost icon with "repost" in small text.
 
 ### Photo Hook Slide (Slide 1) — Real Photo Composite
 
-The hook slide uses a **real photo** of the creator (not AI-generated). Gemini analyses the photo to determine where the creator is positioned and places text in available space around them.
+The hook slide uses a **real photo** of the creator (not AI-generated). The model analyses the photo to determine where the creator is positioned and places text in available space around them.
 
 ```
 Using the attached photo of this person as the base image, generate a
@@ -228,16 +228,16 @@ The prompt should specify HOW to embed the screenshot:
 
 ## 7. Real Photo Usage
 
-The hook slide (slide 1) uses a **real photo** of the creator — not AI-generated. The photo is provided by the user and sent to Gemini as-is.
+The hook slide (slide 1) uses a **real photo** of the creator — not AI-generated. The photo is provided by the user and sent to fal-ai/nano-banana-2 as-is.
 
 ### Rules
 
 - Set `photo_path` in the slide JSON pointing to the real photo file
-- The photo is sent to Gemini as the first content part — Gemini analyses where the person is positioned and composites text/branding around them
-- Gemini must NOT alter the person's face, body, pose, or clothing — the person must appear exactly as in the source photo
+- The photo is sent as the first content part — the model analyses where the person is positioned and composites text/branding around them
+- The model must NOT alter the person's face, body, pose, or clothing — the person must appear exactly as in the source photo
 - The prompt describes only: text content, text placement strategy, background treatment, and brand elements
 - The CTA slide (last slide) does NOT feature the creator — it's a text-based "Comment [KEYWORD]" design
-- Only the hook slide uses a real photo; content slides (text-only, screenshot features) remain fully Gemini-generated
+- Only the hook slide uses a real photo; content slides (text-only, screenshot features) remain fully nano-banana-2-generated
 
 ---
 
@@ -259,7 +259,7 @@ Use `fetch-logo.ts` (4-tier waterfall: Simple Icons → SVG Logos → Logotypes.
 
 ### Embedding Logos in Slide Prompts
 
-Include the fetched logo PNG in the slide's `embed_images` array. The prompt should tell Gemini how to display it:
+Include the fetched logo PNG in the slide's `embed_images` array. The prompt should describe how to display it:
 
 - **Single tool slide:** "Show the attached logo centered above the headline at roughly 120px, with a subtle glow or shadow"
 - **Tool comparison/list slide:** "Display the attached logos in a horizontal row, each roughly 80px, evenly spaced below the headline"
@@ -268,40 +268,40 @@ Include the fetched logo PNG in the slide's `embed_images` array. The prompt sho
 
 ### Rules
 
-- **Every tool mentioned by name MUST have its real logo fetched and embedded** — never let Gemini guess/generate a logo from the text prompt alone. Gemini will get logos wrong if you don't provide the actual image.
+- **Every tool mentioned by name MUST have its real logo fetched and embedded** — never let the model guess/generate a logo from the text prompt alone — the model will get logos wrong if you don't provide the actual image.
 - Logos are white-on-transparent (fetched with `--color ffffff`) — they work on dark backgrounds
 - If a tool has a coloured logo that should stay coloured, fetch WITHOUT `--color` flag so Tier 2 (gilbarbara) preserves original brand colours
 - Don't overcrowd slides — if 3+ tools are mentioned on one slide, show logos smaller or pick the most important ones
-- If a logo fetch fails and user skips, do NOT reference any logo in the prompt — Gemini must not attempt to draw logos from text description
+- If a logo fetch fails and user skips, do NOT reference any logo in the prompt — the model must not attempt to draw logos from text description
 
 ---
 
 ## 9. Slide Generation Approach
 
-### Hook Slide — Real Photo + Gemini Text Composite
+### Hook Slide — Real Photo + nano-banana-2 Text Composite
 
-The hook slide (slide 1) uses a **real photo** of the creator provided by the user. Gemini receives the photo and composites text/branding around the person without modifying their appearance. Set `photo_path` in the slide JSON pointing to the photo file.
+The hook slide (slide 1) uses a **real photo** of the creator provided by the user. The model receives the photo and composites text/branding around the person without modifying their appearance. Set `photo_path` in the slide JSON pointing to the photo file.
 
 ### CTA Slide — Text Only
 
-The CTA slide (last slide) is fully Gemini-generated from a text prompt — no photo of the creator. It's a bold "Comment [KEYWORD]" design with brand styling. See the CTA Slide prompt pattern in Section 2.
+The CTA slide (last slide) is fully generated by fal-ai/nano-banana-2 from a text prompt — no photo of the creator. It's a bold "Comment [KEYWORD]" design with brand styling. See the CTA Slide prompt pattern in Section 2.
 
-### Content Slides — Fully Gemini-Generated
+### Content Slides — Fully nano-banana-2-Generated
 
-Content slides (text-only, screenshot features) are fully Gemini-generated from text prompts and optional `embed_images`. No photos of the creator on content slides.
+Content slides (text-only, screenshot features) are fully nano-banana-2-generated from text prompts and optional `embed_images`. No photos of the creator on content slides.
 
 ### B-Roll & Screenshots
 
 1. **Review B-roll/screenshots** from the project folder to understand what the video covers visually — tools shown, interfaces demonstrated, settings used.
-2. **Use these observations to write better prompts** — describe the scenes, tools, and settings you saw in the video so Gemini generates contextually accurate slides.
-3. **NEVER add B-roll images or extracted video frames to `embed_images`** — they are reference material for the prompt author (you), not input images for Gemini.
+2. **Use these observations to write better prompts** — describe the scenes, tools, and settings you saw in the video so nano-banana-2 generates contextually accurate slides.
+3. **NEVER add B-roll images or extracted video frames to `embed_images`** — they are reference material for the prompt author (you), not input images for the model.
 4. **Screenshots of tool UIs** (e.g., Claude Code interface, IDE windows) are an EXCEPTION — these are product screenshots, not video frames of the creator. Tool UI screenshots CAN be embedded via `embed_images` when a slide discusses that specific tool.
 
 ### Rules
 
-- **Hook slide uses a real photo** — set `photo_path` in the slide JSON, Gemini composites text around the person
+- **Hook slide uses a real photo** — set `photo_path` in the slide JSON, the model composites text around the person
 - **CTA slide is text-only** — no photo of the creator, bold "Comment [KEYWORD]" design
-- **Content slides are fully Gemini-generated** — text prompts + optional embedded screenshots/logos
+- **Content slides are fully nano-banana-2-generated** — text prompts + optional embedded screenshots/logos
 - **B-roll/extracts = prompt inspiration only** — study them, describe what you see, but never embed them
 - **Tool UI screenshots are allowed** as `embed_images` (product screenshots ≠ video frames of the creator)
 

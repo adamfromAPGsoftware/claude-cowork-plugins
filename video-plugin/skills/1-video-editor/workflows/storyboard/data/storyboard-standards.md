@@ -66,9 +66,22 @@ Fade/flash transitions (the opacity fade in/out on BRollOverlay and motion-graph
 | speaker → speaker | **Hard cut — NO transition.** Seamless since both use the same source video with `startFrom` |
 | speaker → branded-template | Fade in on branded template (built into component) |
 | branded-template → speaker | Fade out on branded template (built into component) |
-| b-roll → b-roll | Both segments have their own fade in/out |
+| b-roll → b-roll | Both segments have their own fade in/out — **see social proof rule below** |
 
 **Key principle:** Two consecutive speaker segments (whether SubtleZoom, PowerCaption, or bare speaker) must be a seamless hard cut — the viewer should not perceive any transition between them because they are showing the same continuous speaker footage.
+
+### Social Proof B-Roll Rule
+
+**`video-extract` / `BRollOverlay` is for tutorial body extractions ONLY** — screen recordings, tool demos, and screen-share clips extracted from later in the main recording. The VHS filter + "LATER IN VIDEO" badge signals to viewers that this content is from later in the tutorial. **Never use `BRollOverlay` for social proof clips.**
+
+**Social proof clips** (agency website recordings, Upwork profile recordings, stage/conference footage, external brand videos) must use `type: 'hera-mg'` so they render via `FullScreenMG` — clean playback, full colour, no VHS effect.
+
+**Consecutive social proof clips** (e.g., agency-website → stage-clip-1 → stage-clip-2 played back-to-back) must use `skipFadeIn`/`skipFadeOut` flags to prevent the speaker video from flashing through between clips:
+- First clip in the sequence: `skipFadeOut: true`
+- Middle clips: `skipFadeIn: true, skipFadeOut: true`
+- Last clip in the sequence: `skipFadeIn: true`
+
+This applies whenever two or more `hera-mg` clips are scheduled with zero frames between them.
 
 ## Visual Asset Source Map Entry Schema
 
@@ -143,6 +156,12 @@ Fade/flash transitions (the opacity fade in/out on BRollOverlay and motion-graph
 - Type C motion-graphic entries should default `image_source` to `frame-extract` or `canvas-build` (not `none`)
 - Branded-template entries reference valid template names
 - All statuses are valid enum values
+
+### Showcase MG Prop Validation (3 checks — FAIL if violated)
+
+- **PV1 (FAIL):** For every showcase-mg entry, all prop names and value shapes must match the component's TypeScript `Props` type exactly (verified by reading the component source). Components with `React.FC` and no props generic accept zero custom props — they cannot be used for slots that require custom content.
+- **PV2 (FAIL):** Every showcase-mg entry with text/number content derived from the narration must have a transcript anchor word recorded in `notes`, and `startFrame` must be within the window `[anchorFrame - 30, anchorFrame + 120]`. Multi-anchor cards must have `durationInFrames` extending ≥ 60 frames past the last anchor.
+- **PV3 (FAIL):** No Type D concept diagram component (FlowchartAnimation, SVGLineTimeline, multi-node TransformationArrow) may appear before the concept has been verbally explained. Bridge/tease moments use statement-type components only (BoldStatement, TextRevealMask, CinematicReveal).
 
 ### Pacing Compliance (4 checks)
 - Hook sections meet 15+ events/min target

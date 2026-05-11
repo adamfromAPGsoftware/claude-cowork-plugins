@@ -12,6 +12,15 @@ menu-code: VA
 
 ---
 
+## Correction Detection
+
+When the user corrects your output at any step in this workflow:
+1. Apply the fix immediately
+2. Assess: Is this a reusable correction? (A visual analysis pattern, FPS setting, or scene classification rule that should apply in future)
+3. If yes → prompt: **"That's a useful fix. Save it to the wiki so it doesn't recur? [Y/N]"**
+4. If Y → run [WU] inline: most visual analysis corrections belong in `wiki/storyboard.md` or `wiki/motion-graphics.md`, append the entry, confirm
+5. Continue the workflow from where you left off
+
 ## Phase 1: Init and Configuration
 
 ### 1.1 Discover Video File

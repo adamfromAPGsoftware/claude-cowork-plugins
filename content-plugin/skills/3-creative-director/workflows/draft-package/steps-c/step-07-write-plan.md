@@ -149,7 +149,7 @@ Using the template from {packagePlanTemplate}, compile the complete plan with al
 - **Step 02** — Selected angles with hooks, expressions, visual direction
 - **Step 03** — Selected keywords, keyword research results
 - **Step 04** — Final title/text overlay combos
-- **Step 05** — Composition tables, expression directions, full Gemini prompts
+- **Step 05** — Composition tables, expression directions, full image prompts
 - **Step 06** — CTR pre-validation scores per combo
 
 **Generation config section must include:**

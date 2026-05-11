@@ -14,6 +14,22 @@ Image generation is fully automatic — run immediately without asking for permi
 
 ## Sequence
 
+### Step 0a: Load Social Post Inspiration
+
+Before branching by format, check `{workspace}/context/inspiration/social-posts/` for user-provided inspiration images.
+
+**If images are found AND `{workspace}/context/references/visual-inspiration.md` exists:**
+- Extract the "Social Post Patterns" section.
+- Store as `inspiration_style_notes` for use in image generation below.
+
+**If images exist but visual-inspiration.md does not:**
+- Read up to 2 images directly (multimodal), note dominant background treatment and composition style.
+- Store result as `inspiration_style_notes`.
+
+**If folder is empty:** Set `inspiration_style_notes: null`. Continue without blocking.
+
+---
+
 ### Step 0: Style Profile Visual Guidance
 
 Before branching by format, check if a style profile was selected in step-04. If so, apply its "Asset Guidance" section from `{adamStyleProfiles}` within the format-specific logic below:
@@ -78,10 +94,13 @@ The image should feature the tool(s) mentioned in the post. For style reference,
 
 ```
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="{2-paragraph prompt — see guidelines below}",
   image_size="square_hd"
 )
 ```
+
+> **MODEL RULE:** `model_id: "fal-ai/nano-banana-2"` is REQUIRED. Never use Flux, Gemini, or any other model.
 
 Save the output to `{draftQueue}/YYYY-MM-DD-linkedin-image.png`.
 
@@ -97,6 +116,8 @@ Save the output to `{draftQueue}/YYYY-MM-DD-linkedin-image.png`.
 
 For style reference, check `{project-root}/context/context/brand-assets/` for any prior tool-logo image examples.
 
+**If `inspiration_style_notes` is set (from Step 0a):** Append to the prompt: `"Brand style reference: {inspiration_style_notes}"`
+
 ---
 
 #### Path C: Personal post
@@ -109,6 +130,8 @@ The image should use a real reference photo of the creator that metaphorically m
 - Post about failure/learning → find a photo tagged with `reflective`, `candid`, `thinking`
 - Post about results/wins → find a photo tagged with `confident`, `working`, `at desk`
 - Post about the grind/process → find a photo tagged with `focused`, `building`, `laptop`
+
+**If `inspiration_style_notes` is set (from Step 0a):** Cross-reference with any composition or framing preferences extracted from inspiration. For example, if inspiration shows a preference for outdoor/casual settings, weight catalog entries with those contexts more heavily.
 
 **Step C3:** If a matching photo is found, use it directly as the image — no generation needed. Crop or note ideal crop to 1:1 (square) if the original is landscape.
 Set `media_path: {photo path from catalog}`, `media_type: image`.

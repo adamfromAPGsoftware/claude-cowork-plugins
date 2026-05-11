@@ -1,6 +1,6 @@
 ---
 name: 'step-05-image'
-description: 'Generate images via Gemini — comparison graphics, annotated screenshots, any non-identity image'
+description: 'Generate images via fal-ai nano-banana-2 — comparison graphics, annotated screenshots, any non-identity image'
 
 pipelineScriptsData: '../data/pipeline-scripts.md'
 ---
@@ -9,7 +9,12 @@ pipelineScriptsData: '../data/pipeline-scripts.md'
 
 ## STEP GOAL:
 
-To generate images via Gemini for any use case that doesn't require identity preservation — comparison graphics, logo combinations, annotated screenshots, style transfers, and freeform image generation.
+To generate images via fal-ai MCP (model: `fal-ai/nano-banana-2`) for any use case that doesn't require identity preservation — comparison graphics, logo combinations, annotated screenshots, style transfers, and freeform image generation.
+
+> **MANDATORY TOOL + MODEL RULE:**
+> - Text-only → `generate_image` with `model_id: "fal-ai/nano-banana-2"`
+> - With reference photo → `edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
+> - Never use `generate_image_from_image` — the model expects `image_urls` (array), not `image_url` (string). `edit_image` wraps correctly.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -53,6 +58,22 @@ To generate images via Gemini for any use case that doesn't require identity pre
 
 **CRITICAL:** Follow this sequence exactly. Do not skip, reorder, or improvise unless user explicitly requests a change.
 
+### 0b. Load Social Post Inspiration
+
+Before gathering requirements, auto-check the global social post inspiration folder:
+
+```bash
+ls "{workspace}/context/inspiration/social-posts/" 2>/dev/null | wc -l
+```
+
+**If images are found:**
+- Load `{workspace}/context/references/visual-inspiration.md` and extract the "Social Post Patterns" section.
+- If the file does not exist, read up to 3 images directly using the Read tool (multimodal) and note dominant style patterns: background treatment, text density, colour usage, composition style.
+- Store as `social_inspiration_notes`.
+- Mention inline when presenting to the user: "I have {N} social post inspiration images from your workspace — I'll apply those style patterns to the prompt."
+
+**If the folder is empty:** Continue without blocking.
+
 ### 1. Gather Image Requirements
 
 "**What image do you need?**
@@ -75,7 +96,9 @@ Wait for user input.
 
 ### 2. Build the Prompt
 
-Construct a clear Gemini prompt from the user's description:
+Construct a clear image prompt from the user's description.
+
+**If `social_inspiration_notes` were extracted in section 0b**, append as a style modifier at the end of the prompt: `"Style reference from brand inspiration: {social_inspiration_notes}"`
 
 "**Here's the image prompt:**
 
@@ -84,6 +107,7 @@ Construct a clear Gemini prompt from the user's description:
 ---
 
 **Input images:** {list or 'none — text-only generation'}
+**Inspiration applied:** {social_inspiration_notes summary or 'none'}
 **Output:** {output path}
 
 **Ready to generate?**"
@@ -113,18 +137,22 @@ Execute via fal-ai MCP:
 ```
 # Text-only generation:
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="[the approved prompt]",
   image_size="[appropriate preset]"
 )
 
-# With input images:
+# With reference/input images — use edit_image (NOT generate_image_from_image):
 mcp__fal-ai__upload_file(file_path="[input image path]")  → input_url
-mcp__fal-ai__generate_image_from_image(
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=input_url,
   prompt="[the approved prompt]",
-  image_size="[appropriate preset]"
+  strength=0.92
 )
 ```
+
+> **TOOL + MODEL RULE:** Text-only → `generate_image` with `model_id: "fal-ai/nano-banana-2"`. With any reference image → `edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`. Never use `generate_image_from_image` — it sends `image_url` as a string but the model expects an array.
 
 Save to: `[output path]/[slug]-image-[date].png`
 

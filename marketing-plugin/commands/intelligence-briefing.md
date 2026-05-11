@@ -11,7 +11,7 @@ Read all three marketing data files and present a unified intelligence summary a
 
 1. **Load all data sources:**
    - `marketing-plugin/data/marketing-data.json` — own campaign performance
-   - `marketing-plugin/data/competitor-data.json` — competitor intelligence
+   - `marketing-plugin/data/campaigns/{active_campaign_id}/competitor-data.json` — competitor intelligence
    - `marketing-plugin/data/creative-data.json` — creative pipeline status
 
 2. **Performance Section** — From marketing-data.json:

@@ -11,7 +11,7 @@ pipelineScriptsData: '../data/pipeline-scripts.md'
 
 ## STEP GOAL:
 
-To refine an existing generated thumbnail using Gemini's image-to-image capabilities — adjusting expression, composition, text, colours, or background while preserving identity from reference photos.
+To refine an existing generated thumbnail using fal-ai/nano-banana-2 image-to-image capabilities — adjusting expression, composition, text, colours, or background while preserving identity from reference photos.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -127,11 +127,13 @@ For a full regeneration with the existing thumbnail as style reference:
 
 ```
 mcp__fal-ai__upload_file(file_path="[source thumbnail path]")  → source_url
-mcp__fal-ai__generate_image_from_image(
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=source_url,
   prompt="[the approved edit prompt]",
-  image_size="landscape_16_9"
+  strength=0.92
 )
+# TOOL RULE: use edit_image (not generate_image_from_image) — model expects image_urls array, edit_image handles that internally.
 ```
 
 Save to: `[project thumbnails path]/[slug]-edit-[version]-[date].png`

@@ -1,13 +1,21 @@
 # Pipeline Script CLI Reference
 
+> **MANDATORY MODEL + TOOL RULE:**
+> - **Text-only generation** (no reference photo): use `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+> - **Identity-preserving generation** (reference photo provided): use `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` and `strength: 0.92`
+> - **NEVER use `generate_image_from_image`** with nano-banana-2 — it sends `image_url` as a singular string but the model API expects `image_urls` as an array. `edit_image` wraps the URL correctly internally.
+> - Never use Flux, Gemini, SDXL, or any other model.
+
 ## 1. YouTube Thumbnail — fal-ai MCP
 
-**Tool:** `mcp__fal-ai__generate_image` or `mcp__fal-ai__generate_image_from_image` (when using reference photos)
+**Tool (text-only):** `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+**Tool (identity-preserving):** `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
 **Auth:** Platform-level MCP — no API key needed
 
 **Call pattern (text-only):**
 ```
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="YouTube thumbnail: ...",
   image_size="landscape_16_9"
 )
@@ -18,12 +26,15 @@ mcp__fal-ai__generate_image(
 1. mcp__fal-ai__upload_file(file_path="reference-photos/creator-hero-front.jpg")
    → returns reference_url
 
-2. mcp__fal-ai__generate_image_from_image(
+2. mcp__fal-ai__edit_image(
+     model="fal-ai/nano-banana-2/edit",
      image_url=reference_url,
      prompt="YouTube thumbnail showing {creator} ...",
-     image_size="landscape_16_9"
+     strength=0.92
    )
 ```
+
+**Why `edit_image` not `generate_image_from_image`:** `generate_image_from_image` sends `image_url` as a singular string, but `fal-ai/nano-banana-2/edit` expects `image_urls` as an array. `edit_image` wraps the URL into an array before calling the API, making it compatible.
 
 **Orchestration Rules:**
 - Run combos sequentially — NEVER parallelise (rate limiting)
@@ -33,33 +44,36 @@ mcp__fal-ai__generate_image(
 - Run CTR validation on every generated combo
 
 **Key Mechanics:**
-- For identity preservation: upload reference photo first with `mcp__fal-ai__upload_file`, then pass the URL to `generate_image_from_image`
+- Upload reference photo first with `mcp__fal-ai__upload_file`, then pass the URL to `edit_image`
 - Use 1-3 creator reference photos for best identity consistency
-- `image_size: "landscape_16_9"` produces YouTube-native 1280×720 output
-- To edit an existing thumbnail: use `mcp__fal-ai__edit_image` with a natural language instruction
+- `strength: 0.92` = high transformation while preserving the reference identity
+- `edit_image` does not take `image_size` — output dimensions match the input reference photo
 
 ---
 
 ## 2. General Image — fal-ai MCP
 
-**Tool:** `mcp__fal-ai__generate_image` (text-only) or `mcp__fal-ai__generate_image_from_image` (with reference images)
+**Tool (text-only):** `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+**Tool (with input images):** `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
 **Auth:** Platform-level MCP — no API key needed
 
 **Call pattern (text-only):**
 ```
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="A dark comparison graphic showing Tool A vs Tool B logos",
   image_size="landscape_4_3"
 )
 ```
 
-**Call pattern (with input images):**
+**Call pattern (with input images — logos, screenshots, existing images as reference):**
 ```
 1. mcp__fal-ai__upload_file(file_path="logos/tool-a.png")  → url_a
-2. mcp__fal-ai__generate_image_from_image(
+2. mcp__fal-ai__edit_image(
+     model="fal-ai/nano-banana-2/edit",
      image_url=url_a,
      prompt="Combine these logos into a horizontal comparison",
-     image_size="landscape_16_9"
+     strength=0.92
    )
 ```
 
@@ -105,7 +119,7 @@ node scripts/generate-carousel.js --input slides.json --output output/images/pos
 **Slide types:**
 - `title` — First slide hook with headline, body, and "SWIPE >>>" prompt
 - `body` — Content slides with headline + body + SWIPE. Optional `"label"` field renders a small green uppercase label above the headline (e.g., `"label": "STEP 1"`)
-- `photo-title` — Gemini-generated photo as full-bleed bg with gradient overlay, headline at bottom-left. When last slide: green "Follow" pill bubble instead of SWIPE. Requires `"photoPath"`. Optional `"ctaText"` for the bubble (default: "Follow for more")
+- `photo-title` — Full-bleed photo as bg with gradient overlay, headline at bottom-left. When last slide: green "Follow" pill bubble instead of SWIPE. Requires `"photoPath"`. Optional `"ctaText"` for the bubble (default: "Follow for more")
 - `text-only` — Dark bg, white body text + SWIPE. Optional `"imagePath"` renders a rounded screenshot in the upper portion with text directly below. Without image, text is vertically centered
 - `cta` — Centered CTA with headline, button, and body text
 
@@ -122,7 +136,8 @@ node scripts/generate-carousel.js --input slides.json --output output/images/pos
 
 ## 4. Instagram Carousel — fal-ai MCP (per-slide)
 
-**Tool:** `mcp__fal-ai__generate_image` (text-only) or `mcp__fal-ai__generate_image_from_image` (hook slides with reference photo)
+**Tool (content slides, text-only):** `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+**Tool (hook slide with reference photo):** `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
 **Auth:** Platform-level MCP — no API key needed
 
 **Slide generation pattern:**
@@ -130,20 +145,24 @@ node scripts/generate-carousel.js --input slides.json --output output/images/pos
 For each slide in `slides.json`, make a separate MCP call:
 
 ```
-# Slides without reference photo (text-only):
+# Content slides (text-only — no photo_path):
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="Portrait Instagram slide 1080x1350. ...",
   image_size="portrait_4_5"
 )
 
-# Hook slide with real photo reference:
+# Hook slide (photo_path set — use edit_image, NOT generate_image_from_image):
 1. mcp__fal-ai__upload_file(file_path=slide.photo_path)  → photo_url
-2. mcp__fal-ai__generate_image_from_image(
+2. mcp__fal-ai__edit_image(
+     model="fal-ai/nano-banana-2/edit",
      image_url=photo_url,
-     prompt="Portrait Instagram slide 1080x1350. Using the attached photo as reference...",
-     image_size="portrait_4_5"
+     prompt="Portrait Instagram slide 1080x1350. Using the attached photo as the hero background...",
+     strength=0.92
    )
 ```
+
+**Why `edit_image` for hook slides:** `generate_image_from_image` sends `image_url` as a singular string; `fal-ai/nano-banana-2/edit` expects `image_urls` as an array. `edit_image` handles the wrapping internally.
 
 **Slides JSON schema** (same format, read by the agent):
 ```json
@@ -165,9 +184,8 @@ mcp__fal-ai__generate_image(
 ```
 
 **Key Mechanics:**
-- Each slide is a separate `mcp__fal-ai__generate_image` (or `generate_image_from_image`) call
-- Upload reference photos first with `mcp__fal-ai__upload_file` before the generation call
-- `image_size: "portrait_4_5"` produces Instagram-native 1080×1350 output
+- Hook slide (`photo_path` set): upload with `upload_file` → pass URL to `edit_image`
+- Content slides (no `photo_path`): use `generate_image` with `image_size: "portrait_4_5"` (1080×1350)
 - 2s delay between calls (rate limiting) — NEVER parallelise
 - Maximum 10 slides per carousel
 - Save each output as `slide-01.png`, `slide-02.png`, etc.
@@ -212,7 +230,7 @@ mcp__buffer__use_buffer_api(
 **Runtime:** Node.js 20+ | TypeScript (tsx), Sharp
 **Dependency:** `sharp` (add to `scripts/package.json`) — handles SVG→PNG via libvips
 
-**Output is always PNG (512×512, transparent background).** SVGs are fetched internally and converted before saving — Gemini does not accept SVG input.
+**Output is always PNG (512×512, transparent background).** SVGs are fetched internally and converted before saving — the fal-ai MCP requires raster image inputs, not SVG.
 
 ```bash
 # Automatic waterfall — outputs PNG

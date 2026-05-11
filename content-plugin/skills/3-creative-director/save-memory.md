@@ -31,7 +31,7 @@ Read current `context/memory/3-creative-director-sidecar/index.md` and update:
 
 - **Visual preferences** — Style choices that worked well
 - **Thumbnail performance** — CTR scores and user feedback
-- **Prompt patterns** — Gemini prompts that produced strong results
+- **Prompt patterns** — image prompts that produced strong results
 
 ### Step 3: Update `chronology.md`
 

@@ -58,7 +58,7 @@ Once confirmed, create the following files:
 (which styles and compositions drive best engagement)
 
 ## Prompt Patterns
-(effective Gemini prompt patterns that produce strong results)
+(effective image prompt patterns for fal-ai/nano-banana-2 that produce strong results)
 
 ## Reference Image Notes
 (which angles, expressions, and styles work best)

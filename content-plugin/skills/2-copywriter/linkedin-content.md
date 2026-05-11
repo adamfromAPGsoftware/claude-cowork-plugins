@@ -49,7 +49,7 @@ Load before generating:
 
 ## Phase 3: Media Planning (Image/Carousel/Video only)
 
-**Image:** Draft image concept — either Gemini-generated (with reference photos for identity preservation) or carousel template
+**Image:** Draft image concept — either fal-ai/nano-banana-2-generated (with reference photos for identity preservation) or carousel template
 
 **Carousel:** Plan slide-by-slide:
 - Slide 1: Hook slide (custom photo or bold statement)
@@ -77,7 +77,7 @@ Run against quality-checklist.md:
 
 ## Phase 5: Media Production (Image/Carousel/Video)
 
-For Image posts: generate via Gemini with reference photos or compose using carousel template
+For Image posts: generate via fal-ai/nano-banana-2 with reference photos or compose using carousel template
 For Carousel posts: generate each slide using appropriate template/tool
 For Video posts: identify clip source and prepare caption
 

@@ -24,6 +24,7 @@ Ask: "Which section do you want to update?"
   6. Scheduling         — timezone and Buffer channel names
   7. Brand Assets       — colours, logos, reference photos, email config
   8. Content Strategy   — competitors, content pillars, X Premium (optional)
+  I. Inspiration        — carousel, thumbnail, and social post inspiration images
 ```
 
 Once the user selects a section, show the current values for that section (so they can see what they're changing), then ask only the questions for that section.
@@ -43,6 +44,18 @@ If changed:
 2. Update all `paths.*` keys in config.yaml to reflect the new workspace root
 3. Warn: "Existing content at the old path has NOT been moved. If you have content there, move it manually to the new workspace or point back to the old path."
 
+### Inspiration section (I)
+
+Show current inspiration state from `inspiration.*` in config.yaml:
+```
+  Carousels:    {count} images ({source})
+  Thumbnails:   {count} images ({source})
+  Social posts: {count} images ({source})
+  Instagram:    auto (autopilot-scraped)
+```
+
+Then re-run the inspiration subsection from Section 7 of the setup wizard for each category the user wants to update (ask which ones). After updating images, regenerate `{workspace}/context/references/visual-inspiration.md` using the same multimodal analysis process.
+
 ---
 
 ## Reference file regeneration rules
@@ -58,6 +71,7 @@ If changed:
 | Scheduling (6) | `{project-root}/context/references/scheduling-config.md` |
 | Brand Assets (7) | `{project-root}/context/references/brand-assets.md` |
 | Content Strategy (8) | `{project-root}/context/references/brand-assets.md` (strategy section) |
+| Inspiration (I) | `{project-root}/context/references/visual-inspiration.md` and `{project-root}/context/references/brand-assets.md` (inspiration section) |
 
 ---
 

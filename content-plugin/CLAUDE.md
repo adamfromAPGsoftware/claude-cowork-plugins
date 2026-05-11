@@ -58,7 +58,11 @@ All `{project_folder}`, `{content_output_folder}`, `{standalone_folder}`, and `{
 | Lead magnet keyword registry | `context/lead-magnet-keywords.yaml` |
 | Instagram watchlist | `context/instagram-watchlist.yaml` |
 | YouTube channel library + transcripts | `context/youtube/` |
-| Instagram inspiration cache | `context/inspiration/instagram/` |
+| Carousel inspiration | `context/inspiration/carousels/` |
+| Thumbnail inspiration | `context/inspiration/thumbnails/` |
+| Social post inspiration | `context/inspiration/social-posts/` |
+| Instagram inspiration cache (autopilot) | `context/inspiration/instagram/` |
+| Visual inspiration analysis | `context/references/visual-inspiration.md` |
 | Brand asset logos | `context/brand-assets/logos/` |
 | Creator reference photos (thumbnails) | `context/brand-assets/reference-photos/` |
 | ManyChat setup guide | `content-plugin/references/manychat-setup-guide.md` |
@@ -94,6 +98,11 @@ npm install && npx playwright install chromium
 
 **Brand voice is a hard gate.** The Copywriter must apply the Anti-AI Red Flags filter from `context/references/brand-voice.md` before presenting any draft. The Editor will reject content that scores below 7/10 on voice consistency.
 
+**Image generation: tool selection matters.** Two different tools, two different situations — pick the wrong one and the API call fails silently:
+- **Text-only (no reference photo):** `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+- **With a reference photo (identity preservation, hook slides, thumbnail edits):** `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
+- **NEVER use `generate_image_from_image`** — it sends `image_url` as a singular string but `fal-ai/nano-banana-2/edit` expects `image_urls` as an array. `edit_image` wraps the URL into an array internally, making it compatible. Always: upload ref photo with `upload_file` first, then pass the returned URL to `edit_image`.
+
 **Image generation: sequential only.** The Creative Director must NEVER parallelise `mcp__fal-ai__generate_image` calls — generate images one at a time. Violating this causes rate limit failures.
 
 **Visual identity:** use `{brand.colors.primary}` from `config.yaml` as the accent colour. Run `/content:0-setup` to configure your brand colours.
@@ -107,6 +116,10 @@ npm install && npx playwright install chromium
 **LinkedIn comment processor has a node_modules tree** (~1,540 files from Playwright). Do not mistake file count spikes for actual content — the real plugin files are ~80.
 
 **Standalone mode** does not update `active-project.yaml`. The last real project slug is preserved for the next session.
+
+**Folder-level CLAUDE.md wikis.** The workspace includes CLAUDE.md files at `context/references/`, `context/inspiration/`, `projects/`, and each `projects/{slug}/`. Setup creates them; a PostToolUse hook fires a "folder wiki may be stale" reminder after any file write in a directory that has a CLAUDE.md. Update the relevant CLAUDE.md when folder contents change significantly.
+
+**Visual inspiration is optional but improves output quality.** Workflow steps for carousels, thumbnails, and social post images auto-check `context/inspiration/{type}/` before generating. If images are present, they load `context/references/visual-inspiration.md` (generated during setup) to extract design patterns that inform prompt construction. If no inspiration is configured, workflows fall back to brand tokens only. To configure: `/content:0-setup` → [UC] → [I].
 
 **Presentation capability [CD]** lives in the Copywriter skill (not Creative Director). It generates a self-contained interactive HTML flowchart from a video script — Cold Orange palette (`#E8590C`), horizontal flow + focus slide modes, keyboard navigable. Output saves to the project folder and imports into Claude Design (claude.ai/design) or Canva via HTML import. Replaced [ED] Excalidraw on 2026-04-18 when Anthropic launched Claude Design.
 
@@ -123,6 +136,10 @@ npm install && npx playwright install chromium
 | Platform config | `context/references/platform-config.md` |
 | Scheduling config / Buffer channel config | `context/references/scheduling-config.md` |
 | Brand colours, logos, email config | `context/references/brand-assets.md` |
+| Visual inspiration analysis & design DNA | `context/references/visual-inspiration.md` |
+| Carousel inspiration images | `context/inspiration/carousels/` |
+| Thumbnail inspiration images | `context/inspiration/thumbnails/` |
+| Social post inspiration images | `context/inspiration/social-posts/` |
 | Logo files | `context/brand-assets/logos/` |
 | Creator reference photos | `context/brand-assets/reference-photos/` |
 | Plugin config | `config.yaml` |

@@ -1,6 +1,6 @@
 ---
 name: step-07-generate
-description: Generate carousel slide images via Gemini using existing Creative Director pipeline
+description: Generate carousel slide images via fal-ai nano-banana-2 using existing Creative Director pipeline
 nextStep: ./step-08-quality.md
 ---
 
@@ -9,6 +9,12 @@ nextStep: ./step-08-quality.md
 ## Goal
 
 Plan the hook slide composition, build the slides.json input, and run the carousel generator to produce all slide PNGs at 1080×1350 in the design system style defined in `{carouselGuidelines}`.
+
+> **MANDATORY TOOL + MODEL RULE:**
+> - **Hook slide (reference photo):** `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
+> - **Content slides (text-only):** `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+> - **NEVER use `generate_image_from_image`** — it sends `image_url` as a string but `fal-ai/nano-banana-2/edit` expects `image_urls` as an array. `edit_image` handles this correctly.
+> - Never use Flux, Gemini, SDXL, or any other model.
 
 ## Sequence
 
@@ -60,7 +66,7 @@ If the carousel topic mentions **Claude, Anthropic, Claude Code, Claude Design, 
 **Placement rules:**
 - Use the **orange sunburst** on dark/hero backgrounds (matches the `#d97757` accent palette)
 - Include the logo as an `embed_images` entry on the hook slide
-- In the Gemini prompt, describe placement: position the Claude sunburst icon at ~120px size, placed in a visible area that does NOT overlap the headline text or the creator's face. Typical placements: near the "NEW" tab, beside the headline, or floating in the clear zone of the hero gradient.
+- In the image prompt, describe placement: position the Claude sunburst icon at ~120px size, placed in a visible area that does NOT overlap the headline text or the creator's face. Typical placements: near the "NEW" tab, beside the headline, or floating in the clear zone of the hero gradient.
 - The logo should feel like part of the composition, not a watermark — visible and intentional
 
 **When NOT to include:** If the topic is about general AI tools, AI business, or community topics that don't specifically mention Claude products, omit the Claude logo.
@@ -136,7 +142,7 @@ Only `screenshot`-type slides need an `embed_images` entry. Content and code sli
 
 ### 5. Build slides.json
 
-Construct the full slides array. Reference `{carouselGuidelines}` for the Gemini prompt templates for each slide type — the style guide contains the full wording for backgrounds, typography, border treatments, and syntax highlight colours.
+Construct the full slides array. Reference `{carouselGuidelines}` for the image prompt templates for each slide type — the style guide contains the full wording for backgrounds, typography, border treatments, and syntax highlight colours.
 
 The script expects this top-level shape:
 
@@ -171,10 +177,10 @@ The script expects this top-level shape:
 - No `embed_images` unless the slide references a specific UI.
 
 **`screenshot` slide**
-- **Do NOT embed static screenshots.** When a slide claims Claude generated something (a dashboard, an app, a UI), use Gemini to **generate a realistic representation** of that output directly in the slide image.
-- In the Gemini prompt, describe the generated UI in detail: layout structure, color scheme, component types (sidebar nav, analytics cards, charts, tables), and any specific content. The generated UI should look like a real, polished application — not a placeholder.
+- **Do NOT embed static screenshots.** When a slide claims Claude generated something (a dashboard, an app, a UI), use `fal-ai/nano-banana-2` to **generate a realistic representation** of that output directly in the slide image.
+- In the image prompt, describe the generated UI in detail: layout structure, color scheme, component types (sidebar nav, analytics cards, charts, tables), and any specific content. The generated UI should look like a real, polished application — not a placeholder.
 - The generated UI sits inside the ScreenshotSlide frame (title bar with dots, path label, framed area).
-- Prompt describes: eyebrow label, headline with accent, the framed area containing Gemini's generated UI (described in natural language), caption text below.
+- Prompt describes: eyebrow label, headline with accent, the framed area containing the generated UI (described in natural language), caption text below.
 - Apply the selected carousel theme.
 - Only use `embed_images` with real screenshots when the slide is showing an actual tool interface (Claude Code terminal, Claude Desktop, etc.) — not when demonstrating what Claude built.
 
@@ -200,20 +206,24 @@ The script expects this top-level shape:
 Save the completed slides array as `slides.json` inside `{slides_dir}`, then for each slide call fal-ai MCP:
 
 ```
-# Hook slide (with photo reference):
+# Hook slide (with photo reference) — use edit_image, NOT generate_image_from_image:
 mcp__fal-ai__upload_file(file_path="{hook photo path}")  → photo_url
-mcp__fal-ai__generate_image_from_image(
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=photo_url,
   prompt="{slide 1 prompt}",
-  image_size="portrait_4_5"
+  strength=0.92
 )
 
 # Content slides (text-only):
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="{slide N prompt}",
   image_size="portrait_4_5"
 )
 ```
+
+> **TOOL RULE:** Hook slide with photo → `edit_image` (wraps URL into array correctly). Content slides → `generate_image`. Never use `generate_image_from_image`.
 
 Save each slide as `slide-01.png`, `slide-02.png`, etc. in `{slides_dir}`.
 

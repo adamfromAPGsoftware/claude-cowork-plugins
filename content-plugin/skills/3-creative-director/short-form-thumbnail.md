@@ -71,7 +71,7 @@ Draft 1 concept per video. For each:
 | Char count (line 2) | {count} |
 | Keywords used | Which keywords from pool informed this concept |
 
-Include **Full Gemini Prompt** — exact text ready to send, no placeholders. Must specify: 9:16 (1080x1920), person centered chest-up, 2 floating icons with 3D tilt, top brand icon, themed background, bottom padding (160px dark safe zone), match inspiration thumbnails.
+Include **Full Image Prompt** — exact text ready to send to `fal-ai/nano-banana-2`, no placeholders. Must specify: 9:16 (1080x1920), person centered chest-up, 2 floating icons with 3D tilt, top brand icon, themed background, bottom padding (160px dark safe zone), match inspiration thumbnails.
 
 Typography must be specified exactly with font sizes, weights, stroke widths, and the green underline bar.
 
@@ -96,13 +96,16 @@ Load pipeline scripts reference. For each approved concept, call fal-ai MCP:
 mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
   → returns ref_url
 
-# Generate thumbnail
-mcp__fal-ai__generate_image_from_image(
+# Generate thumbnail — use edit_image (NOT generate_image_from_image)
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=ref_url,
   prompt="{exact prompt}",
-  image_size="landscape_16_9"
+  strength=0.92
 )
 ```
+
+> **TOOL + MODEL RULE:** Use `edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92` whenever passing a reference photo. `generate_image_from_image` is incompatible — it sends `image_url` as a string but the model expects an array.
 
 Save output to `{output_folder}/sf-{NN}.png`. Sequential generation only.
 

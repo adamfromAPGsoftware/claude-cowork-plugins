@@ -85,6 +85,26 @@ For each section that doesn't PASS:
 - Extend B-roll segments
 - Remove redundant transitions
 
+### 4a. Template Diversity Check (P19)
+
+In addition to pacing counts, validate template diversity from the completed timeline:
+
+1. Build `template_category` usage count for intro and full video.
+2. **FAIL** for each template exceeding the intro cap (2) or full-video cap (3).
+3. **FAIL** for each pair of adjacent MG segments using the same `template_category`.
+4. **FAIL** for each `motion-graphic` segment without `hera: true` in the Visual Asset Source Map.
+5. **FAIL** if total `hera: true` segments in intro > 3.
+
+### 4b. Symbolic Alignment Audit
+
+Spot-check 3–5 MG segments from across the video:
+
+1. Read the narration text at each segment's timestamp from the clipped transcript.
+2. Read the `symbolic_alignment:` value from the segment's `notes`.
+3. **FAIL** if any `symbolic_alignment:` is missing, blank, or clearly mismatched (e.g., a counter showing "$600" while speaker says "we connected Gmail").
+
+Add all P19 and symbolic alignment violations to the Recommendations section.
+
 ### 5. Build Pacing Report
 
 ```markdown
@@ -134,6 +154,8 @@ Update {outputFile} frontmatter with `stepsCompleted` appended, then load, read 
 - Visual events counted for every section
 - Pacing compared against correct targets per section type
 - Actionable recommendations generated for WARN/FAIL sections
+- Template diversity validated: no showcase template > 2 in intro or > 3 in video, no adjacent identical templates, Hera count ≤ 3 in intro
+- Symbolic alignment spot-checked and all sampled segments pass
 - Pacing report appended to storyboard
 
 ### FAILURE:
@@ -141,4 +163,6 @@ Update {outputFile} frontmatter with `stepsCompleted` appended, then load, read 
 - Not counting all visual event types
 - Using wrong pacing targets for section types
 - Not generating recommendations for failures
+- Skipping the Template Diversity Check (P19)
+- Skipping the Symbolic Alignment Audit
 - Requiring user interaction (this is deterministic)

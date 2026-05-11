@@ -77,7 +77,7 @@ This workflow is the shared build engine used by both format-specific editing wo
 1. ALL `<OffthreadVideo>` MUST have `muted` prop
 2. ALL `<OffthreadVideo>` MUST have `style={{ width: '100%', height: '100%', objectFit: 'cover' }}`
 3. ALL `<OffthreadVideo>` and `<Audio>` MUST have `pauseWhenBuffering`
-4. Exactly ONE `<Audio>` element in the entire project
+4. Per-clip `<Audio>` elements in Root.tsx — one per clipped source video (no concatenation)
 5. All B-roll is video — no `<Img>`, no KenBurns, no static screenshots
 6. Zero frame gaps between segments
 7. All `<Sequence>` elements MUST have `premountFor={30}`
@@ -89,7 +89,7 @@ This workflow is the shared build engine used by both format-specific editing wo
 
 When a storyboard includes both intro and body clips to be rendered as one video:
 
-1. **Audio concatenation** (before scaffold): Concatenate intro audio + 0.5s silence + body audio into `full-audio.m4a` using FFmpeg concat filter. This preserves the single Audio element rule.
+1. **Per-clip audio extraction** (before scaffold): Extract audio from each clipped source video via stream copy (`ffmpeg -i {clip}.mp4 -vn -acodec copy public/{clip}-audio.m4a`). Each section gets its own `<Audio>` element in Root.tsx. NEVER concatenate — concatenation causes 500ms+ sync drift (see `wiki/audio-sync.md`).
 2. **Intro segments**: Build all intro Seg{NN}.tsx files as normal (Patterns 1-7).
 3. **Transition**: Add a WhiteFlash Sequence (30 frames) immediately after the last intro segment.
 4. **Body video**: Add the body as a single OffthreadVideo Sequence (Pattern 8) — no segment decomposition needed.

@@ -8,15 +8,15 @@ stream, retrieves the measurement ID, and creates key events for conversion trac
 Usage:
     # Dry run (default)
     python3 marketing-plugin/scripts/setup-ga4-property.py \
-        --campaign-id camp-2026-04-07-001
+        --campaign-id ai-scoping-engine-for-agencies
 
     # Execute
     python3 marketing-plugin/scripts/setup-ga4-property.py \
-        --campaign-id camp-2026-04-07-001 --execute
+        --campaign-id ai-scoping-engine-for-agencies --execute
 
     # Use existing property
     python3 marketing-plugin/scripts/setup-ga4-property.py \
-        --campaign-id camp-2026-04-07-001 --property-id 469971846 --execute
+        --campaign-id ai-scoping-engine-for-agencies --property-id 469971846 --execute
 
 Requires:
     pip install google-analytics-admin python-dotenv

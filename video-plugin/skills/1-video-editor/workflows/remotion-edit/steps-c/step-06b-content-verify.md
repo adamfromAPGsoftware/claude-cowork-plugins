@@ -64,7 +64,7 @@ For each segment with `visualType: motion-graphic`:
 
 ### 5. Post-Clip Audio Verification (Critical for Intro)
 
-Run audio analysis (VAD classification) on the FINAL concatenated audio file:
+Run audio analysis (VAD classification) on each per-clip audio file separately (intro-audio.m4a and body-audio.m4a):
 
 **For intro portion** (0 to intro end timestamp):
 - Flag any non-speech region > 150ms that wasn't removed
@@ -78,7 +78,7 @@ Run audio analysis (VAD classification) on the FINAL concatenated audio file:
 
 **Self-heal**: If intro audio artifacts found:
 1. Re-run audio cleanup with intro-specific filters
-2. Re-concatenate audio
+2. Re-extract per-clip audio from clipped videos via stream copy
 3. Update theme.ts with new audio duration
 4. Re-verify
 

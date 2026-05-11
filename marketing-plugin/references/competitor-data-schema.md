@@ -2,7 +2,7 @@
 
 ## Location
 
-`marketing-plugin/data/competitor-data.json` — single source of truth for competitor Meta ad intelligence.
+`marketing-plugin/data/campaigns/{campaign_id}/competitor-data.json` — competitor Meta ad intelligence, scoped per campaign.
 
 ## Top-Level Structure
 
@@ -140,4 +140,4 @@ Watchlist (1) ──→ (N) Ads
 
 - Each **Ad** belongs to one **Watchlist** competitor via `page_id`.
 - Each **Ad** has at most one **Analysis** (populated after Gemini vision review).
-- Downloaded assets are stored at `data/competitor-assets/{page_id}/{ad_id}.{ext}` and referenced via `local_path`.
+- Downloaded assets are stored at `data/campaigns/{campaign_id}/competitor-assets/{page_id}/{ad_id}.{ext}` and referenced via `local_path`.

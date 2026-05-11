@@ -12,6 +12,17 @@ menu-code: VC
 
 ---
 
+## Correction Detection
+
+When the user corrects your output at any step in this workflow:
+1. Apply the fix immediately
+2. Assess: Is this a reusable correction? (A clipping pattern, buffer timing, or signal-weighting rule that should apply to future clips)
+3. If yes → prompt: **"That's a useful fix. Save it to the wiki so it doesn't recur? [Y/N]"**
+4. If Y → run [WU] inline: pick the right topic page (`pacing-timing.md` or `audio-sync.md`), append the entry, confirm
+5. Continue the workflow from where you left off
+
+Before starting, scan `wiki/pacing-timing.md` and `wiki/audio-sync.md` for corrections that apply to this content type.
+
 ## Phase 1: Initialize
 
 ### 1.1 Auto-Detect Content Type

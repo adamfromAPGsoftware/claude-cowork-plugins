@@ -68,7 +68,7 @@ If `{post_format}` is **Single**, **Thread**, or **Long Post** — this step sho
 From step-04 we specified: {image description from step-04}
 
 **[E] Existing asset** — I already have the image file
-**[G] Generate** — use Gemini/DALL-E to produce it
+**[G] Generate** — use fal-ai/nano-banana-2 to produce it
 **[C] Create manually** — I'll make it and provide the path"
 
 **If Existing asset:** Ask for the file path. Verify it exists. Store as `{media_path}`.

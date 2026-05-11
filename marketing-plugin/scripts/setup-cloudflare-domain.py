@@ -3,7 +3,7 @@
 setup-cloudflare-domain.py — Configure a subdomain on Cloudflare DNS for a Pages project.
 
 Creates a CNAME record pointing a subdomain (e.g., audit.{YOUR_DOMAIN}) to the
-apg-landing-pages Cloudflare Pages project, and adds it as a custom domain on the project.
+{YOUR_CF_PAGES_PROJECT} Cloudflare Pages project, and adds it as a custom domain on the project.
 
 Usage:
     # Dry run (default) — show what would be configured
@@ -36,15 +36,18 @@ except ImportError:
     print("Error: 'python-dotenv' not installed. Run: pip install requests python-dotenv", file=sys.stderr)
     sys.exit(1)
 
+from _config import load_config
+
 
 # ─── Configuration ────────────────────────────────────────────────────────────
 
 PLUGIN_ROOT = Path(__file__).parent.parent
 REPO_ROOT = PLUGIN_ROOT.parent
 
+_config = load_config()
 CF_API_BASE = "https://api.cloudflare.com/client/v4"
-DEFAULT_PAGES_PROJECT = "apg-landing-pages"
-BASE_DOMAIN = "{YOUR_DOMAIN}"
+DEFAULT_PAGES_PROJECT = _config["cloudflare"]["pages_project"]
+BASE_DOMAIN = _config["domains"]["base"]
 
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -193,7 +196,7 @@ def add_custom_domain_to_pages(api_token, account_id, project_name, domain):
 def main():
     parser = argparse.ArgumentParser(description="Setup Cloudflare subdomain for Pages project")
     parser.add_argument("--domain", required=True,
-                        help="Full subdomain (e.g., audit.{YOUR_DOMAIN})")
+                        help=f"Full subdomain (e.g., audit.{BASE_DOMAIN})")
     parser.add_argument("--pages-project", default=DEFAULT_PAGES_PROJECT,
                         help=f"Pages project name (default: {DEFAULT_PAGES_PROJECT})")
     parser.add_argument("--dry-run", action="store_true", default=True,
@@ -210,7 +213,7 @@ def main():
     # Extract subdomain part
     parts = domain.split(".")
     if len(parts) < 3:
-        print(f"Error: Expected a subdomain (e.g., audit.{YOUR_DOMAIN}), got: {domain}", file=sys.stderr)
+        print(f"Error: Expected a subdomain (e.g., audit.{BASE_DOMAIN}), got: {domain}", file=sys.stderr)
         sys.exit(1)
     subdomain_part = parts[0]
     base_domain_parts = ".".join(parts[-2:])

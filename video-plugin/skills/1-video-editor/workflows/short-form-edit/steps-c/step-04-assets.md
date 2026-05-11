@@ -318,7 +318,7 @@ Every short-form video gets a pre-mixed audio file containing background music +
 #### 7a. Select Background Music
 
 1. Read the storyboard metadata `mood` field (e.g., "techy", "inspiring", "chill")
-2. Load `{project-root}/_bmad/ccs/data/brand-assets/audio-library.yaml`
+2. Load `{project-root}/example-account-brand-plugin/context/brand/brand-assets/audio-library.yaml`
 3. Match `mood` against the `mood` tags in the catalog — pick the best match
 4. If multiple tracks match, prefer variety across the 5 videos (cycle through tracks, avoid repeating the same track for consecutive videos)
 5. Copy selected track to a working directory for mixing

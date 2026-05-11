@@ -1,5 +1,11 @@
 {
   "global_replacements": [
+    {"find": "link.nilsdigital.com/widget/bookings/adam-goodyear-personal-calendar-bhue8bspw", "replace": "{YOUR_BOOKING_URL}"},
+    {"find": "cal.com/apgsoftware/apg-software-audit-ai-systems-strategy-session-aud", "replace": "{YOUR_STRATEGY_CALL_URL}"},
+    {"find": "nilsdigital.com", "replace": "{YOUR_BOOKING_DOMAIN}"},
+    {"find": "1uRwGbGHF6-8uv2vH3Dd5tgaIWo5nM7410GNT6Rp14qU", "replace": "{YOUR_SHEET_ID}"},
+    {"find": "Joey Ross", "replace": "{TESTIMONIAL_6_NAME}"},
+    {"find": "+61485012038", "replace": "{YOUR_TWILIO_NUMBER}"},
     {"find": "Adam Goodyer", "replace": "{YOUR_NAME}"},
     {"find": "adam@apgsoftware.com", "replace": "{YOUR_EMAIL}"},
     {"find": "https://crm.apgsoftware.com/api/mcp", "replace": "https://your-crm.example.com/api/mcp"},
@@ -246,7 +252,19 @@
     {"find": "`adamgoodyer`, `apgsoftware`", "replace": "`example-account`"},
     {"find": "adamgoodyer", "replace": "example-account"},
     {"find": "# adamgoodyer", "replace": "# example-account"},
-    {"find": "69695c2d69a577939c38b2d1", "replace": "{LATE_YOUTUBE_CHANNEL_ID}"}
+    {"find": "69695c2d69a577939c38b2d1", "replace": "{LATE_YOUTUBE_CHANNEL_ID}"},
+    {"find": "1DPezbmPzXnXuDw5ulYSxWbXbCnrk52IQmJbdx1RGTRk", "replace": "{YOUR_MARKETING_SHEET_ID}"},
+    {"find": "apg-landing-pages", "replace": "{YOUR_CF_PAGES_PROJECT}"},
+    {"find": "nick-saraev-style-guide", "replace": "external-style-reference"},
+    {"find": "nick-saraev", "replace": "example-creator"},
+    {"find": "nate-herk", "replace": "example-creator-2"},
+    {"find": "futurepedia", "replace": "example-creator-3"},
+    {"find": "varun-mayya", "replace": "example-creator-4"},
+    {"find": "kevin-stratvert", "replace": "example-creator-5"},
+    {"find": "cole-medin", "replace": "example-creator-6"},
+    {"find": "matthew-berman", "replace": "example-creator-7"},
+    {"find": "apg-vsl", "replace": "example-vsl"},
+    {"find": "adam-style-profiles", "replace": "style-profiles"}
   ],
 
   "directory_renames": {
@@ -307,6 +325,14 @@
     {
       "source": "apg-social-plugin/accounts/apgsoftware/config.json",
       "template": "_templates/social-account-config-template.json"
+    },
+    {
+      "source": "apg-marketing-plugin/config.yaml",
+      "template": "_templates/marketing-config-template.yaml"
+    },
+    {
+      "source": "apg-content-plugin/skills/6-autopilot/references/adam-style-profiles.md",
+      "template": "_templates/content-style-profiles-template.md"
     }
   ],
 
@@ -413,6 +439,9 @@
     "j\\.dillon097",
     "calendly\\.com/d/",
     "\\+61450365334",
+    "\\+61485012038",
+    "nilsdigital",
+    "Joey Ross",
     "greenscapelandscaping",
     "AI Builders Hub",
     "skool\\.com/ai-builders",
@@ -420,6 +449,25 @@
     "\\$21,997",
     "\\$15,349",
     "upwork\\.com/freelancers/adamgoodyer",
-    "adam\\.goodyer"
+    "adam\\.goodyer",
+    "Nick Saraev",
+    "nick-saraev",
+    "Nate Herk",
+    "nate-herk",
+    "futurepedia",
+    "Varun Mayya",
+    "varun-mayya",
+    "Kevin Stratvert",
+    "kevin-stratvert",
+    "Cole Medin",
+    "cole-medin",
+    "Matthew Berman",
+    "matthew-berman",
+    "getlate\\.dev",
+    "Late\\.dev",
+    "1DPezbmPzXnXuDw5ulYSxWbXbCnrk52IQmJbdx1RGTRk",
+    "apg-landing-pages",
+    "apg-vsl",
+    "AI First Academy"
   ]
 }

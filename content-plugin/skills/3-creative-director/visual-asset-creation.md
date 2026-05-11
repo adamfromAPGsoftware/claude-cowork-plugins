@@ -8,7 +8,13 @@ menu-code: VA
 
 ## Purpose
 
-Generate production-ready visual assets across the content pipeline — thumbnails (wide 16:9 + vertical 9:16) via Gemini with identity preservation, LinkedIn carousels/images via Puppeteer, Instagram carousels via Gemini per-slide generation, general image generation, logo fetching and canvas composition, and web page captures. All with brand consistency, CTR validation, and Creative Director visual expertise.
+Generate production-ready visual assets across the content pipeline — thumbnails (wide 16:9 + vertical 9:16) via fal-ai MCP (`fal-ai/nano-banana-2`) with identity preservation, LinkedIn carousels/images via Puppeteer, Instagram carousels via per-slide generation, general image generation, logo fetching and canvas composition, and web page captures. All with brand consistency, CTR validation, and Creative Director visual expertise.
+
+> **MANDATORY TOOL + MODEL RULE:**
+> - **Text-only** → `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"`
+> - **With reference photo** → `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
+> - **NEVER use `generate_image_from_image`** — it sends `image_url` as a string but the model API expects an array. `edit_image` handles this correctly.
+> - Never use Flux, Gemini, SDXL, or any other model.
 
 ## Role Context
 
@@ -26,7 +32,7 @@ Resolve: user_name, communication_language, content_output_folder, project_folde
 
 "**Visual Asset Creation. What are we building?**
 
-**[TH]** YouTube Thumbnail (wide 16:9) — with identity preservation via Gemini
+**[TH]** YouTube Thumbnail (wide 16:9) — with identity preservation via fal-ai/nano-banana-2
 **[IC]** Instagram Carousel — per-slide generation with embedded screenshots
 **[IM]** General Image — standalone image generation
 **[LG]** Logo Fetch — source and compose brand logos
@@ -63,11 +69,12 @@ For each approved composition, call fal-ai MCP:
 mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
   → returns ref_url
 
-# Generate thumbnail
-mcp__fal-ai__generate_image_from_image(
+# Generate thumbnail — use edit_image (NOT generate_image_from_image)
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=ref_url,
   prompt="{full_prompt_text}",
-  image_size="landscape_16_9"
+  strength=0.92
 )
 ```
 
@@ -89,7 +96,7 @@ Run CTR validation on every generated thumbnail. Present results with scores.
 
 1. Load carousel template from `{project-root}/content-plugin/skills/3-creative-director/workflows/visual-asset-creation/data/instagram-carousel-guidelines-dark.md`
 2. Plan slide-by-slide content (hook slide uses real photo, not reference photos)
-3. Generate each slide via Gemini or compose via template
+3. Generate each slide via `fal-ai/nano-banana-2` (mcp__fal-ai__generate_image) or compose via template
 4. Sequential generation
 5. Save to project output folder
 
@@ -97,7 +104,7 @@ Run CTR validation on every generated thumbnail. Present results with scores.
 
 1. Gather image requirements from user
 2. Draft prompt
-3. Generate via Gemini
+3. Generate via fal-ai MCP (`fal-ai/nano-banana-2`)
 4. Save to project output folder
 
 ## Logo Fetch Pipeline (LG)

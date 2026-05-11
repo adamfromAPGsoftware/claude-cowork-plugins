@@ -78,6 +78,27 @@ PowerCaption generates events from both burst appearances and word reveals:
 
 ---
 
+## P19: Template Diversity Rule
+
+Visual variety is as important as visual density. Using the same motion graphic template repeatedly makes the video feel templated and lazy.
+
+| Rule | Scope | Threshold |
+|------|-------|-----------|
+| No single showcase template repeated too many times | Intro | Max **2 uses** |
+| No single showcase template repeated too many times | Full video | Max **3 uses** |
+| No identical template in adjacent MG slots | Anywhere | MG-A and MG-B separated only by 1 speaker segment must not share `template_category` |
+| Hera cap | Intro | Max **3** `hera: true` segments |
+| Hera cap | Body | Max **1** `hera: true` per body chapter |
+| ROI running-total exception | Body | `NumberCountUp` / `ROICalculator` may repeat once per chapter for a continuous counter narrative — not counted against the cap |
+
+**Remediation when cap is exceeded:**
+1. Identify the over-used template.
+2. Find the lowest-priority instance (least symbolically important).
+3. Demote to the next candidate in the MG Slot Classification table from template-library.md.
+4. Re-validate that the substitution doesn't breach a different cap.
+
+---
+
 ## Long-Form Pacing Rules
 
 These rules apply specifically to long-form tutorial content (16:9, 5–60+ min).

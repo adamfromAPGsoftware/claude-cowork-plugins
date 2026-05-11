@@ -3,12 +3,12 @@
 download-competitor-assets.py — Download competitor ad creative images/videos to local storage.
 
 Reads competitor-data.json, finds ads with creative_url but no local_path,
-and downloads them to data/competitor-assets/{page_id}/{ad_id}.{ext}.
+and downloads them to data/campaigns/{campaign_id}/competitor-assets/{page_id}/{ad_id}.{ext}.
 
 Usage:
-  python3 marketing-plugin/scripts/download-competitor-assets.py
-  python3 marketing-plugin/scripts/download-competitor-assets.py --competitor 12345678
-  python3 marketing-plugin/scripts/download-competitor-assets.py --limit 20
+  python3 marketing-plugin/scripts/download-competitor-assets.py --campaign-id marketing-plugin
+  python3 marketing-plugin/scripts/download-competitor-assets.py --campaign-id marketing-plugin --competitor 12345678
+  python3 marketing-plugin/scripts/download-competitor-assets.py --campaign-id marketing-plugin --limit 20
 
 Requires:
   pip install requests python-dotenv
@@ -38,8 +38,8 @@ except ImportError:
 # ─── Configuration ────────────────────────────────────────────────────────────
 
 PLUGIN_ROOT = Path(__file__).parent.parent  # marketing-plugin/
-COMPETITOR_DATA_PATH = PLUGIN_ROOT / "data" / "competitor-data.json"
-ASSETS_DIR = PLUGIN_ROOT / "data" / "competitor-assets"
+COMPETITOR_DATA_PATH: Path = None  # Set in main() after --campaign-id is parsed
+ASSETS_DIR: Path = None            # Set in main() after --campaign-id is parsed
 
 DOWNLOAD_TIMEOUT = 60
 CHUNK_SIZE = 8192
@@ -177,6 +177,8 @@ def check_url_alive(url: str) -> tuple:
 
 def main():
     parser = argparse.ArgumentParser(description="Download competitor ad creative assets.")
+    parser.add_argument("--campaign-id", type=str, required=True,
+                        help="Campaign ID (e.g. marketing-plugin). Assets are scoped per campaign.")
     parser.add_argument("--competitor", type=str, default=None,
                         help="Filter by Page ID (download only this competitor's assets).")
     parser.add_argument("--limit", type=int, default=None,
@@ -184,6 +186,10 @@ def main():
     parser.add_argument("--force", action="store_true",
                         help="Re-download assets even if already downloaded (still skips expired URLs).")
     args = parser.parse_args()
+
+    global COMPETITOR_DATA_PATH, ASSETS_DIR
+    COMPETITOR_DATA_PATH = PLUGIN_ROOT / "data" / "campaigns" / args.campaign_id / "competitor-data.json"
+    ASSETS_DIR = PLUGIN_ROOT / "data" / "campaigns" / args.campaign_id / "competitor-assets"
 
     # Load env (may need proxy settings etc.)
     load_env()

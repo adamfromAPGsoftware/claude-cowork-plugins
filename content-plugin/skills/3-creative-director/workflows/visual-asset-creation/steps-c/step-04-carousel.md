@@ -68,6 +68,23 @@ To collaboratively create LinkedIn carousel PDFs or single post images by design
 
 Wait for selection. Store the mode.
 
+### 1b. Load Carousel Inspiration
+
+Check the global carousel inspiration folder:
+
+```bash
+ls "{workspace}/context/inspiration/carousels/" 2>/dev/null | wc -l
+```
+
+**If images are found:**
+- Load `{workspace}/context/references/visual-inspiration.md` and extract the "Carousel Patterns" section.
+- If the file does not exist, read up to 3 images from the folder directly using the Read tool (multimodal) and extract dominant patterns inline: slide structure, text density, colour treatment, typography weight.
+- Store as `carousel_inspiration_notes`.
+- Inform user inline: "**Brand inspiration loaded:** {N} carousel examples from your workspace — I'll apply these design patterns to your slides."
+
+**If the folder is empty:**
+- Continue without blocking. Use brand tokens from {brandConfigData} only.
+
 ### 2. Check Carousel Templates
 
 **For Carousel mode only:**
@@ -109,6 +126,8 @@ Wait for user input. Work collaboratively to refine the content.
 ### 4. Build Slide Structure
 
 Load {brandConfigData} for branding values.
+
+**If `carousel_inspiration_notes` were extracted in section 1b**, use them to inform layout decisions: text density per slide, typography weight, composition tendencies, colour accents. If inspiration shows a pattern that differs from the brand tokens, call it out to the user: "Your inspiration examples tend to use {pattern} — want to try that here, or stick with the standard brand style?"
 
 Shape the user's content into the JSON slides structure:
 

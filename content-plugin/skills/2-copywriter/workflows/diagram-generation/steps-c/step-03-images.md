@@ -41,7 +41,7 @@ For each item in the screenshot match table with status **CAPTURE**:
 
 If Playwright is unavailable (MCP not connected) OR the page fails (timeout, 404, auth wall, login redirect):
 - If a catalog reference frame matches the tool mentioned: fall back to that (mark as MATCHED)
-- Otherwise: fall back to GENERATE — write a description for Gemini generation
+- Otherwise: fall back to GENERATE — write a description for fal-ai/nano-banana-2 generation
 
 ### Close browser
 
@@ -73,9 +73,12 @@ Using the prompt templates from `data/image-prompt-templates.md`, write a comple
 
 ### 3b. Generate via fal-ai MCP
 
+> **MANDATORY MODEL RULE:** Always use `model_id: "fal-ai/nano-banana-2"`. Never use Flux, Gemini, or any other model.
+
 Call:
 ```
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="{FULL_PROMPT}",
   image_size="landscape_4_3"
 )

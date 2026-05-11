@@ -1,74 +1,90 @@
-# Memory System for Video Editor
+# Wiki System for Video Editor
 
-**Memory location:** `{project-root}/_bmad/_memory/bmad-apg-vid-1-video-editor-sidecar/`
+**Wiki location:** `{plugin-root}/video-plugin/wiki/`
 
 ## Core Principle
 
-Tokens are expensive. Only remember what matters. Condense everything to its essence.
+Tokens are expensive. Only capture corrections that will prevent a future mistake. Condense everything to its essence.
 
 ## File Structure
 
-### `memories.md` — Primary Source
+### `wiki/index.md` — Master Index
 
 **Load on activation.** Contains:
-- User profile and preferences
-- Session history (date, project, what was processed)
-- Patterns and preferences learned across sessions
-- Pipeline notes (observations about pipeline behavior)
+- Page directory (topic → file mapping)
+- Session log (date, project, skills used, corrections captured)
+- Graduation log (corrections that became permanent rules)
 
-**Update:** After each session or when significant pipeline work is completed.
+**Update:** Via [SM] — append a session row after each working session.
 
-### `instructions.md` — Operational Protocols
+### `wiki/remotion-build.md` — Remotion Build Corrections
 
-**Load on activation.** Contains:
-- Proxy workflow rules
-- Processing order rules (body first, then intro)
-- Boundary constraints (read/write zones)
-- Startup behavior sequence
+Component patterns, prop mistakes, render issues, scaffold errors.
 
-### `editing-preferences.md` — Format-Specific Rules
+### `wiki/audio-sync.md` — Audio & Sync Corrections
 
-**Load on activation before any editing or analysis task.** Contains:
-- Pacing rules per format (talking head, podcast, screen recording, mixed)
-- Transition preferences
-- Visual style rules
-- Platform-specific style guides (YouTube, Shorts, LinkedIn, TikTok, Instagram)
+Audio extraction, sync drift, loudness normalization, per-clip audio patterns.
 
-**Update:** Only with explicit user approval.
+### `wiki/pacing-timing.md` — Pacing & Timing Corrections
 
-### `branded-assets/` — Visual Assets
+Cut timing, overlay density, dead air thresholds, format-specific pacing violations.
 
-Contains logos, profile images, and brand graphics used in motion graphics and overlays.
+### `wiki/storyboard.md` — Storyboard Corrections
 
-### `remotion-templates/` — Template Library
+Segment planning mistakes, MG cue placement, brief structure, B-roll strategy errors.
 
-Contains TypeScript Remotion component templates for segment patterns.
+### `wiki/motion-graphics.md` — Motion Graphics Corrections
 
-## Memory Persistence Strategy
+Hera vs Remotion template selection, animation timing, reference image issues, MG coverage.
 
-### Write-Through (Immediate)
+### `wiki/rendering-output.md` — Rendering & Output Corrections
 
-Persist immediately when:
-1. New project ingested via [VI]
-2. Analysis completed via [AA], [TR], or [VA]
-3. Video clipped via [VC]
-4. Storyboard completed via [SB]
-5. Render completed via [RE]
-6. User explicitly saves via [SM]
+FFmpeg flags, quality settings, file naming, output format issues.
 
-### Checkpoint (Periodic)
+### `wiki/platform-specific.md` — Platform-Specific Corrections
 
-Update `memories.md` patterns section after:
-- A full pipeline run completes
-- User gives feedback on edit quality
-- New pacing or style preferences are established
+YouTube/TikTok/LinkedIn/Instagram format gotchas, dimension requirements, upload issues.
 
 ## Write Discipline
 
-Before writing to memory, ask:
-1. **Is this worth remembering?** — Will it improve the next editing session? If no, skip.
-2. **Minimum tokens?** — Condense to the essential fact. No narrative, no fluff.
-3. **Which file?**
-   - `memories.md` -> session history, user preferences, pipeline observations
-   - `editing-preferences.md` -> pacing rules, style preferences (user approval required)
-   - `instructions.md` -> operational protocol changes (rare)
+### Correction Entry Format
+
+```markdown
+### [YYYY-MM-DD] One-line description of what went wrong
+**Fix:** The correct approach. 1-2 lines max.
+**Applies to:** short-form | vsl | long-form | ad | all
+```
+
+### Before Writing, Ask Three Questions
+
+1. **Worth remembering?** — Will this prevent a future mistake? If it's a one-off creative preference that won't generalize, skip it.
+2. **Minimum tokens?** — Condense to one line problem + one line fix. No narrative, no context.
+3. **Which page?** — Use the topic-to-page mapping in `wiki-update.md`.
+
+## Write-Through Triggers
+
+Capture a correction immediately when:
+- User corrects agent output during any workflow step (Correction Detection blocks)
+- User explicitly requests a wiki save
+- User runs `[WU]` manually after a session
+- A pattern from memory is confirmed wrong
+
+## Graduation Rules
+
+When the same correction appears **3 or more times** (same underlying fix, possibly different wording):
+
+1. The agent detects repetition during `[WU]` execution
+2. Prompts: "This fix has come up {n} times. Graduate it to `references/` as a permanent rule? [Y/N]"
+3. If Y:
+   - Append to the relevant `references/` file (e.g., `pacing-timing.md` → `short-form-pacing-rules.md` or `long-form-pacing-rules.md`)
+   - Add a row to `wiki/index.md` graduation log
+   - Condense the wiki entries to a single line with "(graduated to references/{file})" suffix
+4. Graduation requires explicit user confirmation — never graduate silently
+
+## Session Log Update (via [SM])
+
+After each working session, `[SM]` appends to `wiki/index.md` Session Log:
+
+```markdown
+| {date} | {project-slug} | {skills used} | {n corrections captured} |
+```

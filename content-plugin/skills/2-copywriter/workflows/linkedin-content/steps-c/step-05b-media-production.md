@@ -200,8 +200,8 @@ Check `{linkedin_path}{post_slug}-image.png` exists.
 **If success:** Display: "**Image generated: `{linkedin_path}{post_slug}-image.png`**" and continue to section 6.
 **If failure:** Report the error and ask user how to proceed.
 
-**If source is `gemini-generated`:**
-- Advise the user to run Gemini image generation manually (not yet automated)
+**If source is `nano-banana-generated`:**
+- Generate the image using mcp__fal-ai__generate_image with model_id: "fal-ai/nano-banana-2"
 - Ask the user to confirm when the image is saved to `{linkedin_path}{post_slug}-image.png`
 - Verify it exists on disk before proceeding
 

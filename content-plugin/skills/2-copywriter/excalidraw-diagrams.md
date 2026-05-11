@@ -8,7 +8,7 @@ menu-code: ED
 
 ## Purpose
 
-Generate segment-based visual storyboards for video content — parsing intro scripts into video segments, generating rich sketch-style hero illustrations per segment (via Gemini/Nano Banana), and composing them onto a lightweight horizontal ExcaliDraw canvas with numbered headings, subtitles, supporting text, and arrow connectors between segments.
+Generate segment-based visual storyboards for video content — parsing intro scripts into video segments, generating rich sketch-style hero illustrations per segment (via fal-ai/nano-banana-2), and composing them onto a lightweight horizontal ExcaliDraw canvas with numbered headings, subtitles, supporting text, and arrow connectors between segments.
 
 ## Role Context
 
@@ -59,7 +59,7 @@ For each segment:
 ### Phase 3: Image Generation
 
 For each segment:
-1. Generate hero illustration via Gemini using the drafted prompt
+1. Generate hero illustration via fal-ai/nano-banana-2 using the drafted prompt
 2. Save generated images to project output folder
 3. Sequential generation only — never parallelise
 

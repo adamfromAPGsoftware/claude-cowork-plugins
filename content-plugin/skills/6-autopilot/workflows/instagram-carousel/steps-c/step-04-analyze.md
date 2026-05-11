@@ -24,6 +24,15 @@ Select the top 5 posts by engagement rate.
 
 If the Apify-scraped library has fewer than 3 posts, use the static inspiration library exclusively.
 
+**Global brand inspiration (check and include if present):**
+
+Check `{workspace}/context/inspiration/carousels/` for user-provided carousel inspiration images.
+
+If images exist:
+- Load `{workspace}/context/references/visual-inspiration.md` "Carousel Patterns" section if available, otherwise read up to 3 images directly (multimodal).
+- Include these patterns in the analysis pool alongside scraped and static inspiration. Weight them equally with the static inspiration library.
+- Note: these represent the brand's own aesthetic preferences — any patterns here that deviate from the static viral library should be called out in the style brief.
+
 ### 2. Visually Analyze Slides
 
 For each of the top 5 posts, read its slide images (the Read tool can display PNGs as Claude is multimodal).

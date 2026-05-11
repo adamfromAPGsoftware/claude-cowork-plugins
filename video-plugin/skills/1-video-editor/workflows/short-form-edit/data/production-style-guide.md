@@ -227,7 +227,7 @@ Every short-form video gets background music AND transition swooshes. No opt-out
 
 | Property | Value |
 |----------|-------|
-| Source | Pre-curated library at `_bmad/ccs/data/brand-assets/background-music/` — see `audio-library.yaml` for catalog |
+| Source | Pre-curated library at `example-account-brand-plugin/context/brand/brand-assets/background-music/` — see `audio-library.yaml` for catalog |
 | Volume | 0.08–0.12 (ducked under voiceover) |
 | Fade in | 0.5 seconds |
 | Fade out | 1.0 seconds |

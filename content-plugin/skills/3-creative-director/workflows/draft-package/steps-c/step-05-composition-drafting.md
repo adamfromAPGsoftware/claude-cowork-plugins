@@ -1,6 +1,6 @@
 ---
 name: 'step-05-composition-drafting'
-description: 'Draft 3-element composition tables, expression directions, and full Gemini prompts for each combo'
+description: 'Draft 3-element composition tables, expression directions, and full image prompts for each combo'
 
 nextStepFile: './step-06-ctr-pre-validation.md'
 promptTemplateData: '../../visual-asset-creation/data/thumbnail-prompt-template.md'
@@ -11,7 +11,7 @@ shortFormGuideData: '../../visual-asset-creation/data/short-form-style-guide.md'
 
 ## STEP GOAL:
 
-To build a full composition breakdown for each confirmed combo — 3-element layout, expression direction, background description, and a complete Gemini prompt — so the user can review and edit everything before generation.
+To build a full composition breakdown for each confirmed combo — 3-element layout, expression direction, background description, and a complete image prompt (fal-ai/nano-banana-2) — so the user can review and edit everything before generation.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -28,12 +28,12 @@ To build a full composition breakdown for each confirmed combo — 3-element lay
 
 - ✅ You are a visual composition expert designing thumbnail layouts
 - ✅ We engage in collaborative dialogue, not command-response
-- ✅ You bring 3-element composition expertise, expression psychology, and prompt engineering for Gemini image generation
+- ✅ You bring 3-element composition expertise, expression psychology, and prompt engineering for fal-ai/nano-banana-2 image generation
 - ✅ The user brings their creative preferences and content knowledge
 
 ### Step-Specific Rules:
 
-- 🎯 Focus on composition tables and Gemini prompt construction
+- 🎯 Focus on composition tables and image prompt (fal-ai/nano-banana-2) construction
 - 🚫 FORBIDDEN to execute any generation scripts — that happens via [VA] Visual Assets after the plan is written
 - 💬 Present each combo's composition clearly for user review
 - 📋 Use the loaded prompt template ({promptTemplateData}) to construct prompts — do NOT freestyle
@@ -68,7 +68,7 @@ For each confirmed combo from step 04, build a composition table:
 
 **Background:** {specific background description — not just 'dark' but e.g., 'dark gradient with subtle code editor lines'}
 
-**Full Gemini Prompt:**
+**Full Image Prompt (for fal-ai/nano-banana-2):**
 ```
 {complete prompt following the loaded template structure}
 ```
@@ -104,7 +104,7 @@ Wait for user review. Apply any modifications.
 
 **Only execute this section if `{workflow_mode}` is `auto`. Skip entirely in collab mode.**
 
-Draft all compositions using the exact same process as collab mode (template, 3-element tables, Gemini prompts). Output everything for the audit trail.
+Draft all compositions using the exact same process as collab mode (template, 3-element tables, image prompt (fal-ai/nano-banana-2)s). Output everything for the audit trail.
 
 Auto-approve all compositions without waiting for user review:
 "**All {count} compositions drafted and auto-approved.**
@@ -157,7 +157,7 @@ ONLY WHEN [C continue option] is selected and [all compositions approved by user
 - 3-element composition table built for each combo
 - Expression direction specific and actionable
 - Background descriptions specific (not generic)
-- Full Gemini prompts constructed using the template structure
+- Full image prompt (fal-ai/nano-banana-2)s constructed using the template structure
 - User reviewed and approved all compositions
 - No face descriptions in prompts (reference photos handle identity)
 

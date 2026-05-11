@@ -37,7 +37,7 @@ Loaded by step-04-storyboard alongside pacing rules. Each item is marked HARD (b
 | M8 | Intro MG entry animation types match style guide frequency distribution | SOFT | mg-style-guide.md — most common entry animations |
 | M9 | Intro uses ≥3 distinct MG categories; no single type >40%; priority: UI-mockup ≥15%, text-overlay ≥12%, sequential-bullets ≥10% (P20) | SOFT | mg-style-guide.md — MG category frequency; P20 |
 | M10 | Tool-referencing MGs (Types B, C, D) must use reference frame library as primary image source — no logo-only fallback for Type C | HARD | Short-form workflow pattern — library contains 21 tools with pre-uploaded Supabase URLs |
-| M11 | If tool not in library: resolve via frame-extract or ask user to add screenshot — never skip reference image | HARD | resolve-reference-image.ts waterfall; user adds to `_bmad/ccs/data/brand-assets/reference-frames/` |
+| M11 | If tool not in library: resolve via frame-extract or ask user to add screenshot — never skip reference image | HARD | resolve-reference-image.ts waterfall; user adds to `example-account-brand-plugin/context/brand/brand-assets/reference-frames/` |
 
 ## Caption Rules
 

@@ -1,24 +1,10 @@
 {
   "skill-name": "bmad-apg-vid-1-video-editor",
   "module-code": "vid",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "has-memory": true,
-  "persona": "Full video pipeline specialist — ingest, audio analysis, transcription, visual analysis, intelligent clipping, long-form editing, short-form cuts, storyboarding, Remotion rendering, B-roll extraction, motion graphics, and clip extraction.",
+  "persona": "Video pipeline infrastructure specialist — ingest, audio analysis, transcription, visual analysis, intelligent clipping, B-roll extraction, motion graphics generation, clip extraction, and pipeline status.",
   "capabilities": [
-    {
-      "menu-code": "FP",
-      "name": "full-pipeline",
-      "description": "Full Pipeline — end-to-end: ingest, analyse, clip, storyboard, assets, edit, render",
-      "type": "prompt",
-      "file": "full-pipeline.md"
-    },
-    {
-      "menu-code": "LF",
-      "name": "long-form-edit",
-      "description": "Long-Form Edit — full production editing for long-form tutorial videos (16:9 landscape)",
-      "type": "prompt",
-      "file": "long-form-edit.md"
-    },
     {
       "menu-code": "VI",
       "name": "video-ingest",
@@ -62,20 +48,6 @@
       "file": "pre-storyboard.md"
     },
     {
-      "menu-code": "SB",
-      "name": "storyboard",
-      "description": "Storyboard — plan video production: segments, B-roll, motion graphics, captions, pacing",
-      "type": "prompt",
-      "file": "storyboard.md"
-    },
-    {
-      "menu-code": "RE",
-      "name": "remotion-edit",
-      "description": "Remotion Edit — compile approved storyboard to final video via Remotion",
-      "type": "prompt",
-      "file": "remotion-edit.md"
-    },
-    {
       "menu-code": "BE",
       "name": "broll-extraction",
       "description": "B-Roll Extraction — extract B-roll clips from source video via FFmpeg",
@@ -88,20 +60,6 @@
       "description": "Hera Motion Graphics — generate motion graphic clips via Hera Video API",
       "type": "prompt",
       "file": "hera-motion-graphics.md"
-    },
-    {
-      "menu-code": "SF",
-      "name": "short-form-edit",
-      "description": "Short-Form Edit — platform-specific short-form vertical cuts (9:16)",
-      "type": "prompt",
-      "file": "short-form-edit.md"
-    },
-    {
-      "menu-code": "VE",
-      "name": "vsl-edit",
-      "description": "VSL Edit — Video Sales Letter editing with section-based graphic overlays, rapid pacing, emphasis text",
-      "type": "prompt",
-      "file": "vsl-edit.md"
     },
     {
       "menu-code": "VX",
@@ -123,6 +81,13 @@
       "description": "Save current session context to memory",
       "type": "prompt",
       "file": "save-memory.md"
+    },
+    {
+      "menu-code": "WU",
+      "name": "wiki-update",
+      "description": "Wiki Update — record a correction to the video editor wiki",
+      "type": "prompt",
+      "file": "wiki-update.md"
     }
   ]
 }

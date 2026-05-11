@@ -67,113 +67,65 @@ For each visual segment you identify, you MUST report:
 - If you cannot identify a tool, set tool to null but still describe what's visible
 - Confidence below 0.7 should trigger a more detailed description to compensate for uncertainty
 
-## API Configuration Best Practices
+## API Configuration
 
-### Structured Output (REQUIRED)
+### Default: OpenRouter via OpenAI SDK
 
-Always use Gemini's native structured output to guarantee valid JSON:
-
-```python
-config={
-    "response_mime_type": "application/json",
-    "response_schema": VisualAnalysisSegments,
-    "temperature": 0.2
-}
-```
-
-- `response_mime_type: "application/json"` forces JSON output
-- `response_schema` enforces exact field structure (see classification-taxonomy.md for schema)
-- `temperature: 0.2` for consistent, accurate classification results
-
-### Video Upload
+Always use OpenRouter with `google/gemini-3.1-pro-preview` (Nano Banana Pro). Requires `OPENROUTER_API_KEY` in `.env`.
 
 ```python
-from google import genai
-from google.genai import types
+from openai import OpenAI
+import base64
 
-client = genai.Client(api_key=GEMINI_API_KEY)
-
-# For videos > 20 MB: use Files API (supports up to 2 GB)
-video_file = client.files.upload(file="path/to/video.mp4")
-
-# For videos < 20 MB: can use inline data
-# video_part = types.Part.from_bytes(data=video_bytes, mime_type="video/mp4")
-```
-
-### Custom Frame Rate (FPS)
-
-Set via `videoMetadata` — maps to user's granularity preference:
-
-```python
-video_part = types.Part(
-    inline_data=types.Blob(data=video_bytes, mime_type="video/mp4"),
-    video_metadata=types.VideoMetadata(fps=1.0)  # 1 FPS default
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=OPENROUTER_API_KEY
 )
 ```
 
-| Granularity | FPS Value | Use Case |
+### Frame Extraction (replaces Files API)
+
+Extract frames locally via FFmpeg, send as base64 `image_url` content parts:
+
+```python
+# Extract at configured FPS
+subprocess.run([
+    "ffmpeg", "-i", proxy_path,
+    "-vf", f"fps={fps},scale=1280:-1",
+    "-q:v", "5",
+    f"{frames_dir}/frame_%04d.jpg",
+    "-y", "-loglevel", "error"
+])
+
+# Encode and send
+for frame_path, ts in chunk:
+    b64 = base64.b64encode(frame_path.read_bytes()).decode()
+    content.append({"type": "text", "text": f"[{ts_label(ts)}]"})
+    content.append({
+        "type": "image_url",
+        "image_url": {"url": f"data:image/jpeg;base64,{b64}"}
+    })
+```
+
+### Model
+
+| Nickname | OpenRouter ID | Use |
 |---|---|---|
-| High detail | `fps=1.0` | Intros, short segments, fast-paced content |
-| Standard | `fps=0.2` | Most content (1 frame every 5 seconds) |
-| Overview | `fps=0.067` | Long-form videos, 5+ hours |
+| **Nano Banana Pro** (default) | `google/gemini-3.1-pro-preview` | All production visual analysis |
+| Nano Banana Flash | `google/gemini-3.1-flash-image-preview` | Quick drafts / cheap iteration |
 
-### Chunking via Time Offsets (for long videos)
+### Chunking (for long videos)
 
-Instead of splitting the video file, use `videoMetadata` offsets to query segments:
+Split frames into batches of 100 max per API call. 2-second delay between chunks.
 
-```python
-video_part = types.Part(
-    file_data=types.FileData(file_uri=uploaded_file.uri, mime_type="video/mp4"),
-    video_metadata=types.VideoMetadata(
-        start_offset="0s",
-        end_offset="2700s",  # First 45 minutes
-        fps=1.0
-    )
-)
-```
-
-- Upload video ONCE via Files API
-- Query different time ranges with start/end offsets
-- Merge results across chunks ensuring continuous timeline
-
-### Media Resolution for Long Videos
-
-```python
-config={
-    "media_resolution": "MEDIA_RESOLUTION_LOW"  # 66 tokens/frame instead of 258
-}
-```
-
-- Default resolution: ~1 hour max, 258 tokens/frame
-- Low resolution: ~3 hours max, 66 tokens/frame
-- Use low resolution for overview-mode analysis of very long videos
-
-### Context Caching (for videos > 10 minutes)
-
-Cache the video to reduce cost and latency for multiple queries:
-
-```python
-cache = client.caches.create(
-    model=model_name,
-    config=types.CreateCachedContentConfig(
-        contents=[video_file],
-        system_instruction="You are a video analysis system.",
-    ),
-)
-```
+| FPS | Frames per 17min | Chunks needed |
+|---|---|---|
+| 1.0 | ~1035 | 11 |
+| 0.2 | ~207 | 3 |
+| 0.067 | ~70 | 1 |
 
 ### Cost Optimization
 
-- **Batch API**: 50% discount for non-time-sensitive bulk processing
-- **Context caching**: Reuse cached video across multiple analysis passes
-- **Low media resolution**: 4x fewer tokens per frame for long videos
-- **Lower FPS**: Reduces frames analysed proportionally (fps=0.2 = 5x fewer frames than fps=1.0)
-
-### Token Budget Estimation
-
-| FPS | Tokens/Frame (default) | 15 min video | 1 hour video |
-|---|---|---|---|
-| 1.0 | 258 | ~232K tokens | ~929K tokens |
-| 0.2 | 258 | ~46K tokens | ~186K tokens |
-| 1.0 (low res) | 66 | ~59K tokens | ~238K tokens |
-| 0.067 | 258 | ~15K tokens | ~62K tokens |
+- **Lower FPS**: `fps=0.2` gives 5x fewer frames than `fps=1.0`
+- **Scale frames to 1280px**: Good quality/cost balance
+- **Nano Banana Flash**: 50% cheaper for drafts

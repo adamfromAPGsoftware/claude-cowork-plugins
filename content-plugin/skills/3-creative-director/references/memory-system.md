@@ -20,7 +20,7 @@ Tokens are expensive. Only remember what matters. Condense everything to its ess
 **Load when needed.** Contains:
 - Visual preferences and style choices
 - Thumbnail performance data (CTR scores)
-- Effective Gemini prompt patterns
+- Effective image prompt patterns for fal-ai/nano-banana-2
 - Reference image notes
 
 ### `chronology.md` — Timeline

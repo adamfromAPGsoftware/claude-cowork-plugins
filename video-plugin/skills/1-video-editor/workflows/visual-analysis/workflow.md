@@ -53,7 +53,7 @@ Load and read full config from {project-root}/_bmad/ccs/config.yaml and resolve:
 
 - `project_name`, `output_folder`, `user_name`, `communication_language`, `document_output_language`
 - `content_output_folder`, `project_folder`, `standalone_folder`, `video_ingest_folder`
-- `env_file` (for GEMINI_API_KEY)
+- `env_file` (for OPENROUTER_API_KEY)
 
 ### 2. First Step Execution
 

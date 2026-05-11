@@ -50,7 +50,7 @@ Load and execute each step file in order:
 4. `./steps-c/step-04-analyze.md` — Analyze top scraped posts for style and psychology patterns
 5. `./steps-c/step-05-ideate.md` — Select topic, map to carousel structure, choose CTA keyword
 6. `./steps-c/step-06-draft.md` — Write per-slide copy + Instagram caption + TikTok caption
-7. `./steps-c/step-07-generate.md` — Generate carousel slide images via Gemini
+7. `./steps-c/step-07-generate.md` — Generate carousel slide images via fal-ai/nano-banana-2
 8. `./steps-c/step-08-quality.md` — Quality gate: brand voice, hook strength, CTA, visual consistency
 9. `./steps-c/step-09-queue.md` — Save drafts, update state, add calendar entries, notify
 

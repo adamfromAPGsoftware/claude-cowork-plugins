@@ -32,7 +32,7 @@ To generate 3-5 title options per selected angle, integrating high-signal keywor
 ### Step-Specific Rules:
 
 - 🎯 Focus on generating titles and thumbnail text overlays
-- 🚫 FORBIDDEN to write Gemini prompts or composition details — that's step 05
+- 🚫 FORBIDDEN to write image prompt (fal-ai/nano-banana-2)s or composition details — that's step 05
 - 💬 Present titles in a clear table with character counts and keyword notes
 - 📋 Character counts must be ACCURATE — count the actual characters, do not estimate
 
@@ -169,7 +169,7 @@ ONLY WHEN [C continue option] is selected and [3-5 combos confirmed by user], wi
 
 - Inaccurate character counts
 - Forcing keywords that break the hook
-- Writing Gemini prompts in this step
+- Writing image prompt (fal-ai/nano-banana-2)s in this step
 - Not presenting titles for user selection
 - Proceeding without user confirming final combo list
 

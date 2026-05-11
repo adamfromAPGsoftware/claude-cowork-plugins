@@ -6,11 +6,11 @@ Fetches competitor ad creatives, copy, and metadata from Meta Ad Library.
 Normalizes results into competitor-data.json with merge/dedup and activity tracking.
 
 Usage:
-  python3 marketing-plugin/scripts/scrape-competitor-ads.py --pages 12345678,87654321
-  python3 marketing-plugin/scripts/scrape-competitor-ads.py --all  # load watchlist from competitor-data.json
-  python3 marketing-plugin/scripts/scrape-competitor-ads.py --all --country US
-  python3 marketing-plugin/scripts/scrape-competitor-ads.py --search "business automation" --country AU
-  python3 marketing-plugin/scripts/scrape-competitor-ads.py --search "CRM software" --country AU --max-items 100
+  python3 marketing-plugin/scripts/scrape-competitor-ads.py --campaign-id marketing-plugin --pages 12345678,87654321
+  python3 marketing-plugin/scripts/scrape-competitor-ads.py --campaign-id marketing-plugin --all  # load watchlist from competitor-data.json
+  python3 marketing-plugin/scripts/scrape-competitor-ads.py --campaign-id marketing-plugin --all --country US
+  python3 marketing-plugin/scripts/scrape-competitor-ads.py --campaign-id marketing-plugin --search "business automation" --country AU
+  python3 marketing-plugin/scripts/scrape-competitor-ads.py --campaign-id marketing-plugin --search "CRM software" --country AU --max-items 100
 
 Requires:
   pip install requests python-dotenv
@@ -42,7 +42,7 @@ except ImportError:
 # ─── Configuration ────────────────────────────────────────────────────────────
 
 PLUGIN_ROOT = Path(__file__).parent.parent  # marketing-plugin/
-COMPETITOR_DATA_PATH = PLUGIN_ROOT / "data" / "competitor-data.json"
+COMPETITOR_DATA_PATH: Path = None  # Set in main() after --campaign-id is parsed
 APIFY_API_BASE = "https://api.apify.com/v2"
 ACTOR_ID = "apify~facebook-ads-scraper"
 
@@ -395,6 +395,8 @@ def merge_ads(existing: list, new: list, today_str: str) -> tuple:
 
 def main():
     parser = argparse.ArgumentParser(description="Scrape competitor Meta ads via Apify.")
+    parser.add_argument("--campaign-id", type=str, required=True,
+                        help="Campaign ID (e.g. marketing-plugin). Competitor data is scoped per campaign.")
     parser.add_argument("--pages", type=str, default=None,
                         help="Comma-separated Meta Page IDs to scrape.")
     parser.add_argument("--all", action="store_true",
@@ -406,6 +408,9 @@ def main():
     parser.add_argument("--max-items", type=int, default=500,
                         help="Maximum ads to return (default: 500). Lower = cheaper.")
     args = parser.parse_args()
+
+    global COMPETITOR_DATA_PATH
+    COMPETITOR_DATA_PATH = PLUGIN_ROOT / "data" / "campaigns" / args.campaign_id / "competitor-data.json"
 
     if not args.pages and not args.all and not args.search:
         print("Error: Provide --pages, --all, or --search.", file=sys.stderr)

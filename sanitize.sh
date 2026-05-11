@@ -122,10 +122,41 @@ if ! $CHECK_ONLY; then
       --exclude='*.m4a' \
       --exclude='*.wav' \
       --exclude='*.mp3' \
+      --exclude='data/leads.json' \
+      --exclude='data/pending-drafts.json' \
+      --exclude='data/followup-approved.json' \
+      --exclude='data/send-log.jsonl' \
+      --exclude='data/pipeline-kanban.html' \
+      --exclude='data/recordings/' \
+      --exclude='data/.reclassify-cache/' \
+      --exclude='data/offers/*/outbound/' \
       --exclude='__pycache__/' \
       --exclude='*.pyc' \
       --exclude='.DS_Store' \
       --exclude='node_modules/' \
+      --exclude='data/draft-queue/' \
+      --exclude='data/autopilot-state.yaml' \
+      --exclude='data/instagram-watchlist.yaml' \
+      --exclude='data/inspiration/' \
+      --exclude='content/' \
+      --exclude='skills/6-autopilot/references/carousel-inspiration/' \
+      --exclude='skills/6-autopilot/references/linkedin-posts/' \
+      --exclude='skills/6-autopilot/references/hook-slide-inspiration/' \
+      --exclude='skills/6-autopilot/references/design-system/uploads/' \
+      --exclude='data/campaigns/' \
+      --exclude='data/campaign-data.json' \
+      --exclude='data/campaigns.json' \
+      --exclude='data/reference-images/' \
+      --exclude='reports/' \
+      --exclude='templates/landing-pages/go-enhance/' \
+      --exclude='validation-report-*.md' \
+      --exclude='skills/*/workflows/*/data/inspiration/' \
+      --exclude='skills/2-remotion/references/vsl-analysis/' \
+      --exclude='skills/1-video-editor/workflows/audio-analysis/*.mp4' \
+      --exclude='wiki/' \
+      --exclude='*.jpg' \
+      --exclude='*.jpeg' \
+      --exclude='*.png' \
       "$SOURCE/$plugin/" "$TARGET/$plugin/"
   done
 
@@ -194,7 +225,8 @@ replacements = [(r["find"], r["replace"]) for r in rules["global_replacements"]]
 
 TEXT_EXTENSIONS = {
     ".md", ".json", ".py", ".sh", ".html", ".txt",
-    ".yaml", ".yml", ".css", ".js", ".toml", ".csv"
+    ".yaml", ".yml", ".css", ".js", ".toml", ".csv",
+    ".tsx", ".ts", ".jsx", ".svg"
 }
 
 file_count = 0
@@ -286,6 +318,7 @@ jq -r '.sensitive_patterns[]' "$RULES_FILE" | while IFS= read -r pattern; do
   matches=$(grep -rn --include="*.md" --include="*.json" --include="*.py" \
     --include="*.sh" --include="*.html" --include="*.txt" --include="*.yaml" \
     --include="*.yml" --include="*.js" --include="*.css" --include="*.toml" \
+    --include="*.tsx" --include="*.ts" --include="*.jsx" --include="*.svg" \
     --exclude="SANITIZE_REPORT.txt" --exclude="SANITIZE_DIFF.txt" \
     --exclude="sanitize-rules.json" --exclude="sanitize.sh" \
     -E "$pattern" "$SCAN_DIR" 2>/dev/null || true)

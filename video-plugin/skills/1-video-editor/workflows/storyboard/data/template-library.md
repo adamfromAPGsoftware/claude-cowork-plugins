@@ -341,8 +341,8 @@ When the speaker discusses agency credentials (project count, team size, revenue
 | Section Type | Primary Template | Secondary | Density Target |
 |-------------|-----------------|-----------|---------------|
 | Hook | PowerCaption | SubtleZoom | 15+ events/min |
-| Intro | PowerCaption | BRollOverlay, SocialProofStack, UpworkProfile | 12-15 events/min |
-| Body | PowerCaption | BRollOverlay | 7-10 events/min |
+| Intro | PowerCaption | BRollOverlay, showcase-mg (NumberCountUp, ChecklistReveal, etc.), UpworkProfile | 12-15 events/min |
+| Body | PowerCaption | BRollOverlay, showcase-mg (ROICalculator for running totals) | 7-10 events/min |
 | Chapter Transition | ChapterCard | AgencyBrand | N/A (2-4s card) |
 | CTA | SubtleZoom | SocialProofStack, UpworkProfile, AgencyBrand | Match intro density |
 | Screen Share + Speaker (long-form) | PiPSpeaker | — | 2-4 events/min |
@@ -353,7 +353,8 @@ When the speaker discusses agency credentials (project count, team size, revenue
 |------------|-------------------|
 | speaker | SubtleZoom, PowerCaption |
 | video-extract | BRollOverlay (with B-roll video from main video) |
-| motion-graphic | MotionGraphic (clean, full-color playback of Hera-generated video) |
+| motion-graphic | MotionGraphic (Hera-generated `.mp4` — only used when `hera: true` in Visual Asset Source Map) |
+| showcase-mg | Any showcase component from `src/components/showcase/` — named in `template` field |
 | branded-template | UpworkProfile, AgencyBrand |
 | chapter-card | ChapterCard |
 | cta | SubtleZoom, SocialProofStack, UpworkProfile |
@@ -363,9 +364,19 @@ When the speaker discusses agency credentials (project count, team size, revenue
 
 ## Social Proof Priority Rule
 
-**CRITICAL: Branded templates ALWAYS take priority over Hera motion graphics for social proof content.**
+**CRITICAL: Video scrollovers take priority over static screenshots for Upwork and agency social proof. Static branded templates are the fallback only.**
 
-When the script at a given moment references any of the following, assign `UpworkProfile` (or another branded template) instead of generating a Hera motion graphic:
+**Scrollover priority order:**
+1. **Video scrollover** (preferred — most authentic): Check these locations for existing scrollover recordings:
+   - `example-account-brand-plugin/context/brand/broll/footage/` — brand-level scrollover library (`adam_upwork.mp4`, `apg-website.mp4`, etc.)
+   - Most recent working Remotion project's `public/` folder (`broll-upwork-scrollover.mp4`, `apg-website-scrollover.mp4`)
+   - Render as `BRollOverlay` with `showVHSOverlay: false` and 8-frame cross-dissolve overlaps between clips
+   - Combine as a 3–4 clip montage: Upwork scroll → stage/conference footage → agency website scroll
+2. **Static branded template** (fallback — only when no scrollover exists): `UpworkProfile` / `AgencyBrand` component with real screenshot
+
+**Speaking/stage footage:** Include `broll-stage-1.mp4` and `broll-stage-2.mp4` (conference/presentation clips) as part of the social proof montage. These add authority and energy between the Upwork and agency scrollovers.
+
+When the script at a given moment references any of the following, apply the scrollover montage:
 
 - Upwork profile stats (ratings, earnings, project count, Top Rated / Expert Vetted status)
 - Agency revenue, client count, or project numbers
@@ -374,7 +385,7 @@ When the script at a given moment references any of the following, assign `Upwor
 
 ### Reasoning
 
-Branded templates use real screenshots/assets that viewers recognise as authentic. Hera-generated graphics look polished but fictional for social proof — they reduce credibility rather than build it. The `UpworkProfile` template shows the actual profile screenshot and is always available without any generation cost.
+Video scrollovers of the real Upwork profile and agency website are more authentic than static screenshots — viewers see the real thing in motion. Conference/stage footage adds authority. Static templates are a cost-free fallback but rank below video for credibility.
 
 ### How to Apply
 
@@ -406,34 +417,132 @@ import { staticFile } from 'remotion';
 
 ---
 
-## Motion Graphic Type → Template/Generation Mapping
+## Showcase Templates (Long-Form, Non-Hera)
 
-Maps the 7 motion graphic types (from inspiration analysis) to available Remotion templates and Hera generation strategies.
+These components live in `video-plugin/skills/2-remotion/references/template-showcase/src/components/` and are copied to `src/components/showcase/` during Remotion Edit scaffold (Step 02). They are the **default choice** for all non-interface MG slots in long-form videos. Use Hera only when none of these fit — see [Hera Eligibility Rules](#hera-eligibility-rules-long-form) below.
 
-| MG Type | Description | Template / Generation | Notes |
-|---------|-------------|----------------------|-------|
-| A: Text/Number Overlay | Bold number/metric on speaker | PowerCaption (pop-in variant) or Hera MG | See Type A Decision Tree below |
-| B: Logo Graphic | Tool/platform logo beside speaker | Hera MG with `reference_image_url` (logo) | Fetch logo via `fetch-logo.ts` waterfall, use as Hera reference image |
-| C: UI Mockup | Recreated social proof UI | Hera MG (custom prompt) | Full-screen recreations of YouTube search, comments, chat UIs |
-| D: Concept Graphic | Abstract concept diagram | Hera MG (custom prompt) | Minimalist diagrams with animated connecting lines |
-| E: Sequential Reveals | Bullet list with PiP | Hera MG or custom Remotion component | Bullets reveal synced to transcript word timestamps; speaker in PiP |
-| F: Stylized B-Roll | Real footage with creative post-processing | BRollOverlay with CSS filter overlays | Film grain, 8mm matte, or cinematic grade applied via Remotion filters |
-| G: Digital Pan/Zoom | Smooth movements across static content | SubtleZoom (extended with translate) | Use `interpolate()` for both `scale()` and `translate()` transforms |
+Visual type for all showcase segments: `showcase-mg`. VideoRenderer renders them full-screen inside a `<Sequence>`.
 
-**Type A Decision Tree:**
-- Static number/metric display (e.g., "$1M+" appearing) → PowerCaption pop-in burst (default)
-- Animated counter (e.g., 0 counting up to $1M) → Hera MG
-- Default: PowerCaption (free, reliable, sufficient for 90% of cases)
-- Use Hera only when script explicitly calls for counting animation or number morph
+### Number / Metric
 
-### Resolved Gap Decisions
+| Component | File | Best for |
+|-----------|------|---------|
+| `NumberCountUp` | `NumberCountUp.tsx` | Animated counter — single value counting up from 0. Use for "7.5 HRS", "$2,800/month" hero numbers, ROI totals. Prop: `end`, `prefix`, `suffix`, `duration`. |
+| `MetricCard` | `MetricCard.tsx` | Single large stat with label and sub-text. Static or spring-in. Use for authority flash ("250+ PROJECTS"). |
+| `StatSplitCard` | `StatSplitCard.tsx` | Two side-by-side stats with labels. Use for dual-stat reveals ("$2,800+/MO + 7.5 HRS/WK"). |
+| `ProgressRing` | `ProgressRing.tsx` | Circular progress indicator filling to a target %. Use for completion or capacity metrics. |
+| `ROICalculator` | `ROICalculator.tsx` | Running total with line items adding sequentially. Use for multi-chapter ROI accumulator (replaces MG-BODY-01..06). |
 
-| Type | Gap | Decision |
-|------|-----|----------|
-| A | PowerCaption lacks animated counter | PowerCaption for static pop-in (default); Hera only for counting animations |
-| E | SocialProofStack lacks slide-style PiP | Use Hera MG for agenda/bullet slides; SocialProofStack for data cards only |
-| F | BRollOverlay lacks film grain | Use Hera MG for stylized B-roll with film effects; BRollOverlay for clean screen recordings |
-| G | SubtleZoom lacks pan (translate) | Use Hera MG for pan+zoom across documents; SubtleZoom for zoom-to-detail only |
+### Text / Statement
+
+| Component | File | Best for |
+|-----------|------|---------|
+| `BoldStatement` | `BoldStatement.tsx` | Large single-line or two-line text reveal. Use for bold directional text ("LET'S BUILD IT"), authority claims. |
+| `CinematicReveal` | `CinematicReveal.tsx` | Slow cinematic fade/slide reveal on dark background. Use for mood-setting section openers. |
+| `FullscreenTitleCard` | `FullscreenTitleCard.tsx` | Title + subtitle on solid or gradient background. Use for chapter intro moments in the intro segment. |
+| `TextRevealMask` | `TextRevealMask.tsx` | Text masked behind a wipe animation — word reveals from a horizontal slide. High-impact for single key phrases. |
+| `ParagraphReveal` | `ParagraphReveal.tsx` | Multi-line text fading in line by line. Use for short explanatory callouts. |
+
+### List / Sequential Reveals
+
+| Component | File | Best for |
+|-----------|------|---------|
+| `ChecklistReveal` | `ChecklistReveal.tsx` | Bullet list with items revealing one-by-one, optional check icons. Use for agendas, feature lists, "5 things you'll learn". |
+| `SequentialPillBuild` | `SequentialPillBuild.tsx` | Pill/tag items popping in sequentially. Use for tool lists or tag-style feature bullets. |
+| `StackedPillsReveal` | `StackedPillsReveal.tsx` | Stacked horizontal pill rows building from top. Use for agenda lists or categorised groupings. |
+
+### Concept / Diagram
+
+| Component | File | Best for |
+|-----------|------|---------|
+| `FlowchartAnimation` | `FlowchartAnimation.tsx` | Nodes and connecting arrows animating in sequence. Use for tool/workflow flows (e.g., "Gmail → Claude → structured output"). |
+| `TransformationArrow` | `TransformationArrow.tsx` | Before → After split with animated arrow. Use for problem→solution transitions, directional "bridge" moments. |
+| `SVGLineTimeline` | `SVGLineTimeline.tsx` | Horizontal or vertical timeline with steps drawing in. Use for process sequences. |
+| `TimelineStep` | `TimelineStep.tsx` | Single step card with number, title, and description. Use within a sequence of steps. |
+
+### Logo / Tool Callout (Non-Interface)
+
+| Component | File | Best for |
+|-----------|------|---------|
+| `ToolLogoGrid` | `ToolLogoGrid.tsx` | Grid of tool logos with names. Use for "connected tools" reveals, integration showcases (Gmail + Calendar CONNECTED). |
+| `AIPulseIcon` | `AIPulseIcon.tsx` | Pulsing AI/tool icon with animated aura. Use for single-tool spotlight moments. |
+| `GlowingIconPop` | `GlowingIconPop.tsx` | Icon pops in with colour glow matching tool brand. Use for single-tool callout with brand colour. |
+
+### Comparison / Proof
+
+| Component | File | Best for |
+|-----------|------|---------|
+| `ComparisonTable` | `ComparisonTable.tsx` | Two-column feature comparison. Use for "before AI vs after AI" contrasts. |
+| `BeforeAfterSplit` | `BeforeAfterSplit.tsx` | Screen-split before/after with wipe. Use for visible transformations (messy inbox vs organised output). |
+| `SplitScreenReveal` | `SplitScreenReveal.tsx` | Two content panels sliding in from sides. Use for dual contrast or side-by-side demos. |
+| `ProofQuote` | `ProofQuote.tsx` | Large blockquote with attribution. Use for testimonial or client result moments. |
+
+---
+
+## MG Slot Classification → Template Mapping
+
+For each MG trigger point `[MG-X]` in the script, classify intent, select the primary showcase template, and only reach for Hera if the eligibility rules are satisfied.
+
+| Intent | Showcase candidates (in preference order) | Hera allowed? |
+|--------|------------------------------------------|--------------|
+| `number` — animated counter | `NumberCountUp`, `ROICalculator`, `StatSplitCard` | No — these handle all counter cases |
+| `number` — static flash | `MetricCard`, `BoldStatement` | No |
+| `list` — agenda / features | `ChecklistReveal`, `StackedPillsReveal`, `SequentialPillBuild` | No |
+| `statement` — bold directional | `BoldStatement`, `TextRevealMask`, `CinematicReveal` | No |
+| `concept` — flow / diagram | `FlowchartAnimation`, `TransformationArrow`, `SVGLineTimeline` | No |
+| `logo` — tool callout (logo only) | `ToolLogoGrid`, `AIPulseIcon`, `GlowingIconPop` | No |
+| `comparison` | `ComparisonTable`, `BeforeAfterSplit` | No |
+| `interface` — live tool UI in motion | — | **Yes, if eligibility passes** |
+
+**Type F (Stylized B-Roll):** `BRollOverlay` with CSS filter overlays. Not Hera.
+**Type G (Digital Pan/Zoom on a document/screenshot):** `SubtleZoom` extended with `interpolate()` translate. Use Hera only when the pan is over a live interface (eligibility required).
+
+---
+
+## Hera Eligibility Rules (Long-Form)
+
+A storyboard segment may be assigned to Hera only if **all three** of the following are true:
+
+1. **Subject is a named coding tool or AI interface** — Claude, ChatGPT, Cursor, n8n, Gmail, VS Code, Warp, Airtable, Notion, a terminal, a code editor, a browser dashboard, etc. Generic concepts, numbers, lists, or diagrams are NOT eligible.
+2. **The motion requires a live interface** — zoom-into-UI, text typing in a field, logs filling a terminal, a button being clicked, an agent running. The showcase library cannot replicate this. If a static logo + "CONNECTED" label suffices, use `ToolLogoGrid` instead.
+3. **A usable reference image exists or can be fetched** — frame-extract from the source video where the tool is visible, or a web-screenshot via the logo waterfall resolver. Hera without a reference image produces generic chrome that looks fabricated. If no reference image is obtainable, fall back to the showcase template.
+
+If any condition fails → **must use a showcase template**.
+
+**Maximum Hera MGs per video:** ≤ 3 in the intro, ≤ 1 per body section. If the video contains no screen-share footage of a specific tool (only the speaker talking about it), Hera count is 0 — use showcase templates throughout.
+
+**Storyboard flag:** Segments approved for Hera must carry `hera: true` in the Visual Asset Source Map row. The [HM] Hera Motion Graphics workflow will reject any brief without this flag.
+
+---
+
+## Template Reuse Cap
+
+To prevent visual monotony, the following caps apply across the whole storyboard:
+
+| Scope | Rule |
+|-------|------|
+| Intro | No single showcase template may appear more than **2 times** |
+| Full video | No single showcase template may appear more than **3 times** |
+| Adjacent MGs | Two MG segments separated only by a speaker segment must not use the same template |
+| Body ROI counters | `ROICalculator` or `NumberCountUp` used for a running-total narrative is a **named exception** — the same template may repeat once per chapter to build continuity, but each instance must have a distinct `startValue`/`endValue` pair |
+
+**Application in step 4:** Before assigning a showcase template, tally how many times it has already been assigned. If the intro cap (2) or full-video cap (3) would be exceeded, move to the next candidate in the preference order. Document the cap-trigger and final choice in the Visual Asset Source Map `notes` field.
+
+---
+
+## Motion Graphic Type Reference (Legacy Labels)
+
+The A–G labels from inspiration analysis still appear in script stage directions. This table maps them to the new showcase-first approach.
+
+| Legacy Type | Description | Primary approach | Hera? |
+|-------------|-------------|-----------------|-------|
+| A: Text/Number | Bold number/metric | `NumberCountUp` (counter) or `MetricCard` / `BoldStatement` (flash) | No |
+| B: Logo Graphic | Tool logo callout | `ToolLogoGrid` / `GlowingIconPop` (logo only); Hera `interface-zoom` (if live interface needed + eligibility) | Conditional |
+| C: UI Mockup | Live interface in motion | Hera `interface-ui-mockup` (if eligibility passes) | Conditional |
+| D: Concept Graphic | Abstract diagram | `FlowchartAnimation` / `TransformationArrow` | No |
+| E: Sequential Reveals | Bullet list | `ChecklistReveal` / `StackedPillsReveal` | No |
+| F: Stylized B-Roll | Footage + post-processing | `BRollOverlay` (clean); Hera only for film-grain effects on source footage | No (usually) |
+| G: Digital Pan/Zoom | Pan across static content | `SubtleZoom` (zoom-only); Hera `interface-pan` (pan over live interface, eligibility required) | Conditional |
 
 ---
 
@@ -450,7 +559,8 @@ The VideoRenderer reads segment data from the `SEGMENTS` array in `theme.ts` and
 |-----------|---------------|
 | `speaker` / `cta` | SubtleZoom |
 | `video-extract` | BRollOverlay |
-| `motion-graphic` | MotionGraphic |
+| `motion-graphic` | MotionGraphic (wraps Hera-generated `.mp4`) |
+| `showcase-mg` | Showcase component named in `template` field (e.g. `NumberCountUp`, `ChecklistReveal`) |
 | `branded-template` | UpworkProfile or AgencyBrand (based on `template` field) |
 | `chapter-card` | ChapterCard (branded dark bg + green accent) |
 | `pip-speaker` | PiPSpeaker |
@@ -471,6 +581,7 @@ When using VideoRenderer, the `Segment` type in theme.ts carries ALL rendering p
 | `screenShareFile` | pip-speaker | Screen share video underneath PiP |
 | `pipPosition` / `pipSize` / `pipShape` | pip-speaker | PiP overlay configuration |
 | `bursts` | speaker (PowerCaption) | Caption burst data |
+| `showcaseProps` | showcase-mg | Full props object passed to the named showcase component |
 
 ### Benefits
 

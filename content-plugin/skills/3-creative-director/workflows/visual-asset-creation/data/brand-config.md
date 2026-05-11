@@ -52,7 +52,7 @@
 |-------|-------|
 | Location | `{reference_photos_folder}` (from CCS config) |
 | Subject | {YOUR_NAME} |
-| Usage | Load as input images for Gemini identity preservation — thumbnails, general images with people |
+| Usage | Load as input images for fal-ai/nano-banana-2 identity preservation — thumbnails, general images with people |
 | Default | **Always use these** when generating images that include a person, unless user specifies otherwise |
 
 **Photos (load in this exact order):**
@@ -125,3 +125,16 @@
   }
 }
 ```
+
+## Inspiration Sources
+
+Before generating any visual asset, check the relevant inspiration folder and load `{workspace}/context/references/visual-inspiration.md` to extract design patterns. Inspiration informs style — brand tokens remain authoritative for colours and typography.
+
+| Asset type | Inspiration folder | Section in visual-inspiration.md |
+|-----------|-------------------|----------------------------------|
+| Carousels (LinkedIn + Instagram) | `{workspace}/context/inspiration/carousels/` | Carousel Patterns |
+| Thumbnails (YouTube wide + vertical) | `{workspace}/context/inspiration/thumbnails/` | Thumbnail Patterns |
+| Social post images (LinkedIn, X) | `{workspace}/context/inspiration/social-posts/` | Social Post Patterns |
+| Instagram (autopilot) | `{workspace}/context/inspiration/instagram/` | Autopilot-scraped, analyzed in step-04 |
+
+**Fallback:** If inspiration folder is empty or visual-inspiration.md does not exist, continue using brand tokens only.

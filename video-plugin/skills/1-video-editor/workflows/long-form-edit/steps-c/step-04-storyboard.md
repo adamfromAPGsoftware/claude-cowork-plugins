@@ -89,11 +89,19 @@ For each `[MG-X]` marker in the script:
    - **Duration:** Use P24 duration clustering bands — ultra-short (0.8–3s) for logos/text, short (3–8s) for UI/concepts, medium (8–15s) for pan-zooms/partial reveals, long (15–30s) for sequential lists. Cross-reference style guide avg ±50%.
    - **Entry/exit animation:** Prefer the most common animation types from the style guide for this category
    - **Transcript correlation:** Quote the exact spoken words (mandatory — null is a system failure)
+   - **Hera Prompt Quality (HARD GATE):** For ALL MGs with `hera: true`, the prompt MUST follow the 5-part structure and reach ≥100 words:
+     1. **Subject:** The specific named tool/interface (e.g., "Claude chat interface with Projects sidebar")
+     2. **Motion:** What is animating on screen (e.g., "camera slowly zooms into the input field as typed text appears character-by-character")
+     3. **Style:** Visual treatment (e.g., "dark UI theme, warm cream chat area, soft ambient glow")
+     4. **Color:** Exact hex codes from `tool-visual-reference.md` (e.g., "#D97757 terracotta primary, #2B2A27 background")
+     5. **Duration hint:** Seconds and pacing (e.g., "3.5 seconds, zoom begins at 0.5s, typing visible from 1s mark")
+   
+     A single sentence or vague description is a SYSTEM FAILURE. Minimum 100 words. No reference image = HARD BLOCK (demote to showcase template).
 5. **Tool identification gate (Type B/C/D only — M10/M11 HARD gate):** If the MG references a named tool or platform:
-   - **MANDATORY: Check the central reference frame library FIRST** at `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/catalog.yaml`. Browse for the tool name and aliases. If a matching frame exists, set `image_source: library` and record the `supabase_url` from the catalog — no logo fetch or frame extraction needed. The library contains real interface screenshots from all past projects (21 tools indexed).
+   - **MANDATORY: Check the central reference frame library FIRST** at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/reference-frames/catalog.yaml`. Browse for the tool name and aliases. If a matching frame exists, set `image_source: library` and record the `supabase_url` from the catalog — no logo fetch or frame extraction needed. The library contains real interface screenshots from all past projects (21 tools indexed).
    - **Resolution waterfall (if NOT in library):**
      1. **Frame-extract:** If the tool appears in body footage (check `visual-analysis.json`), extract a frame using `resolve-reference-image.ts --tool "{tool}" --visual-analysis "{analysis_dir}/body/visual-analysis.json" --source-video "{clips_dir}/body-clipped-raw.mp4" --output "{mg_dir}/ref-{slug}.png"`
-     2. **Ask user:** If tool is NOT in library AND NOT in body footage: **STOP and ask user** to capture a screenshot and add it to `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/{tool-slug}/`, then run `npx tsx scripts/analyze-library-images.ts --tool {tool}` to index it. Present: "The reference library doesn't have a screenshot for {tool}. Please capture one and drop it into the reference-frames folder."
+     2. **Ask user:** If tool is NOT in library AND NOT in body footage: **STOP and ask user** to capture a screenshot and add it to `{project-root}/example-account-brand-plugin/context/brand/brand-assets/reference-frames/{tool-slug}/`, then run `npx tsx scripts/analyze-library-images.ts --tool {tool}` to index it. Present: "The reference library doesn't have a screenshot for {tool}. Please capture one and drop it into the reference-frames folder."
    - **No logo-only fallback for Type C** (UI mockup MGs) — logos give Hera zero context about interface layout (M10)
    - Look up the tool in `{project-root}/video-plugin/skills/1-video-editor/workflows/hera-motion-graphics/data/tool-visual-reference.md`
    - Include the tool's primary hex colors, UI layout description, and key visual elements in the MG brief prompt
@@ -167,7 +175,7 @@ Create a single body entry using **Pattern 8: Video Passthrough** as the base, w
 sourceFile: body-clipped.mp4 (raw: body-clipped-raw.mp4)
 duration: {body_clipped_duration}s ({body_clipped_frames} frames at {fps}fps)
 pattern: 8 — Video Passthrough (base clip, NOT decomposed into Seg files)
-audio: included in full-audio.m4a concatenation
+audio: per-clip extraction (intro-audio.m4a + body-audio.m4a via stream copy from clipped videos)
 captions: none (body does not get caption overlays)
 
 ### Overlay Plan:
@@ -273,7 +281,7 @@ Decide whether background music enhances this video:
 ```
 ## Background Music
 - **Decision:** Yes/No (user choice — do NOT default to "no" based on inspiration data alone)
-- **Track source:** Pre-curated library at `{project-root}/_bmad/ccs/data/brand-assets/background-music/` OR Pixabay Music (royalty-free, no attribution required)
+- **Track source:** Pre-curated library at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/background-music/` OR Pixabay Music (royalty-free, no attribution required)
 - **Search terms:** `corporate ambient`, `lo-fi chill`, `tech background` — match video energy
 - **Volume:** ≤10% of voiceover volume (at least -20dB below dialogue)
 - **Sections:**
@@ -328,6 +336,10 @@ Validate the storyboard against all P1–P18 rules and the MG style guide benchm
 | — | Chapter cards at section boundaries | ≥ 1 per body section | {count} | ✅/⚠️ |
 | P22 | Body MG density | ≥1.0 MG/min [shorter-form] or ≥0.15 MG/min [course-length] | {measured} | ✅/⚠️ |
 | M10 | Tool MG reference images | All tool-referencing MGs have library/frame-extract reference | {count} | ✅/❌ |
+| MG-QG | Hera prompt quality | All Hera MGs ≥100 words with 5-part structure | {count} | ✅/❌ |
+| MG-QG | Hera reference images | All Hera MGs have resolved reference image URL or path | {count} | ✅/❌ |
+| MG-QG | Showcase typed props | All showcase MGs have `showcaseProps` (not free-text notes) | {count} | ✅/❌ |
+| MG-QG | Template variety | No template reused within 3 MG slots | {violations} | ✅/❌ |
 
 #### 9d. MG Style Compliance (WARN = flag, not block)
 
@@ -425,6 +437,7 @@ Load, read entire file, then execute {nextStepFile}.
 - WARN-level issues logged but do not block progression
 - Complete storyboard written to `full-storyboard.md`
 - B-roll, MG, logo, branded asset requests clearly listed
+- All MG-QG gates pass: Hera prompts ≥100 words with 5-part structure, reference images resolved, showcase MGs have typed props, no template reused within 3 MG slots
 
 ### ❌ SYSTEM FAILURE:
 
@@ -436,3 +449,7 @@ Load, read entire file, then execute {nextStepFile}.
 - Any FAIL-level gate unresolved (must remediate and re-validate)
 - Missing WhiteFlash transition between intro and body
 - Zero body overlays planned (body must have at least chapter cards)
+- Hera MG prompt fewer than 100 words or missing 5-part structure (MG-QG gate)
+- Hera MG missing reference image — submit to Hera without a reference is a HARD BLOCK
+- Showcase MG with free-text description instead of typed `showcaseProps` (MG-QG gate)
+- Same showcase template reused within 3 MG slots without ROI counter exemption (MG-QG gate)

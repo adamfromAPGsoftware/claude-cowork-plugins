@@ -107,7 +107,7 @@ Generate images sequentially in main thread:
 - Track progress and report as each completes
 
 For each segment:
-1. Call `mcp__fal-ai__generate_image` with the prepared prompt and `image_size: "landscape_4_3"`. The fal-ai MCP is platform-level — no API key needed.
+1. Call `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"` (REQUIRED — never use any other model), the prepared prompt, and `image_size: "landscape_4_3"`. The fal-ai MCP is platform-level — no API key needed.
 2. Save the returned image to `{output_path}/images/segment-{NN}-{heading-slug}.png`
 3. Record: filename, prompt used, generation timestamp
 

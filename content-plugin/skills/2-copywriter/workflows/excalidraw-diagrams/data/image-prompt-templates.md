@@ -3,12 +3,14 @@
 ## Model Configuration
 
 **Tool:** `mcp__fal-ai__generate_image` (fal-ai MCP — platform-level)
+**Model:** `fal-ai/nano-banana-2` (REQUIRED — always specify explicitly, never use any other model)
 **Auth:** No API key needed — connected at the Claude Code platform level
 
 **Call Pattern:**
 
 ```
 mcp__fal-ai__generate_image(
+  model_id="fal-ai/nano-banana-2",
   prompt="PROMPT_HERE",
   image_size="landscape_4_3"
 )

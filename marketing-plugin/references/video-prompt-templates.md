@@ -57,6 +57,62 @@ If a video brief from [BA] specifies scene durations exceeding 30s total, **rewr
 
 **Important for lite chaining:** Each clip in the chain should map to one scene or at most two scenes. Keep per-clip prompts focused — lite handles straightforward prompts well but degrades on complex multi-element scenes. Include the character anchor in every clip's prompt for consistency.
 
+### Dialogue Word Limits for Image-to-Video (UGC Pipeline)
+
+Veo 3.1 generates speech at ~2.0-2.5 WPS — significantly slower than human speech (3.5-4.0 WPS). At the low end (2.0 WPS), 20 words needs 10 seconds and WILL get cut off in an 8s clip. Google warns: "speech is less likely to be generated if the dialogue doesn't fit."
+
+**The 7.5-second rule:** Dialogue must finish by 7.5 seconds per clip. The last 0.5s is buffer.
+
+| Duration | Target Words | Hard Max | Words/Clip | Sentences/Clip | Cost (Lite) |
+|----------|-------------|----------|------------|----------------|-------------|
+| 8s       | **15 words** | 18 words | 15 | 2-3 short (4-7 words each) | ~$0.40 |
+| 16s      | **30 words** | 36 words | 15 per clip | 2-3 short per clip | ~$0.80 |
+
+**Sentence length for lip-sync:** Keep individual sentences to 4-7 words. Short, punchy sentences sync dramatically better than long run-ons. Break dialogue into multiple sentences.
+
+**How to handle 16s chains:** Split dialogue naturally across the two clips in the Veo prompt. The script handles the chain automatically (`--duration 16` = 2 × 8s clips). Feed the full combined dialogue in one prompt — Veo will continue speech across the stitch naturally.
+
+**Rule:** Always check word count before generating. If dialogue exceeds 20 words, use `--duration 16`. Never exceed 40 words total. The `veo_dialogue` field in the script's `ai_video_spec` frontmatter contains the pre-validated condensed version.
+
+**16s minimum word count:** For 16s chains, dialogue MUST be >20 words. The chaining system splits at ~20 words per clip — if the total is ≤20 words, all speech lands in clip 1 and clip 2 becomes a silent hold. If you have ≤20 words, use `--duration 8` instead.
+
+### Voice Realism — Accent & Delivery Control
+
+Veo has **no API parameters for voice** — all voice control is prompt-driven. Always include a voice descriptor before dialogue to prevent robotic speech, random accents, and unnatural delivery.
+
+**Voice descriptor pattern:**
+```
+In a voice that is clear and natural, with a {tone} tone and a neutral American accent, the subject says: ...
+```
+
+**What you can control:**
+| Element | Options | Notes |
+|---------|---------|-------|
+| Accent | "neutral American accent", "standard American accent" | Most reliable. Australian/British can be inconsistent |
+| Voice quality | "clear", "warm", "deep", "raspy" | Describes the voice timbre |
+| Tone | "friendly", "confident", "conversational", "enthusiastic" | Emotional delivery |
+| Pace | "speaks calmly", "deliberate pace", "natural pace" | Speed of delivery |
+
+**Anti-subtitle rule:** Always append `No subtitles, no text on screen.` to prompts — Veo sometimes hallucinates burned-in subtitles.
+
+**Keep sentences short for lip-sync accuracy:** 4-10 words per sentence produces the best mouth-to-audio sync. Longer sentences may result in rushed or drifting delivery.
+
+### Scene Changes for 16s Chains (2-Clip Videos)
+
+For 16s videos, each clip should have a **different scene** (environment + action). This:
+- Disguises the clip stitch as a natural cut — viewers perceive it as an intentional edit
+- Provides a pattern interrupt at the 8s mark that boosts retention
+- Makes the video feel like a real UGC edit, not an AI generation
+
+Use `--scenes-file` instead of `--prompt` for 16s. The preamble carries voice/style consistency; each scene carries its own environment, action, and dialogue portion.
+
+**Scene change priorities (strongest to weakest):**
+1. **Different room/location** — viewer perceives a real cut (office → kitchen, indoor → outdoor)
+2. **Different physical action** — adds energy even in same room (seated → standing with product)
+3. **Different camera framing** — subtle but helps (medium shot → close-up)
+
+**Physical movement is non-negotiable.** Research shows UGC with movement gets 4x higher CTR. Never generate a static talking head. Every clip needs visible body motion: walking, gesturing, leaning, picking up objects, turning toward camera.
+
 ### Text & Screen Content: Abstract Only
 Veo 3.1 **cannot render readable text**. Letters appear distorted, garbled, or illegible. This applies to:
 - Computer monitors, laptops, phone screens

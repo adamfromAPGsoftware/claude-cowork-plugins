@@ -81,12 +81,13 @@ For each segment, populate:
 | `duration_frames` | Duration in frames at 30fps |
 | `visual_type` | speaker / video-extract / motion-graphic / branded-template / chapter-card / cta / transition |
 | `template` | Remotion template name (from template library) |
-| `source_file` | Path to video/clip file for this segment (target video for `speaker`, extracted clip for `video-extract`, generated clip for `motion-graphic`, `branded-assets` for branded templates) |
-| `asset_ref` | Visual Asset Source Map ID (required for video-extract, motion-graphic, branded-template) |
+| `source_file` | Path to video/clip file for this segment (target video for `speaker`, extracted clip for `video-extract`, generated clip for `motion-graphic`, `branded-assets` for branded templates; `null` for `showcase-mg`) |
+| `asset_ref` | Visual Asset Source Map ID (required for video-extract, motion-graphic, showcase-mg, branded-template) |
 | `caption_text` | Caption/overlay text (if applicable) |
 | `caption_position` | top-left / top-right / bottom-left / bottom-right / bottom-center |
 | `section` | Which production brief section this belongs to |
-| `notes` | Any special instructions for Remotion Edit |
+| `template_category` | For `showcase-mg` and `motion-graphic` segments: the showcase component name (e.g., `NumberCountUp`) or `hera-interface`. Used by the Reuse Cap Validator. |
+| `notes` | Special instructions for Remotion Edit. **For every `showcase-mg` and `motion-graphic` segment, `notes` MUST include a `symbolic_alignment:` line** — one sentence explaining how the visual depicted in this segment symbolically matches what the speaker is saying at this timestamp. |
 
 ### 3. Caption Timing — Two-Pass VAD Calibration (MANDATORY)
 
@@ -184,6 +185,51 @@ After placing all MG segments in the intro timeline:
 
 **Validation:** After building intro timeline rows, count visual breaks and measure gaps. If any gap exceeds 6 seconds or asset counts are below minimums, redistribute segments before proceeding.
 
+### 4a. Reuse Cap Validation
+
+After the intro timeline rows are built, scan all `showcase-mg` and `motion-graphic` segments and tally `template_category` usage:
+
+1. Build a count map: `{ ComponentName: count }` for intro segments only.
+2. **FAIL** if any `template_category` appears more than **2 times** in the intro (exception: ROI running-total `NumberCountUp` / `ROICalculator` used for a continuous chapter-by-chapter counter).
+3. **FAIL** if any `template_category` appears more than **3 times** across the full video (same exception applies).
+4. **FAIL** if two MG segments separated only by one speaker segment share the same `template_category` — the viewer sees the same graphic twice in rapid succession.
+5. **FAIL** if any `motion-graphic` segment does not have `hera: true` in its Visual Asset Source Map entry.
+6. **FAIL** if total `hera: true` segments in the intro exceeds **3**.
+
+For each FAIL: identify the over-used template, demote the lowest-priority instance to the next showcase candidate from the template library's mapping table, and update `template_category` and `template` accordingly.
+
+### 4b. Symbolic Alignment Validation
+
+For every `showcase-mg` and `motion-graphic` segment in the timeline:
+
+1. Locate the narration text at that segment's `start_time` in the clipped transcript.
+2. Check that the segment's `notes` field contains a `symbolic_alignment:` entry.
+3. **FAIL** if `symbolic_alignment:` is absent or its value is blank.
+4. **FAIL** if the alignment reads as generic (e.g., "shows relevant information") — require a specific claim like "speaker is saying '$600/month saved'; NumberCountUp animating to $600 directly represents that number."
+5. Flag any case where the visual type does not match the speech content — for example, a `FlowchartAnimation` during a sentence about a single number, or a `ChecklistReveal` while the speaker describes a single tool. In these cases, note the mismatch and substitute the correct showcase template.
+
+If symbolic alignment issues are found: update the `template` and `template_category` to better match the spoken claim, update `notes` with the corrected `symbolic_alignment:` entry, and re-run Reuse Cap Validation to ensure the substitution doesn't breach the cap.
+
+### 4c. MG Description Quality Validation
+
+Run after Reuse Cap and Symbolic Alignment validations. These are FAIL-level gates — resolve before proceeding.
+
+For every MG segment in the assembled timeline:
+
+**Check 1 — Hera Prompt Length (FAIL if under 100 words):**
+If `hera: true`, count the words in the MG brief prompt in the storyboard. FAIL if the prompt is fewer than 100 words. Rewrite the prompt using the 5-part structure (subject / motion / style / color / duration hint) until it passes.
+
+**Check 2 — Hera Reference Image (FAIL if missing):**
+If `hera: true`, verify the Visual Asset Source Map entry has a non-empty `reference_image_url` (Supabase library URL) OR `image_source: frame-extract` with a resolved file path. FAIL if the field is empty, `null`, or set to `unknown`. If a reference cannot be obtained, demote this slot to a showcase template — NEVER submit a reference-less brief to Hera.
+
+**Check 3 — Showcase Typed Props (FAIL if free-text only):**
+If `visual_type: showcase-mg`, verify the segment has a `showcaseProps` object (not just a `notes` description). Each prop key must match the component's TypeScript Props type. FAIL if the only documentation is free-text. Rewrite as typed props before proceeding.
+
+**Check 4 — Template Variety (FAIL if same template reused within 3 MG slots):**
+Scan all MG segments in order. FAIL if any showcase template appears in two MG slots that are 3 or fewer MG positions apart (i.e., MG-1 and MG-4 or closer use the same template). This is stricter than the adjacent-only Reuse Cap check and prevents visual monotony across the intro. ROI running-total counters (`ROICalculator` / `NumberCountUp`) are exempt.
+
+For each FAIL: identify the deficient MG, apply the fix (rewrite prompt, add reference image, select a different template, write typed props), then re-run Reuse Cap + Symbolic Alignment + MG Description Quality validations.
+
 ### 5. Transition Segments
 
 When combining intro and body clips into a single composition:
@@ -257,16 +303,20 @@ Update {outputFile} frontmatter with `stepsCompleted` appended, then load, read 
 
 ### SUCCESS:
 
-- Every segment has all required fields populated
+- Every segment has all required fields populated, including `template_category` for all MG segments
 - Zero frame gaps between segments
 - Total duration matches expected video length
 - Each segment references a valid Remotion template
 - All caption segments verified via two-pass VAD calibration (±3 frame tolerance when audio analysis available; ±15 frame for transcript-only fallback, flagged in notes)
 - Intro visual density validated: min_visual_breaks = ceil(intro_duration / 10), min_mgs = ceil(min_visual_breaks * 0.6), max 6s between visual breaks
 - MG spacing validated: all intro MG gaps between 2–8s (P12), no clustering > 50% in single section
+- Reuse Cap Validation passed: no showcase template > 2 in intro, no template > 3 in full video, no identical template in adjacent MG slots
+- Symbolic Alignment Validation passed: every `showcase-mg` and `motion-graphic` segment has a specific, non-generic `symbolic_alignment:` in notes
+- Total `hera: true` segments in intro ≤ 3
 - Logo prerequisites identified and listed in Visual Asset Source Map
 - Transition segment inserted at intro-to-body boundary
 - Timeline appended to storyboard document
+- MG Description Quality Validation passed: all Hera MGs have ≥100-word prompts + reference images; all showcase MGs have typed `showcaseProps`; no template reused within 3 MG slots
 
 ### FAILURE:
 
@@ -279,6 +329,17 @@ Update {outputFile} frontmatter with `stepsCompleted` appended, then load, read 
 - Intro with fewer MGs or visual breaks than the density formula requires
 - Intro with visual gaps exceeding 6 seconds
 - MG spacing violations: any intro gap > 8s or consecutive gap < 2s (P12)
+- Reuse Cap violation: any showcase template > 2 in intro or > 3 in full video
+- Same `template_category` in adjacent MG segments (MG-speaker-MG sandwich)
+- Any `motion-graphic` segment without `hera: true` in Visual Asset Source Map
+- More than 3 Hera-approved MGs in the intro
+- Missing or blank `symbolic_alignment:` in notes for any `showcase-mg` or `motion-graphic` segment
+- Generic symbolic_alignment text that does not describe the specific speech–visual match
+- Missing `template_category` on MG segments
 - Missing logo prerequisites in Visual Asset Source Map
 - No transition segment at intro-to-body boundary
 - Requiring user interaction (this is deterministic)
+- Hera MG brief under 100 words (MG Description Quality Check 1)
+- Hera MG missing reference image (MG Description Quality Check 2)
+- Showcase MG with free-text notes instead of typed `showcaseProps` (MG Description Quality Check 3)
+- Same showcase template appearing within 3 MG slots (MG Description Quality Check 4)

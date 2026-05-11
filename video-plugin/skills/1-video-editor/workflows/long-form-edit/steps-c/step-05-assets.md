@@ -1,6 +1,6 @@
 ---
 name: 'step-05-assets'
-description: 'Extract B-roll, fetch logos, generate Hera MGs, concatenate audio, then hand off to remotion-edit workflow'
+description: 'Extract B-roll, fetch logos, generate Hera MGs, verify per-clip audio, then hand off to remotion-edit workflow'
 
 nextStepFile: null
 ---
@@ -9,7 +9,7 @@ nextStepFile: null
 
 ## STEP GOAL:
 
-Prepare all visual assets needed by the intro storyboard: extract B-roll clips from body footage, fetch tool/brand logos, generate Hera motion graphics, concatenate intro + body audio into a single file. Verify all assets, then hand off to the remotion-edit workflow for the Remotion build and render phase.
+Prepare all visual assets needed by the intro storyboard: extract B-roll clips from body footage, fetch tool/brand logos, generate Hera motion graphics, verify per-clip audio files extracted in step 3. Verify all assets, then hand off to the remotion-edit workflow for the Remotion build and render phase.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -28,7 +28,7 @@ Prepare all visual assets needed by the intro storyboard: extract B-roll clips f
 ### Step-Specific Rules:
 
 - 🎯 B-roll is extracted from BODY raw footage at timestamps identified in storyboard
-- 🎯 Audio concatenation: verify `full-audio.m4a` already exists from step 3 early concat — only regenerate as fallback
+- 🎯 Per-clip audio: verify `intro-audio.m4a` and `body-audio.m4a` already exist from step 3 extraction — only re-extract as fallback
 - 🎯 All MGs generated via Hera API using type-specific prompt templates
 - 🚫 **FORBIDDEN to submit chapter cards to Hera** — chapter cards are ALWAYS native Remotion (black/white title cards, simple + consistent, handled by the `ChapterCard` template in remotion-edit)
 - 🚫 FORBIDDEN to start Remotion scaffolding — that belongs to remotion-edit workflow
@@ -45,7 +45,7 @@ Asset generation runs in THREE phases to maximize parallelism while respecting d
   - **Hera MGs with `image_source: library`** — these have pre-existing Supabase URLs from the central reference frame library. Submit immediately in Phase 1 (no logo dependency). Pass the catalog's `supabase_url` directly to `dispatch-hera.ts --reference-image`.
 - **Phase 2 (after logos ready):** Submit remaining Hera MGs that need logo reference images (Types B, C — only those WITHOUT library references)
 - **Phase 3 (poll all):** Poll ALL submitted Hera jobs in a single loop (every 10s) until all reach `"success"`
-- Audio concat: verify `full-audio.m4a` exists (generated in step 3), regenerate only as fallback
+- Per-clip audio: verify `intro-audio.m4a` + `body-audio.m4a` exist (extracted in step 3), re-extract only as fallback
 - Asset verification: run all probes
 
 ## MANDATORY SEQUENCE
@@ -62,7 +62,7 @@ Read `{storyboard_dir}/full-storyboard.md` and extract all asset requests from *
 
 **Classify MGs by reference dependency** (applies to both intro and body MGs):
 - **No-ref MGs** (Types A, E — no reference image needed): can submit immediately
-- **Library-ref MGs** (any type with `image_source: library`): can submit immediately — URL from `catalog.yaml` pre-exists. Check the central library at `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/catalog.yaml` for the tool name. This should cover ~80% of tool-referencing MGs.
+- **Library-ref MGs** (any type with `image_source: library`): can submit immediately — URL from `catalog.yaml` pre-exists. Check the central library at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/reference-frames/catalog.yaml` for the tool name. This should cover ~80% of tool-referencing MGs.
 - **Frame-extract MGs** (any type with `image_source: frame-extract`): resolved during storyboard step via `resolve-reference-image.ts` — verify the output file exists and has a valid `supabase_url` in its `.meta.json` sidecar
 - **Logo-ref MGs** (Types B — need logo reference image AND not in library): must wait for logo fetch to complete
 
@@ -74,7 +74,7 @@ Before ANY Hera dispatch, verify that every tool-referencing MG (Types B, C, D) 
 2. Count MGs with verified `reference_image_url` or `supabase_url` (from library or frame-extract)
 3. **These counts MUST match** — if ANY tool-referencing MG lacks a verified reference URL, DO NOT proceed to Hera dispatch
 4. For each missing reference: run `npx tsx scripts/resolve-reference-image.ts --tool "{tool}" --output "{mg_dir}/ref-{slug}.png"` with the full waterfall
-5. If waterfall fails: **STOP and ask user** — "The reference library doesn't have a screenshot for {tool}. Please capture one and drop it into `_bmad/ccs/data/brand-assets/reference-frames/{tool-slug}/`, then run `npx tsx scripts/analyze-library-images.ts --tool {tool}`."
+5. If waterfall fails: **STOP and ask user** — "The reference library doesn't have a screenshot for {tool}. Please capture one and drop it into `example-account-brand-plugin/context/brand/brand-assets/reference-frames/{tool-slug}/`, then run `npx tsx scripts/analyze-library-images.ts --tool {tool}`."
 6. **No logo-only fallback for Type C** (UI mockup MGs) — logos give Hera zero context about interface layout
 
 ### 2. Phase 1 — Parallel Launch (⚡ B-roll + Logos + No-Ref MGs simultaneously)
@@ -180,29 +180,24 @@ Also wait for all background B-roll extractions to complete. Probe each extracte
 | 1 | {desc} | {start}-{end}s | {dur}s | broll-01.mp4 | ✅ |
 | ... | ... | ... | ... | ... | ... |"
 
-### 5. Audio Concatenation (verify or fallback)
+### 5. Per-Clip Audio Verification (verify or fallback)
 
-**Check if `{remotion_dir}/full-audio.m4a` already exists** from the early audio concatenation launched in step 3 (section 7).
+**Check if per-clip audio files already exist** from the extraction launched in step 3 (section 7).
 
-**If it exists:** Verify only:
-- File is playable
-- Duration ≈ intro_clipped_duration + 0.5s + body_clipped_duration (within ±0.1s)
+**If both exist:** Verify only:
+- `{remotion_dir}/public/intro-audio.m4a`: playable, duration matches `intro_clipped_duration` (within ±0.1s)
+- `{remotion_dir}/public/body-audio.m4a`: playable, duration matches `body_clipped_duration` (within ±0.1s)
 
-**If it does NOT exist** (step 3 early concat failed or was skipped): Generate it now as a fallback:
+**If either does NOT exist** (step 3 extraction failed or was skipped): Extract now as a fallback using stream copy:
 
 ```bash
-ffmpeg -i "{clips_dir}/intro-clipped.mp4" -i "{clips_dir}/body-clipped.mp4" \
-  -filter_complex "[0:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[a0]; \
-                    [1:a]aformat=sample_fmts=fltp:sample_rates=48000:channel_layouts=stereo[a1]; \
-                    anullsrc=channel_layout=stereo:sample_rate=48000:d=0.5[silence]; \
-                    [a0][silence][a1]concat=n=3:v=0:a=1[out]" \
-  -map "[out]" -c:a aac -b:a 192k \
-  "{remotion_dir}/full-audio.m4a"
+ffmpeg -i "{clips_dir}/intro-clipped.mp4" -vn -acodec copy \
+  "{remotion_dir}/public/intro-audio.m4a"
+ffmpeg -i "{clips_dir}/body-clipped.mp4" -vn -acodec copy \
+  "{remotion_dir}/public/body-audio.m4a"
 ```
 
-Verify:
-- `full-audio.m4a` exists and is playable
-- Duration ≈ intro_clipped_duration + 0.5s + body_clipped_duration (within ±0.1s)
+Verify both files exist and are playable. NEVER concatenate audio into a single file — concatenation causes 500ms+ sync drift (see `wiki/audio-sync.md`).
 
 ### 6. Asset Verification
 
@@ -219,8 +214,9 @@ for f in {mg_dir}/mg-*.mp4; do
   ffprobe -v error -select_streams v:0 -show_entries stream=width,height,duration -of csv=p=0 "$f"
 done
 
-# Probe full audio
-ffprobe -v error -show_entries format=duration -of csv=p=0 "{remotion_dir}/full-audio.m4a"
+# Probe per-clip audio
+ffprobe -v error -show_entries format=duration -of csv=p=0 "{remotion_dir}/public/intro-audio.m4a"
+ffprobe -v error -show_entries format=duration -of csv=p=0 "{remotion_dir}/public/body-audio.m4a"
 ```
 
 "**Asset Verification Complete**
@@ -231,7 +227,7 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 "{remotion_dir}/full-
 | Motion graphics | {count} | ✅ |
 | Logos | {count} | ✅ |
 | Branded assets | {count} | ✅ |
-| Full audio | 1 | ✅ ({duration}s) |
+| Per-clip audio | 2 | ✅ (intro: {intro_dur}s · body: {body_dur}s) |
 
 **All assets ready for Remotion build.**"
 
@@ -239,7 +235,7 @@ ffprobe -v error -show_entries format=duration -of csv=p=0 "{remotion_dir}/full-
 
 If the storyboard's Background Music section has `Decision: Yes`:
 
-1. Check pre-curated library at `{project-root}/_bmad/ccs/data/brand-assets/background-music/`
+1. Check pre-curated library at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/background-music/`
 2. Select a track matching the video energy: corporate ambient, 90–120 BPM, no lyrics
 3. If no pre-curated match, use Pixabay Music (royalty-free, no attribution required): search `corporate ambient`, `lo-fi chill`, `tech background`
 4. Copy selected track to: `{remotion_dir}/public/music/background-music.mp3`
@@ -264,7 +260,7 @@ The long-form-edit pipeline is complete. Everything needed by the remotion-edit 
 - ✅ Motion graphics: `{mg_dir}/mg-*.mp4`
 - ✅ Logos: `logos/*.png`
 - ✅ Branded assets: `public/branded-assets/*` (if applicable)
-- ✅ Concatenated audio: `{remotion_dir}/full-audio.m4a`
+- ✅ Per-clip audio: `{remotion_dir}/public/intro-audio.m4a` + `{remotion_dir}/public/body-audio.m4a`
 - ✅ Raw video registry YAMLs: `raw/*.yaml`
 
 **Remotion-edit will run its 11 steps:**
@@ -273,7 +269,7 @@ The long-form-edit pipeline is complete. Everything needed by the remotion-edit 
 3. `step-02-scaffold` — Create Remotion project structure
 4. `step-03-theme` — Generate theme.ts configuration
 5. `step-04-segments` — Generate segment components (intro Seg01-SegNN + body passthrough)
-6. `step-05-composition` — Assemble Root.tsx (intro segments → WhiteFlash → body OffthreadVideo → single Audio)
+6. `step-05-composition` — Assemble Root.tsx (intro segments → WhiteFlash → body OffthreadVideo → per-clip Audio elements)
 7. `step-06-qa` — 18-point QA checklist
 8. `step-06b-content-verify` — Content verification
 9. `step-07-render` — Preview & render final MP4
@@ -308,7 +304,7 @@ Instruct the system to load and execute the remotion-edit workflow:
 - All B-roll clips extracted from body raw footage at storyboard-specified timestamps
 - All logos fetched and visually verified as correct
 - All Hera MGs generated with correct type, duration, and aspect ratio (16:9)
-- Audio concatenated: intro + 0.5s silence + body → `full-audio.m4a`
+- Per-clip audio extracted via stream copy: `intro-audio.m4a` + `body-audio.m4a` (never concatenated)
 - All assets verified via ffprobe (exist, playable, correct resolution/duration)
 - Complete handoff checklist satisfied — remotion-edit has everything it needs
 - Clear instruction to launch remotion-edit workflow
@@ -316,7 +312,8 @@ Instruct the system to load and execute the remotion-edit workflow:
 ### ❌ SYSTEM FAILURE:
 
 - Starting Remotion scaffolding or code generation (belongs to remotion-edit)
-- Missing audio concatenation (remotion-edit requires single `full-audio.m4a`)
+- Missing per-clip audio files (remotion-edit requires `intro-audio.m4a` + `body-audio.m4a`)
+- Concatenating audio into a single file (causes 500ms+ sync drift)
 - Generating MGs at wrong aspect ratio (must be 16:9 for long-form)
 - Proceeding with incorrect/unverified logos
 - Not verifying all assets before handoff

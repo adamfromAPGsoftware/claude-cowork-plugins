@@ -14,30 +14,30 @@ Reusable carousel patterns with hardcoded design decisions. Agents fill in text 
 
 | # | Type | Purpose |
 |---|------|---------|
-| 1 | `photo-title` | Hook — Gemini-generated intro photo + bold headline + SWIPE |
+| 1 | `photo-title` | Hook — nano-banana-2-generated intro photo + bold headline + SWIPE |
 | 2 | `text-only` | Problem context / scene-setting (optional image) + SWIPE |
 | 3 | `body` (labeled) | First key point + SWIPE |
 | 4 | `text-only` | Bridge / transition text (optional image) + SWIPE |
 | 5 | `body` (labeled) | Second key point + SWIPE |
 | 6 | `text-only` | Supporting detail / comparison + SWIPE |
 | 7 | `body` (labeled) | Third key point / audience + SWIPE |
-| 8 | `photo-title` | CTA — Gemini-generated CTA photo + follow bubble (NO swipe) |
+| 8 | `photo-title` | CTA — nano-banana-2-generated CTA photo + follow bubble (NO swipe) |
 
 **Design rules:**
-- **Photo slides (intro):** Gemini-generated image as full-bleed bg (creator on right, dark branded bg with green blobs), gradient overlay, headline at bottom-left, "SWIPE >>>" bottom-right.
+- **Photo slides (intro):** nano-banana-2-generated image as full-bleed bg (creator on right, dark branded bg with green blobs), gradient overlay, headline at bottom-left, "SWIPE >>>" bottom-right.
 - **Photo slides (CTA / last slide):** Same as intro BUT no swipe — instead a green pill-shaped "Follow" bubble at bottom-right. Optional `ctaText` field customises the bubble text.
 - **Text-only slides:** Dark bg + blobs, white body text. If `imagePath` is provided, image renders in the upper portion (rounded, contained) with text directly below it. If no image, text is vertically centered. "SWIPE >>>" bottom-right.
 - **Body slides:** Dark bg + blobs + green accent bar, with uppercase green label above headline (e.g., "WHAT IT DOES"). Clear spacing between accent bar → label → headline. "SWIPE >>>" bottom-right.
 - **All slides:** Company brand top-right, author bottom-left.
 - **Text colour:** White (`#ffffff`) for body text on text-only slides, grey (`#999999`) for supporting body on other slide types.
 
-**Hardcoded photo paths (Gemini-generated, dark branded bg with the creator):**
+**Hardcoded photo paths (nano-banana-2-generated, dark branded bg with the creator):**
 - Slide 1 (intro — warm/smiling): `{reference_photos_folder}/carousel-bg-intro.png`
 - Slide 8 (CTA — confident/direct): `{reference_photos_folder}/carousel-bg-cta.png`
 
 Where `{reference_photos_folder}` = `context/brand-assets/reference-photos`
 
-These backgrounds were generated via `scripts/generate-carousel-photos.py` using Gemini with reference photos. They show the creator naturally placed on the right side over a dark background with subtle green blobs — text space is on the left. To regenerate or create new variants, run:
+These backgrounds were generated via `scripts/generate-carousel-photos.py` using fal-ai/nano-banana-2 with reference photos. They show the creator naturally placed on the right side over a dark background with subtle green blobs — text space is on the left. To regenerate or create new variants, run:
 ```bash
 python3 scripts/generate-carousel-photos.py --ref-dir context/brand-assets/reference-photos --output-dir context/brand-assets/reference-photos --slides intro,cta
 ```

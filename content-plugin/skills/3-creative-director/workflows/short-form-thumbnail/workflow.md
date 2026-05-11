@@ -181,7 +181,7 @@ Draft **1 concept per short-form video**. Use script data (title, hook, topic) w
 | Char count (line 2) | {count} |
 | Keywords used | {which keywords from the pool informed this concept's text and icons} |
 
-**Full Gemini Prompt:**
+**Full Image Prompt** (for `fal-ai/nano-banana-2`):
 ```
 {EXACT text ready to send to the API — no placeholders, no brackets, fully resolved. Must specify: 9:16 aspect ratio (1080x1920), person centered chest-up, 2 floating icons with 3D tilt flanking head, top brand icon, themed background, bottom padding (160px dark empty space below the text block — platform UI safe zone), "match the composition and colour palette of the provided inspiration thumbnails". Expression MUST be from the subtle/natural allowed list. Icon logos MUST use real brand colours. When a logo is provided via --logo, the prompt MUST reference it explicitly by brand name so the model uses the provided image rather than hallucinating the shape — e.g. "use the provided [brand] logo image exactly as the [top/floating] icon".
 
@@ -269,12 +269,14 @@ mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front
 mcp__fal-ai__upload_file(file_path="{logo_paths[0]}")  → logo_url_1
 mcp__fal-ai__upload_file(file_path="{logo_paths[1]}")  → logo_url_2
 
-# 3. Generate thumbnail (logos are described in the prompt — reference their URLs)
-mcp__fal-ai__generate_image_from_image(
+# 3. Generate thumbnail — use edit_image (NOT generate_image_from_image)
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=ref_url,
   prompt="{exact prompt from the approved concept, with logo URLs referenced}",
-  image_size="portrait_4_5"
+  strength=0.92
 )
+# TOOL RULE: edit_image wraps image_url into array internally — required for nano-banana-2/edit. Never use generate_image_from_image.
 ```
 
 Omit logo upload steps if no logos were resolved for this concept.

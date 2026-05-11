@@ -29,9 +29,9 @@ The `current_index` in `autopilot-state.yaml` advances by 1 each run, wrapping t
 **Generation steps:**
 1. Check `context/brand-assets/` for any indexed reference images (screenshots, tool logos) relevant to the post topic — use these first
 2. If no suitable existing image, generate via fal-ai MCP:
-   - Call `mcp__fal-ai__generate_image` with `image_size: "square_hd"` for LinkedIn, `image_size: "landscape_16_9"` for X
+   - Call `mcp__fal-ai__generate_image` with `model_id: "fal-ai/nano-banana-2"` (REQUIRED), `image_size: "square_hd"` for LinkedIn, `image_size: "landscape_16_9"` for X
    - For tool logos: use the logo sourcing hierarchy (Simple Icons → SVG Repo → CompanyEnrich)
-   - For the creator in the image: upload reference photos first with `mcp__fal-ai__upload_file`, then use `mcp__fal-ai__generate_image_from_image`
+   - For the creator in the image: upload reference photo first with `mcp__fal-ai__upload_file`, then use `mcp__fal-ai__edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92` (NOT `generate_image_from_image`)
 3. Image prompt rules: 2+ paragraph description, real content only, GREEN gear not blue, no static text overlays
 
 ### Video Clip

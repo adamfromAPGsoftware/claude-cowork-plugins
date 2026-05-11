@@ -8,11 +8,11 @@ landing pages, creates leads in the CRM, and fires Meta Conversions API events.
 Usage:
     # Dry run (default)
     python3 marketing-plugin/scripts/setup-lead-webhook.py \
-        --campaign-id camp-2026-04-07-001
+        --campaign-id ai-scoping-engine-for-agencies
 
     # Execute
     python3 marketing-plugin/scripts/setup-lead-webhook.py \
-        --campaign-id camp-2026-04-07-001 --execute
+        --campaign-id ai-scoping-engine-for-agencies --execute
 
 Requires:
     pip install requests python-dotenv
@@ -37,6 +37,8 @@ except ImportError:
     print("Error: 'python-dotenv' not installed. Run: pip install requests python-dotenv", file=sys.stderr)
     sys.exit(1)
 
+from _config import load_config
+
 
 # ─── Configuration ────────────────────────────────────────────────────────────
 
@@ -45,8 +47,11 @@ REPO_ROOT = PLUGIN_ROOT.parent
 
 CAMPAIGN_DATA_PATH = PLUGIN_ROOT / "data" / "campaign-data.json"
 
+_config = load_config()
 CF_API_BASE = "https://api.cloudflare.com/client/v4"
-CRM_API_BASE = "https://your-crm.example.com/api/mcp"
+CRM_API_BASE = _config["crm"]["api_base_url"]
+DEFAULT_NOTIFICATION_EMAIL = _config["company"]["email"]
+CF_WORKERS_DOMAIN = _config["domains"]["base"].replace("www.", "")
 
 
 # ─── Worker Template ─────────────────────────────────────────────────────────
@@ -62,10 +67,67 @@ const META_ACCESS_TOKEN_ENV = 'META_ACCESS_TOKEN';
 const NOTIFICATION_EMAIL = '{notification_email}';
 const ALLOWED_ORIGIN = '{landing_page_url}';
 
+// Google Sheets — populated by setup-lead-webhook.py when integrations.google_sheets.enabled = true
+const SHEETS_SPREADSHEET_ID = '{sheets_spreadsheet_id}';
+const SHEETS_SHEET_NAME = '{sheets_sheet_name}';
+const SHEETS_SA_EMAIL_ENV = 'GOOGLE_SA_EMAIL';       // service account email (set as Worker secret)
+const SHEETS_SA_KEY_ENV   = 'GOOGLE_SA_PRIVATE_KEY'; // PEM private key (set as Worker secret)
+
+// Optional webhook fanout — JSON array of endpoint URLs (safe: built by json.dumps in Python)
+const WEBHOOK_URLS = {webhook_urls_json};
+
 async function sha256(str) {{
   const buf = await crypto.subtle.digest('SHA-256',
     new TextEncoder().encode(str.toLowerCase().trim()));
   return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, '0')).join('');
+}}
+
+// Get a Google OAuth2 access token using service account JWT flow (RFC 7523).
+// Uses Web Crypto API (available in Cloudflare Workers runtime).
+async function getGoogleAccessToken(saEmail, privateKeyPem) {{
+  const now = Math.floor(Date.now() / 1000);
+  const header = {{ alg: 'RS256', typ: 'JWT' }};
+  const claim  = {{
+    iss: saEmail,
+    scope: 'https://www.googleapis.com/auth/spreadsheets',
+    aud: 'https://oauth2.googleapis.com/token',
+    exp: now + 3600,
+    iat: now,
+  }};
+
+  const enc = (obj) => btoa(JSON.stringify(obj)).replace(/=/g, '').replace(/\\+/g, '-').replace(/\\//g, '_');
+  const signingInput = enc(header) + '.' + enc(claim);
+
+  // Import RSA private key from PEM
+  const pemBody = privateKeyPem
+    .replace(/-----BEGIN PRIVATE KEY-----/, '')
+    .replace(/-----END PRIVATE KEY-----/, '')
+    .replace(/\\s/g, '');
+  const keyDer = Uint8Array.from(atob(pemBody), c => c.charCodeAt(0));
+  const cryptoKey = await crypto.subtle.importKey(
+    'pkcs8', keyDer,
+    {{ name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }},
+    false, ['sign']
+  );
+
+  const signature = await crypto.subtle.sign(
+    'RSASSA-PKCS1-v1_5',
+    cryptoKey,
+    new TextEncoder().encode(signingInput)
+  );
+  const sigB64 = btoa(String.fromCharCode(...new Uint8Array(signature)))
+    .replace(/=/g, '').replace(/\\+/g, '-').replace(/\\//g, '_');
+
+  const jwt = signingInput + '.' + sigB64;
+
+  // Exchange JWT for access token
+  const tokenResp = await fetch('https://oauth2.googleapis.com/token', {{
+    method: 'POST',
+    headers: {{ 'Content-Type': 'application/x-www-form-urlencoded' }},
+    body: `grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=${{jwt}}`,
+  }});
+  const tokenData = await tokenResp.json();
+  return tokenData.access_token;
 }}
 
 export default {{
@@ -104,7 +166,24 @@ export default {{
           }} }});
       }}
 
-      // 1. Create lead in CRM
+      // Enriched lead payload — shared across all destinations
+      const leadPayload = {{
+        name:                  name,
+        email:                 email,
+        phone:                 phone || '',
+        company:               company || '',
+        message:               message || '',
+        campaign_id:           '{campaign_id}',
+        source:                'meta_ad',
+        utm_source:            data.utm_source || '',
+        utm_medium:            data.utm_medium || '',
+        utm_campaign:          data.utm_campaign || '',
+        ip_address:            request.headers.get('CF-Connecting-IP') || '',
+        user_agent:            request.headers.get('User-Agent') || '',
+        submitted_at:          new Date().toISOString(),
+      }};
+
+      // 1. Create lead in CRM (best-effort)
       let crmResult = null;
       try {{
         const crmResp = await fetch(CRM_API, {{
@@ -113,23 +192,22 @@ export default {{
           body: JSON.stringify({{
             method: 'create_lead',
             params: {{
-              name: name,
-              email: email,
-              phone: phone || '',
-              company: company || '',
-              source: 'meta_ad',
+              name:       name,
+              email:      email,
+              phone:      phone || '',
+              company:    company || '',
+              source:     'meta_ad',
               campaign_id: '{campaign_id}',
-              notes: message || '',
+              notes:      message || '',
             }},
           }}),
         }});
         crmResult = await crmResp.json();
       }} catch (e) {{
         console.error('CRM create failed:', e);
-        // Don't block on CRM failure
       }}
 
-      // 2. Fire Meta Conversions API Lead event
+      // 2. Fire Meta Conversions API Lead event (best-effort)
       try {{
         const accessToken = env[META_ACCESS_TOKEN_ENV];
         if (accessToken && META_PIXEL_ID) {{
@@ -153,7 +231,7 @@ export default {{
           }};
 
           await fetch(
-            `https://graph.facebook.com/v22.0/${{META_PIXEL_ID}}/events`,
+            `https://graph.facebook.com/v25.0/${{META_PIXEL_ID}}/events`,
             {{
               method: 'POST',
               headers: {{ 'Content-Type': 'application/json' }},
@@ -163,7 +241,63 @@ export default {{
         }}
       }} catch (e) {{
         console.error('Meta CAPI event failed:', e);
-        // Don't block on Meta failure
+      }}
+
+      // 3. Append to Google Sheet (best-effort)
+      // Authenticates via service account JWT — no external proxy needed.
+      if (SHEETS_SPREADSHEET_ID) {{
+        try {{
+          const saEmail = env[SHEETS_SA_EMAIL_ENV];
+          const saKey   = env[SHEETS_SA_KEY_ENV];
+          if (saEmail && saKey) {{
+            const token = await getGoogleAccessToken(saEmail, saKey);
+            const row = [
+              leadPayload.submitted_at,
+              leadPayload.name,
+              leadPayload.email,
+              leadPayload.phone,
+              leadPayload.company,
+              leadPayload.message,
+              leadPayload.campaign_id,
+              leadPayload.source,
+              leadPayload.utm_source,
+              leadPayload.utm_medium,
+              leadPayload.utm_campaign,
+              leadPayload.ip_address,
+              leadPayload.user_agent,
+            ];
+            await fetch(
+              `https://sheets.googleapis.com/v4/spreadsheets/${{SHEETS_SPREADSHEET_ID}}/values/${{encodeURIComponent(SHEETS_SHEET_NAME + '!A1')}}:append?valueInputOption=RAW&insertDataOption=INSERT_ROWS`,
+              {{
+                method: 'POST',
+                headers: {{
+                  'Authorization': `Bearer ${{token}}`,
+                  'Content-Type': 'application/json',
+                }},
+                body: JSON.stringify({{ values: [row] }}),
+              }}
+            );
+          }}
+        }} catch (e) {{
+          console.error('Google Sheets append failed:', e);
+        }}
+      }}
+
+      // 4. Optional webhook fanout (best-effort, parallel)
+      if (WEBHOOK_URLS.length > 0) {{
+        try {{
+          await Promise.allSettled(
+            WEBHOOK_URLS.map(url =>
+              fetch(url, {{
+                method: 'POST',
+                headers: {{ 'Content-Type': 'application/json' }},
+                body: JSON.stringify(leadPayload),
+              }})
+            )
+          );
+        }} catch (e) {{
+          console.error('Webhook fanout failed:', e);
+        }}
       }}
 
       return new Response(JSON.stringify({{
@@ -247,13 +381,28 @@ def generate_worker_name(campaign_id):
 
 def generate_worker_script(campaign):
     """Generate the Worker script from template."""
+    # Google Sheets config — read from plugin config.yaml
+    gs = _config.get("integrations", {}).get("google_sheets", {})
+    sheets_enabled = gs.get("enabled", False) and campaign.get("lead_capture", {}).get("google_sheets_enabled", True)
+    sheets_spreadsheet_id = gs.get("spreadsheet_id", "") if sheets_enabled else ""
+    sheets_sheet_name = gs.get("sheet_name", "Leads") if sheets_enabled else "Leads"
+
+    # Webhook URLs — merge plugin-level + campaign-level enabled webhooks
+    plugin_webhooks = [w["url"] for w in _config.get("integrations", {}).get("webhooks", []) if w.get("enabled", True) and w.get("url")]
+    campaign_webhooks = [w["url"] for w in campaign.get("lead_capture", {}).get("webhook_urls", []) if w.get("enabled", True) and w.get("url")]
+    import json as _json
+    webhook_urls_json = _json.dumps(plugin_webhooks + campaign_webhooks)
+
     return WORKER_TEMPLATE.format(
         campaign_name=campaign.get("name", "unnamed"),
         campaign_id=campaign.get("campaign_id", ""),
         crm_api=CRM_API_BASE,
         pixel_id=campaign.get("tracking", {}).get("meta_pixel_id", os.environ.get("META_PIXEL_ID", "")),
-        notification_email=campaign.get("notification_email", "{YOUR_EMAIL}"),
+        notification_email=campaign.get("notification_email", DEFAULT_NOTIFICATION_EMAIL),
         landing_page_url=campaign.get("landing_page_url", ""),
+        sheets_spreadsheet_id=sheets_spreadsheet_id,
+        sheets_sheet_name=sheets_sheet_name,
+        webhook_urls_json=webhook_urls_json,
     )
 
 
@@ -262,7 +411,7 @@ def generate_worker_script(campaign):
 def dry_run(campaign):
     """Show what would be deployed."""
     worker_name = generate_worker_name(campaign.get("campaign_id", ""))
-    worker_url = f"https://{worker_name}.apgsoftware.workers.dev"
+    worker_url = f"https://{worker_name}.{CF_WORKERS_DOMAIN}.workers.dev"
 
     print(f"\n═══ Lead Capture Worker Preview (DRY RUN) ═══\n")
     print(f"  Worker Name: {worker_name}")
@@ -277,7 +426,7 @@ def dry_run(campaign):
     print(f"       Hashed fields: email (SHA256), phone (SHA256)")
     print(f"    4. Return success response")
     print(f"")
-    print(f"  Notification: {campaign.get('notification_email', '{YOUR_EMAIL}')}")
+    print(f"  Notification: {campaign.get('notification_email', DEFAULT_NOTIFICATION_EMAIL)}")
     print(f"  Allowed Origin: {campaign.get('landing_page_url', 'NOT SET')}")
     print(f"\n  Run with --execute to deploy.\n")
 
@@ -288,7 +437,7 @@ def execute(campaign, api_token, account_id):
     """Deploy the Worker to Cloudflare."""
     worker_name = generate_worker_name(campaign.get("campaign_id", ""))
     worker_script = generate_worker_script(campaign)
-    worker_url = f"https://{worker_name}.apgsoftware.workers.dev"
+    worker_url = f"https://{worker_name}.{CF_WORKERS_DOMAIN}.workers.dev"
 
     print(f"\n1. Deploying Worker: {worker_name}")
 
@@ -325,24 +474,45 @@ def execute(campaign, api_token, account_id):
     # Enable the Worker route (subdomain routing is automatic for workers.dev)
     print(f"\n2. Worker URL: {worker_url}")
 
-    # Add secrets (META_ACCESS_TOKEN)
-    meta_token = os.environ.get("META_ACCESS_TOKEN")
-    if meta_token:
-        print(f"\n3. Setting Worker secret: META_ACCESS_TOKEN")
-        secret_url = f"{CF_API_BASE}/accounts/{account_id}/workers/scripts/{worker_name}/secrets"
+    # Set Worker secrets
+    secret_url = f"{CF_API_BASE}/accounts/{account_id}/workers/scripts/{worker_name}/secrets"
+
+    def set_secret(name, value, label):
+        if not value:
+            return
         try:
             resp = requests.put(
                 secret_url,
                 headers=cf_headers(api_token),
-                json={"name": "META_ACCESS_TOKEN", "text": meta_token, "type": "secret_text"},
+                json={"name": name, "text": value, "type": "secret_text"},
                 timeout=30,
             )
             if resp.json().get("success"):
-                print(f"   Secret set.")
+                print(f"   {label}: set.")
             else:
-                print(f"   Warning: Could not set secret. Set manually in Cloudflare dashboard.", file=sys.stderr)
+                print(f"   Warning: Could not set {label}. Set manually in Cloudflare dashboard.", file=sys.stderr)
         except requests.exceptions.RequestException as e:
-            print(f"   Warning: Could not set secret: {e}", file=sys.stderr)
+            print(f"   Warning: Could not set {label}: {e}", file=sys.stderr)
+
+    print(f"\n3. Setting Worker secrets...")
+    set_secret("META_ACCESS_TOKEN", os.environ.get("META_ACCESS_TOKEN"), "META_ACCESS_TOKEN")
+
+    # Google Sheets service account secrets (set when Sheets integration is enabled)
+    gs = _config.get("integrations", {}).get("google_sheets", {})
+    if gs.get("enabled", False):
+        creds_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+        if creds_path:
+            full_path = Path(creds_path) if Path(creds_path).is_absolute() else REPO_ROOT / creds_path
+            if full_path.exists():
+                import json as _json
+                with open(full_path) as f:
+                    sa = _json.load(f)
+                set_secret("GOOGLE_SA_EMAIL", sa.get("client_email", ""), "GOOGLE_SA_EMAIL")
+                set_secret("GOOGLE_SA_PRIVATE_KEY", sa.get("private_key", ""), "GOOGLE_SA_PRIVATE_KEY")
+            else:
+                print(f"   Warning: Service account file not found at {full_path} — Sheets secrets not set.", file=sys.stderr)
+        else:
+            print(f"   Warning: GOOGLE_APPLICATION_CREDENTIALS not set — Sheets secrets not set.", file=sys.stderr)
 
     print(f"\n═══ Lead Capture Worker Deployed ═══")
     print(f"  Worker: {worker_name}")

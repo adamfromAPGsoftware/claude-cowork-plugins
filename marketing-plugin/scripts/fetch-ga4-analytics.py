@@ -6,8 +6,8 @@ Fetches session, pageview, conversion, and source/medium data from the GA4 Data 
 Uses a service account for authentication.
 
 Usage:
-  python3 marketing-plugin/scripts/fetch-ga4-analytics.py --from-date 2026-03-01 --to-date 2026-04-01
-  python3 marketing-plugin/scripts/fetch-ga4-analytics.py  # defaults to last 30 days
+  python3 marketing-plugin/scripts/fetch-ga4-analytics.py --campaign-id marketing-plugin --from-date 2026-03-01 --to-date 2026-04-01
+  python3 marketing-plugin/scripts/fetch-ga4-analytics.py --campaign-id marketing-plugin  # defaults to last 30 days
 
 Requires:
   pip install google-analytics-data python-dotenv
@@ -43,18 +43,25 @@ except ImportError:
     sys.exit(1)
 
 
+from _config import load_config
+
 # ─── Configuration ────────────────────────────────────────────────────────────
 
 PLUGIN_ROOT = Path(__file__).parent.parent  # marketing-plugin/
-MARKETING_DATA_PATH = PLUGIN_ROOT / "data" / "marketing-data.json"
+# MARKETING_DATA_PATH is set per-campaign in main() after --campaign-id is parsed
+MARKETING_DATA_PATH: Path = None
 ROW_LIMIT = 100000
+
+_config = load_config()
+_landing_domain = _config["domains"]["landing_traffic"]
+_base_domain = _config["domains"]["base"]
 
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
 PROPERTY_ALIASES = {
-    "landing": "GA4_PROPERTY_ID",       # {YOUR_LANDING_DOMAIN} — Meta ads funnel
-    "home": "GA4_PROPERTY_ID_HOME",     # {YOUR_DOMAIN} — main website
+    "landing": "GA4_PROPERTY_ID",       # landing traffic domain — Meta ads funnel
+    "home": "GA4_PROPERTY_ID_HOME",     # main website
 }
 
 
@@ -336,19 +343,25 @@ def merge_conversions(existing: list, new: list) -> tuple:
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch GA4 analytics data (read-only).")
+    parser.add_argument("--campaign-id", required=True,
+                        help="Campaign slug (e.g. marketing-plugin). Data saved to campaigns/{id}/marketing.json")
     parser.add_argument("--from-date", type=str, default=None,
                         help="Start date (YYYY-MM-DD). Default: 30 days ago.")
     parser.add_argument("--to-date", type=str, default=None,
                         help="End date (YYYY-MM-DD). Default: yesterday.")
     parser.add_argument("--property", type=str, default=None,
                         choices=["landing", "home", "all"],
-                        help="Which GA4 property: 'landing' ({YOUR_LANDING_DOMAIN}), "
-                             "'home' ({YOUR_DOMAIN}), or 'all' (both). Default: landing.")
+                        help=f"Which GA4 property: 'landing' ({_landing_domain}), "
+                             f"'home' ({_base_domain}), or 'all' (both). Default: landing.")
     parser.add_argument("--skip-landing-pages", action="store_true",
                         help="Skip landing page report")
     parser.add_argument("--skip-conversions", action="store_true",
                         help="Skip conversion report")
     args = parser.parse_args()
+
+    # Set per-campaign output path
+    global MARKETING_DATA_PATH
+    MARKETING_DATA_PATH = PLUGIN_ROOT / "data" / "campaigns" / args.campaign_id / "marketing.json"
 
     # Defaults — GA4 data has ~24-48h latency, so default end is yesterday
     today = datetime.now(timezone.utc)
@@ -366,7 +379,7 @@ def main():
     # Load env for first property (also sets up credentials)
     property_id = load_env(properties_to_fetch[0])
 
-    property_names = {"landing": "{YOUR_LANDING_DOMAIN}", "home": "{YOUR_DOMAIN}"}
+    property_names = {"landing": _landing_domain, "home": _base_domain}
 
     print(f"Date range: {from_date} → {to_date}")
     print(f"Properties: {', '.join(f'{p} ({property_names.get(p, p)})' for p in properties_to_fetch)}")

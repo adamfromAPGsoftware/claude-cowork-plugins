@@ -204,7 +204,7 @@ Display: **Select an Option:** [A] Advanced Elicitation [P] Party Mode [R] Revis
 - IF A: Execute {advancedElicitationTask}, and when finished redisplay the menu
 - IF P: Execute {partyModeWorkflow}, and when finished redisplay the menu
 - IF R: Ask user what to revise, regenerate the flagged sections, present updated draft, then [Redisplay Menu Options](#5-present-menu-options)
-- IF D: Load, read entirely, then execute {excalidrawCreateStep} — this will discover the script, parse body segments into a diagram plan, generate hero illustrations via Gemini, and compose the Excalidraw storyboard. When complete, redisplay the menu.
+- IF D: Load, read entirely, then execute {excalidrawCreateStep} — this will discover the script, parse body segments into a diagram plan, generate hero illustrations via fal-ai/nano-banana-2, and compose the Excalidraw storyboard. When complete, redisplay the menu.
 - IF C: Save script to {outputFile}, update frontmatter, then load, read entire file, then execute {nextStepFile}
 - IF Any other: help user, then [Redisplay Menu Options](#5-present-menu-options)
 

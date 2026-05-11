@@ -12,7 +12,12 @@ pipelineScriptsData: '../data/pipeline-scripts.md'
 
 ## STEP GOAL:
 
-To collaboratively design and generate YouTube thumbnails (wide 16:9 or vertical 9:16) using FLUX Kontext Pro with identity preservation from reference photos, including optional inspiration images and logo sourcing, followed by CTR validation.
+To collaboratively design and generate YouTube thumbnails (wide 16:9 or vertical 9:16) using `fal-ai/nano-banana-2` via fal-ai MCP with identity preservation from reference photos, including optional inspiration images and logo sourcing, followed by CTR validation.
+
+> **MANDATORY TOOL + MODEL RULE:**
+> - Thumbnails always use a reference photo → always use `edit_image` with `model: "fal-ai/nano-banana-2/edit"` + `strength: 0.92`
+> - Never use `generate_image_from_image` — the model expects `image_urls` (array), not `image_url` (string). `edit_image` wraps it correctly.
+> - Never use Flux, Gemini, SDXL, or any other model.
 
 ## MANDATORY EXECUTION RULES (READ FIRST):
 
@@ -126,6 +131,25 @@ Wait for selection. Store the format choice.
 
 ### 2. Gather Inspiration
 
+**2a. Global brand inspiration (check first):**
+
+Check the global thumbnail inspiration folder configured during setup:
+
+```bash
+ls "{workspace}/context/inspiration/thumbnails/" 2>/dev/null | wc -l
+```
+
+**If images are found:**
+- Load `{workspace}/context/references/visual-inspiration.md` and extract the "Thumbnail Patterns" section.
+- If the file does not exist, read up to 3 images from the folder directly using the Read tool (multimodal) and extract dominant patterns inline: composition approach (face/object/text arrangement), text overlay style, colour treatment.
+- Store extracted patterns as `global_inspiration_notes` — these will be appended to prompt construction in section 5.
+- Report inline: "**Global inspiration:** {N} thumbnail examples loaded from workspace — applying patterns to prompt."
+
+**If the folder is empty:**
+- Log "No global thumbnail inspiration found — using brand tokens only." Continue without blocking.
+
+**2b. Project-level inspiration (check second):**
+
 Auto-check the inspiration folder created in step 01:
 
 ```bash
@@ -133,13 +157,13 @@ ls "{project_folder}/{project-slug}/creative-director/thumbnails/inspiration/"
 ```
 
 **If images are found:**
-- Report inline: "**Inspiration:** Found {N} thumbnails in `creative-director/thumbnails/inspiration/` — using them automatically."
+- Report inline: "**Project inspiration:** Found {N} thumbnails in `creative-director/thumbnails/inspiration/` — using them automatically."
 - Store the folder path. No user interaction required.
 
 **If the folder is empty:**
-- **Collab mode:** Present: "**Inspiration folder is empty.** Drop high-CTR thumbnails into `creative-director/thumbnails/inspiration/` and type **ready**, or type **skip** to generate from prompt + reference photos only."
+- **Collab mode:** Present: "**Project inspiration folder is empty.** Drop high-CTR thumbnails into `creative-director/thumbnails/inspiration/` and type **ready**, or type **skip** to generate from prompt + reference photos only."
   Wait for user to type `ready` or `skip`. Store result accordingly.
-- **Auto mode:** Log "Inspiration folder empty — proceeding without inspiration images." and continue without waiting.
+- **Auto mode:** Log "Project inspiration folder empty — proceeding without project-level inspiration images." and continue without waiting.
 
 ### 3. Logo Sourcing (Auto)
 
@@ -210,7 +234,10 @@ Present the concepts and let the user choose or modify.
 
 ### 5. Build the Prompt
 
-Using the loaded template ({promptTemplateData} for wide, {shortFormGuideData} for vertical) and the user's direction, construct the complete Gemini prompt following the template's structure.
+Using the loaded template ({promptTemplateData} for wide, {shortFormGuideData} for vertical) and the user's direction, construct the complete image prompt following the template's structure.
+
+**If `global_inspiration_notes` were extracted in section 2a**, append them as a style modifier after the core prompt:
+`"Style reference from brand inspiration: {global_inspiration_notes}"`
 
 **Present the complete prompt to the user:**
 
@@ -222,7 +249,8 @@ Using the loaded template ({promptTemplateData} for wide, {shortFormGuideData} f
 
 **Inputs:**
 - Reference photos: {count} photos from {reference_photos_folder}
-- Inspiration: {count or 'none'}
+- Global inspiration: {count from workspace/context/inspiration/thumbnails/ or 'none'}
+- Project inspiration: {count or 'none'}
 - Logo images: {list or 'none'}
 
 **Ready to generate?**"
@@ -268,13 +296,16 @@ Execute via fal-ai MCP:
 mcp__fal-ai__upload_file(file_path="{reference_photos_folder}/creator-hero-front.jpg")
   → returns ref_url
 
-# 2. Generate thumbnail
-mcp__fal-ai__generate_image_from_image(
+# 2. Generate thumbnail — use edit_image (NOT generate_image_from_image)
+mcp__fal-ai__edit_image(
+  model="fal-ai/nano-banana-2/edit",
   image_url=ref_url,
   prompt="{the approved prompt}",
-  image_size="landscape_16_9"
+  strength=0.92
 )
 ```
+
+> **TOOL + MODEL RULE:** Use `edit_image` (not `generate_image_from_image`) when passing a reference photo. `generate_image_from_image` sends `image_url` as a string but the model API expects an array — `edit_image` wraps it correctly. Model: `fal-ai/nano-banana-2/edit`, strength: `0.92`.
 
 Save to: `{project_folder}/{project-slug}/creative-director/thumbnails/{title-slug}.png`
 

@@ -1,7 +1,7 @@
 # Instagram Carousel — Style Guide ({YOUR_NAME} / Claude-Niche)
 
-Gemini image generation prompt reference for @{YOUR_HANDLE_PERSONAL} Instagram carousels.
-This file is the **translation layer** between the JSX design system and Gemini — Gemini doesn't read JSX components, it reads natural language. Every prompt template here describes what the components render without naming font families (Gemini will render them as literal text).
+fal-ai/nano-banana-2 image generation prompt reference for @{YOUR_HANDLE_PERSONAL} Instagram carousels.
+This file is the **translation layer** between the JSX design system and fal-ai/nano-banana-2 — it doesn't read JSX components, it reads natural language. Every prompt template here describes what the components render without naming font families (Gemini will render them as literal text).
 
 **Design system source:** `content-plugin/skills/6-autopilot/references/design-system/`
 Canonical components: `carousels/SlideFrame.jsx`, `HookSlide.jsx`, `ContentSlide.jsx`, `CodeSlide.jsx`, `ScreenshotSlide.jsx`, `CTASlide.jsx`
@@ -48,11 +48,11 @@ All hex values are sourced directly from `colors_and_type.css`.
 
 ---
 
-## 2. Typography (Gemini-safe descriptions)
+## 2. Typography (model-safe descriptions)
 
-**CRITICAL RULE:** Never name a specific font family in Gemini prompts. Gemini will render the font name as visible text on the slide. Use the style descriptions below instead.
+**CRITICAL RULE:** Never name a specific font family in image prompts. The model will render the font name as visible text on the slide. Use the style descriptions below instead.
 
-| Design system role | Font + weight | Gemini-safe description |
+| Design system role | Font + weight | Model-safe description |
 |---|---|---|
 | Headline / display | Inter 900 | "bold black-weight sans-serif headline" |
 | Heavy heading | Inter 800 | "extra-bold sans-serif heading" |
@@ -63,7 +63,7 @@ All hex values are sourced directly from `colors_and_type.css`.
 | Accent word (SerifAccent) | Instrument Serif italic 400 | "italic serif accent word" |
 | Ghost word (GhostWord) | Instrument Serif italic 400 | "massive italic serif ghost word" |
 
-### Size reference (for Gemini spatial descriptions)
+### Size reference (for spatial descriptions)
 
 These are actual pixel sizes from the JSX — describe them as relative proportions:
 
@@ -81,13 +81,13 @@ These are actual pixel sizes from the JSX — describe them as relative proporti
 
 ## 3. Accent System
 
-Three accent types are used across slides. Each has a precise visual description for Gemini.
+Three accent types are used across slides. Each has a precise visual description for the model.
 
 ### Accent — block underline word
 
 Used for bold, geometric emphasis. The orange word sits above a solid rectangular bar.
 
-**Gemini description:** "The word '[WORD]' in orange (#d97757), with a solid rectangular orange block directly beneath it — a thick flat 8px horizontal bar, sharp geometric edges, borderRadius 2px. The bar sits flush below the word's baseline. Blocky and technical, NOT a brushstroke or curved line."
+**Model prompt:** "The word '[WORD]' in orange (#d97757), with a solid rectangular orange block directly beneath it — a thick flat 8px horizontal bar, sharp geometric edges, borderRadius 2px. The bar sits flush below the word's baseline. Blocky and technical, NOT a brushstroke or curved line."
 
 On ContentSlide and CTASlide the bar is 12px tall. On HookSlide-derived and ScreenshotSlide it is 8px.
 
@@ -95,15 +95,15 @@ On ContentSlide and CTASlide the bar is 12px tall. On HookSlide-derived and Scre
 
 Used for softer, editorial emphasis — a single keyword rendered in an italic serif style within an otherwise sans-serif headline.
 
-**Gemini description on paper bg:** "The word '[WORD]' in italic serif style, orange (#d97757). The surrounding headline text remains bold sans-serif upright."
+**Model prompt on paper bg:** "The word '[WORD]' in italic serif style, orange (#d97757). The surrounding headline text remains bold sans-serif upright."
 
-**Gemini description on dark or hero bg:** "The word '[WORD]' in italic serif style, warm orange (#ffb089). The surrounding headline text remains bold sans-serif upright." (Use #ffb089 on dark/hero for contrast — the JSX explicitly uses this value.)
+**Model prompt on dark or hero bg:** "The word '[WORD]' in italic serif style, warm orange (#ffb089). The surrounding headline text remains bold sans-serif upright." (Use #ffb089 on dark/hero for contrast — the JSX explicitly uses this value.)
 
 ### GhostWord — massive background watermark
 
 A huge italic serif word positioned at bottom-right, partially bleeding off the canvas edge. It is not a design element the reader consciously notices — it is atmosphere.
 
-**Gemini description:** "Behind all content, at the bottom-right corner bleeding off the edge: a massive italic serif word '[WORD]' at roughly 540px — so large it bleeds off canvas. Very low opacity (6-7%). Color: #fafaf8 on dark theme, #1a1614 on paper theme. Line height 0.85, tight tracking. The word should feel like a watermark or shadow, not a readable element."
+**Model prompt:** "Behind all content, at the bottom-right corner bleeding off the edge: a massive italic serif word '[WORD]' at roughly 540px — so large it bleeds off canvas. Very low opacity (6-7%). Color: #fafaf8 on dark theme, #1a1614 on paper theme. Line height 0.85, tight tracking. The word should feel like a watermark or shadow, not a readable element."
 
 ---
 
@@ -122,7 +122,7 @@ linear-gradient(180deg,
 )
 ```
 
-**Gemini prompt template:**
+**Image prompt template (fal-ai/nano-banana-2):**
 
 ```
 Generate a 1080x1350 portrait Instagram slide. The background is [PHOTO DESCRIPTION] as a full-bleed photo. Over the photo, apply a gradient overlay: top 35% semi-dark (rgba 10,7,6 at 35% opacity), middle zone almost transparent (rgba 10,7,6 at 15% opacity), bottom 45% dense dark (rgba 10,7,6 at 90% opacity).
@@ -157,7 +157,7 @@ Footer (always visible on every slide):
 
 ContentSlide is the workhorse educational slide. It carries a badge eyebrow, massive headline with one accent, body text, an optional mono chip, and the GhostWord watermark at bottom-right.
 
-**Gemini prompt template — PAPER variant:**
+**Image prompt template — PAPER variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -189,7 +189,7 @@ Footer (always):
 1080x1350 pixels.
 ```
 
-**Gemini prompt template — DARK variant:**
+**Image prompt template — DARK variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -236,7 +236,7 @@ CodeSlide shows a Claude prompt in a terminal-style card. The terminal card is A
 - Orange keywords: `#d97757`
 - Soft orange secondary highlights: `#f4a387`
 
-**Gemini prompt template — DARK variant:**
+**Image prompt template — DARK variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -266,7 +266,7 @@ Footer (always):
 1080x1350 pixels.
 ```
 
-**Gemini prompt template — PAPER variant:**
+**Image prompt template — PAPER variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -311,7 +311,7 @@ ScreenshotSlide shows a tool screenshot or UI inside a framed area with a macOS-
 - Screenshot fill area: diagonal stripe pattern background + dashed border (placeholder for real screenshot image)
 - Caption: 26px regular sans-serif, below the frame
 
-**Gemini prompt template — DARK variant:**
+**Image prompt template — DARK variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -342,7 +342,7 @@ Footer (always):
 1080x1350 pixels.
 ```
 
-**Gemini prompt template — PAPER variant:**
+**Image prompt template — PAPER variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -385,7 +385,7 @@ CTASlide is always the last slide. It uses `showNextHint={false}` — the "send 
 - Sub text: italic serif, 34px, line-height 1.3
 - CTA button: background #d97757, text #0a0706 (very dark), padding 26px × 34px, borderRadius 12, monospace bold 28px with "→" appended, box-shadow `0 12px 32px rgba(217,119,87,0.4)`
 
-**Gemini prompt template — DARK variant:**
+**Image prompt template — DARK variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -418,7 +418,7 @@ Footer — NOTE: NO "send to a friend" box on CTA slide:
 1080x1350 pixels.
 ```
 
-**Gemini prompt template — PAPER variant:**
+**Image prompt template — PAPER variant:**
 
 ```
 Generate a 1080x1350 portrait Instagram slide.
@@ -449,7 +449,7 @@ Footer — NO save-for-later:
 1080x1350 pixels.
 ```
 
-**Gemini prompt template — HERO variant (photo CTA):**
+**Image prompt template — HERO variant (photo CTA):**
 
 ```
 Generate a 1080x1350 portrait Instagram slide. Background: [PHOTO] as full-bleed with gradient overlay (rgba 10,7,6 at 35% top, 15% at 45%, 90% at 100% — dense dark at bottom).
@@ -524,7 +524,7 @@ Two canonical carousel structures from `content.jsx`:
 
 ## 7. Footer Chrome (Every Slide)
 
-All slides share the same footer chrome from SlideFrame.jsx. Describe it consistently in every Gemini prompt.
+All slides share the same footer chrome from SlideFrame.jsx. Describe it consistently in every image prompt.
 
 **@{YOUR_HANDLE_PERSONAL} handle:**
 - Bottom-left, 18px, small monospace uppercase text, wide tracking (0.04em)
@@ -553,7 +553,7 @@ All slides share the same footer chrome from SlideFrame.jsx. Describe it consist
 ## 8. What NOT to Do
 
 **Typography:**
-- Never name Inter, JetBrains Mono, or Instrument Serif in a Gemini prompt — they render as visible text
+- Never name Inter, JetBrains Mono, or Instrument Serif in an image prompt — they render as visible text
 - Never use all-caps for headlines — always sentence case or mixed-case
 - Never use a brushstroke, curved, or hand-drawn underline — the Accent is a solid rectangular bar
 
@@ -618,7 +618,7 @@ Check `content-plugin/skills/6-autopilot/references/hook-slide-inspiration/` for
 
 ## 10. Reference Screenshots
 
-Available at `context/brand-assets/reference-frames/`. Use as inputs to Gemini for ScreenshotSlide frames and HookSlide screenshot-forward hooks.
+Available at `context/brand-assets/reference-frames/`. Use as inputs for ScreenshotSlide frames and HookSlide screenshot-forward hooks.
 
 | Topic | Directory | Best for |
 |---|---|---|
@@ -639,4 +639,4 @@ Available at `context/brand-assets/reference-frames/`. Use as inputs to Gemini f
 
 **How to pick:** Match the screenshot to the slide's prompt topic. A slide about Claude Code skills → `claude-code/`. A slide about automating research → `exa/` or `claude-desktop/`. A slide about agency delivery → `your-client-portal/`.
 
-Check the catalog file at `context/brand-assets/reference-frames/catalog.yaml` for the full annotated list with Gemini analysis of each frame.
+Check the catalog file at `context/brand-assets/reference-frames/catalog.yaml` for the full annotated list with analysis of each frame.

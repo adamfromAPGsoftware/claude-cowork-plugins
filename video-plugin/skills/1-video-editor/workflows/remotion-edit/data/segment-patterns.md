@@ -399,7 +399,12 @@ This pattern is NOT a Seg{NN}.tsx file — it is added directly to Root.tsx as a
 - `BODY_PIP_SECTIONS` — array of `{ startFrame, durationInFrames, speakerSrc, speakerStartFrom }` for PiP overlays
 - `BODY_ZOOMS` — array of `{ startFrame, durationInFrames, scale, targetX, targetY }` for digital zoom keyframes
 
-**Audio:** Concatenate intro + 0.3s silence (matching 18-frame WhiteFlash duration at 60fps) + body audio into a single `full-audio.m4a` file to preserve the single Audio element rule (Rule 4).
+**Audio:** Extract per-clip audio via stream copy from each clipped source video. Each section gets its own `<Audio>` element in Root.tsx inside a `<Sequence>` with matching `from` and `durationInFrames`. Apply `AUDIO_OFFSET_FRAMES` delay to each Audio Sequence for residual AAC priming correction. NEVER concatenate audio into a single file — concatenation causes 500ms+ sync drift (see `wiki/audio-sync.md`).
+
+```bash
+ffmpeg -i intro-clipped.mp4 -vn -acodec copy public/intro-audio.m4a
+ffmpeg -i body-clipped.mp4 -vn -acodec copy public/body-audio.m4a
+```
 
 ---
 

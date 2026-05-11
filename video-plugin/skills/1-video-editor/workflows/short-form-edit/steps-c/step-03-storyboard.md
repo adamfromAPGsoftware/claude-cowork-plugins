@@ -6,7 +6,7 @@ nextStepFile: './step-04-assets.md'
 pacingRulesData: '../data/short-form-pacing-rules.md'
 segmentPatternsData: '../data/vertical-segment-patterns.md'
 productionStyleGuideData: '../data/production-style-guide.md'
-audioLibraryData: '{project-root}/_bmad/ccs/data/brand-assets/audio-library.yaml'
+audioLibraryData: '{project-root}/example-account-brand-plugin/context/brand/brand-assets/audio-library.yaml'
 mgStyleGuideData: '../data/mg-style-guide.md'
 ---
 
@@ -41,7 +41,7 @@ Load and read:
 - {pacingRulesData} — 9 pacing rules (P1–P9)
 - {segmentPatternsData} — 7 segment patterns (V1–V7)
 - {productionStyleGuideData} — Production style specs (captions, transitions, splits, zoom, cut rhythm)
-- {audioLibraryData} — Background music catalog with mood tags, BPM, and energy levels. Located at `{project-root}/_bmad/ccs/data/brand-assets/audio-library.yaml`. SFX assets (click) are in `{project-root}/_bmad/ccs/data/brand-assets/sfx/`
+- {audioLibraryData} — Background music catalog with mood tags, BPM, and energy levels. Located at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/audio-library.yaml`. SFX assets (click) are in `{project-root}/example-account-brand-plugin/context/brand/brand-assets/sfx/`
 
 ### 2. Build Storyboard (Per Video)
 
@@ -106,8 +106,8 @@ Select the most appropriate background music track from `{audioLibraryData}` for
    - `Background track`: filename from the catalog (e.g., `bg-corporate-tech-01.mp3`)
    - `BPM`: from the catalog entry
    - `Mood match`: which mood tags matched
-5. **Track source path:** `{project-root}/_bmad/ccs/data/brand-assets/{file}` (the `file` field in `audio-library.yaml` is relative to `brand-assets/`)
-6. **SFX source path:** `{project-root}/_bmad/ccs/data/brand-assets/sfx/click-soft-01.wav`
+5. **Track source path:** `{project-root}/example-account-brand-plugin/context/brand/brand-assets/{file}` (the `file` field in `audio-library.yaml` is relative to `brand-assets/`)
+6. **SFX source path:** `{project-root}/example-account-brand-plugin/context/brand/brand-assets/sfx/click-soft-01.wav`
 
 This selection feeds into step-04's audio mix (Section 7), where the music + click SFX are pre-mixed into a single MP3 for Remotion.
 
@@ -194,12 +194,12 @@ After interleaving MG cutaways, classify each MG request into one of **two tiers
 
 **Tier C reference image sourcing (MANDATORY for tool-referencing MGs):**
 
-Every Tier C MG that depicts a named tool/platform MUST have a reference image from the central library at `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/catalog.yaml`.
+Every Tier C MG that depicts a named tool/platform MUST have a reference image from the central library at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/reference-frames/catalog.yaml`.
 
 1. Browse `catalog.yaml` for the tool name (and aliases)
 2. Select the best matching frame based on tags that align with the MG concept
 3. Use the `supabase_url` from the catalog — pre-uploaded, no upload step needed
-4. **If the tool is NOT in the library** → STOP and ask the user: "The reference library doesn't have a screenshot for {tool}. Please capture one and drop it into `_bmad/ccs/data/brand-assets/reference-frames/{tool-slug}/`, then run `npx tsx scripts/analyze-library-images.ts --tool {tool}`."
+4. **If the tool is NOT in the library** → STOP and ask the user: "The reference library doesn't have a screenshot for {tool}. Please capture one and drop it into `example-account-brand-plugin/context/brand/brand-assets/reference-frames/{tool-slug}/`, then run `npx tsx scripts/analyze-library-images.ts --tool {tool}`."
 5. **NEVER fabricate filenames** for screenshots that don't exist
 6. **NEVER fall back to logo-only** for Tier C MGs depicting tool interfaces — logos give Hera zero context about interface layout
 
@@ -222,7 +222,7 @@ After classifying all MGs for a video batch, validate the tier distribution:
 **Every V4/V4b/V5 segment that references a named tool MUST have a reference image plan. `image_source: none` is forbidden for tool-referencing segments.**
 
 **Library-First Resolution (PREFERRED):**
-Before scanning visual-analysis.json or extracting frames from the body video, check the **central reference frame library** at `{project-root}/_bmad/ccs/data/brand-assets/reference-frames/catalog.yaml`. This library contains pre-cleaned, Supabase-hosted interface screenshots from ALL projects — not just the current one. Browse the catalog for the tool name (and its aliases). If a matching frame exists with tags that align with the MG concept, use it directly — no extraction needed, no upload needed (URL pre-exists).
+Before scanning visual-analysis.json or extracting frames from the body video, check the **central reference frame library** at `{project-root}/example-account-brand-plugin/context/brand/brand-assets/reference-frames/catalog.yaml`. This library contains pre-cleaned, Supabase-hosted interface screenshots from ALL projects — not just the current one. Browse the catalog for the tool name (and its aliases). If a matching frame exists with tags that align with the MG concept, use it directly — no extraction needed, no upload needed (URL pre-exists).
 
 When using the resolver script, it now checks the library automatically (Tier 0). The `--context` flag improves frame selection via tag matching:
 ```bash

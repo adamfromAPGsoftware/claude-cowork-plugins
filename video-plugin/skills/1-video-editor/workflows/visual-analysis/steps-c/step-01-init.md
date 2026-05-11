@@ -87,16 +87,17 @@ Once video is confirmed:
 
 - Determine video duration (from registry metadata or file properties)
 - Determine file size
-- Check if file exceeds 20 MB (needs Files API upload) or can use inline data
 - Determine if audio track is present
+- Calculate frame count at configured FPS: `duration_s × fps`
+- Determine chunk count: `ceil(frame_count / 100)` (100 frames max per API call)
 
 Report findings:
 "**Video Assessment:**
 - **Duration:** {duration}
 - **File size:** {size}
 - **Audio:** {yes/no}
-- **Upload method:** {Files API / inline}
-- **Chunking needed:** {yes/no — based on duration vs limits}"
+- **Frames at {fps} FPS:** ~{frame_count}
+- **Chunks needed:** {chunk_count}"
 
 ### 3. Configure Analysis Granularity
 
